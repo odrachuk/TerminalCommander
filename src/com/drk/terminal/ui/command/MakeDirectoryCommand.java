@@ -17,9 +17,9 @@ import java.io.IOException;
  */
 public class MakeDirectoryCommand implements FileCommand {
     private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();
-    private TerminalActivity terminalActivity;
-    private String currentPath;
-    private String directoryPath;
+    private final TerminalActivity terminalActivity;
+    private final String currentPath;
+    private final String directoryPath;
 
     public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryPath, String currentPath) {
         this.terminalActivity = terminalActivity;

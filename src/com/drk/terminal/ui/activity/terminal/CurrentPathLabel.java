@@ -30,7 +30,7 @@ public class CurrentPathLabel {
     public void setPath(String path) {
         fullPath = path;
         ownLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
-        alienLabel.setTextColor(resources.getColor(R.color.COLOR_b2b2b2));
+        alienLabel.setTextColor(resources.getColor(R.color.COLOR_B2B2B2));
         if (path != null) {
             ownLabel.setText(cutIfNeeds(path));
         }

@@ -1,4 +1,4 @@
-package com.drk.terminal.ui.activity;
+package com.drk.terminal.ui.activity.progress;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

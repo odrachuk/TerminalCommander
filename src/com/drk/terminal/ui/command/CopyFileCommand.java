@@ -24,7 +24,8 @@ public class CopyFileCommand implements FileCommand {
     private final String destinationPath;
 
     public CopyFileCommand(TerminalActivity terminalActivity,
-                           List<ListViewItem> items, String destinationPath) {
+                           List<ListViewItem> items,
+                           String destinationPath) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;

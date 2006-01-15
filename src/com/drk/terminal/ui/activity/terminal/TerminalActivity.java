@@ -13,17 +13,17 @@ import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
-import com.drk.terminal.ui.activity.TerminalProgressActivity;
+import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.ui.command.CopyFileCommand;
 import com.drk.terminal.ui.command.DeleteFileCommand;
 import com.drk.terminal.ui.command.MakeDirectoryCommand;
 import com.drk.terminal.ui.command.MoveRenameFileCommand;
+import com.drk.terminal.ui.dialog.TerminalDialogUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -274,11 +274,14 @@ public class TerminalActivity extends Activity {
                                         mRightAdapter.getPathLabel().getCurrentLabel());
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (viewId == R.id.copy_btn) {
+//                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
+//                        mRightAdapter.getPathLabel().getFullPath();
+//                new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
+                TerminalDialogUtil.showCopyDialog(TerminalActivity.this);
+            } else if (viewId == R.id.rename_btn) {
                 String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
-                new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
-            } else if (viewId == R.id.rename_btn) {
-                new MoveRenameFileCommand(TerminalActivity.this, getOperationItems()).onExecute();
+                new MoveRenameFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
             } else if (viewId == R.id.mkdir_btn) {
                 String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();

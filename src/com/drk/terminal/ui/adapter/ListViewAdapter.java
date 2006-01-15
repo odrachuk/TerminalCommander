@@ -90,9 +90,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             viewHolder.fileSizeView.setText(info.getFileSize());
             viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
             if (!info.isDirectory()) {
-                viewHolder.fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                viewHolder.fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                viewHolder.fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                viewHolder.fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
+                viewHolder.fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
+                viewHolder.fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
             }
             cache.put(i, viewHolder);
         }
@@ -124,11 +124,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                         activity.getResources().getColor(android.R.color.white));
             } else {
                 viewHolder.fileNameView.setTextColor(
-                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                        activity.getResources().getColor(R.color.COLOR_B2B2B2));
                 viewHolder.fileSizeView.setTextColor(
-                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                        activity.getResources().getColor(R.color.COLOR_B2B2B2));
                 viewHolder.fileModifyTimeView.setTextColor(
-                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                        activity.getResources().getColor(R.color.COLOR_B2B2B2));
             }
         }
         return viewHolder.view;

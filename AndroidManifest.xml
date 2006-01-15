@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".ui.activity.commander.CommanderActivity"
                   android:windowSoftInputMode="stateVisible|adjustResize"/>
-        <activity android:name=".ui.activity.TerminalProgressActivity"
+        <activity android:name=".ui.activity.progress.TerminalProgressActivity"
                   android:theme="@style/Transparent_Activity_Theme"/>
     </application>
 </manifest>
