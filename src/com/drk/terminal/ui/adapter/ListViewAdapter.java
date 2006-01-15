@@ -114,7 +114,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     private void initCache(ViewGroup parent) {
-        cache = new HashMap<Integer, View>(getCount());
+        cache = new LinkedHashMap<Integer, View>(getCount());
         for (int i = 0; i < getCount(); i++) {
             View rowView = activity.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
             TextView fileNameView = (TextView) rowView.findViewById(R.id.file_name);
