@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.drk.terminal.console.TerminalInputActionListener;
 import com.drk.terminal.console.TerminalInput;
-import com.drk.terminal.process.TerminalInputProcess;
+import com.drk.terminal.process.TerminalProcessImpl;
 import com.drk.terminal.process.TerminalProcess;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class TerminalActivity extends Activity {
 
     private void startTerminal() {
         Log.d(LOG_TAG, "startConsole");
-        mProcess = new TerminalInputProcess(mTerminalInput);
+        mProcess = new TerminalProcessImpl(mTerminalInput);
         try {
             mProcess.startProcess();
         } catch (IOException e) {

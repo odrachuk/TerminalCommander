@@ -8,5 +8,6 @@ package com.drk.terminal.util;
  * To change this template use File | Settings | File Templates.
  */
 public interface StringConstant {
+    String EMPTY_CHAR = "";
     String NEW_LINE_CHAR = "\n";
 }

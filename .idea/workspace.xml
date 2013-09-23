@@ -25,16 +25,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/ConsoleActivity.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInput.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInputActionListener.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/ConsoleInputProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/ConsoleProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Terminal.iws" />
@@ -49,11 +43,12 @@
     <file path="/strings.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435404942" ignored="false" />
     <file path="/Dummy.txt" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379951781231" ignored="false" />
     <file path="/ConsoleInputActionListener.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379613058031" ignored="false" />
-    <file path="/StringConstant.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952025412" ignored="false" />
+    <file path="/StringConstant.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379955756315" ignored="false" />
     <file path="/TerminalInput.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952104324" ignored="false" />
-    <file path="/TerminalInputProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952721988" ignored="false" />
+    <file path="/TerminalInputProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379957357853" ignored="false" />
     <file path="/TerminalActivity.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952799968" ignored="false" />
     <file path="/TerminalService.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379953444117" ignored="false" />
+    <file path="/TerminalProcessImpl.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379957242602" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,43 +109,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TerminalInput.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TerminalProcess.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TerminalProcess.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="34" selection-start="192" selection-end="192" vertical-scroll-proportion="0.20338982">
+            <state line="8" column="1" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerminalInputProcess.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java">
+      <file leaf-file-name="TerminalProcessImpl.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="78" selection-start="2230" selection-end="2230" vertical-scroll-proportion="0.0">
+            <state line="24" column="68" selection-start="890" selection-end="890" vertical-scroll-proportion="-1.5932204">
               <folding>
-                <element signature="e#1732#1996#0" expanded="true" />
-                <element signature="e#1985#1986#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2633#2641#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerminalService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java">
+      <file leaf-file-name="Collections.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/Collections.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="40" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="2586" column="30" selection-start="82898" selection-end="82898" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Handler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="250" column="25" selection-start="10121" selection-end="10121" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bundle.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Bundle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1296" column="29" selection-start="38832" selection-end="38832" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StringConstant.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="24" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -167,7 +178,7 @@
       <file leaf-file-name="TerminalActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="60" selection-start="1510" selection-end="1510" vertical-scroll-proportion="0.0">
+            <state line="45" column="5" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -182,25 +193,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadPoolExecutor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/ThreadPoolExecutor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1127" column="11" selection-start="44403" selection-end="44403" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#78692#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#18315#18323#0" expanded="false" />
-                <element signature="e#32099#32109#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Executors.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/Executors.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="33" selection-start="3800" selection-end="3815" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="59" column="34" selection-start="2519" selection-end="2519" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#26710#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#15140#15223#0" expanded="false" />
+                <element signature="e#15221#15222#0" expanded="false" />
+                <element signature="e#15711#15811#0" expanded="false" />
+                <element signature="e#15809#15810#0" expanded="false" />
+                <element signature="e#17654#17844#0" expanded="false" />
+                <element signature="e#17821#17822#0" expanded="false" />
+                <element signature="e#19419#20234#0" expanded="false" />
+                <element signature="e#20211#20212#0" expanded="false" />
+                <element signature="e#22642#23063#0" expanded="false" />
+                <element signature="e#22745#23024#0" expanded="false" />
+                <element signature="e#23001#23002#0" expanded="false" />
+                <element signature="e#23048#23049#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -223,7 +235,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/command/Command.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInput.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/ConsoleProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" />
@@ -233,12 +244,13 @@
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInputActionListener.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" />
       </list>
     </option>
   </component>
@@ -765,6 +777,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -778,7 +791,6 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -847,20 +859,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="17" selection-start="52" selection-end="52" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/locks/ReentrantLock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="13" selection-start="3074" selection-end="3074" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="11" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
@@ -885,13 +883,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="24" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="28" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
@@ -911,13 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/Executors.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="33" selection-start="3800" selection-end="3815" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="545" column="18" selection-start="19842" selection-end="19842" vertical-scroll-proportion="0.0">
@@ -927,18 +911,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="60" selection-start="1510" selection-end="1510" vertical-scroll-proportion="0.0">
+        <state line="45" column="5" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="78" selection-start="2230" selection-end="2230" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#1732#1996#0" expanded="true" />
-            <element signature="e#1985#1986#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -956,19 +930,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java">
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="40" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
+        <state line="8" column="1" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/Executors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="34" selection-start="2519" selection-end="2519" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#26710#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#15140#15223#0" expanded="false" />
+            <element signature="e#15221#15222#0" expanded="false" />
+            <element signature="e#15711#15811#0" expanded="false" />
+            <element signature="e#15809#15810#0" expanded="false" />
+            <element signature="e#17654#17844#0" expanded="false" />
+            <element signature="e#17821#17822#0" expanded="false" />
+            <element signature="e#19419#20234#0" expanded="false" />
+            <element signature="e#20211#20212#0" expanded="false" />
+            <element signature="e#22642#23063#0" expanded="false" />
+            <element signature="e#22745#23024#0" expanded="false" />
+            <element signature="e#23001#23002#0" expanded="false" />
+            <element signature="e#23048#23049#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="34" selection-start="192" selection-end="192" vertical-scroll-proportion="0.20338982">
+        <state line="10" column="24" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Bundle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1296" column="29" selection-start="38832" selection-end="38832" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="250" column="25" selection-start="10121" selection-end="10121" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/Collections.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2586" column="30" selection-start="82898" selection-end="82898" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="68" selection-start="890" selection-end="890" vertical-scroll-proportion="-1.5932204">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2633#2641#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
