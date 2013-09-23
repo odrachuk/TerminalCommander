@@ -8,20 +8,22 @@ import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
+import com.drk.terminal.util.StringConstant;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class ConsoleInput extends EditText {
-    public static final String DELIMITER = "\n";
+import static com.drk.terminal.util.StringConstant.NEW_LINE_CHAR;
+
+public class TerminalInput extends EditText {
     private int mLastPosition;
 
-    public ConsoleInput(Context context) {
+    public TerminalInput(Context context) {
         super(context);
         init();
     }
 
-    public ConsoleInput(Context context, AttributeSet attrs) {
+    public TerminalInput(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -47,7 +49,7 @@ public class ConsoleInput extends EditText {
     public List<String> readLine() {
         List<String> outLines = new LinkedList<String>();
         String text = getText().toString();
-        String[] inLines = text.split(DELIMITER);
+        String[] inLines = text.split(NEW_LINE_CHAR);
         if (mLastPosition == 0) {
             for (int i = 0; i < inLines.length; i++) {
                 outLines.add(inLines[i]);
@@ -62,11 +64,11 @@ public class ConsoleInput extends EditText {
     }
 
     public void writeLine(String line) {
-        setText(getText() + DELIMITER + line);
+        setText(getText() + NEW_LINE_CHAR + line);
     }
 
     public void newLine() {
-        setText(getText() + DELIMITER);
+        setText(getText() + NEW_LINE_CHAR);
         scrollDown();
     }
 

@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.drk.terminal.console.ConsoleInput android:id="@+id/console_input"
+    <com.drk.terminal.console.TerminalInput android:id="@+id/console_input"
                                            android:layout_width="match_parent"
                                            android:layout_height="match_parent"/>
 </LinearLayout>

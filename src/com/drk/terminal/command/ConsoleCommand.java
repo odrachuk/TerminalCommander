@@ -1,13 +1,13 @@
 package com.drk.terminal.command;
 
 import android.util.Log;
-import com.drk.terminal.process.ConsoleProcess;
+import com.drk.terminal.process.TerminalProcess;
 
 public class ConsoleCommand implements Command {
     public static final String LOG_TAG = ConsoleCommand.class.getSimpleName();
-    private final ConsoleProcess mProcess;
+    private final TerminalProcess mProcess;
 
-    public ConsoleCommand(ConsoleProcess process) {
+    public ConsoleCommand(TerminalProcess process) {
         mProcess = process;
     }
 

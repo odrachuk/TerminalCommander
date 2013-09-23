@@ -3,14 +3,14 @@ package com.drk.terminal.console;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.TextView.*;
-import com.drk.terminal.ConsoleActivity;
+import com.drk.terminal.TerminalActivity;
 import com.drk.terminal.command.Command;
 import com.drk.terminal.command.ConsoleCommand;
 
-public class ConsoleInputActionListener implements OnEditorActionListener {
-    private ConsoleActivity mActivity;
+public class TerminalInputActionListener implements OnEditorActionListener {
+    private TerminalActivity mActivity;
 
-    public ConsoleInputActionListener(ConsoleActivity activity) {
+    public TerminalInputActionListener(TerminalActivity activity) {
         mActivity = activity;
     }
 

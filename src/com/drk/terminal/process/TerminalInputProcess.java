@@ -2,32 +2,39 @@ package com.drk.terminal.process;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import com.drk.terminal.console.ConsoleInput;
+import android.widget.Toast;
+import com.drk.terminal.console.TerminalInput;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
-public class ConsoleInputProcess implements ConsoleProcess {
-    public static final String LOG_TAG = ConsoleInputProcess.class.getSimpleName();
-    public static final String RUNTIME_EXECUTOR = "/bin/bash";
+public class TerminalInputProcess implements TerminalProcess {
+    private static final String LOG_TAG = TerminalInputProcess.class.getSimpleName();
+    public static final String SYSTEM_EXECUTOR_PATH = "sh";
     private Process mProcess;
     private OutputStream mStdIn;
     private InputStream mStdErr;
     private InputStream mStdOut;
-    private ConsoleInput mConsole;
+    private TerminalInput mInput;
+    private ExecutorService mExecutorService;
 
     /**
      * Create new input runtime process
      * @throws IOException if an I/O error happens when create new process {@link ProcessBuilder#start()}
      */
-    public ConsoleInputProcess(ConsoleInput input) throws IOException {
-        mConsole = input;
-        createProcess();
+    public TerminalInputProcess(TerminalInput input) {
+        mInput = input;
     }
 
-    private void createProcess() throws IOException {
-        ProcessBuilder builder = new ProcessBuilder("sh");
+    @Override
+    public void startProcess() throws IOException {
+        Log.d(LOG_TAG, "startProcess");
+        ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR_PATH);
         builder.redirectErrorStream(true);
         try {
             mProcess = builder.start();
@@ -35,20 +42,25 @@ public class ConsoleInputProcess implements ConsoleProcess {
             Log.d(LOG_TAG, "Exception when create console main process: " + ex.getMessage());
             throw ex;
         }
-    }
-
-    @Override
-    public void startProcess() {
-        Log.d(LOG_TAG, "startProcess");
         mStdIn = mProcess.getOutputStream();
         mStdErr = mProcess.getErrorStream();
         mStdOut = mProcess.getInputStream();
+        mExecutorService = Executors.newSingleThreadExecutor();
+        mExecutorService.submit(new Runnable() {
+            @Override
+            public void run() {
+                Scanner scanner = new Scanner(mStdErr);
+                while (scanner.hasNext()) {
+                    Log.e(LOG_TAG, scanner.next());
+                }
+            }
+        });
     }
 
     @Override
     public void execCommand() {
         String input = "";
-        for (String line : mConsole.readLine()) {
+        for (String line : mInput.readLine()) {
             input += line;
         }
         new CommandAsynchronouslyExecutor().execute(input);
@@ -96,9 +108,9 @@ public class ConsoleInputProcess implements ConsoleProcess {
         protected void onPostExecute(List<String> strings) {
             // write result to console
             for (String s : strings) {
-                mConsole.writeLine(s);
+                mInput.writeLine(s);
             }
-            mConsole.newLine();
+            mInput.newLine();
         }
     }
 }
