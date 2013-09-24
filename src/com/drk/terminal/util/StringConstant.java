@@ -9,5 +9,5 @@ package com.drk.terminal.util;
  */
 public interface StringConstant {
     String EMPTY_CHAR = "";
-    String NEW_LINE_CHAR = "\n";
+    String LINE_SEPARATOR = System.getProperty("line.separator");
 }

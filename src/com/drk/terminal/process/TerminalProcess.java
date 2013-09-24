@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface TerminalProcess {
     void startProcess() throws IOException;
-    void execCommand();
+    void execCommand(String command);
     void stopProcess();
 }

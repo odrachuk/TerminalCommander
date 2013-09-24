@@ -25,8 +25,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/Command.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Terminal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,16 +44,17 @@
     <file path="/ConsoleProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379434996232" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435110786" ignored="false" />
     <file path="/fragment.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435155077" ignored="false" />
-    <file path="/main.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435256372" ignored="false" />
+    <file path="/main.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380039977822" ignored="false" />
     <file path="/strings.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435404942" ignored="false" />
     <file path="/Dummy.txt" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379951781231" ignored="false" />
     <file path="/ConsoleInputActionListener.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379613058031" ignored="false" />
-    <file path="/StringConstant.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379955756315" ignored="false" />
+    <file path="/StringConstant.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380043778812" ignored="false" />
     <file path="/TerminalInput.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952104324" ignored="false" />
     <file path="/TerminalInputProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379957357853" ignored="false" />
-    <file path="/TerminalActivity.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952799968" ignored="false" />
+    <file path="/TerminalActivity.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380044110575" ignored="false" />
     <file path="/TerminalService.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379953444117" ignored="false" />
-    <file path="/TerminalProcessImpl.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379957242602" ignored="false" />
+    <file path="/TerminalProcessImpl.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380043894534" ignored="false" />
+    <file path="/TerminalProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380042207438" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,23 +115,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TerminalProcess.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
+      <file leaf-file-name="TerminalProcessImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="1" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+            <state line="108" column="5" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#2464#2472#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExecutorService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/ExecutorService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="140" column="19" selection-start="5377" selection-end="5377" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerminalProcessImpl.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
+      <file leaf-file-name="TerminalProcess.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="57" selection-start="924" selection-end="924" vertical-scroll-proportion="-1.161017">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2633#2641#0" expanded="true" />
-              </folding>
+            <state line="8" column="58" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -136,19 +153,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Handler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Handler.java">
+      <file leaf-file-name="TerminalActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="250" column="25" selection-start="10121" selection-end="10121" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="12" column="28" selection-start="380" selection-end="380" vertical-scroll-proportion="0.30508474">
+              <folding>
+                <element signature="e#2023#3652#0" expanded="true" />
+                <element signature="e#3641#3642#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bundle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Bundle.java">
+      <file leaf-file-name="System.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/lang/System.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1296" column="29" selection-start="38832" selection-end="38832" vertical-scroll-proportion="0.0">
+            <state line="89" column="61" selection-start="3047" selection-end="3084" vertical-scroll-proportion="-10.96">
               <folding />
             </state>
           </provider>
@@ -157,60 +177,39 @@
       <file leaf-file-name="StringConstant.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="24" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
+            <state line="11" column="65" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Service.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/app/Service.java">
+      <file leaf-file-name="TextView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/widget/TextView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="345" column="28" selection-start="17050" selection-end="17050" vertical-scroll-proportion="0.0">
+            <state line="5409" column="27" selection-start="197951" selection-end="197951" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerminalActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
+      <file leaf-file-name="BaseInputConnection.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/view/inputmethod/BaseInputConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="5" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
+            <state line="67" column="11" selection-start="2232" selection-end="2232" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scanner.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/Scanner.java">
+      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="545" column="18" selection-start="19842" selection-end="19842" vertical-scroll-proportion="0.0">
+            <state line="10" column="43" selection-start="578" selection-end="578" vertical-scroll-proportion="-6.0">
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Executors.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/Executors.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="34" selection-start="2519" selection-end="2519" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#26710#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#15140#15223#0" expanded="false" />
-                <element signature="e#15221#15222#0" expanded="false" />
-                <element signature="e#15711#15811#0" expanded="false" />
-                <element signature="e#15809#15810#0" expanded="false" />
-                <element signature="e#17654#17844#0" expanded="false" />
-                <element signature="e#17821#17822#0" expanded="false" />
-                <element signature="e#19419#20234#0" expanded="false" />
-                <element signature="e#20211#20212#0" expanded="false" />
-                <element signature="e#22642#23063#0" expanded="false" />
-                <element signature="e#22745#23024#0" expanded="false" />
-                <element signature="e#23001#23002#0" expanded="false" />
-                <element signature="e#23048#23049#0" expanded="false" />
-              </folding>
-            </state>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -232,22 +231,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInput.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/ConsoleProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/ConsoleInputProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/ConsoleActivity.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/console/ConsoleInputActionListener.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" />
+        <option value="$PROJECT_DIR$/res/layout/main.xml" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
       </list>
     </option>
   </component>
@@ -464,50 +463,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="process" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="console" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="command" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -770,7 +725,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -856,63 +811,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="11" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="11" selection-start="294" selection-end="294" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="513" selection-end="513" vertical-scroll-proportion="-6.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInput.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="5" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/ThreadPoolExecutor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1127" column="11" selection-start="44403" selection-end="44403" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#78692#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#18315#18323#0" expanded="false" />
-            <element signature="e#32099#32109#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/Scanner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="545" column="18" selection-start="19842" selection-end="19842" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="5" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/app/Service.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="345" column="28" selection-start="17050" selection-end="17050" vertical-scroll-proportion="0.0">
@@ -923,13 +821,6 @@
     <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Binder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="132" column="7" selection-start="5325" selection-end="5325" vertical-scroll-proportion="0.36101696">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="1" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -956,13 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="24" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/os/Bundle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1296" column="29" selection-start="38832" selection-end="38832" vertical-scroll-proportion="0.0">
@@ -984,12 +868,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/view/inputmethod/BaseInputConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="11" selection-start="2232" selection-end="2232" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/widget/TextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5409" column="27" selection-start="197951" selection-end="197951" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/util/concurrent/ExecutorService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="140" column="19" selection-start="5377" selection-end="5377" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="43" selection-start="578" selection-end="578" vertical-scroll-proportion="-6.0">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="61" selection-start="3047" selection-end="3084" vertical-scroll-proportion="-10.96">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="65" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="58" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="57" selection-start="924" selection-end="924" vertical-scroll-proportion="-1.161017">
+        <state line="108" column="5" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2633#2641#0" expanded="true" />
+            <element signature="e#2464#2472#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="28" selection-start="380" selection-end="380" vertical-scroll-proportion="0.30508474">
+          <folding>
+            <element signature="e#2023#3652#0" expanded="true" />
+            <element signature="e#3641#3642#0" expanded="true" />
           </folding>
         </state>
       </provider>

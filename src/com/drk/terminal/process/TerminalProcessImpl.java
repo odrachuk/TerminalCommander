@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import com.drk.terminal.console.TerminalInput;
-import com.drk.terminal.util.StringConstant;
+import android.widget.TextView;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -13,25 +12,26 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.drk.terminal.util.StringConstant.LINE_SEPARATOR;
+
 public class TerminalProcessImpl implements TerminalProcess {
     private static final String LOG_TAG = TerminalProcessImpl.class.getSimpleName();
     private static final String RESULT_KEY = "result";
     public static final String SYSTEM_EXECUTOR_PATH = "sh";
-    private String mInputText = StringConstant.EMPTY_CHAR;
+    private String mCommand;
     private Process mProcess;
     private BufferedReader mReader;
     private BufferedWriter mWriter;
-    private TerminalInput mInput;
+    private TextView mTerminalOut;
     private ExecutorService mExecutorService;
-    private boolean inputReady;
 
 
     /**
      * Create new input runtime process
-     * @throws IOException if an I/O error happens when create new process {@link ProcessBuilder#start()}
+     * @param terminalOut TextView component for display command results
      */
-    public TerminalProcessImpl(TerminalInput input) {
-        mInput = input;
+    public TerminalProcessImpl(TextView terminalOut) {
+        mTerminalOut = terminalOut;
     }
 
     @Override
@@ -52,11 +52,8 @@ public class TerminalProcessImpl implements TerminalProcess {
     }
 
     @Override
-    public void execCommand() {
-        for (String line : mInput.readLine()) {
-            mInputText += line;
-        }
-        inputReady = true;
+    public void execCommand(String command) {
+        mCommand = command;
     }
 
     @Override
@@ -73,14 +70,14 @@ public class TerminalProcessImpl implements TerminalProcess {
             for (;;) {
                 // exec command
                 try {
-                    Log.d(LOG_TAG, "execCommand -> " + mInputText);
-                    if (!mInputText.isEmpty() && inputReady) {
+                    Log.d(LOG_TAG, "execCommand -> " + mCommand);
+                    if (mCommand != null) {
                         List<String> resultList = new LinkedList<String>();
-                        if (mInputText.trim().equals("exit")) {
-                            mWriter.write("exit\n");
+                        if (mCommand.trim().equals("exit")) {
+                            mWriter.write("exit" + LINE_SEPARATOR);
                         } else {
                             // write command to process
-                            mWriter.write("((" + mInputText + ") && echo --EOF--) || echo --EOF--\n");
+                            mWriter.write("((" + mCommand + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
                         }
                         mWriter.flush();
                         // read result of command from process
@@ -102,8 +99,7 @@ public class TerminalProcessImpl implements TerminalProcess {
                         Message resultMessage = mResultHandler.obtainMessage();
                         resultMessage.setData(resultBundle);
                         mResultHandler.sendMessage(resultMessage);
-                        mInputText = StringConstant.EMPTY_CHAR;
-                        inputReady = false;
+                        mCommand = null;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -117,11 +113,13 @@ public class TerminalProcessImpl implements TerminalProcess {
         public void handleMessage(Message msg) {
             String[] results = msg.getData().getStringArray(RESULT_KEY);
             if (results != null && results.length != 0) {
+                StringBuilder oldText = new StringBuilder(mTerminalOut.getText());
                 // write result to console
                 for (String s : results) {
-                    mInput.writeLine(s);
+                    oldText.append(LINE_SEPARATOR);
+                    oldText.append(s);
                 }
-                mInput.newLine();
+                mTerminalOut.setText(oldText.toString());
             }
         }
     };
