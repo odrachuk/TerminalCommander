@@ -25,11 +25,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalService.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalInputProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/util/StringConstant.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/console/TerminalInputActionListener.java" />
     </list>
     <ignored path="Terminal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -121,7 +118,7 @@
       <file leaf-file-name="TerminalProcessImpl.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="68" selection-start="890" selection-end="890" vertical-scroll-proportion="-1.5932204">
+            <state line="27" column="57" selection-start="924" selection-end="924" vertical-scroll-proportion="-1.161017">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2633#2641#0" expanded="true" />
@@ -866,7 +863,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/ConsoleCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/CommandImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="11" selection-start="294" selection-end="294" vertical-scroll-proportion="0.0">
           <folding />
@@ -989,7 +986,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="68" selection-start="890" selection-end="890" vertical-scroll-proportion="-1.5932204">
+        <state line="27" column="57" selection-start="924" selection-end="924" vertical-scroll-proportion="-1.161017">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2633#2641#0" expanded="true" />

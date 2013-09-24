@@ -5,7 +5,7 @@ import android.widget.TextView;
 import android.widget.TextView.*;
 import com.drk.terminal.TerminalActivity;
 import com.drk.terminal.command.Command;
-import com.drk.terminal.command.ConsoleCommand;
+import com.drk.terminal.command.CommandImpl;
 
 public class TerminalInputActionListener implements OnEditorActionListener {
     private TerminalActivity mActivity;
@@ -18,7 +18,7 @@ public class TerminalInputActionListener implements OnEditorActionListener {
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         boolean handled = false;
         if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-            Command command = new ConsoleCommand(mActivity.getProcess());
+            Command command = new CommandImpl(mActivity.getProcess());
             command.execute();
             handled = true;
         }
