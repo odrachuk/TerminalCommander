@@ -1,4 +1,4 @@
-package com.drk.terminal.util;
+package com.drk.terminal.utils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,7 +7,7 @@ package com.drk.terminal.util;
  * Time: 6:59 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface StringConstant {
+public interface StringUtils {
     String EMPTY_CHAR = "";
     String LINE_SEPARATOR = System.getProperty("line.separator");
 }
