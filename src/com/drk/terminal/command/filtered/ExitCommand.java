@@ -10,7 +10,7 @@ import com.drk.terminal.process.TerminalProcess;
  * Time: 8:08 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SuCommand implements FilteredCommand {
+public class ExitCommand implements FilteredCommand {
     @Override
     public boolean isExecutable() {
         return false;  //To change body of implemented methods use File | Settings | File Templates.

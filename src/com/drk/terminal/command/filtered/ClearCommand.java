@@ -12,6 +12,11 @@ import com.drk.terminal.process.TerminalProcess;
  */
 public class ClearCommand implements FilteredCommand {
     @Override
+    public boolean isExecutable() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public void onExecute(TerminalProcess terminalProcess) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

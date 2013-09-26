@@ -1,4 +1,4 @@
-package com.drk.terminal;
+package com.drk.terminal.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +19,6 @@ public class TerminalPrompt {
 
     public TerminalPrompt(Context context) {
         mUserName = AccountUtils.getUserName(context);
-        mCurrentPath = "/";
     }
 
     public String getPrompt() {

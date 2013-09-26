@@ -1,4 +1,4 @@
-package com.drk.terminal;
+package com.drk.terminal.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.drk.terminal.R;
+import com.drk.terminal.controller.TerminalController;
 
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
@@ -31,7 +33,7 @@ public class TerminalActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTerminalController.onStopProcess();
+        mTerminalController.onDestroyController();
     }
 
     private void init() {

@@ -8,6 +8,7 @@ package com.drk.terminal.utils;
  * To change this template use File | Settings | File Templates.
  */
 public interface StringUtils {
-    String EMPTY_CHAR = "";
+    String EMPTY = "";
     String LINE_SEPARATOR = System.getProperty("line.separator");
+    String PATH_SEPARATOR = System.getProperty("path.separator");
 }

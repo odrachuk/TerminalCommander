@@ -1,10 +1,13 @@
-package com.drk.terminal;
+package com.drk.terminal.controller;
 
 import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.process.TerminalProcess;
-import com.drk.terminal.process.TerminalProcessImpl;
-import com.drk.terminal.utils.AccountUtils;
+import com.drk.terminal.ui.TerminalActivity;
+import com.drk.terminal.ui.TerminalInputListener;
+import com.drk.terminal.utils.DirectoryUtils;
+import com.drk.terminal.utils.StringUtils;
+import com.drk.terminal.utils.TerminalPrompt;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -32,36 +35,40 @@ public class TerminalController {
         mProcessExecutor = Executors.newCachedThreadPool();
         mPrompt = new TerminalPrompt(activity);
         Log.d(LOG_TAG, "startConsole");
-        mProcess = new TerminalProcessImpl(activity.getTerminalOutView());
-        try {
-            mProcess.startProcess(mProcessExecutor, mPrompt.getCurrentPath());
-        } catch (IOException e) {
-            Toast.makeText(activity, "Can't start main process!", Toast.LENGTH_LONG).show();
+        onStartProcess("/");
+    }
+
+    /**
+     * After start application when user use cd command
+     * @param subDirName The subdirectory name
+     */
+    public boolean onChangedDirectory(String subDirName) {
+        if (mProcess != null && DirectoryUtils.isDirectoryExist(mPrompt.getCurrentPath(), subDirName)) {
+           mProcess.stopProcess();
+           onStartProcess(mPrompt.getCurrentPath() + StringUtils.PATH_SEPARATOR + subDirName);
+           return true;
         }
+        return false;
     }
 
-    // todo: when directory changed, when username changed or when privileges changed
-    public void onChangePrompt() {
-
-    }
-
-    // todo: when directory changed
-    public void onChangedDirectory(String dirName) {
-
-    }
-
-    public void onProcessDead() {
-
-    }
-
-    public void onChangeProcess(String dirName) {
-
+    /**
+     * Only when process not started already
+     * @param path The process execution directory name
+     */
+    private void onStartProcess(String path) {
+        mProcess = new TerminalProcess(mActivity.getTerminalOutView());
+        try {
+            mProcess.startProcess(mProcessExecutor, path);
+        } catch (IOException e) {
+            Toast.makeText(mActivity, "Can't start main process!", Toast.LENGTH_LONG).show();
+        }
+        mPrompt.setCurrentPath(path);
     }
 
     /**
      * When activity destroyed or when changed configuration should be recreated process instance
      */
-    public void onStopProcess() {
+    public void onDestroyController() {
         mProcess.stopProcess();
         mProcessExecutor.shutdownNow();
     }

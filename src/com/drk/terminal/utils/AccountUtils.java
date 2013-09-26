@@ -4,7 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY_CHAR;
+import static com.drk.terminal.utils.StringUtils.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,14 +40,14 @@ public class AccountUtils {
         AccountManager manager = AccountManager.get(context);
         Account account = getAccount(manager);
         if (account == null) {
-            return EMPTY_CHAR;
+            return EMPTY;
         } else {
             String email = account.name;
             String[] parts = email.split("@");
             if (parts.length > 0 && parts[0] != null) {
                 return parts[0];
             } else {
-                return EMPTY_CHAR;
+                return EMPTY;
             }
         }
     }

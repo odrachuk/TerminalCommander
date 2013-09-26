@@ -2,8 +2,10 @@ package com.drk.terminal.command;
 
 import com.drk.terminal.command.filtered.CdCommand;
 import com.drk.terminal.command.filtered.ClearCommand;
+import com.drk.terminal.command.filtered.ExitCommand;
 import com.drk.terminal.command.filtered.SuCommand;
-import com.drk.terminal.process.TerminalProcess;
+
+import static com.drk.terminal.utils.StringUtils.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,6 +34,13 @@ public enum FilteredCommands {
         public FilteredCommand getCommand() {
             return new ClearCommand();
         }
+    },
+
+    EXIT("exit") {
+        @Override
+        public FilteredCommand getCommand() {
+            return new ExitCommand();
+        }
     };
 
     String text;
@@ -48,7 +57,14 @@ public enum FilteredCommands {
 
     public static boolean isFilteredCommand(String command) {
         for (FilteredCommands fc : values()) {
-            if (fc.text.equals(command)) {
+            String commandPrefix = EMPTY;
+            command = command.trim();
+            if (command.contains(" ")) {
+                commandPrefix = command.substring(0, command.indexOf(' '));
+            } else {
+                commandPrefix = command;
+            }
+            if (fc.text.equals(commandPrefix)) {
                 return true;
             }
         }

@@ -1,8 +1,9 @@
-package com.drk.terminal;
+package com.drk.terminal.ui;
 
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import com.drk.terminal.controller.TerminalController;
 
 import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
 
