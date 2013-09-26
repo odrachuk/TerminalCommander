@@ -25,8 +25,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/gitignore" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/Command.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalInputListener.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/ui/KeyboardListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ClearCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ClearCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ExitCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ExitCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/SuCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/SuCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/controller/TerminalController.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/controller/TerminalController.java" />
     </list>
     <ignored path="Terminal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -145,21 +151,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalListener.java" line="37" class="com.drk.terminal.process.TerminalListener" package="com.drk.terminal.process">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java" line="70" class="com.drk.terminal.command.FilteredCommands" package="com.drk.terminal.command">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -210,7 +201,7 @@
       <file leaf-file-name="TerminalController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/TerminalController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="0" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0">
+            <state line="60" column="0" selection-start="2009" selection-end="2009" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -218,10 +209,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerminalInputListener.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalInputListener.java">
+      <file leaf-file-name="KeyboardListener.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/KeyboardListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="61" selection-start="1957" selection-end="1957" vertical-scroll-proportion="0.0">
+            <state line="38" column="56" selection-start="1697" selection-end="1697" vertical-scroll-proportion="0.40207973">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -232,7 +223,7 @@
       <file leaf-file-name="TerminalListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="16" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
+            <state line="44" column="9" selection-start="1444" selection-end="1444" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2164#2172#0" expanded="true" />
@@ -241,19 +232,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FilteredCommand.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java">
+      <file leaf-file-name="Command.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/Command.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="27" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
+            <state line="15" column="0" selection-start="347" selection-end="347" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CdCommand.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CdCommand.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="78" selection-start="586" selection-end="586" vertical-scroll-proportion="0.5338983">
+            <state line="23" column="0" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -273,7 +264,7 @@
       <file leaf-file-name="FilteredCommands.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="0" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0">
+            <state line="67" column="28" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -741,7 +732,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-3" width="1286" height="783" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -759,7 +750,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959481" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959481" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -884,13 +875,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="27" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/utils/TerminalPrompt.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="21" selection-start="628" selection-end="628" vertical-scroll-proportion="0.0">
@@ -900,18 +884,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalInputListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="61" selection-start="1957" selection-end="1957" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/TerminalController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="0" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0">
+        <state line="60" column="0" selection-start="2009" selection-end="2009" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -941,9 +916,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="16" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
+        <state line="44" column="9" selection-start="1444" selection-end="1444" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2164#2172#0" expanded="true" />
@@ -951,18 +935,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="347" selection-end="347" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="0" selection-start="1724" selection-end="1724" vertical-scroll-proportion="0.0">
+        <state line="67" column="28" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/KeyboardListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="78" selection-start="586" selection-end="586" vertical-scroll-proportion="0.5338983">
+        <state line="38" column="56" selection-start="1697" selection-end="1697" vertical-scroll-proportion="0.40207973">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

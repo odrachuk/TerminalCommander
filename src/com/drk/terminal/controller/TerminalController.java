@@ -3,8 +3,8 @@ package com.drk.terminal.controller;
 import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.process.TerminalProcess;
+import com.drk.terminal.ui.KeyboardListener;
 import com.drk.terminal.ui.TerminalActivity;
-import com.drk.terminal.ui.TerminalInputListener;
 import com.drk.terminal.utils.DirectoryUtils;
 import com.drk.terminal.utils.StringUtils;
 import com.drk.terminal.utils.TerminalPrompt;
@@ -26,12 +26,12 @@ public class TerminalController {
     private TerminalPrompt mPrompt;
     private TerminalProcess mProcess;
     private TerminalActivity mActivity;
-    private TerminalInputListener mInputListener;
+    private KeyboardListener mInputListener;
     private ExecutorService mProcessExecutor;
 
     public TerminalController(TerminalActivity activity) {
         mActivity = activity;
-        mInputListener = new TerminalInputListener(this);
+        mInputListener = new KeyboardListener(this);
         mProcessExecutor = Executors.newCachedThreadPool();
         mPrompt = new TerminalPrompt(activity);
         Log.d(LOG_TAG, "startConsole");
@@ -85,7 +85,7 @@ public class TerminalController {
         return mActivity;
     }
 
-    public TerminalInputListener getInputListener() {
+    public KeyboardListener getInputListener() {
         return mInputListener;
     }
 }

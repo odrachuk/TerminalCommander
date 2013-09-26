@@ -14,11 +14,11 @@ import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
  * Time: 9:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TerminalInputListener implements TextView.OnEditorActionListener {
+public class KeyboardListener implements TextView.OnEditorActionListener {
     private TerminalController mTerminalController;
     private boolean inFirst = true;
 
-    public TerminalInputListener(TerminalController terminalController) {
+    public KeyboardListener(TerminalController terminalController) {
         mTerminalController = terminalController;
     }
 

@@ -9,7 +9,7 @@ import com.drk.terminal.process.TerminalProcess;
  * Time: 8:06 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface FilteredCommand {
+public interface Command {
     boolean isExecutable();
     void onExecute(TerminalProcess terminalProcess);
 }

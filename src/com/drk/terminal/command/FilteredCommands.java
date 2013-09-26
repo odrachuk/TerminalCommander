@@ -17,28 +17,28 @@ import static com.drk.terminal.utils.StringUtils.EMPTY;
 public enum FilteredCommands {
     CD("cd") {
         @Override
-        public FilteredCommand getCommand() {
+        public Command getCommand() {
             return new CdCommand();
         }
     },
 
     SU("su") {
         @Override
-        public FilteredCommand getCommand() {
+        public Command getCommand() {
             return new SuCommand();
         }
     },
 
     CLEAR("clear") {
         @Override
-        public FilteredCommand getCommand() {
+        public Command getCommand() {
             return new ClearCommand();
         }
     },
 
     EXIT("exit") {
         @Override
-        public FilteredCommand getCommand() {
+        public Command getCommand() {
             return new ExitCommand();
         }
     };
@@ -53,7 +53,7 @@ public enum FilteredCommands {
         return text;
     }
 
-    public abstract FilteredCommand getCommand();
+    public abstract Command getCommand();
 
     public static boolean isFilteredCommand(String command) {
         for (FilteredCommands fc : values()) {
