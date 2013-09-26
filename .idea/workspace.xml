@@ -25,23 +25,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ExitCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalListener.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcessImpl.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalActivity.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalActivity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalController.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/controller/TerminalController.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalInputListener.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalInputListener.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/drk/terminal/TerminalPrompt.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/utils/TerminalPrompt.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/utils/AccountUtils.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/utils/AccountUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ClearCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/ClearCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/utils/DirectoryUtils.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/utils/DirectoryUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommands.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/utils/StringUtils.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/utils/StringUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/SuCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/SuCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gitignore" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Terminal.iws" />
@@ -757,7 +741,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-3" width="1286" height="783" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -775,7 +759,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959481" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959481" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

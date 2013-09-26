@@ -1,0 +1,19 @@
+# Directory #
+bin/
+gen/
+out/
+classes/
+.idea/
+
+# Directory content #
+.settings/*
+
+# Extensions #
+*.ipr
+*.iws
+*.iml
+*.classpath
+*.project
+
+# Files #
+.idea
