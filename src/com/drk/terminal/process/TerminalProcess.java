@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class TerminalProcess {
-    public static final String SYSTEM_EXECUTOR = "sh";
+    private static final String SYSTEM_EXECUTOR = "sh";
     private static final String LOG_TAG = TerminalProcess.class.getSimpleName();
     private TextView mTerminalOutView;
     private Process mProcess;
@@ -33,7 +33,7 @@ public class TerminalProcess {
             builder.directory(pathDirectory);
             try {
                 mProcess = builder.start();
-                mFuture = processExecutor.submit(new TerminalListener(TerminalProcess.this));
+                mFuture = processExecutor.submit(new TerminalListener(TerminalProcess.this, mCommand));
             } catch (IOException ex) {
                 Log.d(LOG_TAG, "Exception when create console main process: " + ex.getMessage());
                 throw ex;
@@ -61,10 +61,6 @@ public class TerminalProcess {
 
     public TextView getTerminalOutView() {
         return mTerminalOutView;
-    }
-
-    public String getCommand() {
-        return mCommand;
     }
 
     public Process getProcess() {

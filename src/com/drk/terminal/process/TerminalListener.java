@@ -23,19 +23,21 @@ public class TerminalListener implements Runnable {
     private static final String LOG_TAG = TerminalListener.class.getSimpleName();
     private static final String RESULT_KEY = "result";
     private TerminalProcess mTerminalProcess;
+    private String mCommand;
 
-    public TerminalListener(TerminalProcess terminalProcess) {
+    public TerminalListener(TerminalProcess terminalProcess, String command) {
         mTerminalProcess = terminalProcess;
+        mCommand = command;
     }
 
     @Override
     public void run() {
         while (true) {
-            Log.d(LOG_TAG, "execCommand -> " + mTerminalProcess.getCommand());
-            if (mTerminalProcess.getCommand() != null
-                    && !mTerminalProcess.getCommand().isEmpty()) {
+            Log.d(LOG_TAG, "execCommand -> " + mCommand);
+            if (mCommand != null
+                    && !mCommand.isEmpty()) {
                 try {
-                    onExecuteNewCommand(mTerminalProcess.getCommand());
+                    onExecuteNewCommand(mCommand);
                 } catch (IOException e) {
                     // todo create new attempt maybe
                     Log.e(LOG_TAG, "Exception when execute new command");
