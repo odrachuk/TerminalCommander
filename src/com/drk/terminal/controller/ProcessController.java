@@ -3,9 +3,6 @@ package com.drk.terminal.controller;
 import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.process.TerminalProcess;
-import com.drk.terminal.ui.KeyboardListener;
-import com.drk.terminal.ui.TerminalActivity;
-import com.drk.terminal.utils.TerminalPrompt;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -18,21 +15,17 @@ import java.util.concurrent.Executors;
  * Time: 8:46 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TerminalController {
-    private static final String LOG_TAG = TerminalController.class.getSimpleName();
+public class ProcessController {
+    private static final String LOG_TAG = ProcessController.class.getSimpleName();
 
-    private TerminalPrompt mPrompt;
-    private TerminalProcess mProcess;
-    private TerminalActivity mActivity;
-    private KeyboardListener mKeyboardListener;
+    private UiController mUiController;
     private ExecutorService mProcessExecutor;
+    private TerminalProcess mProcess;
 
-    public TerminalController(TerminalActivity activity) {
-        mActivity = activity;
-        mKeyboardListener = new KeyboardListener(this);
+    public ProcessController(UiController uiController) {
+        Log.d(LOG_TAG, "constructor");
+        mUiController = uiController;
         mProcessExecutor = Executors.newCachedThreadPool();
-        mPrompt = new TerminalPrompt(activity);
-        Log.d(LOG_TAG, "startConsole");
         createTerminalProcess("/");
     }
 
@@ -41,35 +34,24 @@ public class TerminalController {
      * @param path The process execution directory name
      */
     private void createTerminalProcess(String path) {
-        mProcess = new TerminalProcess(mActivity.getTerminalOutView(), mPrompt);
+        Log.d(LOG_TAG, "createTerminalProcess");
+        mProcess = new TerminalProcess(mUiController.getActivity().getTerminalOutView(), mUiController.getPrompt());
         try {
             mProcess.startExecutionProcess(mProcessExecutor, path);
         } catch (IOException e) {
-            Toast.makeText(mActivity, "Can't start main process!", Toast.LENGTH_LONG).show();
+            Toast.makeText(mUiController.getActivity(), "Can't start main process!", Toast.LENGTH_LONG).show();
         }
     }
 
     /**
      * When activity destroyed or when changed configuration should be recreated process instance
      */
-    public void onDestroyController() {
+    public void onDestroyExecutionProcess() {
         mProcess.stopExecutionProcess();
         mProcessExecutor.shutdownNow();
     }
 
-    public TerminalPrompt getTerminalPrompt() {
-        return mPrompt;
-    }
-
     public TerminalProcess getProcess() {
         return mProcess;
-    }
-
-    public TerminalActivity getActivity() {
-        return mActivity;
-    }
-
-    public KeyboardListener getKeyboardListener() {
-        return mKeyboardListener;
     }
 }

@@ -3,9 +3,7 @@ package com.drk.terminal.process;
 import android.util.Log;
 import android.widget.TextView;
 import com.drk.terminal.process.exceptions.NotReadyExecutorException;
-import com.drk.terminal.utils.DirectoryUtils;
-import com.drk.terminal.utils.StringUtils;
-import com.drk.terminal.utils.TerminalPrompt;
+import com.drk.terminal.ui.TerminalPrompt;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +43,7 @@ public class TerminalProcess {
                 mExecutionProcess = builder.start();
                 mFuture = processExecutor.submit(new TerminalListener(TerminalProcess.this));
             } catch (IOException ex) {
-                Log.d(LOG_TAG, "Exception when create console main process: " + ex.getMessage());
+                Log.e(LOG_TAG, "Exception when create console main process: " + ex.getMessage());
                 throw ex;
             }
         } else {
@@ -76,9 +74,7 @@ public class TerminalProcess {
 
     public void stopExecutionProcess() {
         Log.d(LOG_TAG, "stopExecutionProcess");
-        if (!mFuture.isDone()) {
-            mFuture.cancel(true);
-        }
+        mFuture.cancel(true);
         mExecutionProcess.destroy();
     }
 

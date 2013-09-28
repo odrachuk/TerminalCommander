@@ -1,10 +1,9 @@
-package com.drk.terminal.utils;
+package com.drk.terminal.ui;
 
-import android.app.Activity;
-import android.content.Context;
+import android.os.Handler;
+import com.drk.terminal.controller.UiController;
 import com.drk.terminal.ui.TerminalActivity;
 import com.drk.terminal.utils.AccountUtils;
-import com.drk.terminal.utils.DirectoryUtils;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,14 +16,14 @@ public class TerminalPrompt {
     private String mCurrentPath;
     private String mUserName;
     private String mPromptSymbol = "$"; // todo Determine privileges
-    private TerminalActivity mActivity; // todo
+    private UiController mUiController;
 
-    public TerminalPrompt(TerminalActivity activity) {
-        mActivity = activity;
-        mUserName = AccountUtils.getUserName(activity);
+    public TerminalPrompt(UiController uiController) {
+        mUserName = AccountUtils.getUserName(uiController.getActivity());
+        mUiController = uiController;
     }
 
-    public String getPrompt() {
+    public String getFullText() {
         StringBuilder promptText = new StringBuilder();
         promptText.append("[");
         promptText.append(mUserName + " ");
@@ -40,7 +39,12 @@ public class TerminalPrompt {
 
     public void setCurrentPath(String currentPath) {
         mCurrentPath = currentPath;
-        mActivity.getTerminalPromptView().setText(getPrompt());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mUiController.getActivity().getTerminalPromptView().setText(getFullText());
+            }
+        });
     }
 
     public String getUserName() {
