@@ -14,7 +14,7 @@ import static com.drk.terminal.utils.StringUtils.EMPTY;
  * Time: 7:59 PM
  * To change this template use File | Settings | File Templates.
  */
-public enum FilteredCommands {
+public enum FilteredCommand {
     CD("cd") {
         @Override
         public Command getCommand() {
@@ -45,7 +45,7 @@ public enum FilteredCommands {
 
     String text;
 
-    private FilteredCommands(String text) {
+    private FilteredCommand(String text) {
         this.text = text;
     }
 
@@ -56,27 +56,36 @@ public enum FilteredCommands {
     public abstract Command getCommand();
 
     public static boolean isFilteredCommand(String command) {
-        for (FilteredCommands fc : values()) {
-            String commandPrefix = EMPTY;
-            command = command.trim();
-            if (command.contains(" ")) {
-                commandPrefix = command.substring(0, command.indexOf(' '));
-            } else {
-                commandPrefix = command;
-            }
-            if (fc.text.equals(commandPrefix)) {
-                return true;
+        boolean isFiltered = false;
+        for (FilteredCommand fc : values()) {
+            if (fc.text.equals(parseCommandFromString(command))) {
+                isFiltered = true;
+                break;
             }
         }
-        return false;
+        return isFiltered;
     }
 
-    public static FilteredCommands getByName(String command) {
-        for (FilteredCommands fc : values()) {
-            if (fc.text.equals(command)) {
-                return fc;
+    public static String parseCommandFromString(String command) {
+        String commandPrefix = EMPTY;
+        command = command.trim();
+        if (command.contains(" ")) {
+            commandPrefix = command.substring(0, command.indexOf(' '));
+        } else {
+            commandPrefix = command;
+        }
+        return commandPrefix;
+    }
+
+    public static FilteredCommand getByName(String command) {
+        FilteredCommand filteredCommand = null;
+        String onlyCommand = parseCommandFromString(command);
+        for (FilteredCommand fc : values()) {
+            if (fc.text.equals(onlyCommand)) {
+                filteredCommand = fc;
+                break;
             }
         }
-        return null;
+        return filteredCommand;
     }
 }

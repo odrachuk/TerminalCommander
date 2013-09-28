@@ -5,8 +5,6 @@ import android.widget.Toast;
 import com.drk.terminal.process.TerminalProcess;
 import com.drk.terminal.ui.KeyboardListener;
 import com.drk.terminal.ui.TerminalActivity;
-import com.drk.terminal.utils.DirectoryUtils;
-import com.drk.terminal.utils.StringUtils;
 import com.drk.terminal.utils.TerminalPrompt;
 
 import java.io.IOException;
@@ -26,50 +24,36 @@ public class TerminalController {
     private TerminalPrompt mPrompt;
     private TerminalProcess mProcess;
     private TerminalActivity mActivity;
-    private KeyboardListener mInputListener;
+    private KeyboardListener mKeyboardListener;
     private ExecutorService mProcessExecutor;
 
     public TerminalController(TerminalActivity activity) {
         mActivity = activity;
-        mInputListener = new KeyboardListener(this);
+        mKeyboardListener = new KeyboardListener(this);
         mProcessExecutor = Executors.newCachedThreadPool();
         mPrompt = new TerminalPrompt(activity);
         Log.d(LOG_TAG, "startConsole");
-        onStartProcess("/");
-    }
-
-    /**
-     * After start application when user use cd command
-     * @param subDirName The subdirectory name
-     */
-    public boolean onChangedDirectory(String subDirName) {
-        if (mProcess != null && DirectoryUtils.isDirectoryExist(mPrompt.getCurrentPath(), subDirName)) {
-           mProcess.stopProcess();
-           onStartProcess(mPrompt.getCurrentPath() + StringUtils.PATH_SEPARATOR + subDirName);
-           return true;
-        }
-        return false;
+        createTerminalProcess("/");
     }
 
     /**
      * Only when process not started already
      * @param path The process execution directory name
      */
-    private void onStartProcess(String path) {
-        mProcess = new TerminalProcess(mActivity.getTerminalOutView());
+    private void createTerminalProcess(String path) {
+        mProcess = new TerminalProcess(mActivity.getTerminalOutView(), mPrompt);
         try {
-            mProcess.startProcess(mProcessExecutor, path);
+            mProcess.startExecutionProcess(mProcessExecutor, path);
         } catch (IOException e) {
             Toast.makeText(mActivity, "Can't start main process!", Toast.LENGTH_LONG).show();
         }
-        mPrompt.setCurrentPath(path);
     }
 
     /**
      * When activity destroyed or when changed configuration should be recreated process instance
      */
     public void onDestroyController() {
-        mProcess.stopProcess();
+        mProcess.stopExecutionProcess();
         mProcessExecutor.shutdownNow();
     }
 
@@ -85,7 +69,7 @@ public class TerminalController {
         return mActivity;
     }
 
-    public KeyboardListener getInputListener() {
-        return mInputListener;
+    public KeyboardListener getKeyboardListener() {
+        return mKeyboardListener;
     }
 }

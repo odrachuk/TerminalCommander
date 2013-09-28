@@ -44,7 +44,7 @@ public class TerminalActivity extends Activity {
         mTerminalInView.setBackgroundColor(android.R.color.transparent);
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mTerminalInView.setOnEditorActionListener(mTerminalController.getInputListener());
+        mTerminalInView.setOnEditorActionListener(mTerminalController.getKeyboardListener());
     }
 
     public void showSoftKeyboard() {

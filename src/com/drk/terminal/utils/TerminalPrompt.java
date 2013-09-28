@@ -2,6 +2,7 @@ package com.drk.terminal.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import com.drk.terminal.ui.TerminalActivity;
 import com.drk.terminal.utils.AccountUtils;
 import com.drk.terminal.utils.DirectoryUtils;
 
@@ -16,9 +17,11 @@ public class TerminalPrompt {
     private String mCurrentPath;
     private String mUserName;
     private String mPromptSymbol = "$"; // todo Determine privileges
+    private TerminalActivity mActivity; // todo
 
-    public TerminalPrompt(Context context) {
-        mUserName = AccountUtils.getUserName(context);
+    public TerminalPrompt(TerminalActivity activity) {
+        mActivity = activity;
+        mUserName = AccountUtils.getUserName(activity);
     }
 
     public String getPrompt() {
@@ -37,6 +40,7 @@ public class TerminalPrompt {
 
     public void setCurrentPath(String currentPath) {
         mCurrentPath = currentPath;
+        mActivity.getTerminalPromptView().setText(getPrompt());
     }
 
     public String getUserName() {

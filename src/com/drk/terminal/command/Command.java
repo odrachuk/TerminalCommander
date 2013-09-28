@@ -10,6 +10,6 @@ import com.drk.terminal.process.TerminalProcess;
  * To change this template use File | Settings | File Templates.
  */
 public interface Command {
-    boolean isExecutable();
-    void onExecute(TerminalProcess terminalProcess);
+    String isExecutable(TerminalProcess terminalProcess);
+    String onExecute(TerminalProcess terminalProcess);
 }

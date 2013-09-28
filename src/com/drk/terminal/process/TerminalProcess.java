@@ -2,16 +2,24 @@ package com.drk.terminal.process;
 
 import android.util.Log;
 import android.widget.TextView;
+import com.drk.terminal.process.exceptions.NotReadyExecutorException;
+import com.drk.terminal.utils.DirectoryUtils;
+import com.drk.terminal.utils.StringUtils;
+import com.drk.terminal.utils.TerminalPrompt;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class TerminalProcess {
     private static final String SYSTEM_EXECUTOR = "sh";
     private static final String LOG_TAG = TerminalProcess.class.getSimpleName();
+    private ExecutorService mExecutorService;
+    private TerminalPrompt mTerminalPrompt;
     private TextView mTerminalOutView;
-    private Process mProcess;
+    private String mProcessDirectory;
+    private Process mExecutionProcess;
     private String mCommand;
     private Future mFuture;
 
@@ -20,27 +28,42 @@ public class TerminalProcess {
      *
      * @param terminalOutView TextView component for display command results
      */
-    public TerminalProcess(TextView terminalOutView) {
+    public TerminalProcess(TextView terminalOutView, TerminalPrompt terminalPrompt) {
         mTerminalOutView = terminalOutView;
+        mTerminalPrompt = terminalPrompt;
     }
 
-    public void startProcess(ExecutorService processExecutor, String processDirectory) throws IOException {
+    public void startExecutionProcess(ExecutorService processExecutor, String processDirectory) throws IOException {
         Log.d(LOG_TAG, "startProcess");
+        mExecutorService = processExecutor;
         File pathDirectory = new File(processDirectory);
         if (pathDirectory.isDirectory()) {
             ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR);
             builder.redirectErrorStream(true);
             builder.directory(pathDirectory);
             try {
-                mProcess = builder.start();
-                mFuture = processExecutor.submit(new TerminalListener(TerminalProcess.this, mCommand));
+                mExecutionProcess = builder.start();
+                mFuture = processExecutor.submit(new TerminalListener(TerminalProcess.this));
             } catch (IOException ex) {
                 Log.d(LOG_TAG, "Exception when create console main process: " + ex.getMessage());
                 throw ex;
             }
         } else {
             Log.d(LOG_TAG, "Wrong process init directory ");
+            mTerminalOutView.setText("FAIL!");
         }
+        mProcessDirectory = processDirectory;
+        mTerminalPrompt.setCurrentPath(processDirectory);
+    }
+
+    public void onChangeDirectory(String targetPath) throws Exception {
+        stopExecutionProcess(); // stop current process
+        if (mExecutorService == null
+                || mExecutorService.isShutdown()
+                || mExecutorService.isTerminated()) {
+            throw new NotReadyExecutorException();
+        }
+        startExecutionProcess(mExecutorService, targetPath);
     }
 
     public void execCommand(String command) {
@@ -51,12 +74,12 @@ public class TerminalProcess {
         mCommand = null;
     }
 
-    public void stopProcess() {
-        Log.d(LOG_TAG, "stopProcess");
+    public void stopExecutionProcess() {
+        Log.d(LOG_TAG, "stopExecutionProcess");
         if (!mFuture.isDone()) {
             mFuture.cancel(true);
         }
-        mProcess.destroy();
+        mExecutionProcess.destroy();
     }
 
     public TextView getTerminalOutView() {
@@ -64,6 +87,14 @@ public class TerminalProcess {
     }
 
     public Process getProcess() {
-        return mProcess;
+        return mExecutionProcess;
+    }
+
+    public String getCommand() {
+        return mCommand;
+    }
+
+    public String getProcessDirectory() {
+        return mProcessDirectory;
     }
 }

@@ -2,6 +2,9 @@ package com.drk.terminal.command.filtered;
 
 import com.drk.terminal.command.Command;
 import com.drk.terminal.process.TerminalProcess;
+import com.drk.terminal.utils.StringUtils;
+
+import static com.drk.terminal.utils.StringUtils.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,12 +15,12 @@ import com.drk.terminal.process.TerminalProcess;
  */
 public class SuCommand implements Command {
     @Override
-    public boolean isExecutable() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public String isExecutable(TerminalProcess terminalProcess) {
+        return EMPTY;
     }
 
     @Override
-    public void onExecute(TerminalProcess terminalProcess) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public String onExecute(TerminalProcess terminalProcess) {
+        return EMPTY;
     }
 }

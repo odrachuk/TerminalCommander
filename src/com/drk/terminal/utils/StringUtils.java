@@ -9,6 +9,6 @@ package com.drk.terminal.utils;
  */
 public interface StringUtils {
     String EMPTY = "";
-    String LINE_SEPARATOR = System.getProperty("line.separator");
-    String PATH_SEPARATOR = System.getProperty("path.separator");
+    String LINE_SEPARATOR =  System.getProperty("line.separator");
+    String PATH_SEPARATOR = "/"; // System.getProperty("path.separator");
 }

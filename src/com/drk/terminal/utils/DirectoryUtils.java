@@ -21,10 +21,58 @@ public class DirectoryUtils {
      * @return true if file exist and is directory file
      */
     public static boolean isDirectoryExist(String curDirName, String subDirName) {
+        boolean isExist = false;
         File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
         if (dir.exists() && dir.isDirectory()) {
-            return true;
+            isExist = true;
         }
-        return false;
+        return isExist;
+    }
+
+    /**
+     * Check if present directory in path
+     *
+     * @param path The target directory
+     * @return true if file exist and is directory file
+     */
+    public static boolean isDirectoryExist(String path) {
+        boolean isExist = false;
+        File dir = new File(path);
+        if (dir.exists() && dir.isDirectory()) {
+            isExist = true;
+        }
+        return isExist;
+    }
+
+    /**
+     * Check if have write permissions to file
+     *
+     * @param curDirName The current directory
+     * @param subDirName The subdirectory in curDirName directory
+     * @return true if can write
+     */
+    public static boolean checkWritePermissions(String curDirName, String subDirName) {
+        boolean canWrite = false;
+        File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
+        if(dir.canWrite()) {
+            canWrite = true;
+        }
+        return canWrite;
+    }
+
+    /**
+     * Check if have write permissions to file
+     *
+     * @param curDirName The current directory
+     * @param subDirName The subdirectory in curDirName directory
+     * @return true if can use cd to subdirectory
+     */
+    public static boolean canChangeDirectory(String curDirName, String subDirName) {
+        boolean canChange = false;
+        File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
+        if(dir.canRead()) {
+            canChange = true;
+        }
+        return canChange;
     }
 }
