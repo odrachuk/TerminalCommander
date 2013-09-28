@@ -2,11 +2,8 @@ package com.drk.terminal.command.filtered;
 
 import com.drk.terminal.command.Command;
 import com.drk.terminal.process.TerminalProcess;
-import com.drk.terminal.process.exceptions.NotReadyExecutorException;
 import com.drk.terminal.utils.DirectoryUtils;
 import com.drk.terminal.utils.StringUtils;
-
-import java.io.IOException;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 
@@ -44,17 +41,19 @@ public class CdCommand implements Command {
             String allCommand = terminalProcess.getCommand().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-                terminalProcess.onChangeDirectory(terminalProcess.getProcessDirectory()
-                        + StringUtils.PATH_SEPARATOR + targetDirectory);
+                String targetFullPath = EMPTY;
+                if (terminalProcess.getProcessDirectory().equals("/")) { // todo make universal method
+                    targetFullPath += StringUtils.PATH_SEPARATOR + targetDirectory;
+                } else {
+                    targetFullPath += terminalProcess.getProcessDirectory()
+                            + StringUtils.PATH_SEPARATOR + targetDirectory;
+                }
+                terminalProcess.onChangeDirectory(targetFullPath);
             } else {
                 callbackString += "Not arguments";
             }
         } catch (Exception e) {
-            if (e instanceof NotReadyExecutorException) {
-                callbackString += "System Executor not ready.";
-            } else if (e instanceof IOException) {
-                callbackString += "System Executor exception";
-            }
+            callbackString += "Execution exception";
         }
         return callbackString;
     }

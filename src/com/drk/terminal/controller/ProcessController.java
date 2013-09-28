@@ -19,13 +19,11 @@ public class ProcessController {
     private static final String LOG_TAG = ProcessController.class.getSimpleName();
 
     private UiController mUiController;
-    private ExecutorService mProcessExecutor;
     private TerminalProcess mProcess;
 
     public ProcessController(UiController uiController) {
         Log.d(LOG_TAG, "constructor");
         mUiController = uiController;
-        mProcessExecutor = Executors.newCachedThreadPool();
         createTerminalProcess("/");
     }
 
@@ -37,7 +35,7 @@ public class ProcessController {
         Log.d(LOG_TAG, "createTerminalProcess");
         mProcess = new TerminalProcess(mUiController.getActivity().getTerminalOutView(), mUiController.getPrompt());
         try {
-            mProcess.startExecutionProcess(mProcessExecutor, path);
+            mProcess.startExecutionProcess(path);
         } catch (IOException e) {
             Toast.makeText(mUiController.getActivity(), "Can't start main process!", Toast.LENGTH_LONG).show();
         }
@@ -48,7 +46,6 @@ public class ProcessController {
      */
     public void onDestroyExecutionProcess() {
         mProcess.stopExecutionProcess();
-        mProcessExecutor.shutdownNow();
     }
 
     public TerminalProcess getProcess() {

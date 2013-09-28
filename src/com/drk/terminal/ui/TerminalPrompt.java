@@ -39,12 +39,7 @@ public class TerminalPrompt {
 
     public void setCurrentPath(String currentPath) {
         mCurrentPath = currentPath;
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                mUiController.getActivity().getTerminalPromptView().setText(getFullText());
-            }
-        });
+        mUiController.getActivity().getTerminalPromptView().setText(getFullText());
     }
 
     public String getUserName() {
