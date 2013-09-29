@@ -1,6 +1,7 @@
 package com.drk.terminal.command.filtered;
 
 import com.drk.terminal.command.Command;
+import com.drk.terminal.command.FilteredCommand;
 import com.drk.terminal.process.TerminalProcess;
 import com.drk.terminal.utils.StringUtils;
 
@@ -21,7 +22,7 @@ public class ClearCommand implements Command {
 
     @Override
     public String onExecute(TerminalProcess terminalProcess) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        terminalProcess.onClear();
         return EMPTY;
     }
 }

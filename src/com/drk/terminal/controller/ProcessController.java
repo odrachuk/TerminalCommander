@@ -33,7 +33,7 @@ public class ProcessController {
      */
     private void createTerminalProcess(String path) {
         Log.d(LOG_TAG, "createTerminalProcess");
-        mProcess = new TerminalProcess(mUiController.getActivity().getTerminalOutView(), mUiController.getPrompt());
+        mProcess = new TerminalProcess(mUiController);
         try {
             mProcess.startExecutionProcess(path);
         } catch (IOException e) {

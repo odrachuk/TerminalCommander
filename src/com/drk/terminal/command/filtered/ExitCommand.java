@@ -1,8 +1,8 @@
 package com.drk.terminal.command.filtered;
 
 import com.drk.terminal.command.Command;
+import com.drk.terminal.command.FilteredCommand;
 import com.drk.terminal.process.TerminalProcess;
-import com.drk.terminal.utils.StringUtils;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 
@@ -21,6 +21,7 @@ public class ExitCommand implements Command {
 
     @Override
     public String onExecute(TerminalProcess terminalProcess) {
-        return EMPTY;
+        terminalProcess.onExit();
+        return FilteredCommand.EXIT.getText();
     }
 }

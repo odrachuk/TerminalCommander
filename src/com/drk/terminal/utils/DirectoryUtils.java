@@ -1,6 +1,7 @@
 package com.drk.terminal.utils;
 
 import android.content.Context;
+import com.drk.terminal.command.filtered.CdCommand;
 
 import java.io.File;
 
@@ -74,5 +75,18 @@ public class DirectoryUtils {
             canChange = true;
         }
         return canChange;
+    }
+
+    public static String buildDirectoryPath(String curDirName, String subDirName) {
+        StringBuilder subDirectoryPath = new StringBuilder(StringUtils.EMPTY);
+        if (curDirName.equals(StringUtils.PATH_SEPARATOR)) {
+            subDirectoryPath.append(StringUtils.PATH_SEPARATOR);
+            subDirectoryPath.append(subDirName);
+        } else {
+            subDirectoryPath.append(curDirName);
+            subDirectoryPath.append(StringUtils.PATH_SEPARATOR);
+            subDirectoryPath.append(subDirName);
+        }
+        return subDirectoryPath.toString();
     }
 }

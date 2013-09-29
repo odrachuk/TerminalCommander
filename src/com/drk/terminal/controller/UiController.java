@@ -13,6 +13,7 @@ import com.drk.terminal.ui.TerminalPrompt;
 public class UiController {
     private TerminalActivity mTerminalActivity;
     private TerminalPrompt mPrompt;
+    private boolean hideOutView;
 
     public UiController(TerminalActivity terminalActivity) {
         mTerminalActivity = terminalActivity;
@@ -25,5 +26,13 @@ public class UiController {
 
     public TerminalPrompt getPrompt() {
         return mPrompt;
+    }
+
+    public boolean isHideOutView() {
+        return hideOutView;
+    }
+
+    public void setHideOutView(boolean hideOutView) {
+        this.hideOutView = hideOutView;
     }
 }

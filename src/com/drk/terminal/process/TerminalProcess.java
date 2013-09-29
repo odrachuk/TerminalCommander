@@ -3,9 +3,12 @@ package com.drk.terminal.process;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import com.drk.terminal.command.FilteredCommand;
+import com.drk.terminal.controller.UiController;
 import com.drk.terminal.ui.TerminalPrompt;
 import com.drk.terminal.utils.StringUtils;
 
@@ -13,6 +16,7 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.drk.terminal.utils.StringUtils.EMPTY;
 import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
 
 public class TerminalProcess {
@@ -20,6 +24,7 @@ public class TerminalProcess {
     private static final String RESULT_KEY = "result";
     private static final String SYSTEM_EXECUTOR = "sh";
     private TerminalPrompt mTerminalPrompt;
+    private UiController mUiController;
     private TextView mTerminalOutView;
     private String mProcessDirectory;
     private Process mExecutionProcess;
@@ -45,11 +50,11 @@ public class TerminalProcess {
     /**
      * Create new input runtime process
      *
-     * @param terminalOutView TextView component for display command results
      */
-    public TerminalProcess(TextView terminalOutView, TerminalPrompt terminalPrompt) {
-        mTerminalOutView = terminalOutView;
-        mTerminalPrompt = terminalPrompt;
+    public TerminalProcess(UiController uiController) {
+        mUiController = uiController;
+        mTerminalOutView = uiController.getActivity().getTerminalOutView();
+        mTerminalPrompt = uiController.getPrompt();
     }
 
     public void startExecutionProcess(String processDirectory) throws IOException {
@@ -73,21 +78,16 @@ public class TerminalProcess {
         mTerminalPrompt.setCurrentPath(processDirectory);
     }
 
-    public void onChangeDirectory(String targetPath) throws Exception {
-        stopExecutionProcess();
-        startExecutionProcess(targetPath);
-    }
-
     public void execCommand(String command) {
         mCommand = command;
         if (command != null && !command.isEmpty()) {
             if (FilteredCommand.isFilteredCommand(mCommand)) {
-                String responseMessage = StringUtils.EMPTY;
+                String responseMessage = EMPTY;
                 FilteredCommand filteredCommand = FilteredCommand.getByName(mCommand);
                 String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
-                if (isExecutableCallback.isEmpty()) {
+                if (isExecutableCallback.isEmpty()) { // executable
                     responseMessage += filteredCommand.getCommand().onExecute(this);
-                } else {
+                } else { // not executable
                     responseMessage += isExecutableCallback;
                 }
                 if (!responseMessage.isEmpty()) {
@@ -140,6 +140,21 @@ public class TerminalProcess {
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);
+    }
+
+    public void onChangeDirectory(String targetPath) throws Exception {
+        stopExecutionProcess();
+        startExecutionProcess(targetPath);
+    }
+
+    public void onExit() {
+        stopExecutionProcess();
+        mUiController.getActivity().finish();
+    }
+
+    public void onClear() {
+        mTerminalOutView.setText(StringUtils.EMPTY);
+//        mUiController.setHideOutView(true);
     }
 
     public void stopExecutionProcess() {

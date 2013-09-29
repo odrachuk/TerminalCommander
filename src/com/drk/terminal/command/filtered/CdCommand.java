@@ -6,6 +6,7 @@ import com.drk.terminal.utils.DirectoryUtils;
 import com.drk.terminal.utils.StringUtils;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
+import static com.drk.terminal.utils.StringUtils.PATH_SEPARATOR;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,20 +42,77 @@ public class CdCommand implements Command {
             String allCommand = terminalProcess.getCommand().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-                String targetFullPath = EMPTY;
-                if (terminalProcess.getProcessDirectory().equals("/")) { // todo make universal method
-                    targetFullPath += StringUtils.PATH_SEPARATOR + targetDirectory;
+                StringBuilder targetFullPath = new StringBuilder(EMPTY);
+                if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
+                    targetFullPath.append(PredefinedLocation.getType(targetDirectory).getTransformedPath(allCommand));
                 } else {
-                    targetFullPath += terminalProcess.getProcessDirectory()
-                            + StringUtils.PATH_SEPARATOR + targetDirectory;
+                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessDirectory(), targetDirectory));
                 }
-                terminalProcess.onChangeDirectory(targetFullPath);
-            } else {
-                callbackString += "Not arguments";
+                terminalProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
             callbackString += "Execution exception";
         }
         return callbackString;
+    }
+
+    public enum PredefinedLocation {
+        DOT(".") {
+            @Override
+            public String getTransformedPath(String commandTrimmedPath) {
+                return commandTrimmedPath;
+            }
+        },
+        TWICE_DOT("..") {
+            @Override
+            public String getTransformedPath(String commandTrimmedPath) {
+                if (commandTrimmedPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
+                    return StringUtils.PATH_SEPARATOR;
+                } else {
+                    String parentPath = commandTrimmedPath.substring(0, commandTrimmedPath.lastIndexOf("/") - 1);
+                    return commandTrimmedPath.substring(0, parentPath.lastIndexOf("/") - 1);
+                }
+            }
+        },
+        SLASH(PATH_SEPARATOR) {
+            @Override
+            public String getTransformedPath(String commandTrimmedPath) {
+                return PATH_SEPARATOR;
+            }
+        };
+
+        private String location;
+
+        private PredefinedLocation(String location) {
+            this.location = location;
+        }
+
+        public String getLocation() {
+            return this.location;
+        }
+
+        public abstract String getTransformedPath(String commandTrimmedPath);
+
+        public static boolean isPredefinedLocation(String targetDirectory) {
+            boolean isPredefined = false;
+            for (PredefinedLocation pl : PredefinedLocation.values()) {
+                if (pl.getLocation().equals(targetDirectory)) {
+                    isPredefined = true;
+                    break;
+                }
+            }
+            return isPredefined;
+        }
+
+        public static PredefinedLocation getType(String targetDirectory) {
+            PredefinedLocation type = null;
+            for (PredefinedLocation pl : PredefinedLocation.values()) {
+                if (pl.getLocation().equals(targetDirectory)) {
+                    type = pl;
+                    break;
+                }
+            }
+            return type;
+        }
     }
 }
