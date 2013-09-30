@@ -1,0 +1,61 @@
+package com.drk.terminal.prompt;
+
+import com.drk.terminal.controller.UiController;
+import com.drk.terminal.prompt.state.PromptState;
+import com.drk.terminal.utils.AccountUtils;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: root
+ * Date: 9/25/13
+ * Time: 9:44 PM
+ * To change this template use File | Settings | File Templates.
+ */
+public class TerminalPrompt {
+    private String mUserName;
+    private String mUserSymbol = "$"; // todo Determine privileges
+    private String mUserLocation;
+    private UiController mUiController;
+
+    PromptState mRootState;
+    PromptState mOneDirState;
+    PromptState mManyDirState;
+
+    PromptState mState = mRootState;
+
+    public TerminalPrompt(UiController uiController) {
+        mUserName = AccountUtils.getUserName(uiController.getActivity());
+        mUiController = uiController;
+    }
+
+    public String getPromptText() {
+        StringBuilder promptText = new StringBuilder();
+        promptText.append("[");
+        promptText.append(mUserName + " ");
+        promptText.append(mUserLocation);
+        promptText.append("]");
+        promptText.append(mUserSymbol + " ");
+        return promptText.toString();
+    }
+
+    public void addUserLocation(String newLocation) {
+        mState.addUserLocation(newLocation);
+    }
+
+    public void setUserLocation(String newLocation) {
+        mUserLocation = newLocation;
+        mUiController.getActivity().getTerminalPromptView().setText(getPromptText());
+    }
+
+    public String getUserLocation() {
+        return mUserLocation;
+    }
+
+    PromptState getState() {
+        return mState;
+    }
+
+    void setState(PromptState state) {
+        mState = state;
+    }
+}

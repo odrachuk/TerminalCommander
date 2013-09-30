@@ -46,7 +46,7 @@ public class TerminalActivity extends Activity {
         mProcessController = new ProcessController(mUiController);
         mKeyboardController = new KeyboardController(mUiController, mProcessController);
         // config ui components
-        mTerminalPromptView.setText(mUiController.getPrompt().getFullText());
+        mTerminalPromptView.setText(mUiController.getPrompt().getPromptText());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
         mTerminalInView.setGravity(Gravity.TOP | Gravity.LEFT);
         mTerminalInView.setBackgroundColor(android.R.color.transparent);

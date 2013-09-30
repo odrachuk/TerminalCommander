@@ -19,11 +19,11 @@ public class CdCommand implements Command {
     @Override
     public String isExecutable(TerminalProcess terminalProcess) {
         String callbackString = EMPTY;
-        String allCommand = terminalProcess.getCommand().trim();
+        String allCommand = terminalProcess.getCommandText().trim();
         if (allCommand.indexOf(' ') > 0) {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-            if (DirectoryUtils.isDirectoryExist(terminalProcess.getProcessDirectory(), targetDirectory)) {
-                if (!DirectoryUtils.canChangeDirectory(terminalProcess.getProcessDirectory(), targetDirectory)) {
+            if (DirectoryUtils.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
+                if (!DirectoryUtils.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
                     callbackString += "Cannot read directory";
                 }
             } else {
@@ -39,14 +39,14 @@ public class CdCommand implements Command {
     public String onExecute(TerminalProcess terminalProcess) {
         String callbackString = EMPTY;
         try {
-            String allCommand = terminalProcess.getCommand().trim();
+            String allCommand = terminalProcess.getCommandText().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).getTransformedPath(allCommand));
                 } else {
-                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessDirectory(), targetDirectory));
+                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessPath(), targetDirectory));
                 }
                 terminalProcess.onChangeDirectory(targetFullPath.toString());
             }

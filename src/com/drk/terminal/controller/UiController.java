@@ -1,7 +1,7 @@
 package com.drk.terminal.controller;
 
 import com.drk.terminal.ui.TerminalActivity;
-import com.drk.terminal.ui.TerminalPrompt;
+import com.drk.terminal.prompt.TerminalPrompt;
 
 /**
  * Created with IntelliJ IDEA.

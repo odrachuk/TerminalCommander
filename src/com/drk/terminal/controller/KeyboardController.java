@@ -30,26 +30,26 @@ public class KeyboardController implements TextView.OnEditorActionListener {
         if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 mUiController.setHideOutView(false);
-                String text = mUiController.getActivity().getTerminalInView().getText().toString();
+                String fullCommandText = mUiController.getActivity().getTerminalInView().getText().toString();
                 StringBuilder resultText = new StringBuilder(mUiController.getActivity().getTerminalOutView().getText().toString());
                 if (inFirst) {
-                    if (!text.isEmpty()) {
-                        resultText.append(mUiController.getPrompt().getFullText());
-                        resultText.append(text);
-                        mProcessController.getProcess().execCommand(text);
+                    if (!fullCommandText.isEmpty()) {
+                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(fullCommandText);
+                        mProcessController.getProcess().execCommand(fullCommandText);
                     } else {
-                        resultText.append(mUiController.getPrompt().getFullText());
+                        resultText.append(mUiController.getPrompt().getPromptText());
                     }
                     inFirst = false;
                 } else {
-                    if (!text.isEmpty()) {
+                    if (!fullCommandText.isEmpty()) {
                         resultText.append(LINE_SEPARATOR);
-                        resultText.append(mUiController.getPrompt().getFullText());
-                        resultText.append(text);
-                        mProcessController.getProcess().execCommand(text);
+                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(fullCommandText);
+                        mProcessController.getProcess().execCommand(fullCommandText);
                     } else {
                         resultText.append(LINE_SEPARATOR);
-                        resultText.append(mUiController.getPrompt().getFullText());
+                        resultText.append(mUiController.getPrompt().getPromptText());
                     }
                 }
                 mUiController.getActivity().getTerminalOutView().setText(resultText);

@@ -3,13 +3,11 @@ package com.drk.terminal.process;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import com.drk.terminal.command.FilteredCommand;
 import com.drk.terminal.controller.UiController;
-import com.drk.terminal.ui.TerminalPrompt;
+import com.drk.terminal.prompt.TerminalPrompt;
 import com.drk.terminal.utils.StringUtils;
 
 import java.io.*;
@@ -23,13 +21,6 @@ public class TerminalProcess {
     private static final String LOG_TAG = TerminalProcess.class.getSimpleName();
     private static final String RESULT_KEY = "result";
     private static final String SYSTEM_EXECUTOR = "sh";
-    private TerminalPrompt mTerminalPrompt;
-    private UiController mUiController;
-    private TextView mTerminalOutView;
-    private String mProcessDirectory;
-    private Process mExecutionProcess;
-    private String mCommand;
-
     Handler mResponseHandler = new Handler() {
 
         @Override
@@ -46,10 +37,14 @@ public class TerminalProcess {
             }
         }
     };
+    private TerminalPrompt mTerminalPrompt;
+    private UiController mUiController;
+    private TextView mTerminalOutView;
+    private Process mExecutionProcess;
+    private String mCommandText;
 
     /**
      * Create new input runtime process
-     *
      */
     public TerminalProcess(UiController uiController) {
         mUiController = uiController;
@@ -57,9 +52,9 @@ public class TerminalProcess {
         mTerminalPrompt = uiController.getPrompt();
     }
 
-    public void startExecutionProcess(String processDirectory) throws IOException {
+    public void startExecutionProcess(String path) throws IOException {
         Log.d(LOG_TAG, "startProcess");
-        File pathDirectory = new File(processDirectory);
+        File pathDirectory = new File(path);
         if (pathDirectory.isDirectory()) {
             ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR);
             builder.redirectErrorStream(true);
@@ -74,39 +69,36 @@ public class TerminalProcess {
             Log.d(LOG_TAG, "Wrong process init directory ");
             mTerminalOutView.setText("FAIL!");
         }
-        mProcessDirectory = processDirectory;
-        mTerminalPrompt.setCurrentPath(processDirectory);
+        mTerminalPrompt.addUserLocation(path);
     }
 
-    public void execCommand(String command) {
-        mCommand = command;
-        if (command != null && !command.isEmpty()) {
-            if (FilteredCommand.isFilteredCommand(mCommand)) {
-                String responseMessage = EMPTY;
-                FilteredCommand filteredCommand = FilteredCommand.getByName(mCommand);
-                String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
-                if (isExecutableCallback.isEmpty()) { // executable
-                    responseMessage += filteredCommand.getCommand().onExecute(this);
-                } else { // not executable
-                    responseMessage += isExecutableCallback;
-                }
-                if (!responseMessage.isEmpty()) {
-                    String[] resultArray = new String[]{responseMessage};
-                    Bundle resultBundle = new Bundle();
-                    resultBundle.putStringArray(RESULT_KEY, resultArray);
-                    Message resultMessage = mResponseHandler.obtainMessage();
-                    resultMessage.setData(resultBundle);
-                    mResponseHandler.sendMessage(resultMessage);
-                }
-            } else {
-                try {
-                    nativeExecute(mCommand);
-                } catch (IOException e) {
-                    mTerminalOutView.setText("FAIL!!!");
-                }
+    public void execCommand(String commandText) {
+        mCommandText = commandText;
+        if (FilteredCommand.isFilteredCommand(mCommandText)) {
+            String responseMessage = EMPTY;
+            FilteredCommand filteredCommand = FilteredCommand.parseCommandTypeFromString(mCommandText);
+            String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
+            if (isExecutableCallback.isEmpty()) { // executable
+                responseMessage += filteredCommand.getCommand().onExecute(this);
+            } else { // not executable
+                responseMessage += isExecutableCallback;
             }
-            mCommand = null;
+            if (!responseMessage.isEmpty()) {
+                String[] resultArray = new String[]{responseMessage};
+                Bundle resultBundle = new Bundle();
+                resultBundle.putStringArray(RESULT_KEY, resultArray);
+                Message resultMessage = mResponseHandler.obtainMessage();
+                resultMessage.setData(resultBundle);
+                mResponseHandler.sendMessage(resultMessage);
+            }
+        } else {
+            try {
+                nativeExecute(mCommandText);
+            } catch (IOException e) {
+                mTerminalOutView.setText("FAIL!!!");
+            }
         }
+        mCommandText = null;
     }
 
     private void nativeExecute(String command) throws IOException {
@@ -162,11 +154,11 @@ public class TerminalProcess {
         mExecutionProcess.destroy();
     }
 
-    public String getCommand() {
-        return mCommand;
+    public String getCommandText() {
+        return mCommandText;
     }
 
-    public String getProcessDirectory() {
-        return mProcessDirectory;
+    public String getProcessPath() {
+        return mTerminalPrompt.getUserLocation();
     }
 }

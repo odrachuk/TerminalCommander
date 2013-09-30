@@ -58,7 +58,7 @@ public enum FilteredCommand {
     public static boolean isFilteredCommand(String command) {
         boolean isFiltered = false;
         for (FilteredCommand fc : values()) {
-            if (fc.text.equals(parseCommandFromString(command))) {
+            if (fc.text.equals(parseCommandTextFromString(command))) {
                 isFiltered = true;
                 break;
             }
@@ -66,7 +66,7 @@ public enum FilteredCommand {
         return isFiltered;
     }
 
-    public static String parseCommandFromString(String command) {
+    public static String parseCommandTextFromString(String command) {
         String commandPrefix = EMPTY;
         command = command.trim();
         if (command.contains(" ")) {
@@ -77,9 +77,9 @@ public enum FilteredCommand {
         return commandPrefix;
     }
 
-    public static FilteredCommand getByName(String command) {
+    public static FilteredCommand parseCommandTypeFromString(String command) {
         FilteredCommand filteredCommand = null;
-        String onlyCommand = parseCommandFromString(command);
+        String onlyCommand = parseCommandTextFromString(command);
         for (FilteredCommand fc : values()) {
             if (fc.text.equals(onlyCommand)) {
                 filteredCommand = fc;
