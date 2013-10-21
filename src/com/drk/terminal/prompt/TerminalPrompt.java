@@ -1,7 +1,6 @@
 package com.drk.terminal.prompt;
 
 import com.drk.terminal.controller.UiController;
-import com.drk.terminal.prompt.state.PromptState;
 import com.drk.terminal.utils.AccountUtils;
 
 /**
@@ -16,12 +15,6 @@ public class TerminalPrompt {
     private String mUserSymbol = "$"; // todo Determine privileges
     private String mUserLocation;
     private UiController mUiController;
-
-    PromptState mRootState;
-    PromptState mOneDirState;
-    PromptState mManyDirState;
-
-    PromptState mState = mRootState;
 
     public TerminalPrompt(UiController uiController) {
         mUserName = AccountUtils.getUserName(uiController.getActivity());
@@ -38,10 +31,6 @@ public class TerminalPrompt {
         return promptText.toString();
     }
 
-    public void addUserLocation(String newLocation) {
-        mState.addUserLocation(newLocation);
-    }
-
     public void setUserLocation(String newLocation) {
         mUserLocation = newLocation;
         mUiController.getActivity().getTerminalPromptView().setText(getPromptText());
@@ -49,13 +38,5 @@ public class TerminalPrompt {
 
     public String getUserLocation() {
         return mUserLocation;
-    }
-
-    PromptState getState() {
-        return mState;
-    }
-
-    void setState(PromptState state) {
-        mState = state;
     }
 }

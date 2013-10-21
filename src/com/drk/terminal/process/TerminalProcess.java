@@ -21,22 +21,6 @@ public class TerminalProcess {
     private static final String LOG_TAG = TerminalProcess.class.getSimpleName();
     private static final String RESULT_KEY = "result";
     private static final String SYSTEM_EXECUTOR = "sh";
-    Handler mResponseHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            String[] results = msg.getData().getStringArray(RESULT_KEY);
-            if (results != null && results.length != 0) {
-                StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
-                // write result to console
-                for (String s : results) {
-                    oldText.append(LINE_SEPARATOR);
-                    oldText.append(s);
-                }
-                mTerminalOutView.setText(oldText.toString());
-            }
-        }
-    };
     private TerminalPrompt mTerminalPrompt;
     private UiController mUiController;
     private TextView mTerminalOutView;
@@ -69,7 +53,7 @@ public class TerminalProcess {
             Log.d(LOG_TAG, "Wrong process init directory ");
             mTerminalOutView.setText("FAIL!");
         }
-        mTerminalPrompt.addUserLocation(path);
+        mTerminalPrompt.setUserLocation(path);
     }
 
     public void execCommand(String commandText) {
@@ -161,4 +145,21 @@ public class TerminalProcess {
     public String getProcessPath() {
         return mTerminalPrompt.getUserLocation();
     }
+
+    Handler mResponseHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            String[] results = msg.getData().getStringArray(RESULT_KEY);
+            if (results != null && results.length != 0) {
+                StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
+                // write result to console
+                for (String s : results) {
+                    oldText.append(LINE_SEPARATOR);
+                    oldText.append(s);
+                }
+                mTerminalOutView.setText(oldText.toString());
+            }
+        }
+    };
 }

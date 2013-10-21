@@ -44,14 +44,16 @@ public class CdCommand implements Command {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
-                    targetFullPath.append(PredefinedLocation.getType(targetDirectory).getTransformedPath(allCommand));
+                    targetFullPath.append(PredefinedLocation.getType(targetDirectory).
+                            getTransformedPath(terminalProcess.getProcessPath(), targetDirectory));
                 } else {
-                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessPath(), targetDirectory));
+                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessPath(),
+                            targetDirectory));
                 }
                 terminalProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString += "Execution exception";
+            callbackString += "Command execution exception";
         }
         return callbackString;
     }
@@ -59,24 +61,24 @@ public class CdCommand implements Command {
     public enum PredefinedLocation {
         DOT(".") {
             @Override
-            public String getTransformedPath(String commandTrimmedPath) {
-                return commandTrimmedPath;
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return processPath;
             }
         },
         TWICE_DOT("..") {
             @Override
-            public String getTransformedPath(String commandTrimmedPath) {
-                if (commandTrimmedPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
                     return StringUtils.PATH_SEPARATOR;
                 } else {
-                    String parentPath = commandTrimmedPath.substring(0, commandTrimmedPath.lastIndexOf("/") - 1);
-                    return commandTrimmedPath.substring(0, parentPath.lastIndexOf("/") - 1);
+                    String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
+                    return parentPath;
                 }
             }
         },
         SLASH(PATH_SEPARATOR) {
             @Override
-            public String getTransformedPath(String commandTrimmedPath) {
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return PATH_SEPARATOR;
             }
         };
@@ -91,7 +93,7 @@ public class CdCommand implements Command {
             return this.location;
         }
 
-        public abstract String getTransformedPath(String commandTrimmedPath);
+        public abstract String getTransformedPath(String processPath, String commandTrimmedPath);
 
         public static boolean isPredefinedLocation(String targetDirectory) {
             boolean isPredefined = false;
