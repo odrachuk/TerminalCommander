@@ -65,12 +65,53 @@ public class CdCommand implements Command {
                 return processPath;
             }
         },
+        DOT_SLASH("./") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return processPath;
+            }
+        },
+        SLASH_DOT("/.") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return PATH_SEPARATOR;
+            }
+        },
         TWICE_DOT("..") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
                     return StringUtils.PATH_SEPARATOR;
                 } else {
+                    String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
+                    return parentPath;
+                }
+            }
+        },
+        TWICE_DOT_SLASH("../") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
+                    return StringUtils.PATH_SEPARATOR;
+                } else {
+                    String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
+                    return parentPath;
+                }
+            }
+        },
+        SLASH_TWICE_DOT("/..") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return PATH_SEPARATOR;
+            }
+        },
+        MANY_TWICE_DOT_SLASH("../..") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
+                    return StringUtils.PATH_SEPARATOR;
+                } else {
+                    // todo /../../ and ../../../
                     String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
                     return parentPath;
                 }
@@ -113,6 +154,11 @@ public class CdCommand implements Command {
                     type = pl;
                     break;
                 }
+            }
+            if (type == null) {
+               if (targetDirectory.contains(MANY_TWICE_DOT_SLASH.getLocation())) {
+                  type = MANY_TWICE_DOT_SLASH;
+               }
             }
             return type;
         }
