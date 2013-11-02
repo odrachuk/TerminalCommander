@@ -16,4 +16,4 @@ classes/
 *.project
 
 # Files #
-.idea
+.idea/workspace.xml

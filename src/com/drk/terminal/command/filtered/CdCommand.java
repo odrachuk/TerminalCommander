@@ -42,6 +42,7 @@ public class CdCommand implements Command {
             String allCommand = terminalProcess.getCommandText().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
+                targetDirectory = DirectoryUtils.trimLastSlash(targetDirectory);
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).
@@ -71,7 +72,19 @@ public class CdCommand implements Command {
                 return processPath;
             }
         },
+        MANY_DOT_SLASH("././") { // todo ././././././
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return processPath;
+            }
+        },
         SLASH_DOT("/.") {
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                return PATH_SEPARATOR;
+            }
+        },
+        MANY_SLASH_DOT("/./.") { // todo /./././././.
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return PATH_SEPARATOR;
@@ -99,22 +112,42 @@ public class CdCommand implements Command {
                 }
             }
         },
+        MANY_TWICE_DOT_SLASH("../../") { // todo ../../../../..
+            @Override
+            public String getTransformedPath(String processPath, String commandTrimmedPath) {
+                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
+                    return StringUtils.PATH_SEPARATOR;
+                } else {
+                    StringBuilder processPathBuilder = new StringBuilder();
+                    processPathBuilder.append(processPath.substring(1, processPath.length()));
+                    processPathBuilder.append(StringUtils.PATH_SEPARATOR);
+                    String[] pathDirs = processPathBuilder.toString().split(StringUtils.PATH_SEPARATOR);
+                    int countOfUp = StringUtils.countOccurrences(commandTrimmedPath, StringUtils.PATH_SEPARATE_CHAR);
+                    if (countOfUp >= pathDirs.length) {
+                        return StringUtils.PATH_SEPARATOR;
+                    } else {
+                        int subCount = countOfUp - pathDirs.length;
+                        StringBuilder responsePath = new StringBuilder();
+                        responsePath.append(StringUtils.PATH_SEPARATOR);
+                        for (int i = 0; i < subCount; i++) {
+                            responsePath.append(pathDirs[i]);
+                            responsePath.append(StringUtils.PATH_SEPARATOR);
+                        }
+                        return responsePath.toString();
+                    }
+                }
+            }
+        },
         SLASH_TWICE_DOT("/..") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return PATH_SEPARATOR;
             }
         },
-        MANY_TWICE_DOT_SLASH("../..") {
+        MANY_SLASH_TWICE_DOT("/../../") { // todo /../../../../
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
-                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
-                    return StringUtils.PATH_SEPARATOR;
-                } else {
-                    // todo /../../ and ../../../
-                    String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
-                    return parentPath;
-                }
+                return PATH_SEPARATOR;
             }
         },
         SLASH(PATH_SEPARATOR) {

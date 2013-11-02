@@ -89,4 +89,15 @@ public class DirectoryUtils {
         }
         return subDirectoryPath.toString();
     }
+
+    public static String trimLastSlash(String targetDirectory) {
+        StringBuilder resultPath = new StringBuilder();
+        int lastSlashIndex = targetDirectory.lastIndexOf(StringUtils.PATH_SEPARATOR);
+        if (lastSlashIndex == targetDirectory.length()) {
+            resultPath.append(targetDirectory.substring(0, lastSlashIndex));
+        } else {
+            resultPath.append(targetDirectory);
+        }
+        return resultPath.toString();
+    }
 }
