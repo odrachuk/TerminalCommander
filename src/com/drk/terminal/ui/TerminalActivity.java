@@ -5,10 +5,7 @@ import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.ToggleButton;
+import android.widget.*;
 import com.drk.terminal.R;
 
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class TerminalActivity extends Activity {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
-            if (viewId == R.id.action_tab) {
+            if (viewId == R.id.action_commander) {
                 //todo
             }
         }
@@ -122,7 +119,6 @@ public class TerminalActivity extends Activity {
         valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listView.setAdapter(adapter);
-        listView.setOnTouchListener(new ListViewTouchListener(listView));
     }
 
     private void prepareRightList() {
@@ -134,6 +130,40 @@ public class TerminalActivity extends Activity {
         valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
+        valuesList.add(new DirectoryContentInfo("/Android", "4096", "Auth 2 2013"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "6540", "Jan 3 2013"));
+        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
+        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
+        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listView.setAdapter(adapter);
     }
@@ -155,7 +185,7 @@ public class TerminalActivity extends Activity {
             mCtrlBtn.setOnCheckedChangeListener(mOnToggleListener);
         }
         // setup tab
-        MenuItem tabItem = menu.findItem(R.id.action_tab);
+        MenuItem tabItem = menu.findItem(R.id.action_commander);
         if (ctrlItem != null) {
             Button tabBtn = (Button) tabItem.getActionView();
             tabBtn.setOnClickListener(mOnClickListener);
@@ -193,81 +223,6 @@ public class TerminalActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             initViews();
-        }
-    }
-
-    private final class ListViewTouchListener implements View.OnTouchListener {
-        private ListView mListView;
-        private View mDownView;
-        private int mDownPosition;
-
-        private ListViewTouchListener(ListView listView) {
-            mListView = listView;
-        }
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch (motionEvent.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    makeSelection(motionEvent);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    mDownView = null;
-                    mDownPosition = ListView.INVALID_POSITION;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    makeSelection(motionEvent);
-                    break;
-            }
-            return true;
-        }
-
-        private void makeSelection(MotionEvent motionEvent) {
-            // Find the child view that was touched (perform a hit test)
-            Rect rect = new Rect();
-            int childCount = mListView.getChildCount();
-            int[] listViewCoords = new int[2];
-            mListView.getLocationOnScreen(listViewCoords);
-            int x = (int) motionEvent.getRawX() - listViewCoords[0];
-            int y = (int) motionEvent.getRawY() - listViewCoords[1];
-            if (mDownView != null) {
-                mDownView.getHitRect(rect);
-                if (!rect.contains(x, y)) {
-                    View child;
-                    for (int i = 0; i < childCount; i++) {
-                        child = mListView.getChildAt(i);
-                        child.getHitRect(rect);
-                        if (rect.contains(x, y)) {
-                            mDownView = child;
-                            break;
-                        }
-                    }
-                }
-            } else {
-                View child;
-                for (int i = 0; i < childCount; i++) {
-                    child = mListView.getChildAt(i);
-                    child.getHitRect(rect);
-                    if (rect.contains(x, y)) {
-                        mDownView = child;
-                        break;
-                    }
-                }
-            }
-
-            if (mDownView != null) {
-                int newPosition = mListView.getPositionForView(mDownView);
-                if (newPosition != mDownPosition) {
-                    mDownPosition = newPosition;
-                    mDownView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
-                    for (int i = 0; i < childCount; i++) {
-                        if (mDownPosition != i) {
-                            View child = mListView.getChildAt(i);
-                            child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
-                        }
-                    }
-                }
-            }
         }
     }
 }

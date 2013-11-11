@@ -21,8 +21,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> {
-    private final Activity context;
     private final List<DirectoryContentInfo> filesInfo;
+    private final Activity context;
 
     static class ViewHolder {
         public TextView fileNameView;

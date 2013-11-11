@@ -13,26 +13,26 @@ import com.drk.terminal.R;
  * Time: 9:37 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ActionBarTabButton extends Button {
+public class ActionBarCommanderButton extends Button {
 
-    public ActionBarTabButton(Context context) {
+    public ActionBarCommanderButton(Context context) {
         super(context);
         initButton();
     }
 
-    public ActionBarTabButton(Context context, AttributeSet attrs) {
+    public ActionBarCommanderButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initButton();
     }
 
-    public ActionBarTabButton(Context context, AttributeSet attrs, int defStyle) {
+    public ActionBarCommanderButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initButton();
     }
 
     private void initButton() {
-        setText(getResources().getString(R.string.action_tab));
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        setText(getResources().getString(R.string.action_commander));
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         setWidth(getResources().getInteger(R.integer.ab_toggle_btn_width));
     }
 }

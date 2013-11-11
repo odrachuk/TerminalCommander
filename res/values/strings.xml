@@ -17,5 +17,5 @@
     <string name="make_dir_string">Make directory</string>
     <string name="delete_string">Delete</string>
     <string name="up_dir">UP--DIR</string>
-    <string name="action_tab">TAB</string>
+    <string name="action_commander"><![CDATA[[ >_ ]]]></string>
 </resources>
