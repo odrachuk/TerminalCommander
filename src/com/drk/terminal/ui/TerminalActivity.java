@@ -124,6 +124,7 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
+        valuesList.add(new DirectoryContentInfo("/..", getString(R.string.up_dir), "Jan 15 2006"));
         valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));

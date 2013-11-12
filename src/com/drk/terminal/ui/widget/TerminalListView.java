@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import com.drk.terminal.R;
 
@@ -16,9 +17,6 @@ import com.drk.terminal.R;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalListView extends ListView {
-    private int mItemPosition = ListView.INVALID_POSITION;
-    private int mTopScrollBounds, mBottomScrollBounds;
-    private boolean isSelection;
 
     public TerminalListView(Context context) {
         this(context, null);
@@ -30,7 +28,21 @@ public class TerminalListView extends ListView {
     }
 
     private void initList() {
-        // todo
+        setOnScrollListener(makeScrollListener());
+    }
+
+    private OnScrollListener makeScrollListener() {
+        return new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // todo
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                // todo
+            }
+        };
     }
 
     @Override
@@ -39,14 +51,13 @@ public class TerminalListView extends ListView {
             case MotionEvent.ACTION_DOWN:
                 final int x = (int) ev.getX();
                 final int y = (int) ev.getY();
-                mItemPosition = pointToPosition(x, y);
-                if (mItemPosition == ListView.INVALID_POSITION) {
+                int position = pointToPosition(x, y);
+                if (position == ListView.INVALID_POSITION) {
                     break;
                 }
-                View selectedView = getChildAtPosition(x, y);
-                if (selectedView != null) {
-                    findScrollBounds();
-                    isSelection = true;
+                View downView = findChildAtPosition(x, y);
+                if (downView != null) {
+                    makeNewSelection(downView);
                     return true;
                 }
                 break;
@@ -55,50 +66,7 @@ public class TerminalListView extends ListView {
         return super.onInterceptTouchEvent(ev);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        if (!isSelection) {
-            return super.onTouchEvent(ev);
-        } else {
-            final int action = ev.getAction();
-            final int x = (int) ev.getX();
-            final int y = (int) ev.getY();
-            mItemPosition = pointToPosition(x, y);
-            switch (action) {
-                case MotionEvent.ACTION_DOWN:
-                    makeNewSelection();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    if (y >= 0) { // y can be negative if fast moving cursor
-                        makeNewSelection();
-                        makeScrolling(y);
-                    }
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                case MotionEvent.ACTION_UP:
-                default:
-                    isSelection = false;
-                    makeNewSelection();
-                    break;
-            }
-            return true;
-        }
-    }
-
-    private void makeNewSelection() {
-        View downView = getChildAt(mItemPosition);
-        if (downView != null) {
-            downView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
-            for (int i = 0; i < getChildCount(); i++) {
-                if (mItemPosition != i) {
-                    View child = getChildAt(i);
-                    child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
-                }
-            }
-        }
-    }
-
-    private View getChildAtPosition(int x, int y) {
+    private View findChildAtPosition(int x, int y) {
         View childView = null;
         Rect rect = new Rect();
         for (int i = 0; i < getChildCount(); i++) {
@@ -112,39 +80,18 @@ public class TerminalListView extends ListView {
         return childView;
     }
 
-    private void findScrollBounds() {
-        mTopScrollBounds = getTop() + getHeight() / 3;
-        mBottomScrollBounds = getBottom() - getHeight() / 3;
-    }
+    private void makeNewSelection(View downView) {
+        synchronized (TerminalListView.this) {
+        if (downView != null) {
+            downView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+            for (int i = 0; i < getChildCount(); i++) {
+                View child = getChildAt(i);
+                if (child != downView) {
+                    child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
+                }
+            }
 
-    private void makeScrolling(int y) {
-        int speed = getScrollSpeedForPosition(y);
-        if (speed != 0) {
-            if (!(getLastVisiblePosition() != getCount() - 1 && speed > 0)
-                    || !(getFirstVisiblePosition() == 0 && speed < 0)) {
-                smoothScrollBy(speed, 30);
-            }
         }
-        // for making scrolling to last element in list
-        if (y > mBottomScrollBounds && getLastVisiblePosition() == getCount() - 1) {
-            smoothScrollToPosition(getCount());
         }
-    }
-
-    private int getScrollSpeedForPosition(int y) {
-        int speed = 0;
-        if (y > mBottomScrollBounds) {
-            if (getLastVisiblePosition() < getCount()) {
-                speed = y > (getBottom() + mBottomScrollBounds) / 2? 16 : 8;
-            } else {
-                speed = 1;
-            }
-        } else if (y < mTopScrollBounds) {
-            speed = y < mTopScrollBounds / 2? -16: -8;
-            if (getFirstVisiblePosition() == 0) {
-                speed = 0;
-            }
-        }
-        return speed;
     }
 }

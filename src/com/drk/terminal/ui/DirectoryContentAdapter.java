@@ -1,13 +1,10 @@
 package com.drk.terminal.ui;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.drk.terminal.R;
 
@@ -58,7 +55,6 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
         holder.fileNameView.setText(info.getFileName());
         holder.fileSizeView.setText(info.getFileSize());
         holder.fileModifyTimeView.setText(info.getFileModifyTime());
-
         return rowView;
     }
 }
