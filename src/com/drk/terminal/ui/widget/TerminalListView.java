@@ -17,6 +17,7 @@ import com.drk.terminal.R;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalListView extends ListView {
+    private View selectedView;
 
     public TerminalListView(Context context) {
         this(context, null);
@@ -39,7 +40,7 @@ public class TerminalListView extends ListView {
                     case OnScrollListener.SCROLL_STATE_IDLE:
                         for (int i = 0; i < getChildCount(); i++) {
                             View child = getChildAt(i);
-                                child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
+                            child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
                         }
                         break;
                 }
@@ -63,7 +64,10 @@ public class TerminalListView extends ListView {
                     break;
                 }
                 View downView = findChildAtPosition(x, y);
-                if (downView != null) {
+                if (downView != null && downView != selectedView) {
+                    if (selectedView != null) {
+                        selectedView.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
+                    }
                     makeNewSelection(downView);
                     return true;
                 }
@@ -88,13 +92,12 @@ public class TerminalListView extends ListView {
     }
 
     private void makeNewSelection(View downView) {
-        if (downView != null) {
-            downView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
-            for (int i = 0; i < getChildCount(); i++) {
-                View child = getChildAt(i);
-                if (child != downView) {
-                    child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
-                }
+        selectedView = downView;
+        downView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            if (child != downView) {
+                child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
             }
         }
     }
