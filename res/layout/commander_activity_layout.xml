@@ -27,7 +27,8 @@
                     android:textSize="18sp"
                     android:layout_toRightOf="@id/terminal_prompt_text_view"
                     android:padding="0dp"
-                    android:layout_margin="0dp"/>
+                    android:layout_margin="0dp"
+                    android:inputType="text"/>
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>

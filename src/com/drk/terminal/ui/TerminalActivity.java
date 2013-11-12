@@ -1,6 +1,8 @@
 package com.drk.terminal.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,33 +22,6 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalActivity extends Activity {
-    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.action_shift) {
-                isShiftToggle = isChecked;
-                if (isChecked && mCtrlBtn.isChecked()) {
-                    mCtrlBtn.setChecked(false);
-                    isCtrlToggle = false;
-                }
-            } else if (buttonView.getId() == R.id.action_ctrl) {
-                isCtrlToggle = isChecked;
-                if (isChecked && mShiftBtn.isChecked()) {
-                    mShiftBtn.setChecked(false);
-                    isShiftToggle = false;
-                }
-            }
-        }
-    };
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_commander) {
-                //todo
-            }
-        }
-    };
     private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
 
@@ -210,6 +185,17 @@ public class TerminalActivity extends Activity {
     }
 
     private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressBar;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar = new ProgressDialog(TerminalActivity.this);
+            progressBar.setCancelable(true);
+            progressBar.setMessage("Data downloading ...");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.show();
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -224,6 +210,37 @@ public class TerminalActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             initViews();
+            progressBar.dismiss();
         }
     }
+
+    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView.getId() == R.id.action_shift) {
+                isShiftToggle = isChecked;
+                if (isChecked && mCtrlBtn.isChecked()) {
+                    mCtrlBtn.setChecked(false);
+                    isCtrlToggle = false;
+                }
+            } else if (buttonView.getId() == R.id.action_ctrl) {
+                isCtrlToggle = isChecked;
+                if (isChecked && mShiftBtn.isChecked()) {
+                    mShiftBtn.setChecked(false);
+                    isShiftToggle = false;
+                }
+            }
+        }
+    };
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_commander) {
+                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
+                startActivity(startIntent);
+            }
+        }
+    };
 }
