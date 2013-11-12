@@ -81,7 +81,6 @@ public class TerminalListView extends ListView {
     }
 
     private void makeNewSelection(View downView) {
-        synchronized (TerminalListView.this) {
         if (downView != null) {
             downView.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
             for (int i = 0; i < getChildCount(); i++) {
@@ -91,7 +90,6 @@ public class TerminalListView extends ListView {
                 }
             }
 
-        }
         }
     }
 }
