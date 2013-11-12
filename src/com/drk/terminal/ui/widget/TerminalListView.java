@@ -35,7 +35,14 @@ public class TerminalListView extends ListView {
         return new OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // todo
+                switch (scrollState) {
+                    case OnScrollListener.SCROLL_STATE_IDLE:
+                        for (int i = 0; i < getChildCount(); i++) {
+                            View child = getChildAt(i);
+                                child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
+                        }
+                        break;
+                }
             }
 
             @Override
@@ -89,7 +96,6 @@ public class TerminalListView extends ListView {
                     child.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
                 }
             }
-
         }
     }
 }
