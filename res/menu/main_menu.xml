@@ -14,6 +14,10 @@
           android:title="@string/action_commander"
           android:showAsAction="ifRoom"
           android:actionViewClass="com.drk.terminal.ui.widget.ActionBarCommanderButton"/>
+    <item android:id="@+id/action_tab"
+          android:title="@string/action_tab"
+          android:showAsAction="ifRoom"
+          android:actionViewClass="com.drk.terminal.ui.widget.ActionBarTabButton"/>
     <!--Menus-->
     <item android:id="@+id/action_serrings"
           android:title="@string/action_settings"

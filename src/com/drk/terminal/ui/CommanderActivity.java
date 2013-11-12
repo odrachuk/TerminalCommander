@@ -1,12 +1,13 @@
 package com.drk.terminal.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.comm.controller.KeyboardController;
 import com.drk.terminal.comm.controller.ProcessController;
@@ -35,6 +36,45 @@ public class CommanderActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        // setup shift
+        MenuItem shiftItem = menu.findItem(R.id.action_shift);
+        shiftItem.setVisible(false);
+        // setup ctrl
+        MenuItem ctrlItem = menu.findItem(R.id.action_ctrl);
+        ctrlItem.setVisible(false);
+        // setup comm
+        MenuItem commItem = menu.findItem(R.id.action_commander);
+        commItem.setVisible(false);
+        // setup tab
+        MenuItem tabItem = menu.findItem(R.id.action_tab);
+        if (ctrlItem != null) {
+            Button tabBtn = (Button) tabItem.getActionView();
+            tabBtn.setOnClickListener(mOnClickListener);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_serrings:
+                //todo
+                return true;
+            case R.id.action_quit:
+                //todo
+                finish();
+                return true;
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mProcessController.onDestroyExecutionProcess();
@@ -53,6 +93,13 @@ public class CommanderActivity extends Activity {
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mTerminalInView.setOnEditorActionListener(mProcessKeyboardController);
+        initActionBar();
+    }
+
+    private void initActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle(getResources().getString(R.string.commander));
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public void showSoftKeyboard() {
@@ -61,4 +108,15 @@ public class CommanderActivity extends Activity {
             imm.showSoftInput(mTerminalInView, InputMethodManager.SHOW_IMPLICIT);
         }
     }
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_tab) {
+                // todo
+                Toast.makeText(CommanderActivity.this, "Tabulate", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

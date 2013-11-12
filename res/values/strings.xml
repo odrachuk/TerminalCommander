@@ -18,4 +18,6 @@
     <string name="delete_string">Delete</string>
     <string name="up_dir">UP--DIR</string>
     <string name="action_commander"><![CDATA[[ >_ ]]]></string>
+    <string name="commander">Commander</string>
+    <string name="action_tab">TAB</string>
 </resources>

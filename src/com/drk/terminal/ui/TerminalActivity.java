@@ -160,12 +160,15 @@ public class TerminalActivity extends Activity {
             mCtrlBtn = (ToggleButton) ctrlItem.getActionView();
             mCtrlBtn.setOnCheckedChangeListener(mOnToggleListener);
         }
-        // setup tab
-        MenuItem tabItem = menu.findItem(R.id.action_commander);
+        // setup commander
+        MenuItem commItem = menu.findItem(R.id.action_commander);
         if (ctrlItem != null) {
-            Button tabBtn = (Button) tabItem.getActionView();
+            Button tabBtn = (Button) commItem.getActionView();
             tabBtn.setOnClickListener(mOnClickListener);
         }
+        // setup tab
+        MenuItem tabItem = menu.findItem(R.id.action_tab);
+        tabItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
