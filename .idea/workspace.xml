@@ -28,7 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" afterPath="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Terminal.iws" />
@@ -41,7 +42,7 @@
     <file path="/fragment.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1382378054750" ignored="false" />
     <file path="/main.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380127310409" ignored="false" />
     <file path="/strings.xml" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379435404942" ignored="false" />
-    <file path="/Dummy.txt" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1384536118501" ignored="false" />
+    <file path="/Dummy.txt" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1384542937860" ignored="false" />
     <file path="/ConsoleInputActionListener.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379613058031" ignored="false" />
     <file path="/StringConstant.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380043778812" ignored="false" />
     <file path="/TerminalInput.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379952104324" ignored="false" />
@@ -49,7 +50,7 @@
     <file path="/TerminalActivity.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380467239623" ignored="false" />
     <file path="/TerminalService.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1379953444117" ignored="false" />
     <file path="/TerminalProcessImpl.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380236224608" ignored="false" />
-    <file path="/TerminalProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1382377959235" ignored="false" />
+    <file path="/TerminalProcess.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1384544379698" ignored="false" />
     <file path="/PromptController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380126917215" ignored="false" />
     <file path="/AccountUtils.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380126652254" ignored="false" />
     <file path="/CommandFilter.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380129496941" ignored="false" />
@@ -73,13 +74,14 @@
     <file path="/TerminalUiController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380361374591" ignored="false" />
     <file path="/KeyboardListener.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380360870064" ignored="false" />
     <file path="/ProcessController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380446477429" ignored="false" />
-    <file path="/KeyboardController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380466956388" ignored="false" />
+    <file path="/KeyboardController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1384545263677" ignored="false" />
     <file path="/UiController.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380448186482" ignored="false" />
     <file path="/PromptState.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380466236951" ignored="false" />
     <file path="/PromptRootState.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380466253714" ignored="false" />
     <file path="/PromptManyDirState.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380466243433" ignored="false" />
     <file path="/PromptOneDirState.java" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1380466249304" ignored="false" />
     <file path="/.gitignore" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1383403626764" ignored="false" />
+    <file path="$APPLICATION_HOME_DIR$/plugins/android/lib/android.jar!/org/jetbrains/android/android.xsd" changelist="df805a5c-f9b4-4c2c-9831-ee1ab829fa7e" time="1384544353939" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,37 +134,7 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" line="65" class="com.drk.terminal.command.filtered.CdCommand$PredefinedLocation$1" package="com.drk.terminal.command.filtered">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" line="79" class="com.drk.terminal.process.TerminalProcess" package="com.drk.terminal.process">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" line="70" class="com.drk.terminal.process.TerminalProcess" package="com.drk.terminal.process">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" line="65" class="com.drk.terminal.command.filtered.CdCommand.PredefinedLocation$1" package="com.drk.terminal.command.filtered">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -192,7 +164,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" line="40" class="com.drk.terminal.process.TerminalProcess" package="com.drk.terminal.process">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" line="57" class="com.drk.terminal.process.TerminalProcess" package="com.drk.terminal.process">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -237,6 +209,36 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" line="30" class="com.drk.terminal.process.TerminalProcess$1" package="com.drk.terminal.process">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java" line="47" class="com.drk.terminal.controller.KeyboardController" package="com.drk.terminal.controller">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
     </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
@@ -247,10 +249,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TerminalProcess.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TerminalProcess.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="0" selection-start="2751" selection-end="2751" vertical-scroll-proportion="0.33333334">
+            <state line="149" column="0" selection-start="5791" selection-end="5791" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#4441#4449#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TerminalActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="64" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="30" selection-start="557" selection-end="557" vertical-scroll-proportion="-6.6">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Editable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/text/Editable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="71" column="20" selection-start="2824" selection-end="2824" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -259,16 +293,16 @@
       <file leaf-file-name="TerminalPrompt.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/prompt/TerminalPrompt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="22" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.0">
+            <state line="32" column="18" selection-start="988" selection-end="988" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KeyboardController.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="KeyboardController.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="63" selection-start="1648" selection-end="1648" vertical-scroll-proportion="0.0">
+            <state line="53" column="35" selection-start="2463" selection-end="2463" vertical-scroll-proportion="0.22010398">
               <folding />
             </state>
           </provider>
@@ -310,33 +344,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UiController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/UiController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="15" selection-start="545" selection-end="552" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Command.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/Command.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="41" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="String.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/java/lang/String.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1811" column="20" selection-start="66870" selection-end="66870" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -362,15 +369,15 @@
         <option value="$PROJECT_DIR$/src/com/drk/terminal/prompt/state/PromptManyDirState.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/prompt/state/PromptOneDirState.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/prompt/state/PromptRootState.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalActivity.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/prompt/TerminalPrompt.java" />
-        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/utils/DirectoryUtils.java" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/utils/StringUtils.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java" />
+        <option value="$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java" />
       </list>
     </option>
   </component>
@@ -406,8 +413,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -441,10 +446,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="terminal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -636,6 +637,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -657,8 +660,8 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -702,19 +705,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -740,6 +730,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -850,9 +853,10 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3987441" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39717427" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -862,15 +866,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24797407" sideWeight="0.6012559" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22366288" sideWeight="0.9874411" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24797407" sideWeight="0.6703297" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22366288" sideWeight="0.9874411" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -943,34 +946,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/utils/AccountUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="361" selection-end="361" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/FilteredCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="31" selection-start="1229" selection-end="1229" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/SuCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="54" selection-start="921" selection-end="921" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/utils/DirectoryUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="92" column="29" selection-start="2945" selection-end="2945" vertical-scroll-proportion="0.0">
@@ -988,13 +963,6 @@
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/Command.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="41" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="63" selection-start="1648" selection-end="1648" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1032,13 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/prompt/TerminalPrompt.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="22" selection-start="1011" selection-end="1011" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/command/filtered/CdCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="53" column="0" selection-start="2366" selection-end="2366" vertical-scroll-proportion="0.0">
@@ -1046,9 +1007,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/widget/TextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6754" column="50" selection-start="248988" selection-end="248988" vertical-scroll-proportion="0.62477875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Install/android-sdk-linux/sources/android-17/android/text/Editable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="20" selection-start="2824" selection-end="2824" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/prompt/TerminalPrompt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="18" selection-start="988" selection-end="988" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/ui/TerminalActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="64" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="30" selection-start="557" selection-end="557" vertical-scroll-proportion="-6.6">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/process/TerminalProcess.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="0" selection-start="2751" selection-end="2751" vertical-scroll-proportion="0.33333334">
+        <state line="149" column="0" selection-start="5791" selection-end="5791" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#4441#4449#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drk/terminal/controller/KeyboardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="35" selection-start="2463" selection-end="2463" vertical-scroll-proportion="0.22010398">
           <folding />
         </state>
       </provider>

@@ -1,8 +1,10 @@
 package com.drk.terminal.controller;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import com.drk.terminal.utils.StringUtils;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
@@ -48,11 +50,15 @@ public class KeyboardController implements TextView.OnEditorActionListener {
                         resultText.append(fullCommandText);
                         mProcessController.getProcess().execCommand(fullCommandText);
                     } else {
-                        resultText.append(LINE_SEPARATOR);
+                        if (!TextUtils.isEmpty(mUiController.getActivity().getTerminalOutView().getText())) {
+                            resultText.append(LINE_SEPARATOR);
+                        }
                         resultText.append(mUiController.getPrompt().getPromptText());
                     }
                 }
-                mUiController.getActivity().getTerminalOutView().setText(resultText);
+                if (!mUiController.isHideOutView()) {
+                    mUiController.getActivity().getTerminalOutView().setText(resultText);
+                }
                 mUiController.getActivity().getTerminalInView().setText(EMPTY);
                 checkVisibility();
             }
