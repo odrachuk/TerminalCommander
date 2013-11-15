@@ -72,7 +72,7 @@ public class CdCommand implements Command {
                 return processPath;
             }
         },
-        MANY_DOT_SLASH("././") { // todo ././././././
+        MANY_DOT_SLASH("././") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return processPath;
@@ -84,7 +84,7 @@ public class CdCommand implements Command {
                 return PATH_SEPARATOR;
             }
         },
-        MANY_SLASH_DOT("/./.") { // todo /./././././.
+        MANY_SLASH_DOT("/./.") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return PATH_SEPARATOR;
@@ -112,7 +112,7 @@ public class CdCommand implements Command {
                 }
             }
         },
-        MANY_TWICE_DOT_SLASH("../../") { // todo ../../../../..
+        MANY_TWICE_DOT_SLASH("../../") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
@@ -144,7 +144,7 @@ public class CdCommand implements Command {
                 return PATH_SEPARATOR;
             }
         },
-        MANY_SLASH_TWICE_DOT("/../../") { // todo /../../../../
+        MANY_SLASH_TWICE_DOT("/../../") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 return PATH_SEPARATOR;
@@ -172,7 +172,8 @@ public class CdCommand implements Command {
         public static boolean isPredefinedLocation(String targetDirectory) {
             boolean isPredefined = false;
             for (PredefinedLocation pl : PredefinedLocation.values()) {
-                if (pl.getLocation().equals(targetDirectory)) {
+                if (targetDirectory.equals(pl.getLocation()) ||
+                        targetDirectory.startsWith(pl.getLocation())) {
                     isPredefined = true;
                     break;
                 }
@@ -189,8 +190,14 @@ public class CdCommand implements Command {
                 }
             }
             if (type == null) {
-               if (targetDirectory.contains(MANY_TWICE_DOT_SLASH.getLocation())) {
+               if (targetDirectory.startsWith(MANY_DOT_SLASH.location)) {
+                  type = MANY_DOT_SLASH;
+               } else if (targetDirectory.startsWith(MANY_SLASH_DOT.location)) {
+                  type = MANY_SLASH_DOT;
+               } else if (targetDirectory.startsWith(MANY_TWICE_DOT_SLASH.location)) {
                   type = MANY_TWICE_DOT_SLASH;
+               } else if (targetDirectory.startsWith(MANY_SLASH_TWICE_DOT.location)) {
+                  type = MANY_SLASH_TWICE_DOT;
                }
             }
             return type;
