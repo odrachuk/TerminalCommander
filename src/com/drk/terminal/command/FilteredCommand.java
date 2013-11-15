@@ -3,7 +3,6 @@ package com.drk.terminal.command;
 import com.drk.terminal.command.filtered.CdCommand;
 import com.drk.terminal.command.filtered.ClearCommand;
 import com.drk.terminal.command.filtered.ExitCommand;
-import com.drk.terminal.command.filtered.SuCommand;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 
@@ -19,13 +18,6 @@ public enum FilteredCommand {
         @Override
         public Command getCommand() {
             return new CdCommand();
-        }
-    },
-
-    SU("su") {
-        @Override
-        public Command getCommand() {
-            return new SuCommand();
         }
     },
 
