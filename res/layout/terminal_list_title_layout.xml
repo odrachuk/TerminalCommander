@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/listPreferredItemHeight"
-                android:padding="6dp">
+                android:layout_height="wrap_content"
+                android:paddingRight="6dp"
+                android:paddingLeft="6dp">
     <RelativeLayout
             android:id="@+id/file_modify_time_container"
             android:layout_alignParentRight="true"
             android:layout_width="@dimen/terminal_modify_column_width"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/file_modify_time"
                 style="@style/terminal_list_title_style"
@@ -17,7 +18,7 @@
             android:id="@+id/file_size_container"
             android:layout_toLeftOf="@id/file_modify_time_container"
             android:layout_width="@dimen/terminal_size_column_width"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/file_size"
                 style="@style/terminal_list_title_style"
@@ -27,7 +28,7 @@
             android:id="@+id/file_name_container"
             android:layout_toLeftOf="@id/file_size_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/file_name"
                 style="@style/terminal_list_title_style"

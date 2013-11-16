@@ -63,7 +63,7 @@ public class TerminalActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+                final DirectoryContentInfo item = (DirectoryContentInfo) parent.getItemAtPosition(position);
             }
 
         });
@@ -108,7 +108,7 @@ public class TerminalActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
+                final DirectoryContentInfo item = (DirectoryContentInfo) parent.getItemAtPosition(position);
             }
 
         });

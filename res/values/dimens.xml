@@ -2,4 +2,7 @@
 <resources>
     <dimen name="terminal_size_column_width">60dp</dimen>
     <dimen name="terminal_modify_column_width">100dp</dimen>
+    <dimen name="terminal_btn_height">33dp</dimen>
+    <dimen name="terminal_history_btn_width">40dp</dimen>
+    <dimen name="terminal_commander_btn_width">40dp</dimen>
 </resources>
