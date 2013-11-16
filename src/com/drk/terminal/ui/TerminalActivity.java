@@ -8,9 +8,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.drk.terminal.R;
-import com.drk.terminal.process.controller.KeyboardController;
-import com.drk.terminal.process.controller.ProcessController;
-import com.drk.terminal.process.controller.UiController;
+import com.drk.terminal.comm.controller.KeyboardController;
+import com.drk.terminal.comm.controller.ProcessController;
+import com.drk.terminal.comm.controller.UiController;
 
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
