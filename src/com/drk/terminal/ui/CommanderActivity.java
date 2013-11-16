@@ -12,8 +12,8 @@ import com.drk.terminal.comm.controller.KeyboardController;
 import com.drk.terminal.comm.controller.ProcessController;
 import com.drk.terminal.comm.controller.UiController;
 
-public class TerminalActivity extends Activity {
-    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+public class CommanderActivity extends Activity {
+    private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
 
     private ProcessController mProcessController;
     private KeyboardController mProcessKeyboardController;
@@ -25,7 +25,7 @@ public class TerminalActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.commander_activity_layout);
         mTerminalOutView = (TextView) findViewById(R.id.terminal_out_text_view);
         mTerminalPromptView = (TextView) findViewById(R.id.terminal_prompt_text_view);
         mTerminalInView = (EditText) findViewById(R.id.terminal_input_edit_text);
