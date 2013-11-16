@@ -1,10 +1,9 @@
-package com.drk.terminal.controller;
+package com.drk.terminal.process.controller;
 
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import com.drk.terminal.utils.StringUtils;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
@@ -32,8 +31,8 @@ public class KeyboardController implements TextView.OnEditorActionListener {
         if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 mUiController.setHideOutView(false);
-                String fullCommandText = mUiController.getActivity().getTerminalInView().getText().toString();
-                StringBuilder resultText = new StringBuilder(mUiController.getActivity().getTerminalOutView().getText().toString());
+                String fullCommandText = mUiController.getTerminalInView().getText().toString();
+                StringBuilder resultText = new StringBuilder(mUiController.getTerminalOutView().getText().toString());
                 if (inFirst) {
                     if (!fullCommandText.isEmpty()) {
                         resultText.append(mUiController.getPrompt().getPromptText());
@@ -50,16 +49,16 @@ public class KeyboardController implements TextView.OnEditorActionListener {
                         resultText.append(fullCommandText);
                         mProcessController.getProcess().execCommand(fullCommandText);
                     } else {
-                        if (!TextUtils.isEmpty(mUiController.getActivity().getTerminalOutView().getText())) {
+                        if (!TextUtils.isEmpty(mUiController.getTerminalOutView().getText())) {
                             resultText.append(LINE_SEPARATOR);
                         }
                         resultText.append(mUiController.getPrompt().getPromptText());
                     }
                 }
                 if (!mUiController.isHideOutView()) {
-                    mUiController.getActivity().getTerminalOutView().setText(resultText);
+                    mUiController.getTerminalOutView().setText(resultText);
                 }
-                mUiController.getActivity().getTerminalInView().setText(EMPTY);
+                mUiController.getTerminalInView().setText(EMPTY);
                 checkVisibility();
             }
             handled = true;
@@ -69,9 +68,9 @@ public class KeyboardController implements TextView.OnEditorActionListener {
 
     private void checkVisibility() {
         if (mUiController.isHideOutView()) {
-            mUiController.getActivity().getTerminalOutView().setVisibility(View.GONE);
+            mUiController.getTerminalOutView().setVisibility(View.GONE);
         } else {
-            mUiController.getActivity().getTerminalOutView().setVisibility(View.VISIBLE);
+            mUiController.getTerminalOutView().setVisibility(View.VISIBLE);
         }
     }
 }

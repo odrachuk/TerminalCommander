@@ -3,13 +3,11 @@ package com.drk.terminal.process;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
-import com.drk.terminal.command.FilteredCommand;
-import com.drk.terminal.controller.UiController;
-import com.drk.terminal.prompt.TerminalPrompt;
-import com.drk.terminal.utils.StringUtils;
+import com.drk.terminal.process.command.FilteredCommand;
+import com.drk.terminal.process.controller.UiController;
+import com.drk.terminal.process.prompt.TerminalPrompt;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -49,7 +47,7 @@ public class TerminalProcess {
      */
     public TerminalProcess(UiController uiController) {
         mUiController = uiController;
-        mTerminalOutView = uiController.getActivity().getTerminalOutView();
+        mTerminalOutView = uiController.getTerminalOutView();
         mTerminalPrompt = uiController.getPrompt();
     }
 

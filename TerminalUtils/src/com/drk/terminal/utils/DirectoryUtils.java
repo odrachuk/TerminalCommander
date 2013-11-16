@@ -1,8 +1,5 @@
 package com.drk.terminal.utils;
 
-import android.content.Context;
-import com.drk.terminal.command.filtered.CdCommand;
-
 import java.io.File;
 
 /**

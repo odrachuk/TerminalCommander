@@ -1,12 +1,10 @@
-package com.drk.terminal.controller;
+package com.drk.terminal.process.controller;
 
 import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.process.TerminalProcess;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created with IntelliJ IDEA.

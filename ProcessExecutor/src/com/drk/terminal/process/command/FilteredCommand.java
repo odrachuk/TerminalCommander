@@ -1,8 +1,8 @@
-package com.drk.terminal.command;
+package com.drk.terminal.process.command;
 
-import com.drk.terminal.command.filtered.CdCommand;
-import com.drk.terminal.command.filtered.ClearCommand;
-import com.drk.terminal.command.filtered.ExitCommand;
+import com.drk.terminal.process.command.filtered.CdCommand;
+import com.drk.terminal.process.command.filtered.ClearCommand;
+import com.drk.terminal.process.command.filtered.ExitCommand;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 

@@ -1,8 +1,8 @@
-package com.drk.terminal.command.filtered;
+package com.drk.terminal.process.command.filtered;
 
-import com.drk.terminal.command.Command;
-import com.drk.terminal.command.FilteredCommand;
 import com.drk.terminal.process.TerminalProcess;
+import com.drk.terminal.process.command.Command;
+import com.drk.terminal.process.command.FilteredCommand;
 
 import static com.drk.terminal.utils.StringUtils.EMPTY;
 

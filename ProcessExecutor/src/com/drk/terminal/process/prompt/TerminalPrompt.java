@@ -1,6 +1,6 @@
-package com.drk.terminal.prompt;
+package com.drk.terminal.process.prompt;
 
-import com.drk.terminal.controller.UiController;
+import com.drk.terminal.process.controller.UiController;
 import com.drk.terminal.utils.AccountUtils;
 
 /**
@@ -33,7 +33,7 @@ public class TerminalPrompt {
 
     public void setUserLocation(String newLocation) {
         mUserLocation = newLocation;
-        mUiController.getActivity().getTerminalPromptView().setText(getPromptText());
+        mUiController.getTerminalPromptView().setText(getPromptText());
     }
 
     public String getUserLocation() {

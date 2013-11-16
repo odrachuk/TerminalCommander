@@ -1,4 +1,4 @@
-package com.drk.terminal.command;
+package com.drk.terminal.process.command;
 
 import com.drk.terminal.process.TerminalProcess;
 

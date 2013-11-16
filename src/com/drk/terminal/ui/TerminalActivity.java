@@ -8,16 +8,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.drk.terminal.R;
-import com.drk.terminal.controller.KeyboardController;
-import com.drk.terminal.controller.ProcessController;
-import com.drk.terminal.controller.UiController;
+import com.drk.terminal.process.controller.KeyboardController;
+import com.drk.terminal.process.controller.ProcessController;
+import com.drk.terminal.process.controller.UiController;
 
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
 
     private ProcessController mProcessController;
-    private KeyboardController mKeyboardController;
-    private UiController mUiController;
+    private KeyboardController mProcessKeyboardController;
+    private UiController mProcessUiController;
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
     private EditText mTerminalInView;
@@ -42,17 +42,17 @@ public class TerminalActivity extends Activity {
 
     private void init() {
         // create controllers
-        mUiController = new UiController(this);
-        mProcessController = new ProcessController(mUiController);
-        mKeyboardController = new KeyboardController(mUiController, mProcessController);
+        mProcessUiController = new UiController(this, mTerminalInView, mTerminalOutView, mTerminalPromptView);
+        mProcessController = new ProcessController(mProcessUiController);
+        mProcessKeyboardController = new KeyboardController(mProcessUiController, mProcessController);
         // config ui components
-        mTerminalPromptView.setText(mUiController.getPrompt().getPromptText());
+        mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
         mTerminalInView.setGravity(Gravity.TOP | Gravity.LEFT);
         mTerminalInView.setBackgroundColor(android.R.color.transparent);
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mTerminalInView.setOnEditorActionListener(mKeyboardController);
+        mTerminalInView.setOnEditorActionListener(mProcessKeyboardController);
     }
 
     public void showSoftKeyboard() {
@@ -60,17 +60,5 @@ public class TerminalActivity extends Activity {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.showSoftInput(mTerminalInView, InputMethodManager.SHOW_IMPLICIT);
         }
-    }
-
-    public EditText getTerminalInView() {
-        return mTerminalInView;
-    }
-
-    public TextView getTerminalPromptView() {
-        return mTerminalPromptView;
-    }
-
-    public TextView getTerminalOutView() {
-        return mTerminalOutView;
     }
 }
