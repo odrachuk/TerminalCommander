@@ -10,6 +10,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
     </style>
     <style name="terminal_list_title_style">
         <item name="android:layout_width">wrap_content</item>
@@ -21,5 +23,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/COLOR_FFFF00</item>
         <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
     </style>
 </resources>
