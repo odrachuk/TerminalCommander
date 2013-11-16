@@ -9,6 +9,7 @@ import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.data.ProcessDirectory;
+import com.drk.terminal.utils.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,49 +48,42 @@ public class TerminalActivity extends Activity {
 
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
-        final List<DirectoryContentInfo> directoryList = new ArrayList<DirectoryContentInfo>();
         final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        directoryList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        filesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
-                directoryList.add(new DirectoryContentInfo(true,
-                        file.toString(),
+                filesList.add(new DirectoryContentInfo(true,
+                        StringUtils.PATH_SEPARATOR + file.getName(),
                         String.valueOf(file.getUsableSpace()),
                         String.valueOf(file.lastModified())));
-                makeSorting(directoryList);
             }
 
             @Override
             public void processFile(File file) {
-                directoryList.add(new DirectoryContentInfo(false,
-                        file.toString(),
+                filesList.add(new DirectoryContentInfo(false,
+                        file.getName(),
                         String.valueOf(file.getUsableSpace()),
                         String.valueOf(file.lastModified())));
-                makeSorting(directoryList);
             }
         }, "").start("/");
-        List<DirectoryContentInfo> completeList = new ArrayList<DirectoryContentInfo>(directoryList.size()
-                + filesList.size());
-        completeList.addAll(directoryList);
-        completeList.addAll(filesList);
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, completeList);
+        makeSorting(filesList);
+        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
 
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
-        final List<DirectoryContentInfo> directoryList = new ArrayList<DirectoryContentInfo>();
         final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        directoryList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        filesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
-                directoryList.add(new DirectoryContentInfo(true,
+                filesList.add(new DirectoryContentInfo(true,
                         file.toString(),
                         String.valueOf(file.getUsableSpace()),
                         String.valueOf(file.lastModified())));
-                makeSorting(directoryList);
+                makeSorting(filesList);
             }
 
             @Override
@@ -101,11 +95,8 @@ public class TerminalActivity extends Activity {
                 makeSorting(filesList);
             }
         }, "").start("/vendor");
-        List<DirectoryContentInfo> completeList = new ArrayList<DirectoryContentInfo>(directoryList.size()
-                + filesList.size());
-        completeList.addAll(directoryList);
-        completeList.addAll(filesList);
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, completeList);
+        makeSorting(filesList);
+        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
 
