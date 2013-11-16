@@ -23,14 +23,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/terminal_btn_height"
                 android:textSize="14sp"
-                android:text="Copy"
+                android:text="@string/copy_string"
                 style="@android:style/Widget.Button.Small"
                 android:layout_toLeftOf="@id/fakeView3"/>
         <Button android:id="@+id/rename_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/terminal_btn_height"
                 android:textSize="14sp"
-                android:text="Rename/Move"
+                android:text="@string/rename_or_move_string"
                 style="@android:style/Widget.Button.Small"
                 android:layout_toRightOf="@id/fakeView3"/>
     </RelativeLayout>
@@ -48,14 +48,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/terminal_btn_height"
                 android:textSize="14sp"
-                android:text="Mkdir"
+                android:text="@string/make_dir_string"
                 style="@android:style/Widget.Button.Small"
                 android:layout_toLeftOf="@id/fakeView4"/>
         <Button android:id="@+id/delete_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/terminal_btn_height"
                 android:textSize="14sp"
-                android:text="Delete"
+                android:text="@string/delete_string"
                 style="@android:style/Widget.Button.Small"
                 android:layout_toRightOf="@id/fakeView4"/>
     </RelativeLayout>
