@@ -38,19 +38,23 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.terminal_list_row_layout, null);
+            rowView = inflater.inflate(R.layout.terminal_list_row_layout, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.fileNameView = (TextView) rowView.findViewById(R.id.file_name);
             viewHolder.fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
             viewHolder.fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
+            DirectoryContentInfo info = filesInfo.get(position);
+            viewHolder.fileNameView.setText(info.getFileName());
+            viewHolder.fileSizeView.setText(info.getFileSize());
+            viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
             rowView.setTag(viewHolder);
         }
 
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        DirectoryContentInfo info = filesInfo.get(position);
-        holder.fileNameView.setText(info.getFileName());
-        holder.fileSizeView.setText(info.getFileSize());
-        holder.fileModifyTimeView.setText(info.getFileModifyTime());
+//        ViewHolder holder = (ViewHolder) rowView.getTag();
+//        DirectoryContentInfo info = filesInfo.get(position);
+//        holder.fileNameView.setText(info.getFileName());
+//        holder.fileSizeView.setText(info.getFileSize());
+//        holder.fileModifyTimeView.setText(info.getFileModifyTime());
 
         return rowView;
     }

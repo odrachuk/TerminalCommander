@@ -1,8 +1,12 @@
 package com.drk.terminal.ui;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -11,6 +15,7 @@ import com.drk.terminal.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,24 +25,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalActivity extends Activity {
-    CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == mShiftBtn.getId()) {
-                isShiftToggle = isChecked;
-                if (isChecked && mCtrlBtn.isChecked()) {
-                    mCtrlBtn.setChecked(false);
-                    isCtrlToggle = false;
-                }
-            } else if (buttonView.getId() == mCtrlBtn.getId()) {
-                isCtrlToggle = isChecked;
-                if (isChecked && mShiftBtn.isChecked()) {
-                    mShiftBtn.setChecked(false);
-                    isShiftToggle = false;
-                }
-            }
-        }
-    };
     private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
 
@@ -45,7 +32,12 @@ public class TerminalActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
-        initViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new LoadInfoTask().execute();
     }
 
     private void initViews() {
@@ -56,6 +48,31 @@ public class TerminalActivity extends Activity {
     private void prepareLeftList() {
         final ListView listview = (ListView) findViewById(R.id.left_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
+        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
+        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
+        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
+        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
+        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
+        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
+        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
+        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
+        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
+        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
+        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
+        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
+        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
+        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
+        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
+        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
+        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
         valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
         valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
@@ -75,6 +92,11 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listview = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
+        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
+        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
+        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
         valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
         valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
         valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
@@ -126,4 +148,41 @@ public class TerminalActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            initViews();
+        }
+    }
+
+    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView.getId() == mShiftBtn.getId()) {
+                isShiftToggle = isChecked;
+                if (isChecked && mCtrlBtn.isChecked()) {
+                    mCtrlBtn.setChecked(false);
+                    isCtrlToggle = false;
+                }
+            } else if (buttonView.getId() == mCtrlBtn.getId()) {
+                isCtrlToggle = isChecked;
+                if (isChecked && mShiftBtn.isChecked()) {
+                    mShiftBtn.setChecked(false);
+                    isShiftToggle = false;
+                }
+            }
+        }
+    };
 }
