@@ -4,7 +4,7 @@ import com.drk.terminal.comm.command.filtered.CdCommand;
 import com.drk.terminal.comm.command.filtered.ClearCommand;
 import com.drk.terminal.comm.command.filtered.ExitCommand;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.

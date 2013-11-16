@@ -13,8 +13,8 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
-import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
+import static com.drk.terminal.utils.StringUtil.LINE_SEPARATOR;
 
 public class TerminalCommander {
     private static final String LOG_TAG = TerminalCommander.class.getSimpleName();

@@ -5,13 +5,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.data.ProcessDirectory;
-import com.drk.terminal.utils.StringUtils;
+import com.drk.terminal.utils.DirectoryUtil;
+import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalActivity extends Activity {
+    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
 
@@ -49,22 +53,42 @@ public class TerminalActivity extends Activity {
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
         final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        filesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        filesList.add(new DirectoryContentInfo(true, true, null, StringUtil.PARENT_DOTS,
+                getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
-                filesList.add(new DirectoryContentInfo(true,
-                        StringUtils.PATH_SEPARATOR + file.getName(),
-                        String.valueOf(file.getUsableSpace()),
-                        String.valueOf(file.lastModified())));
+                try {
+                    filesList.add(new DirectoryContentInfo(true,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                            StringUtil.DIRECTORY_LINK_PREFIX +
+                                    file.getName():
+                            StringUtil.PATH_SEPARATOR +
+                                    file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "prepareLeftList", e);
+                }
             }
 
             @Override
             public void processFile(File file) {
-                filesList.add(new DirectoryContentInfo(false,
-                        file.getName(),
-                        String.valueOf(file.getUsableSpace()),
-                        String.valueOf(file.lastModified())));
+                try {
+                    filesList.add(new DirectoryContentInfo(false,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                                    StringUtil.FILE_LINK_PREFIX +
+                                            file.getName():
+                                            file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "prepareLeftList", e);
+                }
             }
         }, "").start("/");
         makeSorting(filesList);
@@ -75,38 +99,47 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        filesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        filesList.add(new DirectoryContentInfo(true, true, null, StringUtil.PARENT_DOTS,
+                getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
-                filesList.add(new DirectoryContentInfo(true,
-                        file.toString(),
-                        String.valueOf(file.getUsableSpace()),
-                        String.valueOf(file.lastModified())));
-                makeSorting(filesList);
+                try {
+                    filesList.add(new DirectoryContentInfo(true,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                                    StringUtil.DIRECTORY_LINK_PREFIX +
+                                            file.getName():
+                                    StringUtil.PATH_SEPARATOR +
+                                            file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "prepareRightList", e);
+                }
             }
 
             @Override
             public void processFile(File file) {
-                filesList.add(new DirectoryContentInfo(false,
-                        file.toString(),
-                        String.valueOf(file.getUsableSpace()),
-                        String.valueOf(file.lastModified())));
-                makeSorting(filesList);
+                try {
+                    filesList.add(new DirectoryContentInfo(false,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                                    StringUtil.FILE_LINK_PREFIX +
+                                        file.getName():
+                                        file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "prepareRightList", e);
+                }
             }
-        }, "").start("/vendor");
+        }, "").start("/");
         makeSorting(filesList);
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
         listView.setAdapter(adapter);
-    }
-
-    private void makeSorting(List<DirectoryContentInfo> list) {
-        Collections.sort(list, new Comparator<DirectoryContentInfo>() {
-            @Override
-            public int compare(DirectoryContentInfo data1, DirectoryContentInfo data2) {
-                return data1.getFileName().compareTo(data2.getFileName());
-            }
-        });
     }
 
     @Override
@@ -211,4 +244,13 @@ public class TerminalActivity extends Activity {
             }
         }
     };
+
+    public static void makeSorting(List<DirectoryContentInfo> list) {
+        Collections.sort(list, new Comparator<DirectoryContentInfo>() {
+            @Override
+            public int compare(DirectoryContentInfo data1, DirectoryContentInfo data2) {
+                return data1.getFileName().compareTo(data2.getFileName());
+            }
+        });
+    }
 }

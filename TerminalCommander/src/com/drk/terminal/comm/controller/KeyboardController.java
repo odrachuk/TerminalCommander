@@ -5,8 +5,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
-import static com.drk.terminal.utils.StringUtils.LINE_SEPARATOR;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
+import static com.drk.terminal.utils.StringUtil.LINE_SEPARATOR;
 
 /**
  * Created with IntelliJ IDEA.

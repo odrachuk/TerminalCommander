@@ -3,7 +3,7 @@ package com.drk.terminal.comm.command.filtered;
 import com.drk.terminal.comm.TerminalCommander;
 import com.drk.terminal.comm.command.Command;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.

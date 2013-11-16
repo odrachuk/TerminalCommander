@@ -2,11 +2,11 @@ package com.drk.terminal.comm.command.filtered;
 
 import com.drk.terminal.comm.TerminalCommander;
 import com.drk.terminal.comm.command.Command;
-import com.drk.terminal.utils.DirectoryUtils;
-import com.drk.terminal.utils.StringUtils;
+import com.drk.terminal.utils.DirectoryUtil;
+import com.drk.terminal.utils.StringUtil;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
-import static com.drk.terminal.utils.StringUtils.PATH_SEPARATOR;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
+import static com.drk.terminal.utils.StringUtil.PATH_SEPARATOR;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,8 +22,8 @@ public class CdCommand implements Command {
         String allCommand = terminalProcess.getCommandText().trim();
         if (allCommand.indexOf(' ') > 0) {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-            if (DirectoryUtils.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
-                if (!DirectoryUtils.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
+            if (DirectoryUtil.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
+                if (!DirectoryUtil.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
                     callbackString += "Cannot read directory";
                 }
             } else {
@@ -42,13 +42,13 @@ public class CdCommand implements Command {
             String allCommand = terminalProcess.getCommandText().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-                targetDirectory = DirectoryUtils.trimLastSlash(targetDirectory);
+                targetDirectory = DirectoryUtil.trimLastSlash(targetDirectory);
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).
                             getTransformedPath(terminalProcess.getProcessPath(), targetDirectory));
                 } else {
-                    targetFullPath.append(DirectoryUtils.buildDirectoryPath(terminalProcess.getProcessPath(),
+                    targetFullPath.append(DirectoryUtil.buildDirectoryPath(terminalProcess.getProcessPath(),
                             targetDirectory));
                 }
                 terminalProcess.onChangeDirectory(targetFullPath.toString());
@@ -93,8 +93,8 @@ public class CdCommand implements Command {
         TWICE_DOT("..") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
-                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
-                    return StringUtils.PATH_SEPARATOR;
+                if (processPath.lastIndexOf(StringUtil.PATH_SEPARATOR) == 0) {
+                    return StringUtil.PATH_SEPARATOR;
                 } else {
                     String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
                     return parentPath;
@@ -104,8 +104,8 @@ public class CdCommand implements Command {
         TWICE_DOT_SLASH("../") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
-                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
-                    return StringUtils.PATH_SEPARATOR;
+                if (processPath.lastIndexOf(StringUtil.PATH_SEPARATOR) == 0) {
+                    return StringUtil.PATH_SEPARATOR;
                 } else {
                     String parentPath = processPath.substring(0, processPath.lastIndexOf("/"));
                     return parentPath;
@@ -115,23 +115,23 @@ public class CdCommand implements Command {
         MANY_TWICE_DOT_SLASH("../../") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
-                if (processPath.lastIndexOf(StringUtils.PATH_SEPARATOR) == 0) {
-                    return StringUtils.PATH_SEPARATOR;
+                if (processPath.lastIndexOf(StringUtil.PATH_SEPARATOR) == 0) {
+                    return StringUtil.PATH_SEPARATOR;
                 } else {
                     StringBuilder processPathBuilder = new StringBuilder();
                     processPathBuilder.append(processPath.substring(1, processPath.length()));
-                    processPathBuilder.append(StringUtils.PATH_SEPARATOR);
-                    String[] pathDirs = processPathBuilder.toString().split(StringUtils.PATH_SEPARATOR);
-                    int countOfUp = StringUtils.countOccurrences(commandTrimmedPath, StringUtils.PATH_SEPARATE_CHAR);
+                    processPathBuilder.append(StringUtil.PATH_SEPARATOR);
+                    String[] pathDirs = processPathBuilder.toString().split(StringUtil.PATH_SEPARATOR);
+                    int countOfUp = StringUtil.countOccurrences(commandTrimmedPath, StringUtil.PATH_SEPARATE_CHAR);
                     if (countOfUp >= pathDirs.length) {
-                        return StringUtils.PATH_SEPARATOR;
+                        return StringUtil.PATH_SEPARATOR;
                     } else {
                         int subCount = countOfUp - pathDirs.length;
                         StringBuilder responsePath = new StringBuilder();
-                        responsePath.append(StringUtils.PATH_SEPARATOR);
+                        responsePath.append(StringUtil.PATH_SEPARATOR);
                         for (int i = 0; i < subCount; i++) {
                             responsePath.append(pathDirs[i]);
-                            responsePath.append(StringUtils.PATH_SEPARATOR);
+                            responsePath.append(StringUtil.PATH_SEPARATOR);
                         }
                         return responsePath.toString();
                     }

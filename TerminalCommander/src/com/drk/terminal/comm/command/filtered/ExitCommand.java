@@ -4,7 +4,7 @@ import com.drk.terminal.comm.TerminalCommander;
 import com.drk.terminal.comm.command.Command;
 import com.drk.terminal.comm.command.FilteredCommand;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.

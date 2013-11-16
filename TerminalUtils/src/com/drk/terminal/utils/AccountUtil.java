@@ -4,7 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 
-import static com.drk.terminal.utils.StringUtils.EMPTY;
+import static com.drk.terminal.utils.StringUtil.EMPTY;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +13,7 @@ import static com.drk.terminal.utils.StringUtils.EMPTY;
  * Time: 7:14 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AccountUtils {
+public class AccountUtil {
 
     private static Account getAccount(AccountManager accountManager) {
         Account[] accounts = accountManager.getAccountsByType("com.google");

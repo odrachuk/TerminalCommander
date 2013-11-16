@@ -1,6 +1,7 @@
 package com.drk.terminal.utils;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +10,7 @@ import java.io.File;
  * Time: 9:50 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DirectoryUtils {
+public class DirectoryUtil {
 
     /**
      * Check if present directory in path
@@ -20,7 +21,7 @@ public class DirectoryUtils {
      */
     public static boolean isDirectoryExist(String curDirName, String subDirName) {
         boolean isExist = false;
-        File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
+        File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
         if (dir.exists() && dir.isDirectory()) {
             isExist = true;
         }
@@ -51,7 +52,7 @@ public class DirectoryUtils {
      */
     public static boolean checkWritePermissions(String curDirName, String subDirName) {
         boolean canWrite = false;
-        File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
+        File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
         if(dir.canWrite()) {
             canWrite = true;
         }
@@ -67,7 +68,7 @@ public class DirectoryUtils {
      */
     public static boolean canChangeDirectory(String curDirName, String subDirName) {
         boolean canChange = false;
-        File dir = new File(curDirName + StringUtils.PATH_SEPARATOR + subDirName);
+        File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
         if(dir.canRead()) {
             canChange = true;
         }
@@ -75,13 +76,13 @@ public class DirectoryUtils {
     }
 
     public static String buildDirectoryPath(String curDirName, String subDirName) {
-        StringBuilder subDirectoryPath = new StringBuilder(StringUtils.EMPTY);
-        if (curDirName.equals(StringUtils.PATH_SEPARATOR)) {
-            subDirectoryPath.append(StringUtils.PATH_SEPARATOR);
+        StringBuilder subDirectoryPath = new StringBuilder(StringUtil.EMPTY);
+        if (curDirName.equals(StringUtil.PATH_SEPARATOR)) {
+            subDirectoryPath.append(StringUtil.PATH_SEPARATOR);
             subDirectoryPath.append(subDirName);
         } else {
             subDirectoryPath.append(curDirName);
-            subDirectoryPath.append(StringUtils.PATH_SEPARATOR);
+            subDirectoryPath.append(StringUtil.PATH_SEPARATOR);
             subDirectoryPath.append(subDirName);
         }
         return subDirectoryPath.toString();
@@ -89,12 +90,19 @@ public class DirectoryUtils {
 
     public static String trimLastSlash(String targetDirectory) {
         StringBuilder resultPath = new StringBuilder();
-        int lastSlashIndex = targetDirectory.lastIndexOf(StringUtils.PATH_SEPARATOR);
+        int lastSlashIndex = targetDirectory.lastIndexOf(StringUtil.PATH_SEPARATOR);
         if (lastSlashIndex == targetDirectory.length()) {
             resultPath.append(targetDirectory.substring(0, lastSlashIndex));
         } else {
             resultPath.append(targetDirectory);
         }
         return resultPath.toString();
+    }
+
+    public static boolean isSymlink(File file) throws IOException {
+        if (file == null) {
+            throw new NullPointerException("File must not be null");
+        }
+        return file.getAbsolutePath().lastIndexOf(StringUtil.PATH_SEPARATOR) > 0;
     }
 }

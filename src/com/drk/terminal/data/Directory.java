@@ -37,15 +37,22 @@ public class Directory {
 
     static DirectoryTree readDirFiles(File startDir, String regex) {
         DirectoryTree result = new DirectoryTree();
-        for (File item : startDir.listFiles()) {
-            if (item.isDirectory()) {
-                // Directory
-                result.dirs.add(item);
-            } else {
-                // Regular file
-                if (item.getName().matches(regex)) {
-                    result.files.add(item);
+        if (startDir != null) {
+            File[] files = startDir.listFiles();
+            if (files != null) {
+                for (File item : startDir.listFiles()) {
+                    if (item.isDirectory()) {
+                        // Directory
+                        result.dirs.add(item);
+                    } else {
+                        // Regular file
+                        if (item.getName().matches(regex)) {
+                            result.files.add(item);
+                        }
+                    }
                 }
+            } else {
+                // todo empty directory or link
             }
         }
         return result;

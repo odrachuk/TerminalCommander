@@ -1,7 +1,7 @@
 package com.drk.terminal.comm.prompt;
 
 import com.drk.terminal.comm.controller.UiController;
-import com.drk.terminal.utils.AccountUtils;
+import com.drk.terminal.utils.AccountUtil;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +17,7 @@ public class TerminalPrompt {
     private UiController mUiController;
 
     public TerminalPrompt(UiController uiController) {
-        mUserName = AccountUtils.getUserName(uiController.getActivity());
+        mUserName = AccountUtil.getUserName(uiController.getActivity());
         mUiController = uiController;
     }
 

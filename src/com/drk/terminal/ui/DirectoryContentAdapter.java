@@ -1,16 +1,20 @@
 package com.drk.terminal.ui;
 
 import android.app.Activity;
-import android.view.LayoutInflater;
+import android.app.ProgressDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
+import com.drk.terminal.data.ProcessDirectory;
+import com.drk.terminal.utils.DirectoryUtil;
+import com.drk.terminal.utils.StringUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,27 +24,86 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> {
+    private static final String LOG_TAG = DirectoryContentAdapter.class.getSimpleName();
     private final List<DirectoryContentInfo> filesInfo;
     private Map<Integer, View> cache;
-    private final Activity context;
+    private final Activity activity;
     private boolean inFirst = true;
+    private String parentPath = StringUtil.PATH_SEPARATOR;
 
-    static class ViewHolder {
-        public TextView fileNameView;
-        public TextView fileSizeView;
-        public TextView fileModifyTimeView;
+    public DirectoryContentAdapter(Activity activity, List<DirectoryContentInfo> filesInfo) {
+        super(activity, R.layout.terminal_list_row_layout, filesInfo);
+        this.activity = activity;
+        this.filesInfo = filesInfo;
     }
 
-    public DirectoryContentAdapter(Activity context, List<DirectoryContentInfo> filesInfo) {
-        super(context, R.layout.terminal_list_row_layout, filesInfo);
-        this.context = context;
-        this.filesInfo = filesInfo;
+    public void changeDirectory(String path) {
+        // show progress
+        ProgressDialog progressBar = new ProgressDialog(getContext());
+        progressBar.setCancelable(true);
+        progressBar.setMessage("Data downloading ...");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.show();
+        // update data
+        inFirst = true;
+        cache.clear();
+        filesInfo.clear();
+        filesInfo.add(new DirectoryContentInfo(true, true, parentPath, StringUtil.PARENT_DOTS,
+                getContext().getString(R.string.up_dir), ""));
+        parentPath = path;
+        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+            @Override
+            public void processDirectory(File file) {
+                try {
+                    filesInfo.add(new DirectoryContentInfo(true,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                                    StringUtil.DIRECTORY_LINK_PREFIX +
+                                            file.getName():
+                                    StringUtil.PATH_SEPARATOR +
+                                            file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.d(LOG_TAG, "changeDirectory", e);
+                }
+            }
+
+            @Override
+            public void processFile(File file) {
+                try {
+                    filesInfo.add(new DirectoryContentInfo(false,
+                            file.canRead(),
+                            file.getParent(),
+                            DirectoryUtil.isSymlink(file) ?
+                                    StringUtil.FILE_LINK_PREFIX +
+                                            file.getName():
+                                            file.getName(),
+                            String.valueOf(file.getUsableSpace()),
+                            String.valueOf(file.lastModified())));
+                } catch (IOException e) {
+                    Log.d(LOG_TAG, "changeDirectory", e);
+                }
+            }
+        }, "").start(path);
+        TerminalActivity.makeSorting(filesInfo);
+        notifyDataSetChanged();
+        progressBar.dismiss();
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (inFirst) {
+            initCache(parent);
+        }
+        return cache.get(position);
     }
 
     private void initCache(ViewGroup parent) {
         cache = new HashMap<Integer, View>(getCount());
         for (int i = 0; i < getCount(); i++) {
-            View rowView = context.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
+            View rowView = activity.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
             TextView fileNameView = (TextView) rowView.findViewById(R.id.file_name);
             TextView fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
             TextView fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
@@ -56,32 +119,5 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
             cache.put(i, rowView);
         }
         inFirst = false;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (inFirst) {
-            initCache(parent);
-        }
-//        View rowView = convertView;
-//        if (rowView == null) {
-//            LayoutInflater inflater = context.getLayoutInflater();
-//            rowView = inflater.inflate(R.layout.terminal_list_row_layout, parent, false);
-//            ViewHolder viewHolder = new ViewHolder();
-//            viewHolder.fileNameView = (TextView) rowView.findViewById(R.id.file_name);
-//            viewHolder.fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
-//            viewHolder.fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
-//            DirectoryContentInfo info = filesInfo.get(position);
-//            viewHolder.fileNameView.setText(info.getFileName());
-//            viewHolder.fileSizeView.setText(info.getFileSize());
-//            viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
-//            rowView.setTag(viewHolder);
-//        }
-////        ViewHolder holder = (ViewHolder) rowView.getTag();
-////        DirectoryContentInfo info = filesInfo.get(position);
-////        holder.fileNameView.setText(info.getFileName());
-////        holder.fileSizeView.setText(info.getFileSize());
-////        holder.fileModifyTimeView.setText(info.getFileModifyTime());
-        return cache.get(position);
     }
 }

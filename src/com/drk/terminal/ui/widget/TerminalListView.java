@@ -7,7 +7,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.drk.terminal.R;
+import com.drk.terminal.ui.DirectoryContentAdapter;
+import com.drk.terminal.ui.DirectoryContentInfo;
 
 /**
  * Created with IntelliJ IDEA.
@@ -65,11 +68,26 @@ public class TerminalListView extends ListView {
                 }
                 View downView = findChildAtPosition(x, y);
                 if (downView != null && downView != selectedView) {
+                    // select new item and restore color on previous
                     if (selectedView != null) {
                         selectedView.setBackgroundColor(getResources().getColor(R.color.COLOR_002EB8));
                     }
                     makeNewSelection(downView);
                     return true;
+                } else {
+                    // make directory change
+                    DirectoryContentAdapter adapter = (DirectoryContentAdapter) getAdapter();
+                    DirectoryContentInfo selectedItem = (DirectoryContentInfo) getAdapter().getItem(position);
+                    if (selectedItem.isParentDots()) {
+                        adapter.changeDirectory(selectedItem.getParentPath());
+                    } else if (selectedItem.isDirectory() && selectedItem.canRead()) {
+                        adapter.changeDirectory(selectedItem.getFileName());
+                    } else {
+                        // todo start opening
+                        Toast.makeText(getContext(), "Selected item: " +
+                                ((DirectoryContentInfo) getAdapter().getItem(position)).getFileName(),
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
 
