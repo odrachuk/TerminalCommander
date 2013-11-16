@@ -4,4 +4,12 @@
     <string name="title_file_name">Name</string>
     <string name="title_file_size">Size</string>
     <string name="title_file_modify_time">Modify time</string>
+    <string name="action_shift">Shift</string>
+    <string name="action_ctrl">Ctrl</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_quit">Quit</string>
+    <string name="shift_on">SHIFT ON</string>
+    <string name="shift_off">SHIFT OFF</string>
+    <string name="ctrl_on">CTRL ON</string>
+    <string name="ctrl_off">CTRL OFF</string>
 </resources>

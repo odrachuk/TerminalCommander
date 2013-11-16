@@ -10,4 +10,5 @@
     <dimen name="terminal_list_row_height">100dp</dimen>
     <dimen name="terminal_list_padding_right">6dp</dimen>
     <dimen name="terminal_list_padding_left">6dp</dimen>
+    <dimen name="action_bar_height">45dp</dimen>
 </resources>
