@@ -48,6 +48,11 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
             fileNameView.setText(info.getFileName());
             fileSizeView.setText(info.getFileSize());
             fileModifyTimeView.setText(info.getFileModifyTime());
+            if (!info.isDirectory()) {
+                fileNameView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
+                fileSizeView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
+                fileModifyTimeView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
+            }
             cache.put(i, rowView);
         }
         inFirst = false;

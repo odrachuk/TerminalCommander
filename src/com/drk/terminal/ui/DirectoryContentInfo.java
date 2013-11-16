@@ -8,11 +8,13 @@ package com.drk.terminal.ui;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryContentInfo {
+    private final boolean isDirectory;
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
 
-    public DirectoryContentInfo(String fileName, String fileSize, String fileModifyTime) {
+    public DirectoryContentInfo(boolean isDirectory, String fileName, String fileSize, String fileModifyTime) {
+        this.isDirectory = isDirectory;
         this.fileName = fileName;
         this.fileSize = fileSize;
         this.fileModifyTime = fileModifyTime;
@@ -28,5 +30,9 @@ public class DirectoryContentInfo {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public boolean isDirectory() {
+        return isDirectory;
     }
 }

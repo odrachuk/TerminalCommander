@@ -3,13 +3,14 @@ package com.drk.terminal.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
+import com.drk.terminal.data.ProcessDirectory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -45,53 +46,19 @@ public class TerminalActivity extends Activity {
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo("/..", getString(R.string.up_dir), "Jan 15 2006"));
-        valuesList.add(new DirectoryContentInfo("/Android", "4096", "Auth 2 2013"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "6540", "Jan 3 2013"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
+        valuesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+
+            @Override
+            public void processFile(File file) {
+                valuesList.add(new DirectoryContentInfo(false, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+            }
+
+            @Override
+            public void processDir(File file) {
+                valuesList.add(new DirectoryContentInfo(true, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+            }
+        }, "").start("/");
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listView.setAdapter(adapter);
     }
@@ -99,47 +66,19 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo("/..", getString(R.string.up_dir), "Jan 15 2006"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Android", "4096", "Auth 2 2013"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "6540", "Jan 3 2013"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
-        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
-        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+
+            @Override
+            public void processFile(File file) {
+                valuesList.add(new DirectoryContentInfo(false, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+            }
+
+            @Override
+            public void processDir(File file) {
+                valuesList.add(new DirectoryContentInfo(true, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+            }
+        }, "").start("/vendor");
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listView.setAdapter(adapter);
     }
