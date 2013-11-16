@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-        android:background="@color/COLOR_002EB8">
+                android:background="@color/COLOR_002EB8">
     <View android:id="@+id/fakeView"
           android:layout_width="0dp"
           android:layout_height="0dp"
@@ -12,30 +12,126 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignRight="@id/fakeView"
-            android:layout_alignParentLeft="true">
-        <include
-                android:id="@+id/left_list_title"
-                layout="@layout/terminal_list_title_layout"/>
-        <ListView
-                android:id="@+id/left_directory_list"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="3dp">
+        <View android:id="@+id/top_border_image_in_left"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentTop="true"/>
+        <View android:id="@+id/bottom_border_image_in_left"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentBottom="true"/>
+        <View android:id="@+id/left_border_image_in_left"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentLeft="true"/>
+        <View android:id="@+id/right_border_image_in_left"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentRight="true"/>
+        <RelativeLayout
+                android:id="@+id/left_info_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_below="@id/left_list_title"/>
+                android:layout_toRightOf="@id/left_border_image_in_left"
+                android:layout_toLeftOf="@id/right_border_image_in_left"
+                android:layout_below="@id/top_border_image_in_left"
+                android:layout_above="@id/bottom_border_image_in_left">
+            <include
+                    android:id="@+id/left_list_title"
+                    layout="@layout/terminal_list_title_layout"/>
+            <ListView
+                    android:id="@+id/left_directory_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/left_list_title"/>
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/right_list_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignLeft="@id/fakeView"
-            android:layout_alignParentRight="true">
-        <include
-                android:id="@+id/right_list_title"
-                layout="@layout/terminal_list_title_layout"/>
-        <ListView
-                android:id="@+id/right_directory_list"
+            android:layout_alignParentRight="true"
+            android:layout_margin="3dp">
+        <RelativeLayout
+                android:id="@+id/top_border_container_in_right"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <View android:id="@+id/top_border_image_3_in_right"
+                  android:layout_width="5dp"
+                  android:layout_height="1dp"
+                  android:background="@drawable/vertical_border"
+                  android:layout_alignParentRight="true"
+                    android:layout_marginTop="3dp"/>
+            <View android:id="@+id/right_triangle_img_in_right"
+                      android:layout_width="10dp"
+                      android:layout_height="6dp"
+                      android:layout_toLeftOf="@id/top_border_image_3_in_right"
+                      android:background="@drawable/right_triangle"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="2dp"/>
+            <View android:id="@+id/top_border_image_1_in_right"
+                  android:layout_width="5dp"
+                  android:layout_height="1dp"
+                  android:background="@drawable/vertical_border"
+                  android:layout_alignParentLeft="true"
+                  android:layout_marginTop="3dp"/>
+            <View android:id="@+id/left_triangle_img_in_right"
+                  android:layout_width="10dp"
+                  android:layout_height="6dp"
+                      android:layout_toRightOf="@id/top_border_image_1_in_right"
+                    android:background="@drawable/left_triangle"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="1dp"/>
+            <View android:id="@+id/top_border_image_2_in_right"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@drawable/vertical_border"
+                  android:layout_toLeftOf="@id/right_triangle_img_in_right"
+                  android:layout_toRightOf="@id/left_triangle_img_in_right"
+                  android:layout_marginTop="3dp"/>
+        </RelativeLayout>
+        <View android:id="@+id/bottom_border_image_in_right"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentBottom="true"/>
+        <View android:id="@+id/left_border_image_in_right"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentLeft="true"
+                android:layout_marginTop="3dp"/>
+        <View android:id="@+id/right_border_image_in_right"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@drawable/vertical_border"
+              android:layout_alignParentRight="true"
+              android:layout_marginTop="3dp"/>
+        <RelativeLayout
+                android:id="@+id/right_info_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_below="@id/right_list_title"
-                />
+                android:layout_toRightOf="@id/left_border_image_in_right"
+                android:layout_toLeftOf="@id/right_border_image_in_right"
+                android:layout_below="@id/top_border_container_in_right"
+                android:layout_above="@id/bottom_border_image_in_right">
+            <include
+                    android:id="@+id/right_list_title"
+                    layout="@layout/terminal_list_title_layout"/>
+            <ListView
+                    android:id="@+id/right_directory_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/right_list_title"
+                    />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
