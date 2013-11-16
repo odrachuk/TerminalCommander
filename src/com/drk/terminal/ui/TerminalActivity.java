@@ -12,6 +12,8 @@ import com.drk.terminal.data.ProcessDirectory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,42 +47,75 @@ public class TerminalActivity extends Activity {
 
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
-        final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        final List<DirectoryContentInfo> directoryList = new ArrayList<DirectoryContentInfo>();
+        final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
+        directoryList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+            @Override
+            public void processDirectory(File file) {
+                directoryList.add(new DirectoryContentInfo(true,
+                        file.toString(),
+                        String.valueOf(file.getUsableSpace()),
+                        String.valueOf(file.lastModified())));
+                makeSorting(directoryList);
+            }
 
             @Override
             public void processFile(File file) {
-                valuesList.add(new DirectoryContentInfo(false, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
-            }
-
-            @Override
-            public void processDir(File file) {
-                valuesList.add(new DirectoryContentInfo(true, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+                directoryList.add(new DirectoryContentInfo(false,
+                        file.toString(),
+                        String.valueOf(file.getUsableSpace()),
+                        String.valueOf(file.lastModified())));
+                makeSorting(directoryList);
             }
         }, "").start("/");
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
+        List<DirectoryContentInfo> completeList = new ArrayList<DirectoryContentInfo>(directoryList.size()
+                + filesList.size());
+        completeList.addAll(directoryList);
+        completeList.addAll(filesList);
+        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, completeList);
         listView.setAdapter(adapter);
     }
 
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
-        final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
+        final List<DirectoryContentInfo> directoryList = new ArrayList<DirectoryContentInfo>();
+        final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
+        directoryList.add(new DirectoryContentInfo(true, "/..", getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+            @Override
+            public void processDirectory(File file) {
+                directoryList.add(new DirectoryContentInfo(true,
+                        file.toString(),
+                        String.valueOf(file.getUsableSpace()),
+                        String.valueOf(file.lastModified())));
+                makeSorting(directoryList);
+            }
 
             @Override
             public void processFile(File file) {
-                valuesList.add(new DirectoryContentInfo(false, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
-            }
-
-            @Override
-            public void processDir(File file) {
-                valuesList.add(new DirectoryContentInfo(true, "" + file, "" + file.getUsableSpace(), "" + file.lastModified()));
+                filesList.add(new DirectoryContentInfo(false,
+                        file.toString(),
+                        String.valueOf(file.getUsableSpace()),
+                        String.valueOf(file.lastModified())));
+                makeSorting(filesList);
             }
         }, "").start("/vendor");
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
+        List<DirectoryContentInfo> completeList = new ArrayList<DirectoryContentInfo>(directoryList.size()
+                + filesList.size());
+        completeList.addAll(directoryList);
+        completeList.addAll(filesList);
+        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, completeList);
         listView.setAdapter(adapter);
+    }
+
+    private void makeSorting(List<DirectoryContentInfo> list) {
+        Collections.sort(list, new Comparator<DirectoryContentInfo>() {
+            @Override
+            public int compare(DirectoryContentInfo data1, DirectoryContentInfo data2) {
+                return data1.getFileName().compareTo(data2.getFileName());
+            }
+        });
     }
 
     @Override

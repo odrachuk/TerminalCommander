@@ -2,7 +2,6 @@ package com.drk.terminal.data;
 
 import java.util.regex.*;
 import java.io.*;
-import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,66 +27,27 @@ public class Directory {
         return local(new File(path), regex);
     }
 
-    public static TreeInfo walk(String start) {
-        return recursiveDirs(new File(start), ".*");
+    public static DirectoryTree walkDir(String start, String regex) {
+        return readDirFiles(new File(start), regex);
     }
 
-    static TreeInfo recursiveDirs(File startDir, String regex) {
-        TreeInfo result = new TreeInfo();
+    public static DirectoryTree walkDir(String start) { // Overloaded
+        return readDirFiles(new File(start), ".*");
+    }
+
+    static DirectoryTree readDirFiles(File startDir, String regex) {
+        DirectoryTree result = new DirectoryTree();
         for (File item : startDir.listFiles()) {
             if (item.isDirectory()) {
+                // Directory
                 result.dirs.add(item);
-                result.addAll(recursiveDirs(item, regex));
-            } else { // Regular file
+            } else {
+                // Regular file
                 if (item.getName().matches(regex)) {
                     result.files.add(item);
                 }
             }
         }
         return result;
-    }
-
-    public static TreeInfo walkDir(String start, String regex) {
-        return recurseDir(new File(start), regex);
-    }
-
-    public static TreeInfo walkDir(String start) { // Overloaded
-        return recurseDir(new File(start), ".*");
-    }
-
-    static TreeInfo recurseDir(File startDir, String regex) {
-        TreeInfo result = new TreeInfo();
-        for (File item : startDir.listFiles()) {
-            if (item.isDirectory()) {
-                result.dirs.add(item);
-            } else { // Regular file
-                if (item.getName().matches(regex)) {
-                    result.files.add(item);
-                }
-            }
-        }
-        return result;
-    }
-
-    public static class TreeInfo {
-        public List<File> files = new ArrayList<File>();
-        public List<File> dirs = new ArrayList<File>();
-
-        public Iterator<File> getFilesIterator() {
-            return files.iterator();
-        }
-
-        public Iterator<File> getDirsIterator() {
-            return dirs.iterator();
-        }
-
-        void addAll(TreeInfo other) {
-            files.addAll(other.files);
-            dirs.addAll(other.dirs);
-        }
-
-        public String toString() {
-            return "dirs: " + dirs + "\n\nfiles:" + files;
-        }
     }
 }

@@ -19,8 +19,8 @@ public class ProcessDirectory {
     private String ext;
 
     public interface ProcessDirectoryStrategy {
+        void processDirectory(File file);
         void processFile(File file);
-        void processDir(File file);
     }
 
     public ProcessDirectory(ProcessDirectoryStrategy strategy, String ext) {
@@ -37,15 +37,15 @@ public class ProcessDirectory {
     }
 
     public void processDirectoryTree(File root) throws IOException {
-        Directory.TreeInfo treeInfo = Directory.walkDir(
+        DirectoryTree treeInfo = Directory.walkDir(
                 root.getAbsolutePath(), ".*" + ext);
+        Iterator<File> dirsIterator = treeInfo.getDirsIterator();
+        while(dirsIterator.hasNext()) {
+            strategy.processDirectory(dirsIterator.next().getCanonicalFile());
+        }
         Iterator<File> filesIterator = treeInfo.getFilesIterator();
         while(filesIterator.hasNext()) {
             strategy.processFile(filesIterator.next().getCanonicalFile());
-        }
-        Iterator<File> dirsIterator = treeInfo.getDirsIterator();
-        while(dirsIterator.hasNext()) {
-            strategy.processDir(dirsIterator.next().getCanonicalFile());
         }
     }
 }
