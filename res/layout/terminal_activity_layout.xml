@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        android:background="@color/COLOR_002EB8">
+    <View android:id="@+id/fakeView"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_centerInParent="true"/>
+    <RelativeLayout
+            android:id="@+id/left_list_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignRight="@id/fakeView"
+            android:layout_alignParentLeft="true">
+        <include
+                android:id="@+id/left_list_title"
+                layout="@layout/terminal_list_title_layout"/>
+        <ListView
+                android:id="@+id/left_directory_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/left_list_title"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/right_list_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/fakeView"
+            android:layout_alignParentRight="true">
+        <include
+                android:id="@+id/right_list_title"
+                layout="@layout/terminal_list_title_layout"/>
+        <ListView
+                android:id="@+id/right_directory_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/right_list_title"
+                />
+    </RelativeLayout>
+</RelativeLayout>
