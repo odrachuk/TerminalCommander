@@ -91,7 +91,7 @@ public class TerminalActivity extends Activity {
                 }
             }
         }, "").start("/");
-        makeSorting(filesList);
+        Collections.sort(filesList);
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
@@ -137,7 +137,7 @@ public class TerminalActivity extends Activity {
                 }
             }
         }, "").start("/");
-        makeSorting(filesList);
+        Collections.sort(filesList);
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
@@ -244,13 +244,4 @@ public class TerminalActivity extends Activity {
             }
         }
     };
-
-    public static void makeSorting(List<DirectoryContentInfo> list) {
-        Collections.sort(list, new Comparator<DirectoryContentInfo>() {
-            @Override
-            public int compare(DirectoryContentInfo data1, DirectoryContentInfo data2) {
-                return data1.getFileName().compareTo(data2.getFileName());
-            }
-        });
-    }
 }

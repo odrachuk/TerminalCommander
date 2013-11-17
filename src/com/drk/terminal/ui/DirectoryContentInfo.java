@@ -9,7 +9,7 @@ import com.drk.terminal.utils.StringUtil;
  * Time: 1:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DirectoryContentInfo {
+public class DirectoryContentInfo implements Comparable<DirectoryContentInfo> {
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
@@ -57,5 +57,30 @@ public class DirectoryContentInfo {
 
     public String getParentPath() {
         return parentPath;
+    }
+
+    @Override
+    public int compareTo(DirectoryContentInfo another) {
+        int result = -1;
+        String anotherFileName = another.getFileName();
+        if (fileName.startsWith(StringUtil.PATH_SEPARATOR) ||
+                fileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) {
+            if (anotherFileName.startsWith(StringUtil.PATH_SEPARATOR) ||
+                    anotherFileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) { // ---- /sd <> /ds or /sd <> @ds
+                result = fileName.substring(1).compareTo(anotherFileName.substring(1));
+            } else if (anotherFileName.startsWith(StringUtil.FILE_LINK_PREFIX)) {
+                result = 1;
+            }
+        } else if (fileName.startsWith(StringUtil.FILE_LINK_PREFIX)) {
+            if (anotherFileName.startsWith(StringUtil.FILE_LINK_PREFIX)) {
+                result = fileName.substring(1).compareTo(anotherFileName.substring(1));
+            } else if (anotherFileName.startsWith(StringUtil.PATH_SEPARATOR) ||
+                    anotherFileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) {
+                result = -1;
+            }
+        } else {
+            result = fileName.compareTo(anotherFileName);
+        }
+        return result;
     }
 }

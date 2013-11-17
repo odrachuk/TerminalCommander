@@ -87,7 +87,7 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
                 }
             }
         }, "").start(path);
-        TerminalActivity.makeSorting(filesInfo);
+        Collections.sort(filesInfo);
         notifyDataSetChanged();
         progressBar.dismiss();
     }
