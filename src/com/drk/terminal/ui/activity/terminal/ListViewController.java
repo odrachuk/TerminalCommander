@@ -1,4 +1,4 @@
-package com.drk.terminal.ui.widget.listview.observer;
+package com.drk.terminal.ui.activity.terminal;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,6 +6,7 @@ import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.ui.widget.actionbar.observer.ActionBarBtnObserver;
 import com.drk.terminal.ui.widget.listview.TerminalListView;
+import com.drk.terminal.ui.widget.listview.observer.ListViewObserver;
 
 /**
  * Created with IntelliJ IDEA.

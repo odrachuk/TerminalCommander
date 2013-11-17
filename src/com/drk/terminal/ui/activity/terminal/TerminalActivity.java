@@ -20,7 +20,6 @@ import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.ui.widget.listview.TerminalListView;
-import com.drk.terminal.ui.widget.listview.observer.ListViewController;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
