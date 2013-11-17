@@ -38,14 +38,23 @@ public class TerminalListView extends ListView {
                 ListViewAdapter adapter = (ListViewAdapter) getAdapter();
                 ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
                 if (selectedItem.isParentDots()) {
-                    adapter.changeDirectory(selectedItem.getParentPath());
-                    smoothScrollToPosition(0);
-                } else if (selectedItem.isDirectory() && selectedItem.canRead()) {
-                    adapter.changeDirectory(selectedItem.getFileName());
-                    smoothScrollToPosition(0);
+                    String backPath = adapter.getBackPath();
+                    if (backPath != null) {
+                        adapter.changeDirectory(backPath);
+                        smoothScrollToPosition(0);
+                    }
+                } else if (selectedItem.isDirectory()) {
+                    if (selectedItem.canRead()) {
+                        adapter.changeDirectory(selectedItem.getFileName());
+                        smoothScrollToPosition(0);
+                    } else {
+                        Toast.makeText(getContext(), "Selected directory: " +
+                                ((ListViewItem) getAdapter().getItem(position)).getFileName(),
+                                Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     // todo start opening
-                    Toast.makeText(getContext(), "Selected item: " +
+                    Toast.makeText(getContext(), "Selected file: " +
                             ((ListViewItem) getAdapter().getItem(position)).getFileName(),
                             Toast.LENGTH_SHORT).show();
                 }

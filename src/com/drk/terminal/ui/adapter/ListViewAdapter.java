@@ -15,10 +15,7 @@ import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,18 +27,31 @@ import java.util.Map;
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
     private final List<ListViewItem> filesInfo;
-    private Map<Integer, View> cache;
     private final Activity activity;
+    private Map<Integer, View> cache;
     private boolean inFirst = true;
-    private String parentPath = StringUtil.PATH_SEPARATOR;
+    private LinkedList<String> pathStack;
 
     public ListViewAdapter(Activity activity, List<ListViewItem> filesInfo) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
         this.filesInfo = filesInfo;
+        pathStack = new LinkedList<String>();
+        pathStack.add(StringUtil.PATH_SEPARATOR);
     }
 
     public void changeDirectory(String path) {
+        if (path.equals(StringUtil.PATH_SEPARATOR)) {
+            pathStack.clear();
+            pathStack.add(StringUtil.PATH_SEPARATOR);
+        } else {
+            String prevPath = pathStack.getLast();
+            if (!prevPath.equals(path)) {
+                pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
+                        prevPath + path.substring(1) :
+                        prevPath + StringUtil.PATH_SEPARATOR + path.substring(1)); // todo links not correct presentation
+            }
+        }
         // show progress
         ProgressDialog progressBar = new ProgressDialog(getContext());
         progressBar.setCancelable(true);
@@ -52,19 +62,18 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         inFirst = true;
         cache.clear();
         filesInfo.clear();
-        filesInfo.add(new ListViewItem(true, true, parentPath, StringUtil.PARENT_DOTS,
+        filesInfo.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
                 -1, 0l));
-        parentPath = path;
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesInfo.add(new ListViewItem(true,
+                    filesInfo.add(new ListViewItem(
+                            true,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
-                                            file.getName():
+                                            file.getName() :
                                     StringUtil.PATH_SEPARATOR +
                                             file.getName(),
                             file.getUsableSpace(),
@@ -77,13 +86,13 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             @Override
             public void processFile(File file) {
                 try {
-                    filesInfo.add(new ListViewItem(false,
+                    filesInfo.add(new ListViewItem(
+                            false,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
-                                            file.getName():
-                                            file.getName(),
+                                            file.getName() :
+                                    file.getName(),
                             file.getUsableSpace(),
                             file.lastModified()));
                 } catch (IOException e) {
@@ -123,5 +132,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             cache.put(i, rowView);
         }
         inFirst = false;
+    }
+
+    public String getBackPath() {
+        pathStack.removeLast();
+        return pathStack.getLast();
     }
 }

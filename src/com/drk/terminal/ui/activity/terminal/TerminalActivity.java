@@ -61,15 +61,15 @@ public class TerminalActivity extends Activity {
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
         final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
-        filesList.add(new ListViewItem(true, true, null, StringUtil.PARENT_DOTS,
+        filesList.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
                 -1, 0l));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new ListViewItem(true,
+                    filesList.add(new ListViewItem(
+                            true,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                             StringUtil.DIRECTORY_LINK_PREFIX +
                                     file.getName():
@@ -85,9 +85,9 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new ListViewItem(false,
+                    filesList.add(new ListViewItem(
+                            false,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName():
@@ -107,15 +107,15 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
         final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
-        filesList.add(new ListViewItem(true, true, null, StringUtil.PARENT_DOTS,
+        filesList.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
                 -1, 0l));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new ListViewItem(true,
+                    filesList.add(new ListViewItem(
+                            true,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
                                             file.getName():
@@ -131,9 +131,9 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new ListViewItem(false,
+                    filesList.add(new ListViewItem(
+                            false,
                             file.canRead(),
-                            file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                         file.getName():

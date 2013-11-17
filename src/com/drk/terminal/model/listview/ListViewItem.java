@@ -18,20 +18,17 @@ public class ListViewItem implements Comparable<ListViewItem> {
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
-    private final String parentPath;
-    private final boolean canRead;
     private final boolean isDirectory;
+    private final boolean canRead;
     private SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
 
     public ListViewItem(boolean isDirectory,
                         boolean canRead,
-                        String parentPath,
                         String fileName,
                         long fileSize,
                         long fileModifyTime) {
         this.isDirectory = isDirectory;
         this.canRead = canRead;
-        this.parentPath = parentPath;
         this.fileName = fileName;
         this.fileSize = readableFileSize(fileSize);
         this.fileModifyTime = sdf.format(fileModifyTime);
@@ -71,10 +68,6 @@ public class ListViewItem implements Comparable<ListViewItem> {
 
     public boolean isParentDots() {
         return fileName.equals(StringUtil.PARENT_DOTS);
-    }
-
-    public String getParentPath() {
-        return parentPath;
     }
 
     @Override
