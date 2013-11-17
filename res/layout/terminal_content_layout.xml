@@ -48,7 +48,7 @@
                     android:layout_width="@dimen/terminal_history_btn_width"
                     android:layout_height="@dimen/terminal_btn_height"
                     android:textSize="12sp"
-                    android:text="[ ^ ]"
+                    android:text="@string/history_up"
                     android:layout_toLeftOf="@id/top_border_image_4_in_left"
                     style="@android:style/Widget.Button.Small"/>
             <!--From Left to center-->
@@ -132,7 +132,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@id/left_list_title"
-                    android:listSelector="@drawable/list_cursor"/>
+                    android:listSelector="@drawable/list_cursor"
+                    android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>
     <!--Right Side-->
@@ -174,7 +175,7 @@
                     android:layout_width="@dimen/terminal_history_btn_width"
                     android:layout_height="@dimen/terminal_btn_height"
                     android:textSize="12sp"
-                    android:text="[ ^ ]"
+                    android:text="@string/history_up"
                     android:layout_toLeftOf="@id/top_border_image_4_in_right"
                     style="@android:style/Widget.Button.Small"/>
             <!--From Left to center-->
@@ -258,7 +259,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@id/right_list_title"
-                    android:persistentDrawingCache="animation|scrolling"/>
+                    android:listSelector="@drawable/list_cursor"
+                    android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -72,12 +72,12 @@ public class ListViewItem implements Comparable<ListViewItem> {
 
     @Override
     public int compareTo(ListViewItem another) {
-        int result = -1;
+        int result = 0;
         String anotherFileName = another.getFileName();
         if (fileName.startsWith(StringUtil.PATH_SEPARATOR) ||
                 fileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) {
             if (anotherFileName.startsWith(StringUtil.PATH_SEPARATOR) ||
-                    anotherFileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) { // ---- /sd <> /ds or /sd <> @ds
+                    anotherFileName.startsWith(StringUtil.DIRECTORY_LINK_PREFIX)) {
                 result = fileName.substring(1).compareTo(anotherFileName.substring(1));
             } else if (anotherFileName.startsWith(StringUtil.FILE_LINK_PREFIX)) {
                 result = 1;

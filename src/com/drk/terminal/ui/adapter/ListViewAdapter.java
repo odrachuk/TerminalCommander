@@ -136,6 +136,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
 
     public String getBackPath() {
         pathStack.removeLast();
-        return pathStack.getLast();
+        String last = StringUtil.PATH_SEPARATOR;
+        try {
+            last = pathStack.getLast();
+        } catch (NoSuchElementException ignored) {
+        }
+        return last;
     }
 }
