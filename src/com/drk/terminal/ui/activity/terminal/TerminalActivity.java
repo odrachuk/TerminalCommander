@@ -19,6 +19,8 @@ import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
+import com.drk.terminal.ui.widget.listview.TerminalListView;
+import com.drk.terminal.ui.widget.listview.observer.ListViewController;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
@@ -40,6 +42,7 @@ public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
+    private ListViewController listController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class TerminalActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        listController = new ListViewController(this);
         new LoadInfoTask().execute();
     }
 
@@ -102,6 +106,7 @@ public class TerminalActivity extends Activity {
         Collections.sort(filesList);
         final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
         listView.setAdapter(adapter);
+        ((TerminalListView) listView).registerObserver(listController);
     }
 
     private void prepareRightList() {
@@ -148,6 +153,7 @@ public class TerminalActivity extends Activity {
         Collections.sort(filesList);
         final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
         listView.setAdapter(adapter);
+        ((TerminalListView) listView).registerObserver(listController);
     }
 
     @Override

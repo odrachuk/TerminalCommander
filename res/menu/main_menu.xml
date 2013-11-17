@@ -5,19 +5,19 @@
     <item android:id="@+id/action_shift"
           android:title="@string/action_shift"
           android:showAsAction="ifRoom"
-          android:actionViewClass="com.drk.terminal.ui.widget.ActionBarShiftToggleButton"/>
+          android:actionViewClass="com.drk.terminal.ui.widget.actionbar.ActionBarShiftToggleButton"/>
     <item android:id="@+id/action_ctrl"
           android:title="@string/action_ctrl"
           android:showAsAction="ifRoom"
-          android:actionViewClass="com.drk.terminal.ui.widget.ActionBarCtrlToggleButton"/>
+          android:actionViewClass="com.drk.terminal.ui.widget.actionbar.ActionBarCtrlToggleButton"/>
     <item android:id="@+id/action_commander"
           android:title="@string/action_commander"
           android:showAsAction="ifRoom"
-          android:actionViewClass="com.drk.terminal.ui.widget.ActionBarCommanderButton"/>
+          android:actionViewClass="com.drk.terminal.ui.widget.actionbar.ActionBarCommanderButton"/>
     <item android:id="@+id/action_tab"
           android:title="@string/action_tab"
           android:showAsAction="ifRoom"
-          android:actionViewClass="com.drk.terminal.ui.widget.ActionBarTabButton"/>
+          android:actionViewClass="com.drk.terminal.ui.widget.actionbar.ActionBarTabButton"/>
     <!--Menus-->
     <item android:id="@+id/action_serrings"
           android:title="@string/action_settings"

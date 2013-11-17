@@ -1,4 +1,4 @@
-package com.drk.terminal.ui.widget;
+package com.drk.terminal.ui.widget.actionbar;
 
 import android.content.Context;
 import android.util.AttributeSet;

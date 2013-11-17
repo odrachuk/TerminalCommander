@@ -126,8 +126,8 @@
             <include
                     android:id="@+id/left_list_title"
                     layout="@layout/terminal_list_title_layout"/>
-            <!--list-->
-            <com.drk.terminal.ui.widget.TerminalListView
+            <!--listview-->
+            <com.drk.terminal.ui.widget.listview.TerminalListView
                     android:id="@+id/left_directory_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -253,8 +253,8 @@
             <include
                     android:id="@+id/right_list_title"
                     layout="@layout/terminal_list_title_layout"/>
-            <!--list-->
-            <com.drk.terminal.ui.widget.TerminalListView
+            <!--listview-->
+            <com.drk.terminal.ui.widget.listview.TerminalListView
                     android:id="@+id/right_directory_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

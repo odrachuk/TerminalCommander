@@ -116,7 +116,7 @@ public class TerminalCommander {
         // read result of command from comm
         String out = reader.readLine();
         while (out != null && !out.trim().equals("--EOF--")) {
-            // write output to list
+            // write output to listview
             resultList.add(out);
             out = reader.readLine();
         }
