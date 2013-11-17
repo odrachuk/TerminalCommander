@@ -16,4 +16,6 @@
     <string name="rename_or_move_string">Rename/Move</string>
     <string name="make_dir_string">Make directory</string>
     <string name="delete_string">Delete</string>
+    <string name="up_dir">UP--DIR</string>
+    <string name="action_tab">TAB</string>
 </resources>

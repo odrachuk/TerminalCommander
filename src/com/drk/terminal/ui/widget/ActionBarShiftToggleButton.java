@@ -16,20 +16,20 @@ public class ActionBarShiftToggleButton extends ToggleButton {
 
     public ActionBarShiftToggleButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setText();
+        initButton();
     }
 
     public ActionBarShiftToggleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setText();
+        initButton();
     }
 
     public ActionBarShiftToggleButton(Context context) {
         super(context);
-        setText();
+        initButton();
     }
 
-    private void setText() {
+    private void initButton() {
         setText(getResources().getString(R.string.shift_off));
         setTextOn(getResources().getString(R.string.shift_on));
         setTextOff(getResources().getString(R.string.shift_off));

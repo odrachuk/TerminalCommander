@@ -7,10 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.ToggleButton;
+import android.widget.*;
 import com.drk.terminal.R;
 
 import java.util.ArrayList;
@@ -48,33 +45,20 @@ public class TerminalActivity extends Activity {
     private void prepareLeftList() {
         final ListView listview = (ListView) findViewById(R.id.left_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
-        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
-        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
-        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
-        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
-        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
-        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
-        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
-        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
-        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
-        valuesList.add(new DirectoryContentInfo("Max OS X", "Linux", "OS/2"));
-        valuesList.add(new DirectoryContentInfo("Ubuntu", "Windows7", "Max OS X"));
-        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
+        valuesList.add(new DirectoryContentInfo("/..", getString(R.string.up_dir), "Jan 15 2006"));
+        valuesList.add(new DirectoryContentInfo("/Android", "4096", "Auth 2 2013"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "6540", "Jan 3 2013"));
+        valuesList.add(new DirectoryContentInfo("/Windows7", "4322", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "12345", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "456", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "765", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "8854", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listview.setAdapter(adapter);
 
@@ -92,15 +76,12 @@ public class TerminalActivity extends Activity {
     private void prepareRightList() {
         final ListView listview = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
-        valuesList.add(new DirectoryContentInfo("Linux", "OS/2", "Android"));
-        valuesList.add(new DirectoryContentInfo("Android", "iPhone", "WindowsMobile"));
-        valuesList.add(new DirectoryContentInfo("Blackberry", "WebOS", "Ubuntu"));
-        valuesList.add(new DirectoryContentInfo("Windows7", "Max OS X", "Linux"));
-        valuesList.add(new DirectoryContentInfo("OS/2", "Ubuntu", "Windows7"));
+        valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/OS/2", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Max OS X", "8000", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
+        valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
         listview.setAdapter(adapter);
 
@@ -130,6 +111,12 @@ public class TerminalActivity extends Activity {
         if (ctrlItem != null) {
             mCtrlBtn = (ToggleButton) ctrlItem.getActionView();
             mCtrlBtn.setOnCheckedChangeListener(mOnToggleListener);
+        }
+        // setup tab
+        MenuItem tabItem = menu.findItem(R.id.action_tab);
+        if (ctrlItem != null) {
+            Button tabBtn = (Button) tabItem.getActionView();
+            tabBtn.setOnClickListener(mOnClickListener);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -170,18 +157,28 @@ public class TerminalActivity extends Activity {
     private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == mShiftBtn.getId()) {
+            if (buttonView.getId() == R.id.action_shift) {
                 isShiftToggle = isChecked;
                 if (isChecked && mCtrlBtn.isChecked()) {
                     mCtrlBtn.setChecked(false);
                     isCtrlToggle = false;
                 }
-            } else if (buttonView.getId() == mCtrlBtn.getId()) {
+            } else if (buttonView.getId() == R.id.action_ctrl) {
                 isCtrlToggle = isChecked;
                 if (isChecked && mShiftBtn.isChecked()) {
                     mShiftBtn.setChecked(false);
                     isShiftToggle = false;
                 }
+            }
+        }
+    };
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_tab) {
+                //todo
             }
         }
     };

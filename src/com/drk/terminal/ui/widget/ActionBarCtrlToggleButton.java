@@ -2,7 +2,6 @@ package com.drk.terminal.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.ToggleButton;
 import com.drk.terminal.R;
 
@@ -17,20 +16,20 @@ public class ActionBarCtrlToggleButton extends ToggleButton {
 
     public ActionBarCtrlToggleButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setCustomText();
+        initButton();
     }
 
     public ActionBarCtrlToggleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setCustomText();
+        initButton();
     }
 
     public ActionBarCtrlToggleButton(Context context) {
         super(context);
-        setCustomText();
+        initButton();
     }
 
-    private void setCustomText() {
+    private void initButton() {
         setText(getResources().getString(R.string.ctrl_off));
         setTextOn(getResources().getString(R.string.ctrl_on));
         setTextOff(getResources().getString(R.string.ctrl_off));

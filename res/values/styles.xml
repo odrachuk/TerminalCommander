@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="terminal_list_item_style">
+    <style name="terminal_list_item__style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical</item>
@@ -9,9 +9,17 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:layout_marginRight">3dp</item>
+    </style>
+    <style name="terminal_list_item_left_align_style" parent="terminal_list_item__style">
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+    <style name="terminal_list_item_right_align_style" parent="terminal_list_item__style">
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="terminal_list_item_center_align_style" parent="terminal_list_item__style">
+        <item name="android:layout_centerInParent">true</item>
     </style>
     <style name="terminal_list_title_style">
         <item name="android:layout_width">wrap_content</item>
@@ -25,11 +33,5 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:layout_marginRight">3dp</item>
-    </style>
-    <style name="thin_action_bar" parent="android:Theme.Holo.Light">
-        <item name="android:actionBarStyle" >@style/thin_action_bar_style</item>
-    </style>
-    <style name="thin_action_bar_style" parent="android:Widget.Holo.ActionBar">
-        <item name="android:height">@dimen/action_bar_height</item>
     </style>
 </resources>
