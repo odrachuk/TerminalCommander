@@ -47,12 +47,12 @@ public class TerminalActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
-        listController = new ListViewController(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        listController = new ListViewController(this);
         new LoadInfoTask().execute();
     }
 
