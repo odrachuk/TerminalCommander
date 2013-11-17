@@ -6,11 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ListView;
+import android.widget.ToggleButton;
 import com.drk.terminal.R;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
-import com.drk.terminal.model.listview.ListViewFileItem;
+import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.utils.DirectoryUtil;
@@ -54,14 +60,14 @@ public class TerminalActivity extends Activity {
 
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
-        final List<ListViewFileItem> filesList = new ArrayList<ListViewFileItem>();
-        filesList.add(new ListViewFileItem(true, true, null, StringUtil.PARENT_DOTS,
-                getString(R.string.up_dir), ""));
+        final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
+        filesList.add(new ListViewItem(true, true, null, StringUtil.PARENT_DOTS,
+                -1, 0l));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new ListViewFileItem(true,
+                    filesList.add(new ListViewItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -69,8 +75,8 @@ public class TerminalActivity extends Activity {
                                     file.getName():
                             StringUtil.PATH_SEPARATOR +
                                     file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);
                 }
@@ -79,15 +85,15 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new ListViewFileItem(false,
+                    filesList.add(new ListViewItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName():
                                             file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);
                 }
@@ -100,14 +106,14 @@ public class TerminalActivity extends Activity {
 
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
-        final List<ListViewFileItem> filesList = new ArrayList<ListViewFileItem>();
-        filesList.add(new ListViewFileItem(true, true, null, StringUtil.PARENT_DOTS,
-                getString(R.string.up_dir), ""));
+        final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
+        filesList.add(new ListViewItem(true, true, null, StringUtil.PARENT_DOTS,
+                -1, 0l));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new ListViewFileItem(true,
+                    filesList.add(new ListViewItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -115,8 +121,8 @@ public class TerminalActivity extends Activity {
                                             file.getName():
                                     StringUtil.PATH_SEPARATOR +
                                             file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareRightList", e);
                 }
@@ -125,15 +131,15 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new ListViewFileItem(false,
+                    filesList.add(new ListViewItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                         file.getName():
                                         file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareRightList", e);
                 }

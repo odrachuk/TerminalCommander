@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.drk.terminal.model.listview.ListViewFileItem;
+import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 
 /**
@@ -36,7 +36,7 @@ public class TerminalListView extends ListView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ListViewAdapter adapter = (ListViewAdapter) getAdapter();
-                ListViewFileItem selectedItem = (ListViewFileItem) getAdapter().getItem(position);
+                ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
                 if (selectedItem.isParentDots()) {
                     adapter.changeDirectory(selectedItem.getParentPath());
                     smoothScrollToPosition(0);
@@ -46,7 +46,7 @@ public class TerminalListView extends ListView {
                 } else {
                     // todo start opening
                     Toast.makeText(getContext(), "Selected item: " +
-                            ((ListViewFileItem) getAdapter().getItem(position)).getFileName(),
+                            ((ListViewItem) getAdapter().getItem(position)).getFileName(),
                             Toast.LENGTH_SHORT).show();
                 }
             }

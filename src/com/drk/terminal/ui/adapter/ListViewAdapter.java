@@ -9,13 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
-import com.drk.terminal.model.listview.ListViewFileItem;
+import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,15 +27,15 @@ import java.util.*;
  * Time: 1:09 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
+public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
-    private final List<ListViewFileItem> filesInfo;
+    private final List<ListViewItem> filesInfo;
     private Map<Integer, View> cache;
     private final Activity activity;
     private boolean inFirst = true;
     private String parentPath = StringUtil.PATH_SEPARATOR;
 
-    public ListViewAdapter(Activity activity, List<ListViewFileItem> filesInfo) {
+    public ListViewAdapter(Activity activity, List<ListViewItem> filesInfo) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
         this.filesInfo = filesInfo;
@@ -49,14 +52,14 @@ public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
         inFirst = true;
         cache.clear();
         filesInfo.clear();
-        filesInfo.add(new ListViewFileItem(true, true, parentPath, StringUtil.PARENT_DOTS,
-                getContext().getString(R.string.up_dir), ""));
+        filesInfo.add(new ListViewItem(true, true, parentPath, StringUtil.PARENT_DOTS,
+                -1, 0l));
         parentPath = path;
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesInfo.add(new ListViewFileItem(true,
+                    filesInfo.add(new ListViewItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -64,8 +67,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
                                             file.getName():
                                     StringUtil.PATH_SEPARATOR +
                                             file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.d(LOG_TAG, "changeDirectory", e);
                 }
@@ -74,15 +77,15 @@ public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
             @Override
             public void processFile(File file) {
                 try {
-                    filesInfo.add(new ListViewFileItem(false,
+                    filesInfo.add(new ListViewItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName():
                                             file.getName(),
-                            String.valueOf(file.getUsableSpace()),
-                            String.valueOf(file.lastModified())));
+                            file.getUsableSpace(),
+                            file.lastModified()));
                 } catch (IOException e) {
                     Log.d(LOG_TAG, "changeDirectory", e);
                 }
@@ -108,7 +111,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
             TextView fileNameView = (TextView) rowView.findViewById(R.id.file_name);
             TextView fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
             TextView fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
-            ListViewFileItem info = filesInfo.get(i);
+            ListViewItem info = filesInfo.get(i);
             fileNameView.setText(info.getFileName());
             fileSizeView.setText(info.getFileSize());
             fileModifyTimeView.setText(info.getFileModifyTime());

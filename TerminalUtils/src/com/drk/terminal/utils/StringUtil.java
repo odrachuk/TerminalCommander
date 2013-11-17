@@ -15,6 +15,7 @@ public class StringUtil {
     public final static String DIRECTORY_LINK_PREFIX = "~";
     public final static String FILE_LINK_PREFIX = "@";
     public final static String PARENT_DOTS = "/..";
+    public final static String UP_DIR = "UP--DIR ";
 
     public static int countOccurrences(String haystack, char needle) {
         int count = 0;
