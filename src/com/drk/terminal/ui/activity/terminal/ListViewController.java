@@ -25,28 +25,30 @@ public class ListViewController implements ListViewObserver, ActionBarBtnObserve
 
     @Override
     public void onItemSelected(TerminalListView listView, int selectedPosition) {
-        ListViewAdapter adapter = (ListViewAdapter) listView.getAdapter();
-        ListViewItem selectedItem = (ListViewItem) listView.getAdapter().getItem(selectedPosition);
-        if (selectedItem.isParentDots()) {
-            String backPath = adapter.getBackPath();
-            if (backPath != null) {
-                adapter.changeDirectory(backPath);
-                listView.smoothScrollToPosition(0);
-            }
-        } else if (selectedItem.isDirectory()) {
-            if (selectedItem.canRead()) {
-                adapter.changeDirectory(selectedItem.getFileName());
-                listView.smoothScrollToPosition(0);
+        synchronized (ListViewController.this) {
+            ListViewAdapter adapter = (ListViewAdapter) listView.getAdapter();
+            ListViewItem selectedItem = (ListViewItem) listView.getAdapter().getItem(selectedPosition);
+            if (selectedItem.isParentDots()) {
+                String backPath = adapter.getBackPath();
+                if (backPath != null) {
+                    adapter.changeDirectory(backPath);
+                    listView.smoothScrollToPosition(0);
+                }
+            } else if (selectedItem.isDirectory()) {
+                if (selectedItem.canRead()) {
+                    adapter.changeDirectory(selectedItem.getFileName());
+                    listView.smoothScrollToPosition(0);
+                } else {
+                    Toast.makeText(context, "Selected directory: " +
+                            ((ListViewItem) listView.getAdapter().getItem(selectedPosition)).getFileName(),
+                            Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(context, "Selected directory: " +
+                // todo start opening
+                Toast.makeText(context, "Selected file: " +
                         ((ListViewItem) listView.getAdapter().getItem(selectedPosition)).getFileName(),
                         Toast.LENGTH_SHORT).show();
             }
-        } else {
-            // todo start opening
-            Toast.makeText(context, "Selected file: " +
-                    ((ListViewItem) listView.getAdapter().getItem(selectedPosition)).getFileName(),
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
