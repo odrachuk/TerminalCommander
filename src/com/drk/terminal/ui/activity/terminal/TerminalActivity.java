@@ -1,4 +1,4 @@
-package com.drk.terminal.ui;
+package com.drk.terminal.ui.activity.terminal;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
-import com.drk.terminal.data.ProcessDirectory;
+import com.drk.terminal.model.directory.ProcessDirectory;
+import com.drk.terminal.model.listview.ListViewFileItem;
+import com.drk.terminal.ui.activity.commander.CommanderActivity;
+import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
@@ -17,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -52,14 +54,14 @@ public class TerminalActivity extends Activity {
 
     private void prepareLeftList() {
         final ListView listView = (ListView) findViewById(R.id.left_directory_list);
-        final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        filesList.add(new DirectoryContentInfo(true, true, null, StringUtil.PARENT_DOTS,
+        final List<ListViewFileItem> filesList = new ArrayList<ListViewFileItem>();
+        filesList.add(new ListViewFileItem(true, true, null, StringUtil.PARENT_DOTS,
                 getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new DirectoryContentInfo(true,
+                    filesList.add(new ListViewFileItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -77,7 +79,7 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new DirectoryContentInfo(false,
+                    filesList.add(new ListViewFileItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -92,20 +94,20 @@ public class TerminalActivity extends Activity {
             }
         }, "").start("/");
         Collections.sort(filesList);
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
+        final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
 
     private void prepareRightList() {
         final ListView listView = (ListView) findViewById(R.id.right_directory_list);
-        final List<DirectoryContentInfo> filesList = new ArrayList<DirectoryContentInfo>();
-        filesList.add(new DirectoryContentInfo(true, true, null, StringUtil.PARENT_DOTS,
+        final List<ListViewFileItem> filesList = new ArrayList<ListViewFileItem>();
+        filesList.add(new ListViewFileItem(true, true, null, StringUtil.PARENT_DOTS,
                 getString(R.string.up_dir), ""));
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesList.add(new DirectoryContentInfo(true,
+                    filesList.add(new ListViewFileItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -123,7 +125,7 @@ public class TerminalActivity extends Activity {
             @Override
             public void processFile(File file) {
                 try {
-                    filesList.add(new DirectoryContentInfo(false,
+                    filesList.add(new ListViewFileItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -138,7 +140,7 @@ public class TerminalActivity extends Activity {
             }
         }, "").start("/");
         Collections.sort(filesList);
-        final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, filesList);
+        final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
         listView.setAdapter(adapter);
     }
 

@@ -1,4 +1,4 @@
-package com.drk.terminal.data;
+package com.drk.terminal.model.directory;
 
 import java.util.regex.*;
 import java.io.*;
@@ -42,10 +42,8 @@ public class Directory {
             if (files != null) {
                 for (File item : startDir.listFiles()) {
                     if (item.isDirectory()) {
-                        // Directory
                         result.dirs.add(item);
                     } else {
-                        // Regular file
                         if (item.getName().matches(regex)) {
                             result.files.add(item);
                         }

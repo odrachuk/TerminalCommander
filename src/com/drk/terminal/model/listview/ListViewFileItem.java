@@ -1,4 +1,4 @@
-package com.drk.terminal.ui;
+package com.drk.terminal.model.listview;
 
 import com.drk.terminal.utils.StringUtil;
 
@@ -9,7 +9,7 @@ import com.drk.terminal.utils.StringUtil;
  * Time: 1:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DirectoryContentInfo implements Comparable<DirectoryContentInfo> {
+public class ListViewFileItem implements Comparable<ListViewFileItem> {
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
@@ -17,12 +17,12 @@ public class DirectoryContentInfo implements Comparable<DirectoryContentInfo> {
     private final boolean canRead;
     private final boolean isDirectory;
 
-    public DirectoryContentInfo(boolean isDirectory,
-                                boolean canRead,
-                                String parentPath,
-                                String fileName,
-                                String fileSize,
-                                String fileModifyTime) {
+    public ListViewFileItem(boolean isDirectory,
+                            boolean canRead,
+                            String parentPath,
+                            String fileName,
+                            String fileSize,
+                            String fileModifyTime) {
         this.isDirectory = isDirectory;
         this.canRead = canRead;
         this.parentPath = parentPath;
@@ -60,7 +60,7 @@ public class DirectoryContentInfo implements Comparable<DirectoryContentInfo> {
     }
 
     @Override
-    public int compareTo(DirectoryContentInfo another) {
+    public int compareTo(ListViewFileItem another) {
         int result = -1;
         String anotherFileName = another.getFileName();
         if (fileName.startsWith(StringUtil.PATH_SEPARATOR) ||

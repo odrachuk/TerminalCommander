@@ -1,4 +1,4 @@
-package com.drk.terminal.data;
+package com.drk.terminal.model.directory;
 
 import android.util.Log;
 

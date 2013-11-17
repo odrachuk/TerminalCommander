@@ -1,4 +1,4 @@
-package com.drk.terminal.ui;
+package com.drk.terminal.ui.adapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
-import com.drk.terminal.data.ProcessDirectory;
+import com.drk.terminal.model.directory.ProcessDirectory;
+import com.drk.terminal.model.listview.ListViewFileItem;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
@@ -23,15 +24,15 @@ import java.util.*;
  * Time: 1:09 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> {
-    private static final String LOG_TAG = DirectoryContentAdapter.class.getSimpleName();
-    private final List<DirectoryContentInfo> filesInfo;
+public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
+    private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
+    private final List<ListViewFileItem> filesInfo;
     private Map<Integer, View> cache;
     private final Activity activity;
     private boolean inFirst = true;
     private String parentPath = StringUtil.PATH_SEPARATOR;
 
-    public DirectoryContentAdapter(Activity activity, List<DirectoryContentInfo> filesInfo) {
+    public ListViewAdapter(Activity activity, List<ListViewFileItem> filesInfo) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
         this.filesInfo = filesInfo;
@@ -44,18 +45,18 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
         progressBar.setMessage("Data downloading ...");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.show();
-        // update data
+        // update directory
         inFirst = true;
         cache.clear();
         filesInfo.clear();
-        filesInfo.add(new DirectoryContentInfo(true, true, parentPath, StringUtil.PARENT_DOTS,
+        filesInfo.add(new ListViewFileItem(true, true, parentPath, StringUtil.PARENT_DOTS,
                 getContext().getString(R.string.up_dir), ""));
         parentPath = path;
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
             public void processDirectory(File file) {
                 try {
-                    filesInfo.add(new DirectoryContentInfo(true,
+                    filesInfo.add(new ListViewFileItem(true,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -73,7 +74,7 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
             @Override
             public void processFile(File file) {
                 try {
-                    filesInfo.add(new DirectoryContentInfo(false,
+                    filesInfo.add(new ListViewFileItem(false,
                             file.canRead(),
                             file.getParent(),
                             DirectoryUtil.isSymlink(file) ?
@@ -107,7 +108,7 @@ public class DirectoryContentAdapter extends ArrayAdapter<DirectoryContentInfo> 
             TextView fileNameView = (TextView) rowView.findViewById(R.id.file_name);
             TextView fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
             TextView fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
-            DirectoryContentInfo info = filesInfo.get(i);
+            ListViewFileItem info = filesInfo.get(i);
             fileNameView.setText(info.getFileName());
             fileSizeView.setText(info.getFileSize());
             fileModifyTimeView.setText(info.getFileModifyTime());
