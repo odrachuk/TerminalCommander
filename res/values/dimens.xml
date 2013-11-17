@@ -7,7 +7,7 @@
     <dimen name="terminal_commander_btn_width">40dp</dimen>
     <dimen name="terminal_local_path_max_width">100dp</dimen>
     <dimen name="terminal_title_height">20dp</dimen>
-    <dimen name="terminal_list_row_height">37dp</dimen>
+    <dimen name="terminal_list_row_height">45dp</dimen>
     <dimen name="terminal_list_padding_right">6dp</dimen>
     <dimen name="terminal_list_padding_left">6dp</dimen>
 </resources>
