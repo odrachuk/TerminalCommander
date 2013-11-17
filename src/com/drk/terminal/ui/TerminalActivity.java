@@ -43,7 +43,7 @@ public class TerminalActivity extends Activity {
     }
 
     private void prepareLeftList() {
-        final ListView listview = (ListView) findViewById(R.id.left_directory_list);
+        final ListView listView = (ListView) findViewById(R.id.left_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
         valuesList.add(new DirectoryContentInfo("/..", getString(R.string.up_dir), "Jan 15 2006"));
         valuesList.add(new DirectoryContentInfo("/Android", "4096", "Auth 2 2013"));
@@ -60,9 +60,9 @@ public class TerminalActivity extends Activity {
         valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
-        listview.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
@@ -74,7 +74,7 @@ public class TerminalActivity extends Activity {
     }
 
     private void prepareRightList() {
-        final ListView listview = (ListView) findViewById(R.id.right_directory_list);
+        final ListView listView = (ListView) findViewById(R.id.right_directory_list);
         final List<DirectoryContentInfo> valuesList = new ArrayList<DirectoryContentInfo>();
         valuesList.add(new DirectoryContentInfo("/Android", "50", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Blackberry", "876", "Nov 22 2011"));
@@ -83,9 +83,9 @@ public class TerminalActivity extends Activity {
         valuesList.add(new DirectoryContentInfo("/Ubuntu", "234", "Nov 22 2011"));
         valuesList.add(new DirectoryContentInfo("/Linux", "23444", "Nov 22 2012"));
         final DirectoryContentAdapter adapter = new DirectoryContentAdapter(this, valuesList);
-        listview.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
