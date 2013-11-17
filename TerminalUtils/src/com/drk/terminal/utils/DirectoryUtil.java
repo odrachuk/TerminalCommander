@@ -13,11 +13,11 @@ import java.io.IOException;
 public class DirectoryUtil {
 
     /**
-     * Check if present directory in path
+     * Check if present filesystem in path
      *
-     * @param curDirName The current directory
-     * @param subDirName The subdirectory in curDirName directory
-     * @return true if file exist and is directory file
+     * @param curDirName The current filesystem
+     * @param subDirName The subdirectory in curDirName filesystem
+     * @return true if file exist and is filesystem file
      */
     public static boolean isDirectoryExist(String curDirName, String subDirName) {
         boolean isExist = false;
@@ -29,10 +29,10 @@ public class DirectoryUtil {
     }
 
     /**
-     * Check if present directory in path
+     * Check if present filesystem in path
      *
-     * @param path The target directory
-     * @return true if file exist and is directory file
+     * @param path The target filesystem
+     * @return true if file exist and is filesystem file
      */
     public static boolean isDirectoryExist(String path) {
         boolean isExist = false;
@@ -46,8 +46,8 @@ public class DirectoryUtil {
     /**
      * Check if have write permissions to file
      *
-     * @param curDirName The current directory
-     * @param subDirName The subdirectory in curDirName directory
+     * @param curDirName The current filesystem
+     * @param subDirName The subdirectory in curDirName filesystem
      * @return true if can write
      */
     public static boolean checkWritePermissions(String curDirName, String subDirName) {
@@ -62,8 +62,8 @@ public class DirectoryUtil {
     /**
      * Check if have write permissions to file
      *
-     * @param curDirName The current directory
-     * @param subDirName The subdirectory in curDirName directory
+     * @param curDirName The current filesystem
+     * @param subDirName The subdirectory in curDirName filesystem
      * @return true if can use cd to subdirectory
      */
     public static boolean canChangeDirectory(String curDirName, String subDirName) {

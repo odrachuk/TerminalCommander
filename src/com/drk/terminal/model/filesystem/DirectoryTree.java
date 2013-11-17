@@ -1,4 +1,4 @@
-package com.drk.terminal.model.directory;
+package com.drk.terminal.model.filesystem;
 
 import java.io.File;
 import java.util.ArrayList;

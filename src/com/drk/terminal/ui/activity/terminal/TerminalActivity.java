@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
-import com.drk.terminal.model.directory.ProcessDirectory;
+import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.model.listview.ListViewFileItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;

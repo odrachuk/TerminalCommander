@@ -65,7 +65,7 @@ public class TerminalCommander {
                 throw ex;
             }
         } else {
-            Log.d(LOG_TAG, "Wrong comm init directory ");
+            Log.d(LOG_TAG, "Wrong comm init filesystem ");
             mTerminalOutView.setText("FAIL!");
         }
         mTerminalPrompt.setUserLocation(path);

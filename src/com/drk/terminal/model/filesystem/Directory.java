@@ -1,4 +1,4 @@
-package com.drk.terminal.model.directory;
+package com.drk.terminal.model.filesystem;
 
 import java.util.regex.*;
 import java.io.*;
@@ -50,7 +50,7 @@ public class Directory {
                     }
                 }
             } else {
-                // todo empty directory or link
+                // todo empty filesystem or link
             }
         }
         return result;

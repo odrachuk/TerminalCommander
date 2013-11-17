@@ -24,10 +24,10 @@ public class CdCommand implements Command {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
             if (DirectoryUtil.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
                 if (!DirectoryUtil.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
-                    callbackString += "Cannot read directory";
+                    callbackString += "Cannot read filesystem";
                 }
             } else {
-                callbackString += "Target is not directory";
+                callbackString += "Target is not filesystem";
             }
         } else {
             callbackString += "Not arguments";

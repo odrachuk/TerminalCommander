@@ -27,7 +27,7 @@ public class ProcessController {
 
     /**
      * Only when comm not started already
-     * @param path The comm execution directory name
+     * @param path The comm execution filesystem name
      */
     private void createTerminalProcess(String path) {
         Log.d(LOG_TAG, "createTerminalProcess");

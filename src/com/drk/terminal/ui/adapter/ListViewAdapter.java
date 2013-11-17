@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
-import com.drk.terminal.model.directory.ProcessDirectory;
+import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.model.listview.ListViewFileItem;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
@@ -45,7 +45,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewFileItem> {
         progressBar.setMessage("Data downloading ...");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.show();
-        // update directory
+        // update filesystem
         inFirst = true;
         cache.clear();
         filesInfo.clear();
