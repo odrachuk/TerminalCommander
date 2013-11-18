@@ -32,9 +32,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
-    private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
+    private ListViewAdapter mLeftAdapter, mRightAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,10 @@ public class TerminalActivity extends Activity {
         mRightList = (ListView) findViewById(R.id.left_directory_list);
         List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
         ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
-        ListViewAdapter leftListAdapter = new ListViewAdapter(this, listInfo);
-        ListViewAdapter rightListAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo));
-        mLeftList.setAdapter(leftListAdapter);
-        mRightList.setAdapter(rightListAdapter);
+        mLeftAdapter = new ListViewAdapter(this, listInfo);
+        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo));
+        mLeftList.setAdapter(mLeftAdapter);
+        mRightList.setAdapter(mRightAdapter);
     }
 
     @Override
@@ -124,16 +124,20 @@ public class TerminalActivity extends Activity {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (buttonView.getId() == R.id.action_shift) {
-                isShiftToggle = isChecked;
+                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
                 if (isChecked && mCtrlBtn.isChecked()) {
                     mCtrlBtn.setChecked(false);
-                    isCtrlToggle = false;
+                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
                 }
             } else if (buttonView.getId() == R.id.action_ctrl) {
-                isCtrlToggle = isChecked;
+                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
                 if (isChecked && mShiftBtn.isChecked()) {
                     mShiftBtn.setChecked(false);
-                    isShiftToggle = false;
+                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
                 }
             }
         }

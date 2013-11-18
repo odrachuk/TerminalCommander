@@ -4,9 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.activity.terminal.SelectionStrategy;
+import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 
 /**
@@ -17,6 +20,7 @@ import com.drk.terminal.ui.adapter.ListViewAdapter;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalListView extends ListView {
+    private SelectionStrategy selectionStrategy;
 
     public TerminalListView(Context context) {
         this(context, null);
@@ -35,28 +39,35 @@ public class TerminalListView extends ListView {
         return new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListViewAdapter adapter = (ListViewAdapter) getAdapter();
-                ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
-                if (selectedItem.isParentDots()) {
-                    String backPath = adapter.getBackPath();
-                    if (backPath != null) {
-                        adapter.changeDirectory(backPath);
-                        smoothScrollToPosition(0);
-                    }
-                } else if (selectedItem.isDirectory()) {
-                    if (selectedItem.canRead()) {
-                        adapter.changeDirectory(selectedItem.getFileName());
-                        smoothScrollToPosition(0);
+                selectionStrategy = ((ListViewAdapter) getAdapter()).getSelectionStrategy();
+                if (selectionStrategy.isCtrlToggle() ||
+                        selectionStrategy.isShiftToggle()) {
+                    selectionStrategy.addSelection(position);
+                } else {
+                    selectionStrategy.getSelectedItems().clear();
+                    ListViewAdapter adapter = (ListViewAdapter) getAdapter();
+                    ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
+                    if (selectedItem.isParentDots()) {
+                        String backPath = adapter.getBackPath();
+                        if (backPath != null) {
+                            adapter.changeDirectory(backPath);
+                            smoothScrollToPosition(0);
+                        }
+                    } else if (selectedItem.isDirectory()) {
+                        if (selectedItem.canRead()) {
+                            adapter.changeDirectory(selectedItem.getFileName());
+                            smoothScrollToPosition(0);
+                        } else {
+                            Toast.makeText(getContext(), "Selected directory: " +
+                                    ((ListViewItem) getAdapter().getItem(position)).getFileName(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getContext(), "Selected directory: " +
+                        // todo start opening
+                        Toast.makeText(getContext(), "Selected file: " +
                                 ((ListViewItem) getAdapter().getItem(position)).getFileName(),
                                 Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    // todo start opening
-                    Toast.makeText(getContext(), "Selected file: " +
-                            ((ListViewItem) getAdapter().getItem(position)).getFileName(),
-                            Toast.LENGTH_SHORT).show();
                 }
             }
         };

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.activity.terminal.SelectionStrategy;
 import com.drk.terminal.utils.StringUtil;
 
 import java.util.*;
@@ -23,6 +24,7 @@ import java.util.*;
  */
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
+    private final SelectionStrategy selectionStrategy;
     private final List<ListViewItem> filesInfo;
     private final Activity activity;
     private Map<Integer, View> cache;
@@ -36,10 +38,12 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         }
     };
 
-    public ListViewAdapter(Activity activity, List<ListViewItem> filesInfo) {
+    public ListViewAdapter(Activity activity,
+                           List<ListViewItem> filesInfo) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
         this.filesInfo = filesInfo;
+        this.selectionStrategy = new SelectionStrategy(this);
         pathStack = new LinkedList<String>();
         pathStack.add(StringUtil.PATH_SEPARATOR);
     }
@@ -67,7 +71,16 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         if (inFirst) {
             initCache(parent);
         }
-        return cache.get(position);
+        View rowView = cache.get(position);
+        if (selectionStrategy.getSelectedItems().contains(position)) {
+            ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+            ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+            ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+        }
+        return rowView;
     }
 
     private void initCache(ViewGroup parent) {
@@ -82,9 +95,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             fileSizeView.setText(info.getFileSize());
             fileModifyTimeView.setText(info.getFileModifyTime());
             if (!info.isDirectory()) {
-                fileNameView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
-                fileSizeView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
-                fileModifyTimeView.setTextColor(getContext().getResources().getColor(R.color.COLOR_b2b2b2));
+                fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
             }
             cache.put(i, rowView);
         }
@@ -99,5 +112,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         } catch (NoSuchElementException ignored) {
         }
         return last;
+    }
+
+    public SelectionStrategy getSelectionStrategy() {
+        return selectionStrategy;
     }
 }
