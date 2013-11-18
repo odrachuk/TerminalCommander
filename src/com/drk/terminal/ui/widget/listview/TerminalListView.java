@@ -44,7 +44,7 @@ public class TerminalListView extends ListView {
                         selectionStrategy.isShiftToggle()) {
                     selectionStrategy.addSelection(position);
                 } else {
-                    selectionStrategy.getSelectedItems().clear();
+                    selectionStrategy.clear();
                     ListViewAdapter adapter = (ListViewAdapter) getAdapter();
                     ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
                     if (selectedItem.isParentDots()) {

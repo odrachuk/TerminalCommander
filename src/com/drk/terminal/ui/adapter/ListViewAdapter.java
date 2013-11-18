@@ -80,6 +80,24 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
                     activity.getResources().getColor(R.color.COLOR_FFFF00));
         }
+        if (selectionStrategy.getUnselectedItems().contains(position)) {
+            ListViewItem info = filesInfo.get(position);
+            if (info.isDirectory()) {
+                ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+                ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+                ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+            } else {
+                ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+                        activity.getResources().getColor(R.color.COLOR_b2b2b2));
+            }
+        }
         return rowView;
     }
 
