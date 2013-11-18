@@ -4,12 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.SelectionStrategy;
-import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 
 /**

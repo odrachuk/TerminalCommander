@@ -2,7 +2,6 @@ package com.drk.terminal.ui.activity.terminal;
 
 import android.widget.ArrayAdapter;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
