@@ -1,7 +1,8 @@
 package com.drk.terminal.ui.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
+import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
@@ -32,6 +34,13 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private boolean inFirst = true;
     private LinkedList<String> pathStack;
 
+    private final Handler notifyHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            notifyDataSetChanged();
+        }
+    };
+
     public ListViewAdapter(Activity activity, List<ListViewItem> filesInfo) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
@@ -52,57 +61,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                         prevPath + StringUtil.PATH_SEPARATOR + path.substring(1)); // todo links not correct presentation
             }
         }
-        // show progress
-        ProgressDialog progressBar = new ProgressDialog(getContext());
-        progressBar.setCancelable(true);
-        progressBar.setMessage("Data downloading ...");
-        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressBar.show();
         // update filesystem
         inFirst = true;
-        cache.clear();
         filesInfo.clear();
-        filesInfo.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
-                -1, 0l));
-        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
-            @Override
-            public void processDirectory(File file) {
-                try {
-                    filesInfo.add(new ListViewItem(
-                            true,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                                    StringUtil.DIRECTORY_LINK_PREFIX +
-                                            file.getName() :
-                                    StringUtil.PATH_SEPARATOR +
-                                            file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.d(LOG_TAG, "changeDirectory", e);
-                }
-            }
-
-            @Override
-            public void processFile(File file) {
-                try {
-                    filesInfo.add(new ListViewItem(
-                            false,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                                    StringUtil.FILE_LINK_PREFIX +
-                                            file.getName() :
-                                    file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.d(LOG_TAG, "changeDirectory", e);
-                }
-            }
-        }, "").start(path);
-        Collections.sort(filesInfo);
-        notifyDataSetChanged();
-        progressBar.dismiss();
+        ListViewFiller.fillingList(filesInfo, path, notifyHandler);
     }
 
     @Override

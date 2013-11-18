@@ -1,11 +1,9 @@
 package com.drk.terminal.ui.activity.terminal;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,18 +13,13 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 import com.drk.terminal.R;
-import com.drk.terminal.model.filesystem.ProcessDirectory;
+import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
-import com.drk.terminal.ui.widget.listview.TerminalListView;
-import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +34,7 @@ public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private boolean isShiftToggle, isCtrlToggle;
     private ToggleButton mShiftBtn, mCtrlBtn;
-    private ListViewController listController;
+    private ListView mLeftList, mRightList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,107 +45,18 @@ public class TerminalActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        listController = new ListViewController(this);
         new LoadInfoTask().execute();
     }
 
     private void initViews() {
-        prepareLeftList();
-        prepareRightList();
-    }
-
-    private void prepareLeftList() {
-        final ListView listView = (ListView) findViewById(R.id.left_directory_list);
-        final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
-        filesList.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
-                -1, 0l));
-        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
-            @Override
-            public void processDirectory(File file) {
-                try {
-                    filesList.add(new ListViewItem(
-                            true,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                            StringUtil.DIRECTORY_LINK_PREFIX +
-                                    file.getName():
-                            StringUtil.PATH_SEPARATOR +
-                                    file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "prepareLeftList", e);
-                }
-            }
-
-            @Override
-            public void processFile(File file) {
-                try {
-                    filesList.add(new ListViewItem(
-                            false,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                                    StringUtil.FILE_LINK_PREFIX +
-                                            file.getName():
-                                            file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "prepareLeftList", e);
-                }
-            }
-        }, "").start("/");
-        Collections.sort(filesList);
-        final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
-        listView.setAdapter(adapter);
-        ((TerminalListView) listView).registerObserver(listController);
-    }
-
-    private void prepareRightList() {
-        final ListView listView = (ListView) findViewById(R.id.right_directory_list);
-        final List<ListViewItem> filesList = new ArrayList<ListViewItem>();
-        filesList.add(new ListViewItem(true, true, StringUtil.PARENT_DOTS,
-                -1, 0l));
-        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
-            @Override
-            public void processDirectory(File file) {
-                try {
-                    filesList.add(new ListViewItem(
-                            true,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                                    StringUtil.DIRECTORY_LINK_PREFIX +
-                                            file.getName():
-                                    StringUtil.PATH_SEPARATOR +
-                                            file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "prepareRightList", e);
-                }
-            }
-
-            @Override
-            public void processFile(File file) {
-                try {
-                    filesList.add(new ListViewItem(
-                            false,
-                            file.canRead(),
-                            DirectoryUtil.isSymlink(file) ?
-                                    StringUtil.FILE_LINK_PREFIX +
-                                        file.getName():
-                                        file.getName(),
-                            file.getUsableSpace(),
-                            file.lastModified()));
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "prepareRightList", e);
-                }
-            }
-        }, "").start("/");
-        Collections.sort(filesList);
-        final ListViewAdapter adapter = new ListViewAdapter(this, filesList);
-        listView.setAdapter(adapter);
-        ((TerminalListView) listView).registerObserver(listController);
+        mLeftList = (ListView) findViewById(R.id.right_directory_list);
+        mRightList = (ListView) findViewById(R.id.left_directory_list);
+        List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
+        ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
+        ListViewAdapter leftListAdapter = new ListViewAdapter(this, listInfo);
+        ListViewAdapter rightListAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo));
+        mLeftList.setAdapter(leftListAdapter);
+        mRightList.setAdapter(rightListAdapter);
     }
 
     @Override
@@ -199,17 +103,6 @@ public class TerminalActivity extends Activity {
     }
 
     private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressBar;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar = new ProgressDialog(TerminalActivity.this);
-            progressBar.setCancelable(true);
-            progressBar.setMessage("Data downloading ...");
-            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressBar.show();
-        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -224,7 +117,6 @@ public class TerminalActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             initViews();
-            progressBar.dismiss();
         }
     }
 

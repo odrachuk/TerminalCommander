@@ -5,11 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.drk.terminal.ui.widget.listview.observer.ListViewObservable;
-import com.drk.terminal.ui.widget.listview.observer.ListViewObserver;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Toast;
+import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.adapter.ListViewAdapter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,8 +16,7 @@ import java.util.List;
  * Time: 7:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TerminalListView extends ListView implements ListViewObservable {
-    private List<ListViewObserver> observers;
+public class TerminalListView extends ListView {
 
     public TerminalListView(Context context) {
         this(context, null);
@@ -31,7 +28,6 @@ public class TerminalListView extends ListView implements ListViewObservable {
     }
 
     private void initList() {
-        observers = new ArrayList<ListViewObserver>();
         setOnItemClickListener(makeItemClickListener());
     }
 
@@ -39,28 +35,30 @@ public class TerminalListView extends ListView implements ListViewObservable {
         return new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                notifyObservers(position);
+                ListViewAdapter adapter = (ListViewAdapter) getAdapter();
+                ListViewItem selectedItem = (ListViewItem) getAdapter().getItem(position);
+                if (selectedItem.isParentDots()) {
+                    String backPath = adapter.getBackPath();
+                    if (backPath != null) {
+                        adapter.changeDirectory(backPath);
+                        smoothScrollToPosition(0);
+                    }
+                } else if (selectedItem.isDirectory()) {
+                    if (selectedItem.canRead()) {
+                        adapter.changeDirectory(selectedItem.getFileName());
+                        smoothScrollToPosition(0);
+                    } else {
+                        Toast.makeText(getContext(), "Selected directory: " +
+                                ((ListViewItem) getAdapter().getItem(position)).getFileName(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // todo start opening
+                    Toast.makeText(getContext(), "Selected file: " +
+                            ((ListViewItem) getAdapter().getItem(position)).getFileName(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         };
-    }
-
-    @Override
-    public void registerObserver(ListViewObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(ListViewObserver observer) {
-        int i = observers.indexOf(observer);
-        if (i >= 0) {
-            observers.remove(i);
-        }
-    }
-
-    @Override
-    public void notifyObservers(int selectedPosition) {
-        for (ListViewObserver o : observers) {
-            o.onItemSelected(this, selectedPosition);
-        }
     }
 }
