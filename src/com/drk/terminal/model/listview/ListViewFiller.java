@@ -1,18 +1,13 @@
 package com.drk.terminal.model.listview;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ListView;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
-import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

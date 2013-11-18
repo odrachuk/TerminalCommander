@@ -1,7 +1,8 @@
 package com.drk.terminal.model.filesystem;
 
-import java.util.regex.*;
-import java.io.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.

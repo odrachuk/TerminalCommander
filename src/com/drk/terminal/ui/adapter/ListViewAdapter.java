@@ -3,20 +3,15 @@ package com.drk.terminal.ui.adapter;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.drk.terminal.R;
-import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
-import com.drk.terminal.utils.DirectoryUtil;
 import com.drk.terminal.utils.StringUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 /**
