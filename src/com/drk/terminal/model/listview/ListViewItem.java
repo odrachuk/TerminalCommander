@@ -18,17 +18,15 @@ public class ListViewItem implements Comparable<ListViewItem> {
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
-    private final boolean isDirectory;
-    private final boolean canRead;
+    private String absPath;
+    private boolean isDirectory;
+    private boolean isLink;
+    private boolean canRead;
     private SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
 
-    public ListViewItem(boolean isDirectory,
-                        boolean canRead,
-                        String fileName,
+    public ListViewItem(String fileName,
                         long fileSize,
                         long fileModifyTime) {
-        this.isDirectory = isDirectory;
-        this.canRead = canRead;
         this.fileName = fileName;
         this.fileSize = readableFileSize(fileSize);
         this.fileModifyTime = sdf.format(fileModifyTime);
@@ -58,12 +56,40 @@ public class ListViewItem implements Comparable<ListViewItem> {
         return fileName;
     }
 
+    public ListViewItem setIsDirectory(boolean isDirectory) {
+        this.isDirectory = isDirectory;
+        return this;
+    }
+
     public boolean isDirectory() {
         return isDirectory;
     }
 
+    public ListViewItem setCanRead(boolean canRead) {
+        this.canRead = canRead;
+        return this;
+    }
+
     public boolean canRead() {
         return canRead;
+    }
+
+    public ListViewItem setAbsPath(String absPath) {
+        this.absPath = absPath;
+        return this;
+    }
+
+    public String getAbsPath() {
+        return absPath;
+    }
+
+    public ListViewItem setIsLink(boolean isLink) {
+        this.isLink = isLink;
+        return this;
+    }
+
+    public boolean isLink() {
+        return isLink;
     }
 
     public boolean isParentDots() {
