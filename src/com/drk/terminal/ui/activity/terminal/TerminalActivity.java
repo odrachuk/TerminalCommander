@@ -154,10 +154,16 @@ public class TerminalActivity extends Activity {
                     }
                 } else if (selectedItem.isDirectory()) {
                     if (selectedItem.canRead()) {
-                        String absPath = selectedItem.getAbsPath();
-                        String realPath = selectedItem.getFileName();
-                        Log.d(LOG_TAG, "abs: " + absPath + "<>" + realPath + " :real");
-                        adapter.changeDirectory(realPath);
+                        if (selectedItem.isLink()) {
+                            Toast.makeText(TerminalActivity.this,
+                                    "Link: " + selectedItem.getAbsPath(), Toast.LENGTH_SHORT).show();
+                            String[] splitPath = selectedItem.getAbsPath().
+                                    substring(1).split(StringUtil.PATH_SEPARATOR);
+                            adapter.clearBackPath(splitPath);
+                            adapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        } else {
+                            adapter.changeDirectory(selectedItem.getFileName());
+                        }
                         listView.smoothScrollToPosition(0);
                     } else {
                         Toast.makeText(TerminalActivity.this, "Selected directory: " +

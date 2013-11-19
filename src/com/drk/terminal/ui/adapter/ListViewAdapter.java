@@ -3,6 +3,7 @@ package com.drk.terminal.ui.adapter;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -61,16 +62,18 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         } else {
             String prevPath = pathStack.getLast();
             if (!prevPath.equals(path)) {
+                String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR)?
+                        path.substring(1) : path;
                 pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
-                        prevPath + path.substring(1) :
-                        prevPath + StringUtil.PATH_SEPARATOR + path.substring(1)); // todo links not correct presentation
+                        prevPath + correctPath :
+                        prevPath + StringUtil.PATH_SEPARATOR + correctPath);
             }
         }
         // update filesystem
         inFirst = true;
         filesInfo.clear();
         labelPath = pathStack.getLast();
-        ListViewFiller.fillingList(filesInfo, path, notifyHandler);
+        ListViewFiller.fillingList(filesInfo, labelPath, notifyHandler);
     }
 
     private void initCache(ViewGroup parent) {
@@ -129,6 +132,19 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             }
         }
         return viewHolder.view;
+    }
+
+    public void clearBackPath(String[] newBackPathInArray) {
+        pathStack.clear();
+        pathStack.add(StringUtil.PATH_SEPARATOR);
+        for (int i = 0; i < newBackPathInArray.length - 1; i++) {
+            if (pathStack.getLast().equals(StringUtil.PATH_SEPARATOR)) {
+                pathStack.add(pathStack.getLast() + newBackPathInArray[i]);
+            } else {
+                pathStack.add(pathStack.getLast() + StringUtil.PATH_SEPARATOR + newBackPathInArray[i]);
+            }
+        }
+        Log.d(LOG_TAG, "After clearing in link");
     }
 
     public String getBackPath() {
