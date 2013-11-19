@@ -26,10 +26,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
     private final SelectionStrategy selectionStrategy;
     private final List<ListViewItem> filesInfo;
+    private final LinkedList<String> pathStack;
+    private Map<Integer, ViewHolder> cache;
     private final Activity activity;
-    private Map<Integer, View> cache;
     private boolean inFirst = true;
-    private LinkedList<String> pathStack;
 
     private final Handler notifyHandler = new Handler() {
         @Override
@@ -66,60 +66,62 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         ListViewFiller.fillingList(filesInfo, path, notifyHandler);
     }
 
+    private void initCache(ViewGroup parent) {
+        cache = new LinkedHashMap<Integer, ViewHolder>(getCount());
+        for (int i = 0; i < getCount(); i++) {
+            ViewHolder viewHolder = new ViewHolder();
+            View rowView = activity.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
+            viewHolder.view = rowView;
+            viewHolder.fileNameView = (TextView) rowView.findViewById(R.id.file_name);
+            viewHolder.fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
+            viewHolder.fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
+            ListViewItem info = filesInfo.get(i);
+            viewHolder.fileNameView.setText(info.getFileName());
+            viewHolder.fileSizeView.setText(info.getFileSize());
+            viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
+            if (!info.isDirectory()) {
+                viewHolder.fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                viewHolder.fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+                viewHolder.fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
+            }
+            cache.put(i, viewHolder);
+        }
+        inFirst = false;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (inFirst) {
             initCache(parent);
         }
-        View rowView = cache.get(position);
+        ViewHolder viewHolder = cache.get(position);
         if (selectionStrategy.getSelectedItems().contains(position)) {
-            ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+            viewHolder.fileNameView.setTextColor(
                     activity.getResources().getColor(R.color.COLOR_FFFF00));
-            ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+            viewHolder.fileSizeView.setTextColor(
                     activity.getResources().getColor(R.color.COLOR_FFFF00));
-            ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+            viewHolder.fileModifyTimeView.setTextColor(
                     activity.getResources().getColor(R.color.COLOR_FFFF00));
         }
         if (selectionStrategy.getUnselectedItems().contains(position)) {
             ListViewItem info = filesInfo.get(position);
             if (info.isDirectory()) {
-                ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+                viewHolder.fileNameView.setTextColor(
                         activity.getResources().getColor(android.R.color.white));
-                ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+                viewHolder.fileSizeView.setTextColor(
                         activity.getResources().getColor(android.R.color.white));
-                ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+                viewHolder.fileModifyTimeView.setTextColor(
                         activity.getResources().getColor(android.R.color.white));
             } else {
-                ((TextView) rowView.findViewById(R.id.file_name)).setTextColor(
+                viewHolder.fileNameView.setTextColor(
                         activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                ((TextView) rowView.findViewById(R.id.file_size)).setTextColor(
+                viewHolder.fileSizeView.setTextColor(
                         activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                ((TextView) rowView.findViewById(R.id.file_modify_time)).setTextColor(
+                viewHolder.fileModifyTimeView.setTextColor(
                         activity.getResources().getColor(R.color.COLOR_b2b2b2));
             }
         }
-        return rowView;
-    }
-
-    private void initCache(ViewGroup parent) {
-        cache = new LinkedHashMap<Integer, View>(getCount());
-        for (int i = 0; i < getCount(); i++) {
-            View rowView = activity.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
-            TextView fileNameView = (TextView) rowView.findViewById(R.id.file_name);
-            TextView fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
-            TextView fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
-            ListViewItem info = filesInfo.get(i);
-            fileNameView.setText(info.getFileName());
-            fileSizeView.setText(info.getFileSize());
-            fileModifyTimeView.setText(info.getFileModifyTime());
-            if (!info.isDirectory()) {
-                fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
-                fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_b2b2b2));
-            }
-            cache.put(i, rowView);
-        }
-        inFirst = false;
+        return viewHolder.view;
     }
 
     public String getBackPath() {
@@ -134,5 +136,12 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
 
     public SelectionStrategy getSelectionStrategy() {
         return selectionStrategy;
+    }
+
+    class ViewHolder {
+        View view;
+        TextView fileNameView;
+        TextView fileSizeView;
+        TextView fileModifyTimeView;
     }
 }
