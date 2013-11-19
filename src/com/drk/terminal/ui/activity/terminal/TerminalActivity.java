@@ -85,9 +85,9 @@ public class TerminalActivity extends Activity {
         List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
         ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
         mLeftAdapter = new ListViewAdapter(this, listInfo,
-                new CurrentPathLabel(leftPathLabel));
+                new CurrentPathLabel(getResources(), leftPathLabel, rightPathLabel));
         mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
-                new CurrentPathLabel(rightPathLabel));
+                new CurrentPathLabel(getResources(), rightPathLabel, leftPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
@@ -158,16 +158,19 @@ public class TerminalActivity extends Activity {
     private final class ListViewItemClickListener implements AdapterView.OnItemClickListener {
         private final SelectionStrategy selectionStrategy;
         private final ListViewAdapter adapter;
+        private final CurrentPathLabel pathLabel;
         private final ListView listView;
 
         private ListViewItemClickListener(ListViewAdapter adapter, ListView listView) {
             this.adapter = adapter;
             this.listView = listView;
             this.selectionStrategy = adapter.getSelectionStrategy();
+            this.pathLabel = adapter.getPathLabel();
         }
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            pathLabel.setPath(null);
             if (selectionStrategy.isCtrlToggle() ||
                     selectionStrategy.isShiftToggle()) {
                 selectionStrategy.addSelection(position);

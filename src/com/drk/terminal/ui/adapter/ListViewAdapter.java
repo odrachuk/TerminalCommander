@@ -32,11 +32,13 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private Map<Integer, ViewHolder> cache;
     private final Activity activity;
     private boolean inFirst = true;
+    private String labelPath;
 
     private final Handler notifyHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             notifyDataSetChanged();
+            pathLabel.setPath(labelPath);
         }
     };
 
@@ -67,7 +69,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         // update filesystem
         inFirst = true;
         filesInfo.clear();
-//        pathLabel.setPath(path);
+        labelPath = path;
         ListViewFiller.fillingList(filesInfo, path, notifyHandler);
     }
 
@@ -141,6 +143,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
 
     public SelectionStrategy getSelectionStrategy() {
         return selectionStrategy;
+    }
+
+    public CurrentPathLabel getPathLabel() {
+        return pathLabel;
     }
 
     class ViewHolder {
