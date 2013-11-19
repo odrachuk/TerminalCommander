@@ -21,7 +21,7 @@ import java.util.List;
 public class ListViewFiller {
     private static final String LOG_TAG = ListViewFiller.class.getSimpleName();
 
-    public static void fillingList(final List<ListViewItem> filesList, String path, Handler notifyHandler) {
+    public static void fillingList(final List<ListViewItem> filesList, final String path, Handler notifyHandler) {
         ListViewItem firstItem = new ListViewItem(StringUtil.PARENT_DOTS, -1, 0l).setIsDirectory(true);
         filesList.add(firstItem);
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
@@ -29,7 +29,7 @@ public class ListViewFiller {
             public void processDirectory(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
-                            DirectoryUtil.isSymlink(file) ?
+                            DirectoryUtil.isSymlink(path, file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
                                             file.getName():
                                     StringUtil.PATH_SEPARATOR +
@@ -39,7 +39,7 @@ public class ListViewFiller {
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).
                             setIsDirectory(file.isDirectory()).
-                            setIsLink(DirectoryUtil.isSymlink(file));
+                            setIsLink(DirectoryUtil.isSymlink(path, file));
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);
@@ -50,7 +50,7 @@ public class ListViewFiller {
             public void processFile(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
-                            DirectoryUtil.isSymlink(file) ?
+                            DirectoryUtil.isSymlink(path, file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName():
                                     file.getName(),
@@ -59,7 +59,7 @@ public class ListViewFiller {
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).
                             setIsDirectory(file.isDirectory()).
-                            setIsLink(DirectoryUtil.isSymlink(file));
+                            setIsLink(DirectoryUtil.isSymlink(path, file));
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);

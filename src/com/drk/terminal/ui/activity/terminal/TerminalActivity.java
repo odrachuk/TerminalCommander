@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -153,7 +154,10 @@ public class TerminalActivity extends Activity {
                     }
                 } else if (selectedItem.isDirectory()) {
                     if (selectedItem.canRead()) {
-                        adapter.changeDirectory(selectedItem.getFileName());
+                        String absPath = selectedItem.getAbsPath();
+                        String realPath = selectedItem.getFileName();
+                        Log.d(LOG_TAG, "abs: " + absPath + "<>" + realPath + " :real");
+                        adapter.changeDirectory(realPath);
                         listView.smoothScrollToPosition(0);
                     } else {
                         Toast.makeText(TerminalActivity.this, "Selected directory: " +

@@ -53,7 +53,7 @@ public class DirectoryUtil {
     public static boolean checkWritePermissions(String curDirName, String subDirName) {
         boolean canWrite = false;
         File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
-        if(dir.canWrite()) {
+        if (dir.canWrite()) {
             canWrite = true;
         }
         return canWrite;
@@ -69,7 +69,7 @@ public class DirectoryUtil {
     public static boolean canChangeDirectory(String curDirName, String subDirName) {
         boolean canChange = false;
         File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
-        if(dir.canRead()) {
+        if (dir.canRead()) {
             canChange = true;
         }
         return canChange;
@@ -99,10 +99,14 @@ public class DirectoryUtil {
         return resultPath.toString();
     }
 
-    public static boolean isSymlink(File file) throws IOException {
+    public static boolean isSymlink(String parentPath, File file) throws IOException {
         if (file == null) {
             throw new NullPointerException("File must not be null");
         }
-        return file.getAbsolutePath().lastIndexOf(StringUtil.PATH_SEPARATOR) > 0;
+        String presentPath = parentPath.equals(StringUtil.PATH_SEPARATOR)?
+                StringUtil.PATH_SEPARATOR + file.getName() :
+                parentPath + StringUtil.PATH_SEPARATOR + file.getName();
+        String realPath = file.getAbsolutePath();
+        return !presentPath.equals(realPath);
     }
 }
