@@ -19,10 +19,10 @@ public class ProcessController {
     private UiController mUiController;
     private TerminalCommander mProcess;
 
-    public ProcessController(UiController uiController) {
+    public ProcessController(UiController uiController, String path) {
         Log.d(LOG_TAG, "constructor");
         mUiController = uiController;
-        createTerminalProcess("/");
+        createTerminalProcess(path);
     }
 
     /**

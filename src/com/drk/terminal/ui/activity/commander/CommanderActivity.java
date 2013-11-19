@@ -2,6 +2,7 @@ package com.drk.terminal.ui.activity.commander;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
@@ -14,9 +15,11 @@ import com.drk.terminal.R;
 import com.drk.terminal.comm.controller.KeyboardController;
 import com.drk.terminal.comm.controller.ProcessController;
 import com.drk.terminal.comm.controller.UiController;
+import com.drk.terminal.utils.StringUtil;
 
 public class CommanderActivity extends Activity {
     private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
+    public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
 
     private ProcessController mProcessController;
     private KeyboardController mProcessKeyboardController;
@@ -77,15 +80,30 @@ public class CommanderActivity extends Activity {
     }
 
     @Override
+    public void finish() {
+        // Prepare data intent
+        Intent data = new Intent();
+        data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data);
+        super.finish();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mProcessController.onDestroyExecutionProcess();
     }
 
     private void init() {
+        Intent startIntent = getIntent();
+        String path = StringUtil.PATH_SEPARATOR;
+        if (startIntent != null) {
+            path = startIntent.getStringExtra(WORK_PATH_EXTRA);
+        }
         // create controllers
         mProcessUiController = new UiController(this, mTerminalInView, mTerminalOutView, mTerminalPromptView);
-        mProcessController = new ProcessController(mProcessUiController);
+        mProcessController = new ProcessController(mProcessUiController, path);
         mProcessKeyboardController = new KeyboardController(mProcessUiController, mProcessController);
         // config ui components
         mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());

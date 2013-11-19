@@ -53,6 +53,13 @@ public class CurrentPathLabel {
                 return path;
             }
         }
+    }
 
+    public String getCurrentLabel() {
+        return ownLabel.getText().toString();
+    }
+
+    public TextView getOwnLabel() {
+        return ownLabel;
     }
 }

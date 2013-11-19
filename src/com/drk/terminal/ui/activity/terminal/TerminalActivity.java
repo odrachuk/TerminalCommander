@@ -30,9 +30,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    public static final int REQUEST_CODE = 0;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
+    private boolean isLeftActive = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,25 @@ public class TerminalActivity extends Activity {
     protected void onResume() {
         super.onResume();
         new LoadInfoTask().execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            if (data.hasExtra(CommanderActivity.WORK_PATH_EXTRA)) {
+                String pathFromCommander = data.getStringExtra(CommanderActivity.WORK_PATH_EXTRA);
+                String[] splitPath = pathFromCommander.
+                        substring(1).split(StringUtil.PATH_SEPARATOR);
+                if (isLeftActive) {
+                    // todo save instance state on this activity
+                    mLeftAdapter.clearBackPath(splitPath);
+                    mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                } else {
+                    mRightAdapter.clearBackPath(splitPath);
+                    mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                }
+            }
+        }
     }
 
     private void initViews() {
@@ -139,6 +160,11 @@ public class TerminalActivity extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (pathLabel.getOwnLabel().getId() == R.id.path_location_in_left) {
+                isLeftActive = true;
+            } else {
+                isLeftActive = false;
+            }
             pathLabel.setPath(null);
             if (selectionStrategy.isCtrlToggle() ||
                     selectionStrategy.isShiftToggle()) {
@@ -208,7 +234,10 @@ public class TerminalActivity extends Activity {
             int viewId = v.getId();
             if (viewId == R.id.action_commander) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
-                startActivity(startIntent);
+                startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
+                        isLeftActive? mLeftAdapter.getPathLabel().getCurrentLabel() :
+                                        mRightAdapter.getPathLabel().getCurrentLabel());
+                startActivityForResult(startIntent, REQUEST_CODE);
             }
         }
     };
