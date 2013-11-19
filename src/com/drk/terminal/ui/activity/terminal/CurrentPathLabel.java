@@ -27,11 +27,18 @@ public class CurrentPathLabel {
         ownLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
         alienLabel.setTextColor(resources.getColor(R.color.COLOR_b2b2b2));
         if (path != null) {
-            ownLabel.setText(path);
+            ownLabel.setText(cutIfNeeds(path));
         }
     }
 
-    private String preparePath() {
-       return null;
+    // todo dimension variant should be
+    private String cutIfNeeds(String path) {
+        if (path.length() > 12) {
+            StringBuilder result = new StringBuilder();
+            result.append(path.substring(0, 10)).append("..");
+            return result.toString();
+        } else {
+            return path;
+        }
     }
 }
