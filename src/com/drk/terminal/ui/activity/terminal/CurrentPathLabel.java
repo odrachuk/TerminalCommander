@@ -30,4 +30,8 @@ public class CurrentPathLabel {
             ownLabel.setText(path);
         }
     }
+
+    private String preparePath() {
+       return null;
+    }
 }

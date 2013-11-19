@@ -69,7 +69,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         // update filesystem
         inFirst = true;
         filesInfo.clear();
-        labelPath = path;
+        labelPath = pathStack.getLast();
         ListViewFiller.fillingList(filesInfo, path, notifyHandler);
     }
 

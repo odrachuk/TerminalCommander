@@ -29,38 +29,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
-    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.action_shift) {
-                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                if (isChecked && mCtrlBtn.isChecked()) {
-                    mCtrlBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
-                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
-                }
-            } else if (buttonView.getId() == R.id.action_ctrl) {
-                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                if (isChecked && mShiftBtn.isChecked()) {
-                    mShiftBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
-                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
-                }
-            }
-        }
-    };
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_commander) {
-                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
-                startActivity(startIntent);
-            }
-        }
-    };
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
@@ -200,4 +168,38 @@ public class TerminalActivity extends Activity {
             }
         }
     }
+
+    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView.getId() == R.id.action_shift) {
+                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                if (isChecked && mCtrlBtn.isChecked()) {
+                    mCtrlBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
+                }
+            } else if (buttonView.getId() == R.id.action_ctrl) {
+                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                if (isChecked && mShiftBtn.isChecked()) {
+                    mShiftBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
+                }
+            }
+        }
+    };
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_commander) {
+                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
+                startActivity(startIntent);
+            }
+        }
+    };
 }
