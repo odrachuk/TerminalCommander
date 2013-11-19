@@ -3,6 +3,7 @@ package com.drk.terminal.ui.activity.terminal;
 import android.content.res.Resources;
 import android.widget.TextView;
 import com.drk.terminal.R;
+import com.drk.terminal.utils.OrientationUtil;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +13,8 @@ import com.drk.terminal.R;
  * To change this template use File | Settings | File Templates.
  */
 public class CurrentPathLabel {
+    private static final int MAX_PORTRAIT_SYMBOLS = 12;
+    private static final int MAX_LANDSCAPE_SYMBOLS = 20;
     private final TextView ownLabel;
     private final TextView alienLabel;
     private final Resources resources;
@@ -31,14 +34,25 @@ public class CurrentPathLabel {
         }
     }
 
-    // todo dimension variant should be
+    // todo dimension variant should be and prefix logic not postfix
     private String cutIfNeeds(String path) {
-        if (path.length() > 12) {
-            StringBuilder result = new StringBuilder();
-            result.append(path.substring(0, 10)).append("..");
-            return result.toString();
+        if (OrientationUtil.isLandscapeOrientation(resources)) {
+            if (path.length() > MAX_LANDSCAPE_SYMBOLS) {
+                StringBuilder result = new StringBuilder();
+                result.append(path.substring(0, MAX_LANDSCAPE_SYMBOLS - 2)).append("..");
+                return result.toString();
+            } else {
+                return path;
+            }
         } else {
-            return path;
+            if (path.length() > MAX_PORTRAIT_SYMBOLS) {
+                StringBuilder result = new StringBuilder();
+                result.append(path.substring(0, MAX_PORTRAIT_SYMBOLS - 2)).append("..");
+                return result.toString();
+            } else {
+                return path;
+            }
         }
+
     }
 }
