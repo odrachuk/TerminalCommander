@@ -76,7 +76,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="16sp"
-                      android:text="/local"
+                      android:text="@string/slash"
                       android:textColor="@color/COLOR_b2b2b2"
                       android:maxWidth="@dimen/terminal_local_path_max_width"
                       android:layout_toRightOf="@id/top_border_image_2_in_left"
@@ -127,7 +127,7 @@
                     android:id="@+id/left_list_title"
                     layout="@layout/terminal_list_title_layout"/>
             <!--listview-->
-            <com.drk.terminal.ui.widget.listview.TerminalListView
+            <ListView
                     android:id="@+id/left_directory_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -203,7 +203,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="16sp"
-                      android:text="/local/term"
+                      android:text="@string/slash"
                       android:textColor="@color/COLOR_b2b2b2"
                       android:maxWidth="@dimen/terminal_local_path_max_width"
                       android:layout_toRightOf="@id/top_border_image_2_in_right"
@@ -254,7 +254,7 @@
                     android:id="@+id/right_list_title"
                     layout="@layout/terminal_list_title_layout"/>
             <!--listview-->
-            <com.drk.terminal.ui.widget.listview.TerminalListView
+            <ListView
                     android:id="@+id/right_directory_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

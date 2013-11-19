@@ -8,10 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ListView;
-import android.widget.ToggleButton;
+import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
@@ -32,6 +29,38 @@ import java.util.concurrent.TimeUnit;
  */
 public class TerminalActivity extends Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView.getId() == R.id.action_shift) {
+                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                if (isChecked && mCtrlBtn.isChecked()) {
+                    mCtrlBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
+                }
+            } else if (buttonView.getId() == R.id.action_ctrl) {
+                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                if (isChecked && mShiftBtn.isChecked()) {
+                    mShiftBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
+                }
+            }
+        }
+    };
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_commander) {
+                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
+                startActivity(startIntent);
+            }
+        }
+    };
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
@@ -49,14 +78,20 @@ public class TerminalActivity extends Activity {
     }
 
     private void initViews() {
-        mLeftList = (ListView) findViewById(R.id.right_directory_list);
-        mRightList = (ListView) findViewById(R.id.left_directory_list);
+        mLeftList = (ListView) findViewById(R.id.left_directory_list);
+        mRightList = (ListView) findViewById(R.id.right_directory_list);
+        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
+        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
         List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
         ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
-        mLeftAdapter = new ListViewAdapter(this, listInfo);
-        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo));
+        mLeftAdapter = new ListViewAdapter(this, listInfo,
+                new CurrentPathLabel(leftPathLabel));
+        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
+                new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
+        mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
+        mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
     }
 
     @Override
@@ -120,37 +155,46 @@ public class TerminalActivity extends Activity {
         }
     }
 
-    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.action_shift) {
-                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                if (isChecked && mCtrlBtn.isChecked()) {
-                    mCtrlBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
-                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
-                }
-            } else if (buttonView.getId() == R.id.action_ctrl) {
-                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                if (isChecked && mShiftBtn.isChecked()) {
-                    mShiftBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
-                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
-                }
-            }
-        }
-    };
+    private final class ListViewItemClickListener implements AdapterView.OnItemClickListener {
+        private final SelectionStrategy selectionStrategy;
+        private final ListViewAdapter adapter;
+        private final ListView listView;
 
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        private ListViewItemClickListener(ListViewAdapter adapter, ListView listView) {
+            this.adapter = adapter;
+            this.listView = listView;
+            this.selectionStrategy = adapter.getSelectionStrategy();
+        }
+
         @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_commander) {
-                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
-                startActivity(startIntent);
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (selectionStrategy.isCtrlToggle() ||
+                    selectionStrategy.isShiftToggle()) {
+                selectionStrategy.addSelection(position);
+            } else {
+                selectionStrategy.clear();
+                ListViewItem selectedItem = adapter.getItem(position);
+                if (selectedItem.isParentDots()) {
+                    String backPath = adapter.getBackPath();
+                    if (backPath != null) {
+                        adapter.changeDirectory(backPath);
+                        listView.smoothScrollToPosition(0);
+                    }
+                } else if (selectedItem.isDirectory()) {
+                    if (selectedItem.canRead()) {
+                        adapter.changeDirectory(selectedItem.getFileName());
+                        listView.smoothScrollToPosition(0);
+                    } else {
+                        Toast.makeText(TerminalActivity.this, "Selected directory: " +
+                                adapter.getItem(position).getFileName(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(TerminalActivity.this, "Selected file: " +
+                            adapter.getItem(position).getFileName(),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         }
-    };
+    }
 }

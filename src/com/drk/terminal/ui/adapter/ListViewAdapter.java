@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.activity.terminal.CurrentPathLabel;
 import com.drk.terminal.ui.activity.terminal.SelectionStrategy;
 import com.drk.terminal.utils.StringUtil;
 
@@ -25,6 +26,7 @@ import java.util.*;
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
     private final SelectionStrategy selectionStrategy;
+    private final CurrentPathLabel pathLabel;
     private final List<ListViewItem> filesInfo;
     private final LinkedList<String> pathStack;
     private Map<Integer, ViewHolder> cache;
@@ -39,10 +41,12 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     };
 
     public ListViewAdapter(Activity activity,
-                           List<ListViewItem> filesInfo) {
+                           List<ListViewItem> filesInfo,
+                           CurrentPathLabel pathLabel) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.activity = activity;
         this.filesInfo = filesInfo;
+        this.pathLabel = pathLabel;
         this.selectionStrategy = new SelectionStrategy(this);
         pathStack = new LinkedList<String>();
         pathStack.add(StringUtil.PATH_SEPARATOR);
@@ -63,6 +67,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         // update filesystem
         inFirst = true;
         filesInfo.clear();
+//        pathLabel.setPath(path);
         ListViewFiller.fillingList(filesInfo, path, notifyHandler);
     }
 
