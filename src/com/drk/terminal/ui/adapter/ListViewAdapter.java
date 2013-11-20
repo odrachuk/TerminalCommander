@@ -161,6 +161,14 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         return selectionStrategy;
     }
 
+    public List<ListViewItem> getSelectedItems() {
+        List<ListViewItem> selectedItems = new ArrayList<ListViewItem>();
+        for (Integer selectedPosition : selectionStrategy.getSelectedItems()) {
+            selectedItems.add(filesInfo.get(selectedPosition));
+        }
+        return selectedItems;
+    }
+
     public CurrentPathLabel getPathLabel() {
         return pathLabel;
     }

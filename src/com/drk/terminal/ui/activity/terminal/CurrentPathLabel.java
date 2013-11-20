@@ -18,6 +18,7 @@ public class CurrentPathLabel {
     private final TextView ownLabel;
     private final TextView alienLabel;
     private final Resources resources;
+    private String fullPath;
 
     public CurrentPathLabel(Resources resources,
                             TextView ownLabel, TextView alienLabel) {
@@ -27,6 +28,7 @@ public class CurrentPathLabel {
     }
 
     public void setPath(String path) {
+        fullPath = path;
         ownLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
         alienLabel.setTextColor(resources.getColor(R.color.COLOR_b2b2b2));
         if (path != null) {
@@ -61,5 +63,9 @@ public class CurrentPathLabel {
 
     public TextView getOwnLabel() {
         return ownLabel;
+    }
+
+    public String getFullPath() {
+        return fullPath;
     }
 }

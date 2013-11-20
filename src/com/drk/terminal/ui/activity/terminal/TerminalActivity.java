@@ -16,9 +16,14 @@ import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.TerminalProgressActivity;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
+import com.drk.terminal.ui.command.CopyFileCommand;
+import com.drk.terminal.ui.command.DeleteFileCommand;
+import com.drk.terminal.ui.command.MakeDirectoryCommand;
+import com.drk.terminal.ui.command.MoveRenameFileCommand;
 import com.drk.terminal.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,13 +40,14 @@ public class TerminalActivity extends Activity {
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private boolean isLeftActive = true;
+    private ActivePage activePage = ActivePage.LEFT;
     private boolean isPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
+        initView();
     }
 
     @Override
@@ -68,19 +74,29 @@ public class TerminalActivity extends Activity {
                 String pathFromCommander = data.getStringExtra(CommanderActivity.WORK_PATH_EXTRA);
                 String[] splitPath = pathFromCommander.
                         substring(1).split(StringUtil.PATH_SEPARATOR);
-                if (isLeftActive) {
-                    // todo save instance state on this activity
-                    mLeftAdapter.clearBackPath(splitPath);
-                    mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
-                } else {
-                    mRightAdapter.clearBackPath(splitPath);
-                    mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                switch (activePage) {
+                    case LEFT:
+                        // todo save instance state on this activity
+                        mLeftAdapter.clearBackPath(splitPath);
+                        mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        break;
+                    case RIGHT:
+                        mRightAdapter.clearBackPath(splitPath);
+                        mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        break;
                 }
             }
         }
     }
 
-    private void initViews() {
+    private void initView() {
+        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
+    }
+
+    private void initLists() {
         mLeftList = (ListView) findViewById(R.id.left_directory_list);
         mRightList = (ListView) findViewById(R.id.right_directory_list);
         TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
@@ -141,6 +157,14 @@ public class TerminalActivity extends Activity {
         }
     }
 
+    public ListViewAdapter getLeftListAdapter() {
+        return mLeftAdapter;
+    }
+
+    public ListViewAdapter getRightListAdapter() {
+        return mRightAdapter;
+    }
+
     private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -155,7 +179,7 @@ public class TerminalActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
-            initViews();
+            initLists();
         }
     }
 
@@ -175,9 +199,9 @@ public class TerminalActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (pathLabel.getOwnLabel().getId() == R.id.path_location_in_left) {
-                isLeftActive = true;
+                activePage = ActivePage.LEFT;
             } else {
-                isLeftActive = false;
+                activePage = ActivePage.RIGHT;
             }
             pathLabel.setPath(null);
             if (selectionStrategy.isCtrlToggle() ||
@@ -247,12 +271,28 @@ public class TerminalActivity extends Activity {
             if (viewId == R.id.action_commander) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
                 startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
-                        isLeftActive? mLeftAdapter.getPathLabel().getCurrentLabel() :
+                        activePage == ActivePage.LEFT? mLeftAdapter.getPathLabel().getCurrentLabel() :
                                         mRightAdapter.getPathLabel().getCurrentLabel());
                 startActivityForResult(startIntent, REQUEST_CODE);
+            } else if (viewId == R.id.copy_btn) {
+                String destinationLocation = activePage != ActivePage.LEFT? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
+            } else if (viewId == R.id.rename_btn) {
+                new MoveRenameFileCommand(TerminalActivity.this, getOperationItems()).onExecute();
+            } else if (viewId == R.id.mkdir_btn) {
+                new MakeDirectoryCommand(TerminalActivity.this, getOperationItems().get(0)).onExecute();
+            } else if (viewId == R.id.delete_btn) {
+                String currentLocation = activePage == ActivePage.LEFT? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                new DeleteFileCommand(TerminalActivity.this, getOperationItems(), currentLocation).onExecute();
             }
         }
     };
+
+    private List<ListViewItem> getOperationItems() {
+        return activePage == ActivePage.LEFT? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
+    }
 
     public void showProgress() {
         startActivity(new Intent(this, TerminalProgressActivity.class));
@@ -260,5 +300,14 @@ public class TerminalActivity extends Activity {
 
     public void hideProgress() {
         sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
+    }
+
+    public ActivePage getActivePage() {
+        return activePage;
+    }
+
+    public enum ActivePage {
+        LEFT,
+        RIGHT
     }
 }
