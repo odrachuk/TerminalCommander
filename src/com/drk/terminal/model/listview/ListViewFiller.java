@@ -3,7 +3,7 @@ package com.drk.terminal.model.listview;
 import android.os.Handler;
 import android.util.Log;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
-import com.drk.terminal.utils.DirectoryUtil;
+import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
@@ -29,7 +29,7 @@ public class ListViewFiller {
             public void processDirectory(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
-                            DirectoryUtil.isSymlink(path, file) ?
+                            FileUtil.isSymlink(path, file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
                                             file.getName():
                                     StringUtil.PATH_SEPARATOR +
@@ -39,7 +39,7 @@ public class ListViewFiller {
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).
                             setIsDirectory(file.isDirectory()).
-                            setIsLink(DirectoryUtil.isSymlink(path, file));
+                            setIsLink(FileUtil.isSymlink(path, file));
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);
@@ -50,7 +50,7 @@ public class ListViewFiller {
             public void processFile(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
-                            DirectoryUtil.isSymlink(path, file) ?
+                            FileUtil.isSymlink(path, file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName():
                                     file.getName(),
@@ -59,7 +59,7 @@ public class ListViewFiller {
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).
                             setIsDirectory(file.isDirectory()).
-                            setIsLink(DirectoryUtil.isSymlink(path, file));
+                            setIsLink(FileUtil.isSymlink(path, file));
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);

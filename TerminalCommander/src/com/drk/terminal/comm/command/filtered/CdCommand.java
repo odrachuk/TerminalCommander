@@ -2,7 +2,7 @@ package com.drk.terminal.comm.command.filtered;
 
 import com.drk.terminal.comm.TerminalCommander;
 import com.drk.terminal.comm.command.Command;
-import com.drk.terminal.utils.DirectoryUtil;
+import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import static com.drk.terminal.utils.StringUtil.EMPTY;
@@ -22,8 +22,8 @@ public class CdCommand implements Command {
         String allCommand = terminalProcess.getCommandText().trim();
         if (allCommand.indexOf(' ') > 0) {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-            if (DirectoryUtil.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
-                if (!DirectoryUtil.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
+            if (FileUtil.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
+                if (!FileUtil.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
                     callbackString += "Cannot read filesystem";
                 }
             } else {
@@ -42,13 +42,13 @@ public class CdCommand implements Command {
             String allCommand = terminalProcess.getCommandText().trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-                targetDirectory = DirectoryUtil.trimLastSlash(targetDirectory);
+                targetDirectory = FileUtil.trimLastSlash(targetDirectory);
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).
                             getTransformedPath(terminalProcess.getProcessPath(), targetDirectory));
                 } else {
-                    targetFullPath.append(DirectoryUtil.buildDirectoryPath(terminalProcess.getProcessPath(),
+                    targetFullPath.append(FileUtil.buildDirectoryPath(terminalProcess.getProcessPath(),
                             targetDirectory));
                 }
                 terminalProcess.onChangeDirectory(targetFullPath.toString());

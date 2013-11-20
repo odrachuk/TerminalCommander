@@ -195,8 +195,6 @@ public class TerminalActivity extends Activity {
                 } else if (selectedItem.isDirectory()) {
                     if (selectedItem.canRead()) {
                         if (selectedItem.isLink()) {
-                            Toast.makeText(TerminalActivity.this,
-                                    "Link: " + selectedItem.getAbsPath(), Toast.LENGTH_SHORT).show();
                             String[] splitPath = selectedItem.getAbsPath().
                                     substring(1).split(StringUtil.PATH_SEPARATOR);
                             adapter.clearBackPath(splitPath);
