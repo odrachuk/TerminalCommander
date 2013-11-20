@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="terminal_list_item__style">
+    <style name="Terminal_Theme" parent="android:Theme.Holo.Light"/>
+    <style name="Terminal_Theme.List_Item_Style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center_vertical</item>
@@ -12,16 +13,16 @@
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:layout_marginRight">3dp</item>
     </style>
-    <style name="terminal_list_item_left_align_style" parent="terminal_list_item__style">
+    <style name="Terminal_Theme.List_Item_Left_Align_Style" parent="Terminal_Theme.List_Item_Style">
         <item name="android:layout_alignParentLeft">true</item>
     </style>
-    <style name="terminal_list_item_right_align_style" parent="terminal_list_item__style">
+    <style name="Terminal_Theme.List_Item_Right_Align_Style" parent="Terminal_Theme.List_Item_Style">
         <item name="android:layout_alignParentRight">true</item>
     </style>
-    <style name="terminal_list_item_center_align_style" parent="terminal_list_item__style">
+    <style name="Terminal_Theme.List_Item_Center_Align_Style" parent="Terminal_Theme.List_Item_Style">
         <item name="android:layout_centerInParent">true</item>
     </style>
-    <style name="terminal_list_title_style">
+    <style name="Terminal_Theme.List_Title_Style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>

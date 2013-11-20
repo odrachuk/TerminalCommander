@@ -11,7 +11,7 @@
             android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/file_modify_time"
-                style="@style/terminal_list_title_style"
+                style="@style/Terminal_Theme.List_Title_Style"
                 android:text="@string/title_file_modify_time"/>
     </RelativeLayout>
     <RelativeLayout
@@ -31,7 +31,7 @@
               android:layout_alignParentRight="true"/>
         <TextView
                 android:id="@+id/file_size"
-                style="@style/terminal_list_title_style"
+                style="@style/Terminal_Theme.List_Title_Style"
                 android:text="@string/title_file_size"/>
     </RelativeLayout>
     <RelativeLayout
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/file_name"
-                style="@style/terminal_list_title_style"
+                style="@style/Terminal_Theme.List_Title_Style"
                 android:text="@string/title_file_name"/>
     </RelativeLayout>
 </RelativeLayout>

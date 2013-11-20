@@ -11,7 +11,7 @@
             android:layout_height="match_parent">
         <TextView
                 android:id="@+id/file_modify_time"
-                style="@style/terminal_list_item_center_align_style"/>
+                style="@style/Terminal_Theme.List_Item_Center_Align_Style"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/file_size_container"
@@ -30,7 +30,7 @@
               android:layout_alignParentRight="true"/>
         <TextView
                 android:id="@+id/file_size"
-                style="@style/terminal_list_item_right_align_style"/>
+                style="@style/Terminal_Theme.List_Item_Right_Align_Style"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/file_name_container"
@@ -39,6 +39,6 @@
             android:layout_height="match_parent">
         <TextView
                 android:id="@+id/file_name"
-                style="@style/terminal_list_item_left_align_style"/>
+                style="@style/Terminal_Theme.List_Item_Left_Align_Style"/>
     </RelativeLayout>
 </RelativeLayout>
