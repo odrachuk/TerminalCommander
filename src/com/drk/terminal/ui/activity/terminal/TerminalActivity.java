@@ -13,6 +13,7 @@ import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.activity.TerminalProgressActivity;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.utils.StringUtil;
@@ -35,6 +36,7 @@ public class TerminalActivity extends Activity {
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private boolean isLeftActive = true;
+    private boolean isPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +45,20 @@ public class TerminalActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        isPaused = true;
+    }
+
+    @Override
     protected void onResume() {
+        Log.d(LOG_TAG, "onResume");
         super.onResume();
-        new LoadInfoTask().execute();
+        if (!isPaused) {
+            isPaused = false;
+            showProgress();
+            new LoadInfoTask().execute();
+        }
     }
 
     @Override
@@ -82,6 +95,7 @@ public class TerminalActivity extends Activity {
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
         mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
+        hideProgress();
     }
 
     @Override
@@ -241,4 +255,12 @@ public class TerminalActivity extends Activity {
             }
         }
     };
+
+    public void showProgress() {
+        startActivity(new Intent(this, TerminalProgressActivity.class));
+    }
+
+    public void hideProgress() {
+        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
+    }
 }

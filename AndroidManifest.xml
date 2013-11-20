@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-		  package="com.drk.terminal"
-		  android:versionCode="1"
-		  android:versionName="1.0">
+          package="com.drk.terminal"
+          android:versionCode="1"
+          android:versionName="1.0">
     <!-- For reading account information -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
 
-	<uses-sdk android:minSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="11"/>
 
-	<application
+    <application
             android:label="@string/app_name"
             android:icon="@drawable/terminal_icon"
             android:theme="@style/Terminal_Theme"
             android:hardwareAccelerated="true">
-		<activity android:name=".ui.activity.terminal.TerminalActivity"
-				  android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
+        <activity android:name=".ui.activity.terminal.TerminalActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.commander.CommanderActivity"
                   android:windowSoftInputMode="stateVisible|adjustResize"/>
-	</application>
+        <activity android:name=".ui.activity.TerminalProgressActivity"
+                  android:theme="@style/Transparent_Activity_Theme"/>
+    </application>
 </manifest>

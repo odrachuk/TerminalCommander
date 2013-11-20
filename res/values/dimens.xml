@@ -9,4 +9,5 @@
     <dimen name="terminal_list_row_height">40dp</dimen>
     <dimen name="terminal_list_padding_right">6dp</dimen>
     <dimen name="terminal_list_padding_left">6dp</dimen>
+    <dimen name="terminal_progress_bar_width_height">73dp</dimen>
 </resources>
