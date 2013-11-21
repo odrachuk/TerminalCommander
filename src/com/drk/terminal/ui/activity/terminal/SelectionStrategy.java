@@ -102,6 +102,12 @@ public class SelectionStrategy {
         }
     }
 
+    public void makeClearSelected() {
+        for (Integer i : selectedItems) {
+            removeElement(i);
+        }
+    }
+
     private void addElement(int item) {
         if (unselectedItems.contains(item)) {
             unselectedItems.remove(item);

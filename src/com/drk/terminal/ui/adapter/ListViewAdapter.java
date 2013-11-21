@@ -173,6 +173,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         return pathLabel;
     }
 
+    public void clearSelection() {
+        selectionStrategy.makeClearSelected();
+        notifyDataSetChanged();
+    }
+
     class ViewHolder {
         View view;
         TextView fileNameView;

@@ -47,9 +47,11 @@ public class CopyFileCommand implements FileCommand {
                             switch (terminalActivity.getActivePage()) {
                                 case LEFT:
                                     terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                                    terminalActivity.getLeftListAdapter().clearSelection();
                                     break;
                                 case RIGHT:
                                     terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                                    terminalActivity.getRightListAdapter().clearSelection();
                                     break;
                             }
                         } else {
