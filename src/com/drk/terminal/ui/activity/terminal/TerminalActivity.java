@@ -203,7 +203,6 @@ public class TerminalActivity extends Activity {
             } else {
                 activePage = ActivePage.RIGHT;
             }
-            pathLabel.setPath(null);
             if (selectionStrategy.isCtrlToggle() ||
                     selectionStrategy.isShiftToggle()) {
                 selectionStrategy.addSelection(position);
@@ -275,7 +274,7 @@ public class TerminalActivity extends Activity {
                                         mRightAdapter.getPathLabel().getCurrentLabel());
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (viewId == R.id.copy_btn) {
-                String destinationLocation = activePage != ActivePage.LEFT? mLeftAdapter.getPathLabel().getFullPath() :
+                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
                 new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
             } else if (viewId == R.id.rename_btn) {
@@ -283,7 +282,7 @@ public class TerminalActivity extends Activity {
             } else if (viewId == R.id.mkdir_btn) {
                 new MakeDirectoryCommand(TerminalActivity.this, getOperationItems().get(0)).onExecute();
             } else if (viewId == R.id.delete_btn) {
-                String currentLocation = activePage == ActivePage.LEFT? mLeftAdapter.getPathLabel().getFullPath() :
+                String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
                 new DeleteFileCommand(TerminalActivity.this, getOperationItems(), currentLocation).onExecute();
             }
