@@ -102,20 +102,21 @@ public class SelectionStrategy {
         }
     }
 
-    public void makeClearSelected() {
-        for (Integer i : selectedItems) {
-            removeElement(i);
+    public synchronized void makeClearSelected() {
+        Integer[] selected = selectedItems.toArray(new Integer[selectedItems.size()]);
+        for (Integer item : selected) {
+            removeElement(item);
         }
     }
 
-    private void addElement(int item) {
+    private synchronized void addElement(int item) {
         if (unselectedItems.contains(item)) {
             unselectedItems.remove(item);
         }
         selectedItems.add(item);
     }
 
-    private void removeElement(int item) {
+    private synchronized void removeElement(int item) {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item);
         }

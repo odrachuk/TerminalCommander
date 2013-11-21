@@ -37,16 +37,19 @@ public class DeleteFileCommand implements FileCommand {
                     File file = new File(item.getAbsPath());
                     if (file.canRead()) {
                         FileUtil.deleteQuietly(file);
-                        switch (terminalActivity.getActivePage()) {
-                            case LEFT:
-                                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                                break;
-                            case RIGHT:
-                                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                                break;
-                        }
                     } else {
                         Toast.makeText(terminalActivity, "No enough permission to delete source file " + file.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                    // clear selected and refresh directory after deleting
+                    switch (terminalActivity.getActivePage()) {
+                        case LEFT:
+                            terminalActivity.getLeftListAdapter().clearSelection();
+                            terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                            break;
+                        case RIGHT:
+                            terminalActivity.getRightListAdapter().clearSelection();
+                            terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                            break;
                     }
                 }
             } catch (Exception e) {

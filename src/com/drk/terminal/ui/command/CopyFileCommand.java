@@ -44,19 +44,20 @@ public class CopyFileCommand implements FileCommand {
                             } else {
                                 FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
                             }
-                            switch (terminalActivity.getActivePage()) {
-                                case LEFT:
-                                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                                    terminalActivity.getLeftListAdapter().clearSelection();
-                                    break;
-                                case RIGHT:
-                                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                                    terminalActivity.getRightListAdapter().clearSelection();
-                                    break;
-                            }
                         } else {
                             Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    // clear selected
+                    switch (terminalActivity.getActivePage()) {
+                        case LEFT:
+                            terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                            terminalActivity.getLeftListAdapter().clearSelection();
+                            break;
+                        case RIGHT:
+                            terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                            terminalActivity.getRightListAdapter().clearSelection();
+                            break;
                     }
                 } else {
                     Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
