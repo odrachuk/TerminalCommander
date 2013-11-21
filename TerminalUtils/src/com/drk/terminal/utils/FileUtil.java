@@ -629,7 +629,7 @@ public class FileUtil {
      * @throws NullPointerException if the directory is {@code null}
      * @throws java.io.IOException  if the directory cannot be created or the file already exists but is not a directory
      */
-    public static void forceMkdir(File directory) throws IOException {
+    public static void forceMakeDir(File directory) throws IOException {
         if (directory.exists()) {
             if (!directory.isDirectory()) {
                 String message =

@@ -1,7 +1,12 @@
 package com.drk.terminal.ui.command;
 
+import android.util.Log;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
+import com.drk.terminal.utils.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,12 +16,34 @@ import com.drk.terminal.ui.activity.terminal.TerminalActivity;
  * To change this template use File | Settings | File Templates.
  */
 public class MakeDirectoryCommand implements FileCommand {
-    public MakeDirectoryCommand(TerminalActivity terminalActivity, ListViewItem listViewItem) {
-        //To change body of created methods use File | Settings | File Templates.
+    private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();
+    private TerminalActivity terminalActivity;
+    private String currentPath;
+    private String directoryPath;
+
+    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryPath, String currentPath) {
+        this.terminalActivity = terminalActivity;
+        this.directoryPath = directoryPath;
+        this.currentPath = currentPath;
     }
 
     @Override
     public void onExecute() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        try {
+            FileUtil.forceMakeDir(new File(directoryPath));
+            // clear selected and refresh directory after deleting
+            switch (terminalActivity.getActivePage()) {
+                case LEFT:
+                    terminalActivity.getLeftListAdapter().clearSelection();
+                    terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                    break;
+                case RIGHT:
+                    terminalActivity.getRightListAdapter().clearSelection();
+                    terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                    break;
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "makeDirectory", e);
+        }
     }
 }

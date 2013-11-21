@@ -280,7 +280,11 @@ public class TerminalActivity extends Activity {
             } else if (viewId == R.id.rename_btn) {
                 new MoveRenameFileCommand(TerminalActivity.this, getOperationItems()).onExecute();
             } else if (viewId == R.id.mkdir_btn) {
-                new MakeDirectoryCommand(TerminalActivity.this, getOperationItems().get(0)).onExecute();
+                String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                new MakeDirectoryCommand(TerminalActivity.this,
+                        "/storage/emulated/legacy/Download/tmp-" + String.valueOf(System.nanoTime()),
+                        currentLocation).onExecute();
             } else if (viewId == R.id.delete_btn) {
                 String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
