@@ -87,13 +87,14 @@
                       android:inputType="text"
                       android:maxLines="1"
                       android:singleLine="true"
-                      android:background="@color/COLOR_C2C2C2"
-                      android:layout_below="@id/copy_dialog_describe_copy_text"/>
+                      android:textColor="@color/COLOR_525252"
+                      android:background="@drawable/dialog_edit_text_bg"
+                      android:layout_below="@id/copy_dialog_describe_copy_text"
+                      android:layout_marginBottom="@dimen/terminal_copy_dialog_describe_margin_bottom"/>
             <RelativeLayout android:id="@+id/copy_dialog_btn_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/copy_dialog_destination_input"
-                            android:layout_marginTop="@dimen/terminal_copy_dialog_btn_container_margin_top">
+                            android:layout_below="@id/copy_dialog_destination_input">
                 <View android:id="@+id/terminal_copy_dialog_btn_divider"
                       android:layout_width="1dp"
                       android:layout_height="wrap_content"
@@ -102,18 +103,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ok"
-                        android:textSize="@dimen/terminal_copy_dialog_btn_text_size"
                         android:layout_toLeftOf="@id/terminal_copy_dialog_btn_divider"
                         android:layout_alignParentBottom="true"
-                        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"/>
+                        style="@style/Terminal_Dialog_Button_Style"/>
                 <Button android:id="@+id/terminal_copy_dialog_btn_cancel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/cancel"
-                        android:textSize="@dimen/terminal_copy_dialog_btn_text_size"
                         android:layout_toRightOf="@id/terminal_copy_dialog_btn_divider"
                         android:layout_alignParentBottom="true"
-                        style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"/>
+                        style="@style/Terminal_Dialog_Button_Style"/>
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
