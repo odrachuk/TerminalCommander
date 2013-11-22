@@ -1,13 +1,11 @@
 package com.drk.terminal.ui.dialog;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.drk.terminal.R;
@@ -53,9 +51,9 @@ public class TerminalCopyDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         View v = inflater.inflate(R.layout.terminal_copy_dialog_layout, container, false);
-        TextView describeText = (TextView) v.findViewById(R.id.copy_dialog_describe_copy_text);
+        TextView describeText = (TextView) v.findViewById(R.id.terminal_copy_dialog_describe_copy_text);
         describeText.setText("Copy file \"" + mFileAbsPath + "\" to:");
-        EditText dstInput = (EditText) v.findViewById(R.id.copy_dialog_destination_input);
+        EditText dstInput = (EditText) v.findViewById(R.id.terminal_copy_dialog_destination_input);
         dstInput.setText(mDstDirAbsPath + "/");
         dstInput.setSelection(new String(mDstDirAbsPath + "/").length());
         return v;

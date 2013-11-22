@@ -294,7 +294,10 @@ public class TerminalActivity extends Activity {
             } else if (viewId == R.id.delete_btn) {
                 String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
-                new DeleteFileCommand(TerminalActivity.this, getOperationItems(), currentLocation).onExecute();
+                if (!getOperationItems().isEmpty()) {
+                    TerminalDialogUtil.showDeleteDialog(TerminalActivity.this, getOperationItems().get(0).getAbsPath());
+//                new DeleteFileCommand(TerminalActivity.this, getOperationItems(), currentLocation).onExecute();
+                }
             }
         }
     };
