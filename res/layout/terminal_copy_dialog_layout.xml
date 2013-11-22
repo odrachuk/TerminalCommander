@@ -78,7 +78,6 @@
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/white"
                       android:textSize="@dimen/terminal_copy_dialog_describe_text_size"
-                      android:text="@string/copy_file_describe"
                       android:layout_marginBottom="@dimen/terminal_copy_dialog_describe_margin_bottom"/>
             <EditText android:id="@+id/copy_dialog_destination_input"
                       android:layout_width="match_parent"

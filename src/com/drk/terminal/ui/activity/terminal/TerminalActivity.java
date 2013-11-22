@@ -274,10 +274,13 @@ public class TerminalActivity extends Activity {
                                         mRightAdapter.getPathLabel().getCurrentLabel());
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (viewId == R.id.copy_btn) {
-//                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
-//                        mRightAdapter.getPathLabel().getFullPath();
+                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
 //                new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
-                TerminalDialogUtil.showCopyDialog(TerminalActivity.this);
+                if (!getOperationItems().isEmpty()) {
+                    TerminalDialogUtil.showCopyDialog(TerminalActivity.this,
+                        getOperationItems().get(0).getAbsPath(), destinationLocation);
+                }
             } else if (viewId == R.id.rename_btn) {
                 String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
