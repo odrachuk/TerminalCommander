@@ -36,7 +36,7 @@ public class MakeDirectoryCommand implements FileCommand {
             makeClearSelection();
         } catch (IOException e) {
             Log.e(LOG_TAG, "makeDirectory", e);
-            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

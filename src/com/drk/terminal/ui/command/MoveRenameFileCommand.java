@@ -55,7 +55,7 @@ public class MoveRenameFileCommand implements FileCommand {
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Move/Rename", e);
-            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
             makeClearSelection();
         }
         } else {

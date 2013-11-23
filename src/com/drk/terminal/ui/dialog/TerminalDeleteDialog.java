@@ -61,6 +61,7 @@ public class TerminalDeleteDialog extends DialogFragment {
         if (mFileAbsPathList.size() == 1) {
             deleteDescribe.setText("Delete file \"" + mFileAbsPathList.get(0).getAbsPath() + "\"?");
         } else {
+            // add attention about recursive deleting all included objects
             deleteDescribe.setText("Delete " + mFileAbsPathList.size() + " files?");
         }
         // Setup button's listener

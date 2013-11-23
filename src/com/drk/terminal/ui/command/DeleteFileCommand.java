@@ -45,7 +45,7 @@ public class DeleteFileCommand implements FileCommand {
                 }
             } catch (Exception e) {
                 Log.e(LOG_TAG, "copyFile", e);
-                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
                 makeClearSelection();
             }
         } else {
