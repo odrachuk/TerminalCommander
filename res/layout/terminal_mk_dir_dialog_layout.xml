@@ -82,6 +82,7 @@
                       android:singleLine="true"
                       android:textColor="@color/COLOR_525252"
                       android:background="@drawable/dialog_edit_text_bg"
+                      android:layout_marginTop="@dimen/terminal_dialog_input_margin_top"
                       android:layout_marginBottom="@dimen/terminal_dialog_input_margin_bottom"/>
             <RelativeLayout android:id="@+id/terminal_mk_dir_dialog_btn_container"
                             android:layout_width="match_parent"

@@ -23,6 +23,7 @@
     <dimen name="terminal_dialog_describe_text_size">20sp</dimen>
     <dimen name="terminal_dialog_input_text_size">20sp</dimen>
     <dimen name="terminal_dialog_input_margin_bottom">10dp</dimen>
+    <dimen name="terminal_dialog_input_margin_top">10dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_right">20dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_left">20dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_top">10dp</dimen>
@@ -32,5 +33,5 @@
     <dimen name="terminal_delete_dialog_height">150dp</dimen>
     <dimen name="terminal_dialog_describe_max_width">400dp</dimen>
     <dimen name="terminal_mk_dir_dialog_width">450dp</dimen>
-    <dimen name="terminal_mk_dir_dialog_height">140dp</dimen>
+    <dimen name="terminal_mk_dir_dialog_height">150dp</dimen>
 </resources>

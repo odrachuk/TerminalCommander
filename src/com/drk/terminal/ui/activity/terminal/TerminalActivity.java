@@ -284,43 +284,48 @@ public class TerminalActivity extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // Detect active list
             if (pathLabel.getOwnLabel().getId() == R.id.path_location_in_left) {
                 activePage = ActivePage.LEFT;
             } else {
                 activePage = ActivePage.RIGHT;
             }
-            if (selectionStrategy.isCtrlToggle() ||
-                    selectionStrategy.isShiftToggle()) {
-                selectionStrategy.addSelection(position);
+            // If parent dots clicked go up
+            ListViewItem selectedItem = adapter.getItem(position);
+            if (selectedItem.isParentDots()) {
+                String backPath = adapter.getBackPath();
+                if (backPath != null) {
+                    selectionStrategy.clear();
+                    adapter.changeDirectory(backPath);
+                    listView.smoothScrollToPosition(0);
+                }
             } else {
-                selectionStrategy.clear();
-                ListViewItem selectedItem = adapter.getItem(position);
-                if (selectedItem.isParentDots()) {
-                    String backPath = adapter.getBackPath();
-                    if (backPath != null) {
-                        adapter.changeDirectory(backPath);
-                        listView.smoothScrollToPosition(0);
-                    }
-                } else if (selectedItem.isDirectory()) {
-                    if (selectedItem.canRead()) {
-                        if (selectedItem.isLink()) {
-                            String[] splitPath = selectedItem.getAbsPath().
-                                    substring(1).split(StringUtil.PATH_SEPARATOR);
-                            adapter.clearBackPath(splitPath);
-                            adapter.changeDirectory(splitPath[splitPath.length - 1]);
+                if (selectionStrategy.isCtrlToggle() ||
+                        selectionStrategy.isShiftToggle()) {
+                    selectionStrategy.addSelection(position);
+                } else {
+                    selectionStrategy.clear();
+                    if (selectedItem.isDirectory()) {
+                        if (selectedItem.canRead()) {
+                            if (selectedItem.isLink()) {
+                                String[] splitPath = selectedItem.getAbsPath().
+                                        substring(1).split(StringUtil.PATH_SEPARATOR);
+                                adapter.clearBackPath(splitPath);
+                                adapter.changeDirectory(splitPath[splitPath.length - 1]);
+                            } else {
+                                adapter.changeDirectory(selectedItem.getFileName());
+                            }
+                            listView.smoothScrollToPosition(0);
                         } else {
-                            adapter.changeDirectory(selectedItem.getFileName());
+                            Toast.makeText(TerminalActivity.this, "Selected directory: " +
+                                    adapter.getItem(position).getFileName(),
+                                    Toast.LENGTH_SHORT).show();
                         }
-                        listView.smoothScrollToPosition(0);
                     } else {
-                        Toast.makeText(TerminalActivity.this, "Selected directory: " +
+                        Toast.makeText(TerminalActivity.this, "Selected file: " +
                                 adapter.getItem(position).getFileName(),
                                 Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(TerminalActivity.this, "Selected file: " +
-                            adapter.getItem(position).getFileName(),
-                            Toast.LENGTH_SHORT).show();
                 }
             }
         }
