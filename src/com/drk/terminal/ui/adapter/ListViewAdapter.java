@@ -1,6 +1,7 @@
 package com.drk.terminal.ui.adapter;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -31,10 +32,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private final List<ListViewItem> filesInfo;
     private final LinkedList<String> pathStack;
     private final Activity activity;
-    private Map<Integer, ViewHolder> cache;
-    private boolean inFirst = true;
-    private String labelPath;
-
     private final Handler notifyHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -42,6 +39,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             pathLabel.setPath(labelPath);
         }
     };
+    private Map<Integer, ViewHolder> cache;
+    private boolean inFirst = true;
+    private String labelPath;
 
     public ListViewAdapter(Activity activity,
                            List<ListViewItem> filesInfo,
@@ -93,6 +93,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                 viewHolder.fileNameView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
                 viewHolder.fileSizeView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
                 viewHolder.fileModifyTimeView.setTextColor(activity.getResources().getColor(R.color.COLOR_B2B2B2));
+            } else {
+                if (!info.canRead() && !info.isParentDots()) {
+                    viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
+                            Paint.STRIKE_THRU_TEXT_FLAG);
+                }
             }
             cache.put(i, viewHolder);
         }
@@ -116,12 +121,19 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         if (selectionStrategy.getUnselectedItems().contains(position)) {
             ListViewItem info = filesInfo.get(position);
             if (info.isDirectory()) {
-                viewHolder.fileNameView.setTextColor(
-                        activity.getResources().getColor(android.R.color.white));
-                viewHolder.fileSizeView.setTextColor(
-                        activity.getResources().getColor(android.R.color.white));
-                viewHolder.fileModifyTimeView.setTextColor(
-                        activity.getResources().getColor(android.R.color.white));
+                if (info.canRead()) {
+                    viewHolder.fileNameView.setTextColor(
+                            activity.getResources().getColor(android.R.color.white));
+                    viewHolder.fileSizeView.setTextColor(
+                            activity.getResources().getColor(android.R.color.white));
+                    viewHolder.fileModifyTimeView.setTextColor(
+                            activity.getResources().getColor(android.R.color.white));
+                } else {
+                    if (!info.isParentDots()) {
+                        viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
+                                Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+                }
             } else {
                 viewHolder.fileNameView.setTextColor(
                         activity.getResources().getColor(R.color.COLOR_B2B2B2));

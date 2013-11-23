@@ -30,7 +30,8 @@
               android:layout_alignParentRight="true"/>
         <TextView
                 android:id="@+id/file_size"
-                style="@style/Terminal_Theme.List_Item_Right_Align_Style"/>
+                style="@style/Terminal_Theme.List_Item_Right_Align_Style"
+                android:paddingRight="@dimen/file_size_margin_right"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/file_name_container"

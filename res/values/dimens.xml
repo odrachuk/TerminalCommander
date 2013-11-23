@@ -34,4 +34,5 @@
     <dimen name="terminal_dialog_describe_max_width">400dp</dimen>
     <dimen name="terminal_mk_dir_dialog_width">450dp</dimen>
     <dimen name="terminal_mk_dir_dialog_height">150dp</dimen>
+    <dimen name="file_size_margin_right">2dp</dimen>
 </resources>

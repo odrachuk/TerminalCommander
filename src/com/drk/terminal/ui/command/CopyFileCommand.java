@@ -46,7 +46,7 @@ public class CopyFileCommand implements FileCommand {
                                 FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
                             }
                         } else {
-                            Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(terminalActivity, "No enough permission to read file " + srcFile + ".", Toast.LENGTH_SHORT).show();
                             makeClearSelection();
                         }
                     }

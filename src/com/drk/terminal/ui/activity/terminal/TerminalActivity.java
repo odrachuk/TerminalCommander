@@ -321,13 +321,13 @@ public class TerminalActivity extends Activity {
                             }
                             listView.smoothScrollToPosition(0);
                         } else {
-                            Toast.makeText(TerminalActivity.this, "Selected directory: " +
-                                    adapter.getItem(position).getFileName(),
+                            Toast.makeText(TerminalActivity.this, "Can't read directory " +
+                                    adapter.getItem(position).getFileName() + ".",
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(TerminalActivity.this, "Selected file: " +
-                                adapter.getItem(position).getFileName(),
+                        Toast.makeText(TerminalActivity.this, "Selected file " +
+                                adapter.getItem(position).getFileName() + ".",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
