@@ -17,8 +17,10 @@ import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
 import com.drk.terminal.ui.dialog.TerminalDialogUtil;
+import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -175,7 +177,9 @@ public class TerminalActivity extends Activity {
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
+        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
         mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
+        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
         hideProgress();
     }
 
@@ -328,6 +332,44 @@ public class TerminalActivity extends Activity {
                     }
                 }
             }
+        }
+    }
+
+    private final class ListViewItemLongClickListener implements AdapterView.OnItemLongClickListener {
+        private final ListViewAdapter adapter;
+
+        private ListViewItemLongClickListener(ListViewAdapter adapter) {
+            this.adapter = adapter;
+        }
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            ListViewItem item = adapter.getItem(position);
+            if (item.isDirectory()) {
+                new DirectorySizeComputationTask().execute(item);
+            }
+            return true;
+        }
+    };
+
+    private final class DirectorySizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
+
+        @Override
+        protected Long doInBackground(ListViewItem... params) {
+            ListViewItem item = params[0];
+            long size = 0l;
+            try {
+                size = FileUtil.getDirectorySize(new File(item.getAbsPath()));
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "compute directory size:", e);
+            }
+            return size;
+        }
+
+        @Override
+        protected void onPostExecute(Long size) {
+            Toast.makeText(TerminalActivity.this, "Directory size = " + ListViewItem.readableFileSize(size),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

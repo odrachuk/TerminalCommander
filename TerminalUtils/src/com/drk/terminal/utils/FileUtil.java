@@ -944,4 +944,23 @@ public class FileUtil {
         }
         return resultPath.toString();
     }
+
+    public static long getDirectorySize(File directory) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            // space used by directory itself
+            long size = directory.length();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    // space used by subdirectory
+                    size += getDirectorySize(file);
+                } else {
+                    size += file.length();
+                }
+            }
+            return size;
+        } else {
+            return 0l;
+        }
+    }
 }

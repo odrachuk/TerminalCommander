@@ -1,7 +1,9 @@
 package com.drk.terminal.model.listview;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
@@ -22,7 +24,7 @@ public class ListViewFiller {
     private static final String LOG_TAG = ListViewFiller.class.getSimpleName();
 
     public static void fillingList(final List<ListViewItem> filesList, final String path, Handler notifyHandler) {
-        ListViewItem firstItem = new ListViewItem(StringUtil.PARENT_DOTS, -1, 0l).setIsDirectory(true);
+        ListViewItem firstItem = new ListViewItem(StringUtil.PARENT_DOTS, ListViewItem.UP_LINK_DEF_SIZE, 0l).setIsDirectory(true);
         filesList.add(firstItem);
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
             @Override
@@ -34,7 +36,7 @@ public class ListViewFiller {
                                             file.getName() :
                                     StringUtil.PATH_SEPARATOR +
                                             file.getName(),
-                            file.getUsableSpace(),
+                            ListViewItem.DIRECTORY_DEF_SIZE,
                             file.lastModified()).
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).
@@ -54,7 +56,7 @@ public class ListViewFiller {
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName() :
                                     file.getName(),
-                            file.getUsableSpace(),
+                            file.length(),
                             file.lastModified()).
                             setAbsPath(file.getAbsolutePath()).
                             setCanRead(file.canRead()).

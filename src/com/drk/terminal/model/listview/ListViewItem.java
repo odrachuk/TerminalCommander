@@ -17,6 +17,8 @@ import java.util.Locale;
  */
 public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public static final String DATE_FORMAT = "MMM dd yyyy";
+    public static final long DIRECTORY_DEF_SIZE = -1;
+    public static final long UP_LINK_DEF_SIZE = -2;
     private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
     private final String fileName;
     private final String fileSize;
@@ -36,8 +38,10 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     }
 
     public static String readableFileSize(long size) {
-        if (size < 0) {
+        if (size == UP_LINK_DEF_SIZE) {
             return StringUtil.UP_DIR;
+        } else if (size == DIRECTORY_DEF_SIZE) {
+            return "dir";
         } else if (size > 0) {
             final String[] units = new String[]{"b", "Kb", "Mb", "Gb", "Tb"};
             int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
