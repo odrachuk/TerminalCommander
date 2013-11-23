@@ -30,8 +30,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private final CurrentPathLabel pathLabel;
     private final List<ListViewItem> filesInfo;
     private final LinkedList<String> pathStack;
-    private Map<Integer, ViewHolder> cache;
     private final Activity activity;
+    private Map<Integer, ViewHolder> cache;
     private boolean inFirst = true;
     private String labelPath;
 
@@ -62,7 +62,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         } else {
             String prevPath = pathStack.getLast();
             if (!prevPath.equals(path)) {
-                String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR)?
+                String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR) ?
                         path.substring(1) : path;
                 pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
                         prevPath + correctPath :

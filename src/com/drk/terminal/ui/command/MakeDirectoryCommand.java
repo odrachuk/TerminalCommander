@@ -2,7 +2,6 @@ package com.drk.terminal.ui.command;
 
 import android.util.Log;
 import android.widget.Toast;
-import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.utils.FileUtil;
 
@@ -19,19 +18,19 @@ import java.io.IOException;
 public class MakeDirectoryCommand implements FileCommand {
     private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();
     private final TerminalActivity terminalActivity;
+    private final String directoryName;
     private final String currentPath;
-    private final String directoryPath;
 
-    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryPath, String currentPath) {
+    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryName, String currentPath) {
         this.terminalActivity = terminalActivity;
-        this.directoryPath = directoryPath;
+        this.directoryName = directoryName;
         this.currentPath = currentPath;
     }
 
     @Override
     public void onExecute() {
         try {
-            FileUtil.forceMakeDir(new File(directoryPath));
+            FileUtil.forceMakeDir(new File(directoryName));
             // clear selected and refresh directory after deleting
             makeClearSelection();
         } catch (IOException e) {

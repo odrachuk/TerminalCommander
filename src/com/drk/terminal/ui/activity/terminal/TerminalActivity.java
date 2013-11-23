@@ -16,7 +16,6 @@ import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
-import com.drk.terminal.ui.command.MakeDirectoryCommand;
 import com.drk.terminal.ui.dialog.TerminalDialogUtil;
 import com.drk.terminal.utils.StringUtil;
 
@@ -91,9 +90,7 @@ public class TerminalActivity extends Activity {
             } else if (viewId == R.id.mkdir_btn) {
                 String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();
-                new MakeDirectoryCommand(TerminalActivity.this,
-                        "/storage/emulated/legacy/Download/tmp-" + String.valueOf(System.nanoTime()),
-                        currentLocation).onExecute();
+                TerminalDialogUtil.showMkDirDialog(TerminalActivity.this, currentLocation);
             } else if (viewId == R.id.delete_btn) {
                 String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
                         mRightAdapter.getPathLabel().getFullPath();

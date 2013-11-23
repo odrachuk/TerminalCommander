@@ -46,7 +46,7 @@ public class SelectionStrategy {
     public synchronized void addSelection(int item) {
         if (item > 0) {
             if (isCtrlToggle) {
-               makeCtrlSelection(item);
+                makeCtrlSelection(item);
             } else if (isShiftToggle) {
                 makeShiftSelection(item);
             }

@@ -37,27 +37,27 @@ public class MoveRenameFileCommand implements FileCommand {
     @Override
     public void onExecute() {
         if (items != null && !items.isEmpty()) {
-        try {
-            File dstDirectory = new File(destinationPath);
-            if (dstDirectory.canWrite()) {
-                for (ListViewItem item : items) {
-                    File srcFile = new File(item.getAbsPath());
-                    if (srcFile.canRead()) {
-                        FileUtil.moveToDirectory(srcFile, dstDirectory, true);
-                    } else {
-                        Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+            try {
+                File dstDirectory = new File(destinationPath);
+                if (dstDirectory.canWrite()) {
+                    for (ListViewItem item : items) {
+                        File srcFile = new File(item.getAbsPath());
+                        if (srcFile.canRead()) {
+                            FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                        } else {
+                            Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    // clear selected
+                    makeClearSelection();
+                } else {
+                    Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
                 }
-                // clear selected
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Move/Rename", e);
+                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
                 makeClearSelection();
-            } else {
-                Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Move/Rename", e);
-            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            makeClearSelection();
-        }
         } else {
             // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();

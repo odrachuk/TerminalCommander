@@ -20,6 +20,7 @@ public class ProcessDirectory {
 
     public interface ProcessDirectoryStrategy {
         void processDirectory(File file);
+
         void processFile(File file);
     }
 
@@ -40,11 +41,11 @@ public class ProcessDirectory {
         DirectoryTree treeInfo = Directory.walkDir(
                 root.getAbsolutePath(), ".*" + ext);
         Iterator<File> dirsIterator = treeInfo.getDirsIterator();
-        while(dirsIterator.hasNext()) {
+        while (dirsIterator.hasNext()) {
             strategy.processDirectory(dirsIterator.next().getCanonicalFile());
         }
         Iterator<File> filesIterator = treeInfo.getFilesIterator();
-        while(filesIterator.hasNext()) {
+        while (filesIterator.hasNext()) {
             strategy.processFile(filesIterator.next().getCanonicalFile());
         }
     }

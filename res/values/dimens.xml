@@ -10,8 +10,9 @@
     <dimen name="terminal_list_padding_right">6dp</dimen>
     <dimen name="terminal_list_padding_left">6dp</dimen>
     <dimen name="terminal_progress_bar_width_height">73dp</dimen>
-    <dimen name="terminal_copy_dialog_width">450dp</dimen>
-    <dimen name="terminal_copy_dialog_height">175dp</dimen>
+    <dimen name="terminal_cp_mv_dialog_width">450dp</dimen>
+    <dimen name="terminal_cp_mv_dialog_height">175dp</dimen>
+    <dimen name="terminal_editable_dialog_btn_text_size">20sp</dimen>
     <dimen name="terminal_dialog_title_text_size">20sp</dimen>
     <dimen name="terminal_dialog_padding_bottom">14dp</dimen>
     <dimen name="terminal_dialog_padding_left">10dp</dimen>
@@ -20,15 +21,16 @@
     <dimen name="terminal_dialog_title_text_padding_right">10dp</dimen>
     <dimen name="terminal_dialog_border_margin_top">14dp</dimen>
     <dimen name="terminal_dialog_describe_text_size">20sp</dimen>
-    <dimen name="terminal_copy_dialog_input_text_size">20sp</dimen>
-    <dimen name="terminal_dialog_describe_margin_bottom">10dp</dimen>
-    <dimen name="terminal_copy_dialog_btn_text_size">20sp</dimen>
+    <dimen name="terminal_dialog_input_text_size">20sp</dimen>
+    <dimen name="terminal_dialog_input_margin_bottom">10dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_right">20dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_left">20dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_top">10dp</dimen>
     <dimen name="terminal_dialog_content_container_margin_bottom">10dp</dimen>
-    <dimen name="terminal_copy_dialog_btn_container_margin_top">10dp</dimen>
+    <dimen name="terminal_editable_dialog_btn_container_margin_top">10dp</dimen>
     <dimen name="terminal_delete_dialog_width">450dp</dimen>
     <dimen name="terminal_delete_dialog_height">150dp</dimen>
     <dimen name="terminal_dialog_describe_max_width">400dp</dimen>
+    <dimen name="terminal_mk_dir_dialog_width">450dp</dimen>
+    <dimen name="terminal_mk_dir_dialog_height">140dp</dimen>
 </resources>

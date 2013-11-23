@@ -31,7 +31,7 @@ public class ListViewFiller {
                     ListViewItem item = new ListViewItem(
                             FileUtil.isSymlink(path, file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
-                                            file.getName():
+                                            file.getName() :
                                     StringUtil.PATH_SEPARATOR +
                                             file.getName(),
                             file.getUsableSpace(),
@@ -52,7 +52,7 @@ public class ListViewFiller {
                     ListViewItem item = new ListViewItem(
                             FileUtil.isSymlink(path, file) ?
                                     StringUtil.FILE_LINK_PREFIX +
-                                            file.getName():
+                                            file.getName() :
                                     file.getName(),
                             file.getUsableSpace(),
                             file.lastModified()).

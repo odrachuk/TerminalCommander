@@ -51,7 +51,7 @@
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
         <item name="android:paddingBottom">5dp</item>
-        <item name="android:textSize">@dimen/terminal_copy_dialog_btn_text_size</item>
+        <item name="android:textSize">@dimen/terminal_editable_dialog_btn_text_size</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
     </style>

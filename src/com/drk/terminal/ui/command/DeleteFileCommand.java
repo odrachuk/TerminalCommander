@@ -7,7 +7,6 @@ import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.utils.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
