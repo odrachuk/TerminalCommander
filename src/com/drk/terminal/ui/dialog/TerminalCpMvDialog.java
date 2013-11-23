@@ -102,7 +102,7 @@ public class TerminalCpMvDialog extends DialogFragment {
         switch (mOperationType) {
             case COPY_OPERATION:
                 if (mFileAbsPathList.size() == 1) {
-                    describeText.setText("Copy file \"" + mFileAbsPathList.get(0).getAbsPath() + "\" to:");
+                    describeText.setText("Copy file \"" + truncateFileName() + "\" to:");
                 } else {
                     describeText.setText("Copy " + mFileAbsPathList.size() + " files to:");
                 }
@@ -110,7 +110,7 @@ public class TerminalCpMvDialog extends DialogFragment {
             case MOVE_OPERATION:
                 title.setText(getResources().getString(R.string.move_string));
                 if (mFileAbsPathList.size() == 1) {
-                    describeText.setText("Move file \"" + mFileAbsPathList.get(0).getAbsPath() + "\" to:");
+                    describeText.setText("Move file \"" + truncateFileName() + "\" to:");
                 } else {
                     describeText.setText("Move " + mFileAbsPathList.size() + " files to:");
                 }
@@ -124,6 +124,25 @@ public class TerminalCpMvDialog extends DialogFragment {
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_ok).setOnClickListener(mOnClickListener);
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_cancel).setOnClickListener(mOnClickListener);
         return v;
+    }
+
+    private String truncateFileName() {
+        String fileName = mFileAbsPathList.get(0).getAbsPath();
+        int fileNameLength = fileName.length();
+        if (fileNameLength > 26) {
+            String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));
+            if (lastCorrectPath.length() > 26) {
+                fileName = "..." + fileName.substring(fileNameLength - 22);
+            } else {
+                int firstSeparator = lastCorrectPath.indexOf(StringUtil.PATH_SEPARATOR);
+                if (firstSeparator > 4) {
+                    fileName = "..." + lastCorrectPath.substring(firstSeparator);
+                } else {
+                    fileName = "..." + lastCorrectPath;
+                }
+            }
+        }
+        return fileName;
     }
 
     public enum TransferOperationType {

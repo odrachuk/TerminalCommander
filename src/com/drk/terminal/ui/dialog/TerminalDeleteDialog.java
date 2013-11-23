@@ -11,6 +11,7 @@ import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.ui.command.DeleteFileCommand;
+import com.drk.terminal.utils.StringUtil;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,23 @@ public class TerminalDeleteDialog extends DialogFragment {
     private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
     private ArrayList<ListViewItem> mFileAbsPathList;
     private String mCurrentAbsPath;
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            switch (viewId) {
+                case R.id.terminal_delete_dialog_btn_ok:
+                    new DeleteFileCommand((TerminalActivity) getActivity(),
+                            mFileAbsPathList,
+                            mCurrentAbsPath).onExecute();
+                    TerminalDeleteDialog.this.getDialog().cancel();
+                    break;
+                case R.id.terminal_delete_dialog_btn_cancel:
+                    TerminalDeleteDialog.this.getDialog().cancel();
+                    break;
+            }
+        }
+    };
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
@@ -58,7 +76,7 @@ public class TerminalDeleteDialog extends DialogFragment {
         // Set relative notification text
         TextView deleteDescribe = (TextView) v.findViewById(R.id.terminal_delete_dialog_describe_delete_text);
         if (mFileAbsPathList.size() == 1) {
-            deleteDescribe.setText("Delete file \"" + mFileAbsPathList.get(0).getAbsPath() + "\"?");
+            deleteDescribe.setText("Delete file \"" + truncateFileName() + "\"?");
         } else {
             // add attention about recursive deleting all included objects
             deleteDescribe.setText("Delete " + mFileAbsPathList.size() + " files?");
@@ -69,21 +87,22 @@ public class TerminalDeleteDialog extends DialogFragment {
         return v;
     }
 
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            switch (viewId) {
-                case R.id.terminal_delete_dialog_btn_ok:
-                    new DeleteFileCommand((TerminalActivity) getActivity(),
-                            mFileAbsPathList,
-                            mCurrentAbsPath).onExecute();
-                    TerminalDeleteDialog.this.getDialog().cancel();
-                    break;
-                case R.id.terminal_delete_dialog_btn_cancel:
-                    TerminalDeleteDialog.this.getDialog().cancel();
-                    break;
+    private String truncateFileName() {
+        String fileName = mFileAbsPathList.get(0).getAbsPath();
+        int fileNameLength = fileName.length();
+        if (fileNameLength > 26) {
+            String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));
+            if (lastCorrectPath.length() > 26) {
+                fileName = "..." + fileName.substring(fileNameLength - 22);
+            } else {
+                int firstSeparator = lastCorrectPath.indexOf(StringUtil.PATH_SEPARATOR);
+                if (firstSeparator > 4) {
+                    fileName = "..." + lastCorrectPath.substring(firstSeparator);
+                } else {
+                    fileName = "..." + lastCorrectPath;
+                }
             }
         }
-    };
+        return fileName;
+    }
 }

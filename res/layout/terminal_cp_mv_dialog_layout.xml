@@ -76,9 +76,9 @@
             <TextView android:id="@+id/terminal_cp_mv_dialog_describe_copy_text"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:maxWidth="@dimen/terminal_dialog_describe_max_width"
                       android:textColor="@android:color/white"
                       android:textSize="@dimen/terminal_dialog_describe_text_size"
+                      android:singleLine="true"
                       android:layout_marginBottom="@dimen/terminal_dialog_input_margin_bottom"/>
             <EditText android:id="@+id/terminal_cp_mv_dialog_input_element"
                       android:layout_width="match_parent"

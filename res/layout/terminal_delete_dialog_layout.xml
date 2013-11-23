@@ -78,6 +78,7 @@
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/white"
                       android:textSize="@dimen/terminal_dialog_describe_text_size"
+                      android:singleLine="true"
                       android:layout_marginBottom="@dimen/terminal_dialog_input_margin_bottom"/>
             <RelativeLayout android:id="@+id/terminal_delete_dialog_btn_container"
                             android:layout_width="match_parent"

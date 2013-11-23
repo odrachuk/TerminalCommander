@@ -150,7 +150,9 @@ public class TerminalCommander {
 
     public void stopExecutionProcess() {
         Log.d(LOG_TAG, "stopExecutionProcess");
-        mExecutionProcess.destroy();
+        if (mExecutionProcess != null) {
+            mExecutionProcess.destroy();
+        }
     }
 
     public String getCommandText() {
