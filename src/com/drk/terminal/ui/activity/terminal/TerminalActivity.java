@@ -13,13 +13,10 @@ import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
-import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
+import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.adapter.ListViewAdapter;
-import com.drk.terminal.ui.command.CopyFileCommand;
-import com.drk.terminal.ui.command.DeleteFileCommand;
 import com.drk.terminal.ui.command.MakeDirectoryCommand;
-import com.drk.terminal.ui.command.MoveRenameFileCommand;
 import com.drk.terminal.ui.dialog.TerminalDialogUtil;
 import com.drk.terminal.utils.StringUtil;
 
@@ -35,8 +32,79 @@ import java.util.concurrent.TimeUnit;
  * To change this template use File | Settings | File Templates.
  */
 public class TerminalActivity extends Activity {
-    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     public static final int REQUEST_CODE = 0;
+    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView.getId() == R.id.action_shift) {
+                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
+                if (isChecked && mCtrlBtn.isChecked()) {
+                    mCtrlBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
+                }
+            } else if (buttonView.getId() == R.id.action_ctrl) {
+                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
+                if (isChecked && mShiftBtn.isChecked()) {
+                    mShiftBtn.setChecked(false);
+                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
+                }
+            }
+        }
+    };
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_commander) {
+                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
+                startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
+                        activePage == ActivePage.LEFT ? mLeftAdapter.getPathLabel().getCurrentLabel() :
+                                mRightAdapter.getPathLabel().getCurrentLabel());
+                startActivityForResult(startIntent, REQUEST_CODE);
+            } else if (viewId == R.id.copy_btn) {
+                String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                if (!getOperationItems().isEmpty()) {
+                    TerminalDialogUtil.showCopyDialog(TerminalActivity.this,
+                            getOperationItems(),
+                            destinationLocation,
+                            currentLocation);
+                }
+            } else if (viewId == R.id.rename_btn) {
+                String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                if (!getOperationItems().isEmpty()) {
+                    TerminalDialogUtil.showMoveRenameDialog(TerminalActivity.this,
+                            getOperationItems(),
+                            destinationLocation,
+                            currentLocation);
+                }
+            } else if (viewId == R.id.mkdir_btn) {
+                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                new MakeDirectoryCommand(TerminalActivity.this,
+                        "/storage/emulated/legacy/Download/tmp-" + String.valueOf(System.nanoTime()),
+                        currentLocation).onExecute();
+            } else if (viewId == R.id.delete_btn) {
+                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                        mRightAdapter.getPathLabel().getFullPath();
+                if (!getOperationItems().isEmpty()) {
+                    TerminalDialogUtil.showDeleteDialog(TerminalActivity.this,
+                            getOperationItems(),
+                            currentLocation);
+                }
+            }
+        }
+    };
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
@@ -165,6 +233,27 @@ public class TerminalActivity extends Activity {
         return mRightAdapter;
     }
 
+    private ArrayList<ListViewItem> getOperationItems() {
+        return activePage == ActivePage.LEFT ? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
+    }
+
+    public void showProgress() {
+        startActivity(new Intent(this, TerminalProgressActivity.class));
+    }
+
+    public void hideProgress() {
+        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
+    }
+
+    public ActivePage getActivePage() {
+        return activePage;
+    }
+
+    public enum ActivePage {
+        LEFT,
+        RIGHT
+    }
+
     private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -238,88 +327,5 @@ public class TerminalActivity extends Activity {
                 }
             }
         }
-    }
-
-    private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.action_shift) {
-                mLeftAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setShiftToggle(isChecked);
-                if (isChecked && mCtrlBtn.isChecked()) {
-                    mCtrlBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
-                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
-                }
-            } else if (buttonView.getId() == R.id.action_ctrl) {
-                mLeftAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                mRightAdapter.getSelectionStrategy().setCtrlToggle(isChecked);
-                if (isChecked && mShiftBtn.isChecked()) {
-                    mShiftBtn.setChecked(false);
-                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
-                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
-                }
-            }
-        }
-    };
-
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_commander) {
-                Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
-                startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
-                        activePage == ActivePage.LEFT? mLeftAdapter.getPathLabel().getCurrentLabel() :
-                                        mRightAdapter.getPathLabel().getCurrentLabel());
-                startActivityForResult(startIntent, REQUEST_CODE);
-            } else if (viewId == R.id.copy_btn) {
-                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-//                new CopyFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
-                if (!getOperationItems().isEmpty()) {
-                    TerminalDialogUtil.showCopyDialog(TerminalActivity.this,
-                        getOperationItems().get(0).getAbsPath(), destinationLocation);
-                }
-            } else if (viewId == R.id.rename_btn) {
-                String destinationLocation = !activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                new MoveRenameFileCommand(TerminalActivity.this, getOperationItems(), destinationLocation).onExecute();
-            } else if (viewId == R.id.mkdir_btn) {
-                String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                new MakeDirectoryCommand(TerminalActivity.this,
-                        "/storage/emulated/legacy/Download/tmp-" + String.valueOf(System.nanoTime()),
-                        currentLocation).onExecute();
-            } else if (viewId == R.id.delete_btn) {
-                String currentLocation = activePage.equals(ActivePage.LEFT)? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                if (!getOperationItems().isEmpty()) {
-                    TerminalDialogUtil.showDeleteDialog(TerminalActivity.this, getOperationItems().get(0).getAbsPath());
-//                new DeleteFileCommand(TerminalActivity.this, getOperationItems(), currentLocation).onExecute();
-                }
-            }
-        }
-    };
-
-    private List<ListViewItem> getOperationItems() {
-        return activePage == ActivePage.LEFT? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
-    }
-
-    public void showProgress() {
-        startActivity(new Intent(this, TerminalProgressActivity.class));
-    }
-
-    public void hideProgress() {
-        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
-    }
-
-    public ActivePage getActivePage() {
-        return activePage;
-    }
-
-    public enum ActivePage {
-        LEFT,
-        RIGHT
     }
 }

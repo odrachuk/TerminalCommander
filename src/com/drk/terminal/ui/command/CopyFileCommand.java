@@ -50,25 +50,31 @@ public class CopyFileCommand implements FileCommand {
                         }
                     }
                     // clear selected
-                    switch (terminalActivity.getActivePage()) {
-                        case LEFT:
-                            terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                            terminalActivity.getLeftListAdapter().clearSelection();
-                            break;
-                        case RIGHT:
-                            terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                            terminalActivity.getRightListAdapter().clearSelection();
-                            break;
-                    }
+                    makeClearSelection();
                 } else {
                     Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "copyFile", e);
+                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                makeClearSelection();
             }
         } else {
             // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void makeClearSelection() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                terminalActivity.getLeftListAdapter().clearSelection();
+                break;
+            case RIGHT:
+                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                terminalActivity.getRightListAdapter().clearSelection();
+                break;
         }
     }
 }

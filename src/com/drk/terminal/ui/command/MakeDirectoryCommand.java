@@ -1,6 +1,7 @@
 package com.drk.terminal.ui.command;
 
 import android.util.Log;
+import android.widget.Toast;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.utils.FileUtil;
@@ -32,18 +33,23 @@ public class MakeDirectoryCommand implements FileCommand {
         try {
             FileUtil.forceMakeDir(new File(directoryPath));
             // clear selected and refresh directory after deleting
-            switch (terminalActivity.getActivePage()) {
-                case LEFT:
-                    terminalActivity.getLeftListAdapter().clearSelection();
-                    terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                    break;
-                case RIGHT:
-                    terminalActivity.getRightListAdapter().clearSelection();
-                    terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                    break;
-            }
+            makeClearSelection();
         } catch (IOException e) {
             Log.e(LOG_TAG, "makeDirectory", e);
+            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void makeClearSelection() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getLeftListAdapter().clearSelection();
+                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                break;
+            case RIGHT:
+                terminalActivity.getRightListAdapter().clearSelection();
+                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                break;
         }
     }
 }

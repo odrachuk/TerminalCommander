@@ -23,5 +23,6 @@
     <string name="slash">/</string>
     <string name="ok">[ OK ]</string>
     <string name="cancel">[ Cancel ]</string>
+    <string name="move_string">Move</string>
     <!--<string name="up_dir">UP&#45;&#45;DIR\u0020</string>-->
 </resources>

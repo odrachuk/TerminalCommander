@@ -30,4 +30,5 @@
     <dimen name="terminal_copy_dialog_btn_container_margin_top">10dp</dimen>
     <dimen name="terminal_delete_dialog_width">450dp</dimen>
     <dimen name="terminal_delete_dialog_height">150dp</dimen>
+    <dimen name="terminal_dialog_describe_max_width">400dp</dimen>
 </resources>

@@ -41,23 +41,29 @@ public class DeleteFileCommand implements FileCommand {
                         Toast.makeText(terminalActivity, "No enough permission to delete source file " + file.getName(), Toast.LENGTH_SHORT).show();
                     }
                     // clear selected and refresh directory after deleting
-                    switch (terminalActivity.getActivePage()) {
-                        case LEFT:
-                            terminalActivity.getLeftListAdapter().clearSelection();
-                            terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                            break;
-                        case RIGHT:
-                            terminalActivity.getRightListAdapter().clearSelection();
-                            terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                            break;
-                    }
+                    makeClearSelection();
                 }
             } catch (Exception e) {
                 Log.e(LOG_TAG, "copyFile", e);
+                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                makeClearSelection();
             }
         } else {
             // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void makeClearSelection() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getLeftListAdapter().clearSelection();
+                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                break;
+            case RIGHT:
+                terminalActivity.getRightListAdapter().clearSelection();
+                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                break;
         }
     }
 }

@@ -22,13 +22,16 @@ public class MoveRenameFileCommand implements FileCommand {
     private final TerminalActivity terminalActivity;
     private final List<ListViewItem> items;
     private final String destinationPath;
+    private final String currentPath;
 
     public MoveRenameFileCommand(TerminalActivity terminalActivity,
                                  List<ListViewItem> items,
-                                 String destinationPath) {
+                                 String destinationPath,
+                                 String currentPath) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
+        this.currentPath = currentPath;
     }
 
     @Override
@@ -46,25 +49,33 @@ public class MoveRenameFileCommand implements FileCommand {
                     }
                 }
                 // clear selected
-                switch (terminalActivity.getActivePage()) {
-                    case LEFT:
-                        terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                        terminalActivity.getLeftListAdapter().clearSelection();
-                        break;
-                    case RIGHT:
-                        terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                        terminalActivity.getRightListAdapter().clearSelection();
-                        break;
-                }
+                makeClearSelection();
             } else {
                 Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Move/Rename", e);
+            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+            makeClearSelection();
         }
         } else {
             // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void makeClearSelection() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                terminalActivity.getLeftListAdapter().clearSelection();
+                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                break;
+            case RIGHT:
+                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                terminalActivity.getRightListAdapter().clearSelection();
+                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                break;
         }
     }
 }

@@ -76,6 +76,7 @@
             <TextView android:id="@+id/terminal_copy_dialog_describe_copy_text"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
+                      android:maxWidth="@dimen/terminal_dialog_describe_max_width"
                       android:textColor="@android:color/white"
                       android:textSize="@dimen/terminal_dialog_describe_text_size"
                       android:layout_marginBottom="@dimen/terminal_dialog_describe_margin_bottom"/>

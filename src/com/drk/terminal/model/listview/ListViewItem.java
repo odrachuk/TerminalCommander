@@ -1,5 +1,7 @@
 package com.drk.terminal.model.listview;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.drk.terminal.utils.StringUtil;
 
 import java.text.DecimalFormat;
@@ -13,16 +15,17 @@ import java.util.Locale;
  * Time: 1:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ListViewItem implements Comparable<ListViewItem> {
+public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public static final String DATE_FORMAT = "MMM dd yyyy";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
     private final String fileName;
     private final String fileSize;
     private final String fileModifyTime;
     private String absPath;
     private boolean isDirectory;
     private boolean isLink;
+
     private boolean canRead;
-    private SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
 
     public ListViewItem(String fileName,
                         long fileSize,
@@ -118,4 +121,48 @@ public class ListViewItem implements Comparable<ListViewItem> {
             }
         }
     }
+
+    public boolean isEmpty() {
+        return absPath.isEmpty();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fileName);
+        dest.writeString(fileSize);
+        dest.writeString(fileModifyTime);
+        dest.writeString(absPath);
+        dest.writeBooleanArray(new boolean[]{isDirectory});
+        dest.writeBooleanArray(new boolean[]{isLink});
+    }
+
+    private ListViewItem(Parcel parcel) {
+        fileName = parcel.readString();
+        fileSize = parcel.readString();
+        fileModifyTime = parcel.readString();
+        absPath = parcel.readString();
+        boolean[] isDirectoryRsp = new boolean[1];
+        parcel.readBooleanArray(isDirectoryRsp);
+        isDirectory = isDirectoryRsp[0];
+        boolean[] isLinkRsp = new boolean[1];
+        parcel.readBooleanArray(isLinkRsp);
+        isDirectory = isLinkRsp[0];
+    }
+
+    public Creator<ListViewItem> CREATOR = new Creator<ListViewItem>() {
+        @Override
+        public ListViewItem createFromParcel(Parcel source) {
+            return new ListViewItem(source);
+        }
+
+        @Override
+        public ListViewItem[] newArray(int size) {
+            return new ListViewItem[0];
+        }
+    };
 }
