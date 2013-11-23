@@ -13,6 +13,7 @@ import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.ui.command.CopyFileCommand;
 import com.drk.terminal.ui.command.MoveRenameFileCommand;
+import com.drk.terminal.utils.StringUtil;
 
 import java.util.ArrayList;
 
@@ -90,8 +91,10 @@ public class TerminalCopyMoveDialog extends DialogFragment {
         }
         // Destination directory path
         EditText dstInput = (EditText) v.findViewById(R.id.terminal_copy_dialog_destination_input);
-        dstInput.setText(mDstDirAbsPath + "/");
-        dstInput.setSelection(new String(mDstDirAbsPath + "/").length());
+        String dstText = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR)?
+                mDstDirAbsPath + "/" : mDstDirAbsPath;
+        dstInput.setText(dstText);
+        dstInput.setSelection(dstText.length());
         // Setup button's listener
         v.findViewById(R.id.terminal_copy_dialog_btn_ok).setOnClickListener(mOnClickListener);
         v.findViewById(R.id.terminal_copy_dialog_btn_cancel).setOnClickListener(mOnClickListener);

@@ -47,12 +47,14 @@ public class CopyFileCommand implements FileCommand {
                             }
                         } else {
                             Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+                            makeClearSelection();
                         }
                     }
                     // clear selected
                     makeClearSelection();
                 } else {
                     Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
+                    makeClearSelection();
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "copyFile", e);

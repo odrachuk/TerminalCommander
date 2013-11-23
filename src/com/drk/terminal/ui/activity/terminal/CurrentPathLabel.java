@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.widget.TextView;
 import com.drk.terminal.R;
 import com.drk.terminal.utils.OrientationUtil;
+import com.drk.terminal.utils.StringUtil;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +19,7 @@ public class CurrentPathLabel {
     private final TextView ownLabel;
     private final TextView alienLabel;
     private final Resources resources;
-    private String fullPath;
+    private String fullPath = StringUtil.PATH_SEPARATOR;
 
     public CurrentPathLabel(Resources resources,
                             TextView ownLabel, TextView alienLabel) {
