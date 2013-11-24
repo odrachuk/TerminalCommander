@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="terminal_local_path_max_width">260dp</dimen>
+    <dimen name="terminal_local_path_max_width">376dp</dimen>
 </resources>

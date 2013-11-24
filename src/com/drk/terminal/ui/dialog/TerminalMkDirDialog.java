@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import com.drk.terminal.R;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;

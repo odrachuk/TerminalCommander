@@ -1,9 +1,6 @@
 package com.drk.terminal.ui.activity.terminal;
 
-import android.content.res.Resources;
 import android.widget.TextView;
-import com.drk.terminal.R;
-import com.drk.terminal.utils.OrientationUtil;
 import com.drk.terminal.utils.StringUtil;
 
 /**
@@ -14,57 +11,26 @@ import com.drk.terminal.utils.StringUtil;
  * To change this template use File | Settings | File Templates.
  */
 public class CurrentPathLabel {
-    private static final int MAX_PORTRAIT_SYMBOLS = 12;
-    private static final int MAX_LANDSCAPE_SYMBOLS = 20;
-    private final TextView ownLabel;
-    private final TextView alienLabel;
-    private final Resources resources;
+    private final TextView pathLabel;
     private String fullPath = StringUtil.PATH_SEPARATOR;
 
-    public CurrentPathLabel(Resources resources,
-                            TextView ownLabel,
-                            TextView alienLabel) {
-        this.resources = resources;
-        this.ownLabel = ownLabel;
-        this.alienLabel = alienLabel;
+    public CurrentPathLabel(TextView ownLabel) {
+        this.pathLabel = ownLabel;
     }
 
     public void setPath(String path) {
         fullPath = path;
-        ownLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
-        alienLabel.setTextColor(resources.getColor(R.color.COLOR_B2B2B2));
         if (path != null) {
-            ownLabel.setText(cutIfNeeds(path));
-        }
-    }
-
-    // todo dimension variant should be and prefix logic not postfix
-    private String cutIfNeeds(String path) {
-        if (OrientationUtil.isLandscapeOrientation(resources)) {
-            if (path.length() > MAX_LANDSCAPE_SYMBOLS) {
-                StringBuilder result = new StringBuilder();
-                result.append(path.substring(0, MAX_LANDSCAPE_SYMBOLS - 2)).append("..");
-                return result.toString();
-            } else {
-                return path;
-            }
-        } else {
-            if (path.length() > MAX_PORTRAIT_SYMBOLS) {
-                StringBuilder result = new StringBuilder();
-                result.append(path.substring(0, MAX_PORTRAIT_SYMBOLS - 2)).append("..");
-                return result.toString();
-            } else {
-                return path;
-            }
+            pathLabel.setText(path);
         }
     }
 
     public String getCurrentLabel() {
-        return ownLabel.getText().toString();
+        return pathLabel.getText().toString();
     }
 
     public TextView getOwnLabel() {
-        return ownLabel;
+        return pathLabel;
     }
 
     public String getFullPath() {

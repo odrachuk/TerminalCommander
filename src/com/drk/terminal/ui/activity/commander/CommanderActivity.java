@@ -84,7 +84,7 @@ public class CommanderActivity extends Activity {
         // Prepare data intent
         Intent data = new Intent();
         data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
-        // Activity finished ok, return the data
+        // TerminalActivity finished ok, return the data
         setResult(RESULT_OK, data);
         super.finish();
     }

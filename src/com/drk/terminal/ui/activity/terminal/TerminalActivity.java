@@ -1,14 +1,10 @@
 package com.drk.terminal.ui.activity.terminal;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
@@ -32,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * Time: 10:39 AM
  * To change this template use File | Settings | File Templates.
  */
-public class TerminalActivity extends Activity {
+public class TerminalActivity extends android.app.Activity {
     public static final int REQUEST_CODE = 0;
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
@@ -55,6 +51,20 @@ public class TerminalActivity extends Activity {
                     mRightAdapter.getSelectionStrategy().setShiftToggle(false);
                 }
             }
+        }
+    };
+    private final AbsListView.OnTouchListener mListTouchListener = new AbsListView.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            // Detect active list
+            if (v.getId() == mLeftList.getId()) {
+                activePage = ActivePage.LEFT;
+                selectionVisualItems.selectLeft();
+            } else if (v.getId() == mRightList.getId()) {
+                activePage = ActivePage.RIGHT;
+                selectionVisualItems.selectRight();
+            }
+            return false;
         }
     };
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -173,15 +183,17 @@ public class TerminalActivity extends Activity {
         List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
         ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
         mLeftAdapter = new ListViewAdapter(this, listInfo,
-                new CurrentPathLabel(getResources(), leftPathLabel, rightPathLabel));
+                new CurrentPathLabel(leftPathLabel));
         mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
-                new CurrentPathLabel(getResources(), rightPathLabel, leftPathLabel));
+                new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
         mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
+        mLeftList.setOnTouchListener(mListTouchListener);
         mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
         mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
+        mRightList.setOnTouchListener(mListTouchListener);
         hideProgress();
     }
 
@@ -290,14 +302,6 @@ public class TerminalActivity extends Activity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // Detect active list
-            if (pathLabel.getOwnLabel().getId() == R.id.path_location_in_left) {
-                activePage = ActivePage.LEFT;
-                selectionVisualItems.selectLeft();
-            } else {
-                activePage = ActivePage.RIGHT;
-                selectionVisualItems.selectRight();
-            }
             // If parent dots clicked go up
             ListViewItem selectedItem = adapter.getItem(position);
             if (selectedItem.isParentDots()) {
@@ -339,6 +343,8 @@ public class TerminalActivity extends Activity {
         }
     }
 
+    ;
+
     private final class ListViewItemLongClickListener implements AdapterView.OnItemLongClickListener {
         private final ListViewAdapter adapter;
 
@@ -354,7 +360,7 @@ public class TerminalActivity extends Activity {
             }
             return true;
         }
-    };
+    }
 
     private final class DirectorySizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
 

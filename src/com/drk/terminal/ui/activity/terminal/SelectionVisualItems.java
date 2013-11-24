@@ -2,6 +2,7 @@ package com.drk.terminal.ui.activity.terminal;
 
 import android.content.res.Resources;
 import android.view.View;
+import android.widget.TextView;
 import com.drk.terminal.R;
 
 import java.util.ArrayList;
@@ -18,32 +19,36 @@ public class SelectionVisualItems {
     private final Resources resources;
     private final List<View> leftPanelBorders = new ArrayList<View>();
     private final List<View> rightPanelBorders = new ArrayList<View>();
+    private final TextView rightPathLabel;
+    private final TextView leftPathLabel;
 
 
-    public SelectionVisualItems(TerminalActivity terminalActivity) {
-        this.resources = terminalActivity.getResources();
+    public SelectionVisualItems(TerminalActivity activity) {
+        this.resources = activity.getResources();
         // left panel
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_1_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_2_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_3_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_4_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_5_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.right_triangle_img_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.left_triangle_img_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.bottom_border_image_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.left_border_image_in_left));
-        leftPanelBorders.add(terminalActivity.findViewById(R.id.right_border_image_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.top_border_image_1_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.top_border_image_2_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.top_border_image_3_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.top_border_image_4_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.top_border_image_5_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.right_triangle_img_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.left_triangle_img_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.bottom_border_image_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.left_border_image_in_left));
+        leftPanelBorders.add(activity.findViewById(R.id.right_border_image_in_left));
+        leftPathLabel = (TextView) activity.findViewById(R.id.path_location_in_left);
         // right panel
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_1_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_2_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_3_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_4_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.top_border_image_5_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.right_triangle_img_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.left_triangle_img_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.bottom_border_image_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.left_border_image_in_right));
-        rightPanelBorders.add(terminalActivity.findViewById(R.id.right_border_image_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.top_border_image_1_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.top_border_image_2_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.top_border_image_3_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.top_border_image_4_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.top_border_image_5_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.right_triangle_img_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.left_triangle_img_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.bottom_border_image_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.left_border_image_in_right));
+        rightPanelBorders.add(activity.findViewById(R.id.right_border_image_in_right));
+        rightPathLabel = (TextView) activity.findViewById(R.id.path_location_in_right);
     }
 
     public void selectLeft() {
@@ -53,6 +58,8 @@ public class SelectionVisualItems {
         for (View right : rightPanelBorders) {
             right.setBackgroundColor(resources.getColor(R.color.COLOR_C2C2C2));
         }
+        leftPathLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
+        rightPathLabel.setTextColor(resources.getColor(R.color.COLOR_C2C2C2));
     }
 
     public void selectRight() {
@@ -62,5 +69,7 @@ public class SelectionVisualItems {
         for (View left : leftPanelBorders) {
             left.setBackgroundColor(resources.getColor(R.color.COLOR_C2C2C2));
         }
+        rightPathLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
+        leftPathLabel.setTextColor(resources.getColor(R.color.COLOR_C2C2C2));
     }
 }
