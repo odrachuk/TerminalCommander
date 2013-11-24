@@ -347,7 +347,11 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             ListViewItem item = adapter.getItem(position);
-            if (item.isDirectory()) {
+            if (item.isParentDots()) {
+                Toast.makeText(TerminalActivity.this, "Directory path: " +
+                        item.getAbsPath() + ".",
+                        Toast.LENGTH_LONG).show();
+            } else if (item.isDirectory()) {
                 new DirectorySizeComputationTask().execute(item);
             }
             return true;
