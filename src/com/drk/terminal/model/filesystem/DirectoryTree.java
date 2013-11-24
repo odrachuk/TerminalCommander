@@ -6,11 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/16/13
- * Time: 2:38 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class DirectoryTree {
     public List<File> files = new ArrayList<File>();

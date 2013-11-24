@@ -7,11 +7,9 @@ import com.drk.terminal.comm.TerminalCommander;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 9/25/13
- * Time: 8:46 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class ProcessController {
     private static final String LOG_TAG = ProcessController.class.getSimpleName();

@@ -9,11 +9,9 @@ import android.os.Bundle;
 import com.drk.terminal.R;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/20/13
- * Time: 8:25 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class TerminalProgressActivity extends Activity {
     public static final String PROGRESS_DISMISS_ACTION = TerminalProgressActivity.class.getSimpleName() +

@@ -9,11 +9,9 @@ import com.drk.terminal.model.listview.ListViewItem;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/21/13
- * Time: 10:22 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public final class TerminalDialogUtil {
     public static final String COPY_DIALOG_TAG = TerminalCpMvDialog.class.getCanonicalName() +

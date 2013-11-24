@@ -4,11 +4,9 @@ import com.drk.terminal.comm.controller.UiController;
 import com.drk.terminal.utils.AccountUtil;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 9/25/13
- * Time: 9:44 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class TerminalPrompt {
     private String mUserName;

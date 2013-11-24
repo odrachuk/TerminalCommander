@@ -17,6 +17,11 @@ import com.drk.terminal.comm.controller.ProcessController;
 import com.drk.terminal.comm.controller.UiController;
 import com.drk.terminal.utils.StringUtil;
 
+/**
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
+ */
 public class CommanderActivity extends Activity {
     private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";

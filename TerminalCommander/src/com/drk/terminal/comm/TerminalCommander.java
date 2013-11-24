@@ -16,6 +16,11 @@ import java.util.List;
 import static com.drk.terminal.utils.StringUtil.EMPTY;
 import static com.drk.terminal.utils.StringUtil.LINE_SEPARATOR;
 
+/**
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
+ */
 public class TerminalCommander {
     private static final String LOG_TAG = TerminalCommander.class.getSimpleName();
     private static final String RESULT_KEY = "result";

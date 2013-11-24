@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/12/13
- * Time: 10:22 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class ProcessDirectory {
     private static final String LOG_TAG = ProcessDirectory.class.getSimpleName();

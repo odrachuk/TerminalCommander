@@ -9,11 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/16/13
- * Time: 1:18 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public static final String DATE_FORMAT = "MMM dd yyyy";

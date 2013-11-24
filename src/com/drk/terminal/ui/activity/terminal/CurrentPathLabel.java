@@ -4,11 +4,9 @@ import android.widget.TextView;
 import com.drk.terminal.utils.StringUtil;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/19/13
- * Time: 4:52 AM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class CurrentPathLabel {
     private final TextView pathLabel;

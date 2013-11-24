@@ -16,11 +16,9 @@ import com.drk.terminal.utils.StringUtil;
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/21/13
- * Time: 10:20 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class TerminalDeleteDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalDeleteDialog.class.getSimpleName();

@@ -5,11 +5,9 @@ import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/12/13
- * Time: 10:33 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class Directory {
 

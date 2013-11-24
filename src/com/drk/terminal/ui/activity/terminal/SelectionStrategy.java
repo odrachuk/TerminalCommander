@@ -6,11 +6,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/18/13
- * Time: 10:10 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class SelectionStrategy {
     private final Set<Integer> selectedItems;

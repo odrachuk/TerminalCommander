@@ -9,11 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/20/13
- * Time: 9:05 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class MakeDirectoryCommand implements FileCommand {
     private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();

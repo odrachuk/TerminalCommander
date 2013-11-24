@@ -6,11 +6,9 @@ import com.drk.terminal.comm.command.Command;
 import static com.drk.terminal.utils.StringUtil.EMPTY;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 9/25/13
- * Time: 8:07 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class ClearCommand implements Command {
     @Override

@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
  * Date: 11/24/13
- * Time: 12:27 AM
- * To change this template use File | Settings | File Templates.
+ *
+ * @author Drachuk O.V.
  */
 public class SelectionVisualItems {
     private final Resources resources;

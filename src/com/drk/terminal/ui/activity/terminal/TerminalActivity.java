@@ -22,15 +22,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/16/13
- * Time: 10:39 AM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class TerminalActivity extends android.app.Activity {
-    public static final int REQUEST_CODE = 0;
-    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -67,7 +63,7 @@ public class TerminalActivity extends android.app.Activity {
             return false;
         }
     };
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
@@ -106,11 +102,14 @@ public class TerminalActivity extends android.app.Activity {
             }
         }
     };
+
+    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    private ListViewAdapter mLeftAdapter, mRightAdapter;
+    private SelectionVisualItems selectionVisualItems;
+    private ActivePage activePage = ActivePage.LEFT;
+    public static final int REQUEST_CODE = 0;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
-    private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private ActivePage activePage = ActivePage.LEFT;
-    private SelectionVisualItems selectionVisualItems;
     private boolean isPaused;
 
     @Override
@@ -160,35 +159,6 @@ public class TerminalActivity extends android.app.Activity {
         }
     }
 
-    private void initView() {
-        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
-    }
-
-    private void initLists() {
-        mLeftList = (ListView) findViewById(R.id.left_directory_list);
-        mRightList = (ListView) findViewById(R.id.right_directory_list);
-        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
-        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
-        List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
-        ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
-        mLeftAdapter = new ListViewAdapter(this, listInfo,
-                new CurrentPathLabel(leftPathLabel));
-        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
-                new CurrentPathLabel(rightPathLabel));
-        mLeftList.setAdapter(mLeftAdapter);
-        mRightList.setAdapter(mRightAdapter);
-        mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
-        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
-        mLeftList.setOnTouchListener(mListTouchListener);
-        mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
-        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
-        mRightList.setOnTouchListener(mListTouchListener);
-        hideProgress();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -232,6 +202,35 @@ public class TerminalActivity extends android.app.Activity {
         }
     }
 
+    private void initView() {
+        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
+    }
+
+    private void initLists() {
+        mLeftList = (ListView) findViewById(R.id.left_directory_list);
+        mRightList = (ListView) findViewById(R.id.right_directory_list);
+        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
+        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
+        List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
+        ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
+        mLeftAdapter = new ListViewAdapter(this, listInfo,
+                new CurrentPathLabel(leftPathLabel));
+        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
+                new CurrentPathLabel(rightPathLabel));
+        mLeftList.setAdapter(mLeftAdapter);
+        mRightList.setAdapter(mRightAdapter);
+        mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
+        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
+        mLeftList.setOnTouchListener(mListTouchListener);
+        mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
+        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
+        mRightList.setOnTouchListener(mListTouchListener);
+        hideProgress();
+    }
+
     public ListViewAdapter getLeftListAdapter() {
         return mLeftAdapter;
     }
@@ -268,7 +267,7 @@ public class TerminalActivity extends android.app.Activity {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Log.e(LOG_TAG, "LoadInfoTask", e);
             }
             return null;
         }
@@ -282,14 +281,12 @@ public class TerminalActivity extends android.app.Activity {
     private final class ListViewItemClickListener implements AdapterView.OnItemClickListener {
         private final SelectionStrategy selectionStrategy;
         private final ListViewAdapter adapter;
-        private final CurrentPathLabel pathLabel;
         private final ListView listView;
 
         private ListViewItemClickListener(ListViewAdapter adapter, ListView listView) {
             this.adapter = adapter;
             this.listView = listView;
             this.selectionStrategy = adapter.getSelectionStrategy();
-            this.pathLabel = adapter.getPathLabel();
         }
 
         @Override
@@ -334,8 +331,6 @@ public class TerminalActivity extends android.app.Activity {
             }
         }
     }
-
-    ;
 
     private final class ListViewItemLongClickListener implements AdapterView.OnItemLongClickListener {
         private final ListViewAdapter adapter;

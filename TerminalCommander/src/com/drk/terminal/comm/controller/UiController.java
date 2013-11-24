@@ -6,11 +6,9 @@ import android.widget.TextView;
 import com.drk.terminal.comm.prompt.TerminalPrompt;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 9/28/13
- * Time: 12:21 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class UiController {
     private Activity mProcessActivity;

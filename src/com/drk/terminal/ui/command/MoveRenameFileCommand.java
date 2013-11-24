@@ -11,11 +11,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 11/20/13
- * Time: 9:05 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 11/24/13
+ *
+ * @author Drachuk O.V.
  */
 public class MoveRenameFileCommand implements FileCommand {
     private static final String LOG_TAG = MoveRenameFileCommand.class.getSimpleName();
