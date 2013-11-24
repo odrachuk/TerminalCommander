@@ -18,7 +18,6 @@ import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -55,10 +54,10 @@ public class TerminalActivity extends android.app.Activity {
             // Detect active list
             if (v.getId() == mLeftList.getId()) {
                 activePage = ActivePage.LEFT;
-                selectionVisualItems.selectLeft();
+                mSelectionVisualItems.selectLeft();
             } else if (v.getId() == mRightList.getId()) {
                 activePage = ActivePage.RIGHT;
-                selectionVisualItems.selectRight();
+                mSelectionVisualItems.selectRight();
             }
             return false;
         }
@@ -104,26 +103,37 @@ public class TerminalActivity extends android.app.Activity {
     };
 
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    private static final String FILE_LIST_BUNDLE = LOG_TAG + ".FILE_LIST";
     private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private SelectionVisualItems selectionVisualItems;
+    private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
     public static final int REQUEST_CODE = 0;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private boolean isPaused;
+    private ArrayList<ListViewItem> mFilesList = new ArrayList<ListViewItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mFilesList = savedInstanceState.getParcelableArrayList(FILE_LIST_BUNDLE);
+        }
         setContentView(R.layout.terminal_activity_layout);
+        mSelectionVisualItems = new SelectionVisualItems(this);
         initView();
-        selectionVisualItems = new SelectionVisualItems(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         isPaused = true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(FILE_LIST_BUNDLE, mFilesList);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -207,18 +217,19 @@ public class TerminalActivity extends android.app.Activity {
         findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
-    }
-
-    private void initLists() {
         mLeftList = (ListView) findViewById(R.id.left_directory_list);
         mRightList = (ListView) findViewById(R.id.right_directory_list);
+    }
+
+    private void fillLists() {
         TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
         TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
-        List<ListViewItem> listInfo = new ArrayList<ListViewItem>();
-        ListViewFiller.fillingList(listInfo, StringUtil.PATH_SEPARATOR, null);
-        mLeftAdapter = new ListViewAdapter(this, listInfo,
+        if (mFilesList.isEmpty()) { // filling not necessary when we restoring from saved state
+            ListViewFiller.fillingList(mFilesList, StringUtil.PATH_SEPARATOR, null);
+        }
+        mLeftAdapter = new ListViewAdapter(this, mFilesList,
                 new CurrentPathLabel(leftPathLabel));
-        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(listInfo),
+        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(mFilesList),
                 new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
@@ -274,7 +285,7 @@ public class TerminalActivity extends android.app.Activity {
 
         @Override
         protected void onPostExecute(Void result) {
-            initLists();
+            fillLists();
         }
     }
 

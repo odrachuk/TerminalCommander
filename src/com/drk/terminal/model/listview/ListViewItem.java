@@ -156,7 +156,7 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         isDirectory = isLinkRsp[0];
     }
 
-    public Creator<ListViewItem> CREATOR = new Creator<ListViewItem>() {
+    public static final Creator<ListViewItem> CREATOR = new Creator<ListViewItem>() {
         @Override
         public ListViewItem createFromParcel(Parcel source) {
             return new ListViewItem(source);
