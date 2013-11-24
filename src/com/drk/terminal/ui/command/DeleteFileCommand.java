@@ -54,6 +54,7 @@ public class DeleteFileCommand implements FileCommand {
     }
 
     private void makeClearSelection() {
+        // todo if other panel is same as this, should be also refreshed
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 terminalActivity.getLeftListAdapter().clearSelection();

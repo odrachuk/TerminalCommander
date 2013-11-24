@@ -23,15 +23,18 @@ public class MoveRenameFileCommand implements FileCommand {
     private final List<ListViewItem> items;
     private final String destinationPath;
     private final String currentPath;
+    private final boolean pathChanged;
 
     public MoveRenameFileCommand(TerminalActivity terminalActivity,
                                  List<ListViewItem> items,
                                  String destinationPath,
-                                 String currentPath) {
+                                 String currentPath,
+                                 boolean pathChanged) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
         this.currentPath = currentPath;
+        this.pathChanged = pathChanged;
     }
 
     @Override
@@ -86,11 +89,15 @@ public class MoveRenameFileCommand implements FileCommand {
     private void makeRefreshDirectory() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                if (!pathChanged) {
+                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                }
                 terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                 break;
             case RIGHT:
-                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                if (!pathChanged) {
+                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                }
                 terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                 break;
         }

@@ -40,7 +40,7 @@ public class TerminalCpMvDialog extends DialogFragment {
         public void onClick(View v) {
             String realTextFromInput = mInput.getText().toString();
             if (realTextFromInput.lastIndexOf(StringUtil.PATH_SEPARATOR) == realTextFromInput.length() - 1) {
-                realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() -1);
+                realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
             }
             int viewId = v.getId();
             switch (viewId) {
@@ -49,23 +49,27 @@ public class TerminalCpMvDialog extends DialogFragment {
                         if (!realTextFromInput.equals(mDstDirAbsPath)) {
                             new CopyFileCommand((TerminalActivity) getActivity(),
                                     mFileAbsPathList,
-                                    realTextFromInput).onExecute();
+                                    realTextFromInput,
+                                    true).onExecute();
                         } else {
                             new CopyFileCommand((TerminalActivity) getActivity(),
-                                mFileAbsPathList,
-                                mDstDirAbsPath).onExecute();
+                                    mFileAbsPathList,
+                                    mDstDirAbsPath,
+                                    false).onExecute();
                         }
                     } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
                         if (!realTextFromInput.equals(mDstDirAbsPath)) {
                             new MoveRenameFileCommand((TerminalActivity) getActivity(),
                                     mFileAbsPathList,
                                     realTextFromInput,
-                                    mCurrentAbsPath).onExecute();
+                                    mCurrentAbsPath,
+                                    true).onExecute();
                         } else {
                             new MoveRenameFileCommand((TerminalActivity) getActivity(),
                                     mFileAbsPathList,
                                     mDstDirAbsPath,
-                                    mCurrentAbsPath).onExecute();
+                                    mCurrentAbsPath,
+                                    false).onExecute();
                         }
                     }
                     TerminalCpMvDialog.this.getDialog().cancel();
@@ -134,10 +138,10 @@ public class TerminalCpMvDialog extends DialogFragment {
                 }
                 break;
         }
-        mDstDirAbsPath = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
+        String textForInput = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
                 mDstDirAbsPath + "/" : mDstDirAbsPath;
-        mInput.setText(mDstDirAbsPath);
-        mInput.setSelection(mDstDirAbsPath.length());
+        mInput.setText(textForInput);
+        mInput.setSelection(textForInput.length());
         // Setup button's listener
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_ok).setOnClickListener(mOnClickListener);
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_cancel).setOnClickListener(mOnClickListener);

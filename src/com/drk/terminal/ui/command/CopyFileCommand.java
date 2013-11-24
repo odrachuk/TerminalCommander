@@ -22,13 +22,16 @@ public class CopyFileCommand implements FileCommand {
     private final TerminalActivity terminalActivity;
     private final List<ListViewItem> items;
     private final String destinationPath;
+    private final boolean pathChanged;
 
     public CopyFileCommand(TerminalActivity terminalActivity,
                            List<ListViewItem> items,
-                           String destinationPath) {
+                           String destinationPath,
+                           boolean pathChanged) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
+        this.pathChanged = pathChanged;
     }
 
     @Override
@@ -85,13 +88,15 @@ public class CopyFileCommand implements FileCommand {
     }
 
     private void makeRefreshDirectory() {
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                break;
-            case RIGHT:
-                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                break;
+        if (!pathChanged) {
+            switch (terminalActivity.getActivePage()) {
+                case LEFT:
+                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                    break;
+                case RIGHT:
+                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                    break;
+            }
         }
     }
 }

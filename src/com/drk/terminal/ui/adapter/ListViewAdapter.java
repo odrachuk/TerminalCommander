@@ -66,10 +66,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                     pathStack.addLast(path);
                 } else {
                     String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR) ?
-                        path.substring(1) : path;
+                            path.substring(1) : path;
                     pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
-                        prevPath + correctPath :
-                        prevPath + StringUtil.PATH_SEPARATOR + correctPath);
+                            prevPath + correctPath :
+                            prevPath + StringUtil.PATH_SEPARATOR + correctPath);
                 }
             }
         }
