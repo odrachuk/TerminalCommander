@@ -71,6 +71,10 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
+            String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                    mRightAdapter.getPathLabel().getFullPath();
+            String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+                    mRightAdapter.getPathLabel().getFullPath();
             if (viewId == R.id.action_commander) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
                 startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
@@ -78,10 +82,6 @@ public class TerminalActivity extends android.app.Activity {
                                 mRightAdapter.getPathLabel().getCurrentLabel());
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (viewId == R.id.copy_btn) {
-                String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
                 if (!getOperationItems().isEmpty()) {
                     TerminalDialogUtil.showCopyDialog(TerminalActivity.this,
                             getOperationItems(),
@@ -89,27 +89,19 @@ public class TerminalActivity extends android.app.Activity {
                             currentLocation);
                 }
             } else if (viewId == R.id.rename_btn) {
-                String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                if (!getOperationItems().isEmpty()) {
+               if (!getOperationItems().isEmpty()) {
                     TerminalDialogUtil.showMoveRenameDialog(TerminalActivity.this,
                             getOperationItems(),
                             destinationLocation,
                             currentLocation);
                 }
             } else if (viewId == R.id.mkdir_btn) {
-                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
-                TerminalDialogUtil.showMkDirDialog(TerminalActivity.this, currentLocation);
+               TerminalDialogUtil.showMkDirDialog(TerminalActivity.this, currentLocation, destinationLocation);
             } else if (viewId == R.id.delete_btn) {
-                String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
-                        mRightAdapter.getPathLabel().getFullPath();
                 if (!getOperationItems().isEmpty()) {
                     TerminalDialogUtil.showDeleteDialog(TerminalActivity.this,
                             getOperationItems(),
-                            currentLocation);
+                            currentLocation, destinationLocation);
                 }
             }
         }

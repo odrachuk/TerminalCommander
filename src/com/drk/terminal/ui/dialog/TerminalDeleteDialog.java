@@ -25,9 +25,11 @@ import java.util.ArrayList;
 public class TerminalDeleteDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalDeleteDialog.class.getSimpleName();
     private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
+    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
     private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
     private ArrayList<ListViewItem> mFileAbsPathList;
     private String mCurrentAbsPath;
+    private String mDestinationPath;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -36,7 +38,8 @@ public class TerminalDeleteDialog extends DialogFragment {
                 case R.id.terminal_delete_dialog_btn_ok:
                     new DeleteFileCommand((TerminalActivity) getActivity(),
                             mFileAbsPathList,
-                            mCurrentAbsPath).onExecute();
+                            mCurrentAbsPath,
+                            mDestinationPath).onExecute();
                     TerminalDeleteDialog.this.getDialog().cancel();
                     break;
                 case R.id.terminal_delete_dialog_btn_cancel:
@@ -50,12 +53,14 @@ public class TerminalDeleteDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalDeleteDialog newInstance(ArrayList<ListViewItem> fileAbsPathList, String currentPath) {
+    static TerminalDeleteDialog newInstance(ArrayList<ListViewItem> fileAbsPathList,
+                                            String currentPath, String destinationPath) {
         TerminalDeleteDialog f = new TerminalDeleteDialog();
         // Supply arguments
         Bundle args = new Bundle();
         args.putParcelableArrayList(FILE_PATH_LIST, fileAbsPathList);
         args.putString(CUR_DIRECTORY_PATH, currentPath);
+        args.putString(DST_DIRECTORY_PATH, destinationPath);
         f.setArguments(args);
         return f;
     }
@@ -65,6 +70,7 @@ public class TerminalDeleteDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         mFileAbsPathList = getArguments().getParcelableArrayList(FILE_PATH_LIST);
         mCurrentAbsPath = getArguments().getString(CUR_DIRECTORY_PATH);
+        mDestinationPath = getArguments().getString(DST_DIRECTORY_PATH);
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 

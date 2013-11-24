@@ -64,7 +64,7 @@ public final class TerminalDialogUtil {
         newFragment.show(ft, MOVE_RENAME_DIALOG_TAG);
     }
 
-    public static void showMkDirDialog(Activity activity, String currentPath) {
+    public static void showMkDirDialog(Activity activity, String currentPath, String destinationPath) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -76,11 +76,12 @@ public final class TerminalDialogUtil {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = TerminalMkDirDialog.newInstance(currentPath);
+        DialogFragment newFragment = TerminalMkDirDialog.newInstance(currentPath, destinationPath);
         newFragment.show(ft, MK_DIR_DIALOG_TAG);
     }
 
-    public static void showDeleteDialog(Activity activity, ArrayList<ListViewItem> filePaths, String currentPath) {
+    public static void showDeleteDialog(Activity activity, ArrayList<ListViewItem> filePaths,
+                                        String currentPath, String destinationPath) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -92,7 +93,7 @@ public final class TerminalDialogUtil {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = TerminalDeleteDialog.newInstance(filePaths, currentPath);
+        DialogFragment newFragment = TerminalDeleteDialog.newInstance(filePaths, currentPath, destinationPath);
         newFragment.show(ft, DELETE_DIALOG_TAG);
     }
 }

@@ -20,11 +20,15 @@ public class MakeDirectoryCommand implements FileCommand {
     private final TerminalActivity terminalActivity;
     private final String directoryName;
     private final String currentPath;
+    private final String destinationPath;
 
-    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryName, String currentPath) {
+    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryName,
+                                String currentPath,
+                                String destinationPath) {
         this.terminalActivity = terminalActivity;
         this.directoryName = directoryName;
         this.currentPath = currentPath;
+        this.destinationPath = destinationPath;
     }
 
     @Override
@@ -40,16 +44,37 @@ public class MakeDirectoryCommand implements FileCommand {
     }
 
     private void makeClearSelection() {
-        // todo if other panel is same as this, should be also refreshed
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                terminalActivity.getLeftListAdapter().clearSelection();
-                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                break;
-            case RIGHT:
-                terminalActivity.getRightListAdapter().clearSelection();
-                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                break;
+        if (currentPath.equals(destinationPath)) {
+            terminalActivity.getLeftListAdapter().clearSelection();
+            terminalActivity.getRightListAdapter().clearSelection();
+            terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+            terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+        } else {
+            if (directoryName.contains(destinationPath)) {
+                switch (terminalActivity.getActivePage()) {
+                    case LEFT:
+                        terminalActivity.getLeftListAdapter().clearSelection();
+                        terminalActivity.getRightListAdapter().clearSelection();
+                        terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                        break;
+                    case RIGHT:
+                        terminalActivity.getLeftListAdapter().clearSelection();
+                        terminalActivity.getRightListAdapter().clearSelection();
+                        terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                        break;
+                }
+            } else {
+                switch (terminalActivity.getActivePage()) {
+                    case LEFT:
+                        terminalActivity.getLeftListAdapter().clearSelection();
+                        terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                        break;
+                    case RIGHT:
+                        terminalActivity.getRightListAdapter().clearSelection();
+                        terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                        break;
+                }
+            }
         }
     }
 }

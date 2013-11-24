@@ -21,11 +21,15 @@ public class DeleteFileCommand implements FileCommand {
     private final TerminalActivity terminalActivity;
     private final List<ListViewItem> items;
     private final String currentPath;
+    private final String destinationPath;
 
-    public DeleteFileCommand(TerminalActivity terminalActivity, List<ListViewItem> items, String currentPath) {
+    public DeleteFileCommand(TerminalActivity terminalActivity, List<ListViewItem> items,
+                             String currentPath,
+                             String destinationPath) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.currentPath = currentPath;
+        this.destinationPath = destinationPath;
     }
 
     @Override
@@ -54,16 +58,27 @@ public class DeleteFileCommand implements FileCommand {
     }
 
     private void makeClearSelection() {
-        // todo if other panel is same as this, should be also refreshed
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                terminalActivity.getLeftListAdapter().clearSelection();
-                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                break;
-            case RIGHT:
-                terminalActivity.getRightListAdapter().clearSelection();
-                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                break;
+        if (currentPath.equals(destinationPath)) {
+            terminalActivity.getLeftListAdapter().clearSelection();
+            terminalActivity.getRightListAdapter().clearSelection();
+            terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+            terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+        } else if (destinationPath.contains(currentPath)) {
+            terminalActivity.getLeftListAdapter().clearSelection();
+            terminalActivity.getRightListAdapter().clearSelection();
+            terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+            terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+        } else {
+            switch (terminalActivity.getActivePage()) {
+                case LEFT:
+                    terminalActivity.getLeftListAdapter().clearSelection();
+                    terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                    break;
+                case RIGHT:
+                    terminalActivity.getRightListAdapter().clearSelection();
+                    terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                    break;
+            }
         }
     }
 }

@@ -22,18 +22,40 @@ import com.drk.terminal.utils.StringUtil;
 public class TerminalMkDirDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalMkDirDialog.class.getSimpleName();
     private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
+    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
     private String mCurrentAbsPath;
+    private String mDestinationPath;
     private EditText mInput;
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            switch (viewId) {
+                case R.id.terminal_mk_dir_dialog_btn_ok:
+                    Editable newFileName = mInput.getText();
+                    new MakeDirectoryCommand((TerminalActivity) getActivity(),
+                            newFileName.toString(),
+                            mCurrentAbsPath,
+                            mDestinationPath).onExecute();
+                    TerminalMkDirDialog.this.getDialog().cancel();
+                    break;
+                case R.id.terminal_mk_dir_dialog_btn_cancel:
+                    TerminalMkDirDialog.this.getDialog().cancel();
+                    break;
+            }
+        }
+    };
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalMkDirDialog newInstance(String currentAbsPath) {
+    static TerminalMkDirDialog newInstance(String currentAbsPath, String destinationPath) {
         TerminalMkDirDialog f = new TerminalMkDirDialog();
         // Supply arguments
         Bundle args = new Bundle();
         args.putString(CUR_DIRECTORY_PATH, currentAbsPath);
+        args.putString(DST_DIRECTORY_PATH, destinationPath);
         f.setArguments(args);
         return f;
     }
@@ -42,6 +64,7 @@ public class TerminalMkDirDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCurrentAbsPath = getArguments().getString(CUR_DIRECTORY_PATH);
+        mDestinationPath = getArguments().getString(DST_DIRECTORY_PATH);
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 
@@ -60,23 +83,4 @@ public class TerminalMkDirDialog extends DialogFragment {
         v.findViewById(R.id.terminal_mk_dir_dialog_btn_cancel).setOnClickListener(mOnClickListener);
         return v;
     }
-
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            switch (viewId) {
-                case R.id.terminal_mk_dir_dialog_btn_ok:
-                    Editable newFileName = mInput.getText();
-                    new MakeDirectoryCommand((TerminalActivity) getActivity(),
-                            newFileName.toString(),
-                            mCurrentAbsPath).onExecute();
-                    TerminalMkDirDialog.this.getDialog().cancel();
-                    break;
-                case R.id.terminal_mk_dir_dialog_btn_cancel:
-                    TerminalMkDirDialog.this.getDialog().cancel();
-                    break;
-            }
-        }
-    };
 }
