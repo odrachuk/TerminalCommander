@@ -36,24 +36,30 @@ public class CopyFileCommand implements FileCommand {
         if (items != null && !items.isEmpty()) {
             try {
                 File dstDirectory = new File(destinationPath);
-                if (dstDirectory.canWrite()) {
-                    for (ListViewItem item : items) {
-                        File srcFile = new File(item.getAbsPath());
-                        if (srcFile.canRead()) {
-                            if (item.isDirectory()) {
-                                FileUtil.copyDirectoryToDirectory(new File(item.getAbsPath()), new File(destinationPath));
+                if (dstDirectory.exists()) {
+                    if (dstDirectory.canWrite()) {
+                        for (ListViewItem item : items) {
+                            File srcFile = new File(item.getAbsPath());
+                            if (srcFile.canRead()) {
+                                if (item.isDirectory()) {
+                                    FileUtil.copyDirectoryToDirectory(new File(item.getAbsPath()), new File(destinationPath));
+                                } else {
+                                    FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
+                                }
                             } else {
-                                FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
+                                Toast.makeText(terminalActivity, "No enough permission to read file " + srcFile + ".", Toast.LENGTH_SHORT).show();
+                                makeClearSelection();
                             }
-                        } else {
-                            Toast.makeText(terminalActivity, "No enough permission to read file " + srcFile + ".", Toast.LENGTH_SHORT).show();
-                            makeClearSelection();
                         }
+                        // clear selected
+                        makeClearSelection();
+                        makeRefreshDirectory();
+                    } else {
+                        Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
+                        makeClearSelection();
                     }
-                    // clear selected
-                    makeClearSelection();
                 } else {
-                    Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(terminalActivity, "Destination directory " + destinationPath + " not exists.", Toast.LENGTH_SHORT).show();
                     makeClearSelection();
                 }
             } catch (IOException e) {
@@ -70,12 +76,21 @@ public class CopyFileCommand implements FileCommand {
     private void makeClearSelection() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                 terminalActivity.getLeftListAdapter().clearSelection();
                 break;
             case RIGHT:
-                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
                 terminalActivity.getRightListAdapter().clearSelection();
+                break;
+        }
+    }
+
+    private void makeRefreshDirectory() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                break;
+            case RIGHT:
+                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
                 break;
         }
     }

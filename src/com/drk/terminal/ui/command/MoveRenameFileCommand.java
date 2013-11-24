@@ -39,19 +39,27 @@ public class MoveRenameFileCommand implements FileCommand {
         if (items != null && !items.isEmpty()) {
             try {
                 File dstDirectory = new File(destinationPath);
-                if (dstDirectory.canWrite()) {
-                    for (ListViewItem item : items) {
-                        File srcFile = new File(item.getAbsPath());
-                        if (srcFile.canRead()) {
-                            FileUtil.moveToDirectory(srcFile, dstDirectory, true);
-                        } else {
-                            Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+                if (dstDirectory.exists()) {
+                    if (dstDirectory.canWrite()) {
+                        for (ListViewItem item : items) {
+                            File srcFile = new File(item.getAbsPath());
+                            if (srcFile.canRead()) {
+                                FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                            } else {
+                                Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
+                                makeClearSelection();
+                            }
                         }
+                        // clear selected
+                        makeClearSelection();
+                        makeRefreshDirectory();
+                    } else {
+                        Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
+                        makeClearSelection();
                     }
-                    // clear selected
-                    makeClearSelection();
                 } else {
-                    Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(terminalActivity, "Destination directory " + destinationPath + " not exists.", Toast.LENGTH_SHORT).show();
+                    makeClearSelection();
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Move/Rename", e);
@@ -67,13 +75,22 @@ public class MoveRenameFileCommand implements FileCommand {
     private void makeClearSelection() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                 terminalActivity.getLeftListAdapter().clearSelection();
+                break;
+            case RIGHT:
+                terminalActivity.getRightListAdapter().clearSelection();
+                break;
+        }
+    }
+
+    private void makeRefreshDirectory() {
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                 terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                 break;
             case RIGHT:
                 terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                terminalActivity.getRightListAdapter().clearSelection();
                 terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                 break;
         }

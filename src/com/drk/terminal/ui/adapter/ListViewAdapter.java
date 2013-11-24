@@ -62,11 +62,15 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         } else {
             String prevPath = pathStack.getLast();
             if (!prevPath.equals(path)) {
-                String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR) ?
+                if (isContinueForPrev(prevPath, path)) {
+                    pathStack.addLast(path);
+                } else {
+                    String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR) ?
                         path.substring(1) : path;
-                pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
+                    pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
                         prevPath + correctPath :
                         prevPath + StringUtil.PATH_SEPARATOR + correctPath);
+                }
             }
         }
         // update filesystem
@@ -74,6 +78,14 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         filesInfo.clear();
         labelPath = pathStack.getLast();
         ListViewFiller.fillingList(filesInfo, labelPath, notifyHandler);
+    }
+
+    private boolean isContinueForPrev(String prevPath, String newPath) {
+        if (newPath.contains(prevPath)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void initCache(ViewGroup parent) {

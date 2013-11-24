@@ -67,7 +67,6 @@ public class TerminalMkDirDialog extends DialogFragment {
             int viewId = v.getId();
             switch (viewId) {
                 case R.id.terminal_mk_dir_dialog_btn_ok:
-                    // todo check correct input
                     Editable newFileName = mInput.getText();
                     new MakeDirectoryCommand((TerminalActivity) getActivity(),
                             newFileName.toString(),

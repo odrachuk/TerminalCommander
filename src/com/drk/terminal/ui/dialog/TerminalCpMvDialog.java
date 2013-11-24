@@ -38,17 +38,35 @@ public class TerminalCpMvDialog extends DialogFragment {
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            String realTextFromInput = mInput.getText().toString();
+            if (realTextFromInput.lastIndexOf(StringUtil.PATH_SEPARATOR) == realTextFromInput.length() - 1) {
+                realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() -1);
+            }
             int viewId = v.getId();
             switch (viewId) {
                 case R.id.terminal_cp_mv_dialog_btn_ok:
                     if (mOperationType.equals(TransferOperationType.COPY_OPERATION)) {
-                        new CopyFileCommand((TerminalActivity) getActivity(),
+                        if (!realTextFromInput.equals(mDstDirAbsPath)) {
+                            new CopyFileCommand((TerminalActivity) getActivity(),
+                                    mFileAbsPathList,
+                                    realTextFromInput).onExecute();
+                        } else {
+                            new CopyFileCommand((TerminalActivity) getActivity(),
                                 mFileAbsPathList,
-                                mDstDirAbsPath).onExecute(); // todo read actual dst path
+                                mDstDirAbsPath).onExecute();
+                        }
                     } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
-                        new MoveRenameFileCommand((TerminalActivity) getActivity(),
-                                mFileAbsPathList,
-                                mDstDirAbsPath, mCurrentAbsPath).onExecute(); // todo read actual dst path
+                        if (!realTextFromInput.equals(mDstDirAbsPath)) {
+                            new MoveRenameFileCommand((TerminalActivity) getActivity(),
+                                    mFileAbsPathList,
+                                    realTextFromInput,
+                                    mCurrentAbsPath).onExecute();
+                        } else {
+                            new MoveRenameFileCommand((TerminalActivity) getActivity(),
+                                    mFileAbsPathList,
+                                    mDstDirAbsPath,
+                                    mCurrentAbsPath).onExecute();
+                        }
                     }
                     TerminalCpMvDialog.this.getDialog().cancel();
                     break;
@@ -116,10 +134,10 @@ public class TerminalCpMvDialog extends DialogFragment {
                 }
                 break;
         }
-        String dstText = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
+        mDstDirAbsPath = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
                 mDstDirAbsPath + "/" : mDstDirAbsPath;
-        mInput.setText(dstText);
-        mInput.setSelection(dstText.length());
+        mInput.setText(mDstDirAbsPath);
+        mInput.setSelection(mDstDirAbsPath.length());
         // Setup button's listener
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_ok).setOnClickListener(mOnClickListener);
         v.findViewById(R.id.terminal_cp_mv_dialog_btn_cancel).setOnClickListener(mOnClickListener);
