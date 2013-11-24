@@ -21,12 +21,12 @@
         <View android:id="@+id/left_border_image"
               android:layout_width="1dp"
               android:layout_height="match_parent"
-              android:background="@drawable/vertical_border"
+              android:background="@color/COLOR_C2C2C2"
               android:layout_alignParentLeft="true"/>
         <View android:id="@+id/right_border_image"
               android:layout_width="1dp"
               android:layout_height="match_parent"
-              android:background="@drawable/vertical_border"
+              android:background="@color/COLOR_C2C2C2"
               android:layout_alignParentRight="true"/>
         <TextView
                 android:id="@+id/file_size"

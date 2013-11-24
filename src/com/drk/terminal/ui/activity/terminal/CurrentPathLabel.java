@@ -22,7 +22,8 @@ public class CurrentPathLabel {
     private String fullPath = StringUtil.PATH_SEPARATOR;
 
     public CurrentPathLabel(Resources resources,
-                            TextView ownLabel, TextView alienLabel) {
+                            TextView ownLabel,
+                            TextView alienLabel) {
         this.resources = resources;
         this.ownLabel = ownLabel;
         this.alienLabel = alienLabel;

@@ -108,6 +108,7 @@ public class TerminalActivity extends Activity {
     private ListView mLeftList, mRightList;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private ActivePage activePage = ActivePage.LEFT;
+    private SelectionVisualItems selectionVisualItems;
     private boolean isPaused;
 
     @Override
@@ -115,6 +116,7 @@ public class TerminalActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
         initView();
+        selectionVisualItems = new SelectionVisualItems(this);
     }
 
     @Override
@@ -291,8 +293,10 @@ public class TerminalActivity extends Activity {
             // Detect active list
             if (pathLabel.getOwnLabel().getId() == R.id.path_location_in_left) {
                 activePage = ActivePage.LEFT;
+                selectionVisualItems.selectLeft();
             } else {
                 activePage = ActivePage.RIGHT;
+                selectionVisualItems.selectRight();
             }
             // If parent dots clicked go up
             ListViewItem selectedItem = adapter.getItem(position);

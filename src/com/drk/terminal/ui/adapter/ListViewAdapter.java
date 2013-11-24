@@ -121,18 +121,15 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         if (selectionStrategy.getUnselectedItems().contains(position)) {
             ListViewItem info = filesInfo.get(position);
             if (info.isDirectory()) {
-                if (info.canRead()) {
-                    viewHolder.fileNameView.setTextColor(
-                            activity.getResources().getColor(android.R.color.white));
-                    viewHolder.fileSizeView.setTextColor(
-                            activity.getResources().getColor(android.R.color.white));
-                    viewHolder.fileModifyTimeView.setTextColor(
-                            activity.getResources().getColor(android.R.color.white));
-                } else {
-                    if (!info.isParentDots()) {
-                        viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
-                                Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
+                viewHolder.fileNameView.setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+                viewHolder.fileSizeView.setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+                viewHolder.fileModifyTimeView.setTextColor(
+                        activity.getResources().getColor(android.R.color.white));
+                if (!info.canRead() && !info.isParentDots()) {
+                    viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
+                            Paint.STRIKE_THRU_TEXT_FLAG);
                 }
             } else {
                 viewHolder.fileNameView.setTextColor(
