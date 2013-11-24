@@ -11,13 +11,16 @@ import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
-import com.drk.terminal.ui.adapter.ListViewAdapter;
+import com.drk.terminal.ui.activity.terminal.adapter.ListViewAdapter;
+import com.drk.terminal.ui.activity.terminal.selection.SelectionStrategy;
+import com.drk.terminal.ui.activity.terminal.selection.SelectionVisualItems;
 import com.drk.terminal.ui.dialog.TerminalDialogUtil;
 import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -103,22 +106,21 @@ public class TerminalActivity extends android.app.Activity {
     };
 
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
-    private static final String FILE_LIST_BUNDLE = LOG_TAG + ".FILE_LIST";
+    private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
+    private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
     public static final int REQUEST_CODE = 0;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
+    private String mRightListSavedLocation;
+    private String mLeftListSavedLocation;
     private boolean isPaused;
-    private ArrayList<ListViewItem> mFilesList = new ArrayList<ListViewItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            mFilesList = savedInstanceState.getParcelableArrayList(FILE_LIST_BUNDLE);
-        }
         setContentView(R.layout.terminal_activity_layout);
         mSelectionVisualItems = new SelectionVisualItems(this);
         initView();
@@ -132,8 +134,22 @@ public class TerminalActivity extends android.app.Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(FILE_LIST_BUNDLE, mFilesList);
+        if (mLeftAdapter != null) {
+            outState.putString(LEFT_FILE_LIST_PATH_BUNDLE, mLeftAdapter.getPathLabel().getFullPath());
+        }
+        if (mRightAdapter != null) {
+            outState.putString(RIGHT_FILE_LIST_PATH_BUNDLE, mRightAdapter.getPathLabel().getFullPath());
+        }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            mLeftListSavedLocation = savedInstanceState.getString(LEFT_FILE_LIST_PATH_BUNDLE);
+            mRightListSavedLocation = savedInstanceState.getString(RIGHT_FILE_LIST_PATH_BUNDLE);
+        }
     }
 
     @Override
@@ -222,14 +238,23 @@ public class TerminalActivity extends android.app.Activity {
     }
 
     private void fillLists() {
+        List<ListViewItem> leftFilesList = null;
+        List<ListViewItem> rightFilesList = null;
+        if (mLeftListSavedLocation == null) { // filling not necessary when we restoring from saved state
+            leftFilesList = new ArrayList<ListViewItem>();
+            ListViewFiller.fillingList(leftFilesList, StringUtil.PATH_SEPARATOR, null);
+            rightFilesList = new ArrayList<ListViewItem>(leftFilesList);
+        } else {
+            leftFilesList = new ArrayList<ListViewItem>();
+            rightFilesList = new ArrayList<ListViewItem>();
+            ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
+            ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
+        }
         TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
         TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
-        if (mFilesList.isEmpty()) { // filling not necessary when we restoring from saved state
-            ListViewFiller.fillingList(mFilesList, StringUtil.PATH_SEPARATOR, null);
-        }
-        mLeftAdapter = new ListViewAdapter(this, mFilesList,
+        mLeftAdapter = new ListViewAdapter(this, leftFilesList,
                 new CurrentPathLabel(leftPathLabel));
-        mRightAdapter = new ListViewAdapter(this, new ArrayList<ListViewItem>(mFilesList),
+        mRightAdapter = new ListViewAdapter(this, rightFilesList,
                 new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);

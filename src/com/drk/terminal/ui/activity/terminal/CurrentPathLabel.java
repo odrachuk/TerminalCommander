@@ -27,10 +27,6 @@ public class CurrentPathLabel {
         return pathLabel.getText().toString();
     }
 
-    public TextView getOwnLabel() {
-        return pathLabel;
-    }
-
     public String getFullPath() {
         return fullPath;
     }

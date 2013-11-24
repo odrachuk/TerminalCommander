@@ -1,4 +1,4 @@
-package com.drk.terminal.ui.adapter;
+package com.drk.terminal.ui.activity.terminal.adapter;
 
 import android.app.Activity;
 import android.graphics.Paint;
@@ -13,7 +13,7 @@ import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.CurrentPathLabel;
-import com.drk.terminal.ui.activity.terminal.SelectionStrategy;
+import com.drk.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.drk.terminal.utils.StringUtil;
 
 import java.util.*;

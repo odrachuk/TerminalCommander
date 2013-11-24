@@ -1,9 +1,10 @@
-package com.drk.terminal.ui.activity.terminal;
+package com.drk.terminal.ui.activity.terminal.selection;
 
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.TextView;
 import com.drk.terminal.R;
+import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 
 import java.util.ArrayList;
 import java.util.List;

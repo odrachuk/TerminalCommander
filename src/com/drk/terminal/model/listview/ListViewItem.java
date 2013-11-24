@@ -124,8 +124,31 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         }
     }
 
-    public boolean isEmpty() {
-        return absPath.isEmpty();
+    @Override
+    public boolean equals(Object o) {
+        ListViewItem other = (ListViewItem) o;
+        if (this.fileName.equals(other.fileName) &&
+                this.fileSize.equals(other.fileSize) &&
+                this.fileModifyTime.equals(other.fileModifyTime) &&
+                this.absPath.equals(other.absPath)  &&
+                this.isDirectory == other.isDirectory &&
+                this.isLink == other.isLink) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + fileName.hashCode();
+        result = 37 * result + fileSize.hashCode();
+        result = 37 * result + fileModifyTime.hashCode();
+        result = 37 * result + (absPath != null? absPath.hashCode() : 0);
+        result = 37 * result + (isDirectory? 0: 1);
+        result = 37 * result + (isLink? 0: 1);
+        return result;
     }
 
     @Override

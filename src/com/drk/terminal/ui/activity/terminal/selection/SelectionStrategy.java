@@ -1,4 +1,4 @@
-package com.drk.terminal.ui.activity.terminal;
+package com.drk.terminal.ui.activity.terminal.selection;
 
 import android.widget.ArrayAdapter;
 
