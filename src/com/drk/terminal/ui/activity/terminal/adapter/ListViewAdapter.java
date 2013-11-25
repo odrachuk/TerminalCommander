@@ -176,6 +176,12 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         return last;
     }
 
+    public void goBackToPath(String backPath) {
+        while (!pathStack.getLast().equals(backPath)) {
+            pathStack.removeLast();
+        }
+    }
+
     public SelectionStrategy getSelectionStrategy() {
         return selectionStrategy;
     }

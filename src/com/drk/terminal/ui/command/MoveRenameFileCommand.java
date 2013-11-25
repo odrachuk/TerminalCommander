@@ -20,17 +20,20 @@ public class MoveRenameFileCommand implements FileCommand {
     private final TerminalActivity terminalActivity;
     private final List<ListViewItem> items;
     private final String destinationPath;
+    private final String destinationOldPath;
     private final String currentPath;
     private final boolean pathChanged;
 
     public MoveRenameFileCommand(TerminalActivity terminalActivity,
                                  List<ListViewItem> items,
                                  String destinationPath,
+                                 String destinationOldPath,
                                  String currentPath,
                                  boolean pathChanged) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
+        this.destinationOldPath = destinationOldPath;
         this.currentPath = currentPath;
         this.pathChanged = pathChanged;
     }
@@ -87,13 +90,17 @@ public class MoveRenameFileCommand implements FileCommand {
     private void makeRefreshDirectory() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                if (!pathChanged) {
+                if (destinationOldPath.equals(currentPath)) {
+                    terminalActivity.getRightListAdapter().changeDirectory(destinationOldPath);
+                } else if (!pathChanged) {
                     terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                 }
                 terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                 break;
             case RIGHT:
-                if (!pathChanged) {
+                if (destinationOldPath.equals(currentPath)) {
+                    terminalActivity.getLeftListAdapter().changeDirectory(destinationOldPath);
+                } else if (!pathChanged) {
                     terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
                 }
                 terminalActivity.getRightListAdapter().changeDirectory(currentPath);

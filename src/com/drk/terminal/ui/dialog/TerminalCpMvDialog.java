@@ -37,38 +37,30 @@ public class TerminalCpMvDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             String realTextFromInput = mInput.getText().toString();
-            if (realTextFromInput.lastIndexOf(StringUtil.PATH_SEPARATOR) == realTextFromInput.length() - 1) {
+            if (realTextFromInput.endsWith(StringUtil.PATH_SEPARATOR)) {
                 realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
             }
             int viewId = v.getId();
             switch (viewId) {
                 case R.id.terminal_cp_mv_dialog_btn_ok:
+                    String operationDestinationPath = mDstDirAbsPath;
+                    boolean pathChanged = false;
+                    if (!mDstDirAbsPath.equals(realTextFromInput)) {
+                        operationDestinationPath = realTextFromInput;
+                        pathChanged = true;
+                    }
                     if (mOperationType.equals(TransferOperationType.COPY_OPERATION)) {
-                        if (!realTextFromInput.equals(mDstDirAbsPath)) {
-                            new CopyFileCommand((TerminalActivity) getActivity(),
-                                    mFileAbsPathList,
-                                    realTextFromInput,
-                                    true).onExecute();
-                        } else {
-                            new CopyFileCommand((TerminalActivity) getActivity(),
-                                    mFileAbsPathList,
-                                    mDstDirAbsPath,
-                                    false).onExecute();
-                        }
+                        new CopyFileCommand((TerminalActivity) getActivity(),
+                                mFileAbsPathList,
+                                operationDestinationPath,
+                                pathChanged).onExecute();
                     } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
-                        if (!realTextFromInput.equals(mDstDirAbsPath)) {
                             new MoveRenameFileCommand((TerminalActivity) getActivity(),
                                     mFileAbsPathList,
-                                    realTextFromInput,
-                                    mCurrentAbsPath,
-                                    true).onExecute();
-                        } else {
-                            new MoveRenameFileCommand((TerminalActivity) getActivity(),
-                                    mFileAbsPathList,
+                                    operationDestinationPath,
                                     mDstDirAbsPath,
                                     mCurrentAbsPath,
-                                    false).onExecute();
-                        }
+                                    pathChanged).onExecute();
                     }
                     TerminalCpMvDialog.this.getDialog().cancel();
                     break;

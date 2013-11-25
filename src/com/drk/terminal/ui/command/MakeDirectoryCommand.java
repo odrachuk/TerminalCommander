@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.utils.FileUtil;
+import com.drk.terminal.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,30 +49,27 @@ public class MakeDirectoryCommand implements FileCommand {
             terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
             terminalActivity.getRightListAdapter().changeDirectory(currentPath);
         } else {
-            if (directoryName.contains(destinationPath)) {
-                switch (terminalActivity.getActivePage()) {
-                    case LEFT:
-                        terminalActivity.getLeftListAdapter().clearSelection();
-                        terminalActivity.getRightListAdapter().clearSelection();
+            String correctDirectoryName = directoryName.endsWith(StringUtil.PATH_SEPARATOR) ?
+                    directoryName.substring(0, directoryName.length() - 1) : directoryName;
+            int lastSlashIndex = correctDirectoryName.lastIndexOf(StringUtil.PATH_SEPARATOR);
+            correctDirectoryName = correctDirectoryName.substring(0, lastSlashIndex);
+            switch (terminalActivity.getActivePage()) {
+                case LEFT:
+                    if (correctDirectoryName.equals(destinationPath)) {
                         terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                        break;
-                    case RIGHT:
-                        terminalActivity.getLeftListAdapter().clearSelection();
-                        terminalActivity.getRightListAdapter().clearSelection();
-                        terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                        break;
-                }
-            } else {
-                switch (terminalActivity.getActivePage()) {
-                    case LEFT:
+                    } else {
                         terminalActivity.getLeftListAdapter().clearSelection();
                         terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                        break;
-                    case RIGHT:
+                    }
+                    break;
+                case RIGHT:
+                    if (correctDirectoryName.equals(destinationPath)) {
+                        terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                    } else {
                         terminalActivity.getRightListAdapter().clearSelection();
                         terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                        break;
-                }
+                    }
+                    break;
             }
         }
     }
