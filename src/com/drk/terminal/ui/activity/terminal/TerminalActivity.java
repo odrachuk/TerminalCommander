@@ -238,24 +238,30 @@ public class TerminalActivity extends android.app.Activity {
     }
 
     private void fillLists() {
+        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
+        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
         List<ListViewItem> leftFilesList = null;
         List<ListViewItem> rightFilesList = null;
         if (mLeftListSavedLocation == null) { // filling not necessary when we restoring from saved state
             leftFilesList = new ArrayList<ListViewItem>();
             ListViewFiller.fillingList(leftFilesList, StringUtil.PATH_SEPARATOR, null);
             rightFilesList = new ArrayList<ListViewItem>(leftFilesList);
+            mLeftAdapter = new ListViewAdapter(this, leftFilesList,
+                    new CurrentPathLabel(leftPathLabel));
+            mRightAdapter = new ListViewAdapter(this, rightFilesList,
+                    new CurrentPathLabel(rightPathLabel));
         } else {
             leftFilesList = new ArrayList<ListViewItem>();
             rightFilesList = new ArrayList<ListViewItem>();
             ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
             ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
+            mLeftAdapter = new ListViewAdapter(this, leftFilesList,
+                    new CurrentPathLabel(leftPathLabel));
+            mRightAdapter = new ListViewAdapter(this, rightFilesList,
+                    new CurrentPathLabel(rightPathLabel));
+            mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
+            mRightAdapter.restoreBackPath(mRightListSavedLocation);
         }
-        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
-        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
-        mLeftAdapter = new ListViewAdapter(this, leftFilesList,
-                new CurrentPathLabel(leftPathLabel));
-        mRightAdapter = new ListViewAdapter(this, rightFilesList,
-                new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));

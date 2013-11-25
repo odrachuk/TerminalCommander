@@ -79,11 +79,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     private boolean isContinueForPrev(String prevPath, String newPath) {
-        if (newPath.contains(prevPath)) {
-            return true;
-        } else {
-            return false;
-        }
+        return newPath.contains(prevPath);
     }
 
     private void initCache(ViewGroup parent) {
@@ -179,6 +175,19 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     public void goBackToPath(String backPath) {
         while (!pathStack.getLast().equals(backPath)) {
             pathStack.removeLast();
+        }
+    }
+
+    public void restoreBackPath(String listSavedLocation) {
+        if (listSavedLocation.lastIndexOf(StringUtil.PATH_SEPARATOR) > 0) {
+            String correctSavedListLocation = listSavedLocation.endsWith(StringUtil.PATH_SEPARATOR) ?
+                    listSavedLocation.substring(0, listSavedLocation.length() - 1) : listSavedLocation;
+            String[] pathArray = correctSavedListLocation.split(StringUtil.PATH_SEPARATOR);
+            pathStack.addLast(pathStack.getLast() + pathArray[1]);
+            for (int i = 2; i < pathArray.length; i++) {
+                pathStack.addLast(pathStack.getLast() + StringUtil.PATH_SEPARATOR + pathArray[i]);
+            }
+            pathLabel.setPath(correctSavedListLocation);
         }
     }
 
