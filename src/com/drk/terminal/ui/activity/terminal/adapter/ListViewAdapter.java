@@ -179,7 +179,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     public void restoreBackPath(String listSavedLocation) {
-        if (listSavedLocation.lastIndexOf(StringUtil.PATH_SEPARATOR) > 0) {
+        if (listSavedLocation.length() > 1) {
             String correctSavedListLocation = listSavedLocation.endsWith(StringUtil.PATH_SEPARATOR) ?
                     listSavedLocation.substring(0, listSavedLocation.length() - 1) : listSavedLocation;
             String[] pathArray = correctSavedListLocation.split(StringUtil.PATH_SEPARATOR);
