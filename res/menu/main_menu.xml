@@ -19,7 +19,7 @@
           android:showAsAction="ifRoom"
           android:actionViewClass="com.drk.terminal.ui.widget.actionbar.ActionBarTabButton"/>
     <!--Menus-->
-    <item android:id="@+id/action_serrings"
+    <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:showAsAction="never"/>
     <item android:id="@+id/action_quit"

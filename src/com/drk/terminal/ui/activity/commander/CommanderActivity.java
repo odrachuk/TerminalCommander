@@ -70,7 +70,7 @@ public class CommanderActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_serrings:
+            case R.id.action_settings:
                 //todo
                 return true;
             case R.id.action_quit:

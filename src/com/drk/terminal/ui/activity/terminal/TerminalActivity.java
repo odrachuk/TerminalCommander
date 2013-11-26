@@ -9,6 +9,7 @@ import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.model.shpref.HistoryLocationsManager;
 import com.drk.terminal.model.shpref.TerminalPreferences;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
@@ -30,6 +31,10 @@ import java.util.concurrent.TimeUnit;
  * @author Drachuk O.V.
  */
 public class TerminalActivity extends android.app.Activity {
+    public static final int REQUEST_CODE = 0;
+    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
+    private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
+    private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
     private final CompoundButton.OnCheckedChangeListener mOnToggleListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -88,36 +93,47 @@ public class TerminalActivity extends android.app.Activity {
                             currentLocation);
                 }
             } else if (viewId == R.id.rename_btn) {
-               if (!getOperationItems().isEmpty()) {
+                if (!getOperationItems().isEmpty()) {
                     TerminalDialogUtil.showMoveRenameDialog(TerminalActivity.this,
                             getOperationItems(),
                             destinationLocation,
                             currentLocation);
                 }
             } else if (viewId == R.id.mkdir_btn) {
-               TerminalDialogUtil.showMkDirDialog(TerminalActivity.this, currentLocation, destinationLocation);
+                TerminalDialogUtil.showMkDirDialog(TerminalActivity.this, currentLocation, destinationLocation);
             } else if (viewId == R.id.delete_btn) {
                 if (!getOperationItems().isEmpty()) {
                     TerminalDialogUtil.showDeleteDialog(TerminalActivity.this,
                             getOperationItems(),
                             currentLocation, destinationLocation);
                 }
+            } else if (viewId == R.id.history_btn_in_left) {
+                String[] locations = mLeftHistoryLocationManager.getActualHistoryLocations();
+                if (locations.length > 0) {
+                    TerminalDialogUtil.showHistoryDialog(TerminalActivity.this,
+                            locations,
+                            ActivePage.LEFT);
+                }
+            } else if (viewId == R.id.history_btn_in_right) {
+                String[] locations = mRightHistoryLocationManager.getActualHistoryLocations();
+                if (locations.length > 0) {
+                    TerminalDialogUtil.showHistoryDialog(TerminalActivity.this,
+                            locations,
+                            ActivePage.RIGHT);
+                }
             }
         }
     };
-
-    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
-    private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
-    private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
-    public static final int REQUEST_CODE = 0;
     private ToggleButton mShiftBtn, mCtrlBtn;
     private ListView mLeftList, mRightList;
     private String mRightListSavedLocation;
     private String mLeftListSavedLocation;
     private TerminalPreferences mPreferences;
+    private HistoryLocationsManager mLeftHistoryLocationManager;
+    private HistoryLocationsManager mRightHistoryLocationManager;
     private boolean isPaused;
 
     @Override
@@ -125,10 +141,18 @@ public class TerminalActivity extends android.app.Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
         mSelectionVisualItems = new SelectionVisualItems(this);
+        readPreferences();
+        initView();
+    }
+
+    private void readPreferences() {
         mPreferences = new TerminalPreferences(this);
+        // read last locations
         mLeftListSavedLocation = mPreferences.loadLastLeftLocations();
         mRightListSavedLocation = mPreferences.loadLastRightLocations();
-        initView();
+        // read locations history
+        mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.LEFT);
+        mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.RIGHT);
     }
 
     @Override
@@ -221,7 +245,7 @@ public class TerminalActivity extends android.app.Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_serrings:
+            case R.id.action_settings:
                 //todo
                 return true;
             case R.id.action_quit:
@@ -235,9 +259,15 @@ public class TerminalActivity extends android.app.Activity {
 
     @Override
     protected void onDestroy() {
+        saveDataBeforeDestroy();
+        super.onDestroy();
+    }
+
+    private void saveDataBeforeDestroy() {
         mPreferences.saveLastLocations(mLeftAdapter.getPathLabel().getFullPath(),
                 mRightAdapter.getPathLabel().getFullPath());
-        super.onDestroy();
+        mPreferences.saveLeftHistoryLocations(mLeftHistoryLocationManager.getActualHistoryLocations());
+        mPreferences.saveRightHistoryLocations(mRightHistoryLocationManager.getActualHistoryLocations());
     }
 
     private void initView() {
@@ -245,6 +275,8 @@ public class TerminalActivity extends android.app.Activity {
         findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.history_btn_in_left).setOnClickListener(mOnClickListener);
+        findViewById(R.id.history_btn_in_right).setOnClickListener(mOnClickListener);
         mLeftList = (ListView) findViewById(R.id.left_directory_list);
         mRightList = (ListView) findViewById(R.id.right_directory_list);
     }
@@ -258,8 +290,10 @@ public class TerminalActivity extends android.app.Activity {
         rightFilesList = new ArrayList<ListViewItem>();
         ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
         ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
-        mLeftAdapter = new ListViewAdapter(this, leftFilesList, new CurrentPathLabel(leftPathLabel));
-        mRightAdapter = new ListViewAdapter(this, rightFilesList, new CurrentPathLabel(rightPathLabel));
+        mLeftAdapter = new ListViewAdapter(this, leftFilesList, new CurrentPathLabel(leftPathLabel),
+                mLeftHistoryLocationManager);
+        mRightAdapter = new ListViewAdapter(this, rightFilesList, new CurrentPathLabel(rightPathLabel),
+                mRightHistoryLocationManager);
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));

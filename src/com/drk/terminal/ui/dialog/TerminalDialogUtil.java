@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.ui.activity.terminal.TerminalActivity;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public final class TerminalDialogUtil {
             TerminalCpMvDialog.TransferOperationType.MOVE_OPERATION;
     public static final String MK_DIR_DIALOG_TAG = TerminalMkDirDialog.class.getCanonicalName();
     public static final String DELETE_DIALOG_TAG = TerminalDeleteDialog.class.getCanonicalName();
+    public static final String HISTORY_DIALOG_TAG = TerminalHistoryDialog.class.getCanonicalName();
 
     private TerminalDialogUtil() {
     }
@@ -93,5 +95,22 @@ public final class TerminalDialogUtil {
         // Create and show the dialog.
         DialogFragment newFragment = TerminalDeleteDialog.newInstance(filePaths, currentPath, destinationPath);
         newFragment.show(ft, DELETE_DIALOG_TAG);
+    }
+
+    public static void showHistoryDialog(Activity activity, String[] historyLocations,
+                                         TerminalActivity.ActivePage activePage) {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+        Fragment prev = activity.getFragmentManager().findFragmentByTag(HISTORY_DIALOG_TAG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = TerminalHistoryDialog.newInstance(activePage, historyLocations);
+        newFragment.show(ft, HISTORY_DIALOG_TAG);
     }
 }
