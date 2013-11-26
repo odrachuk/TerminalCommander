@@ -9,6 +9,7 @@ import android.widget.*;
 import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
+import com.drk.terminal.model.shpref.TerminalPreferences;
 import com.drk.terminal.ui.activity.commander.CommanderActivity;
 import com.drk.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.drk.terminal.ui.activity.terminal.adapter.ListViewAdapter;
@@ -116,6 +117,7 @@ public class TerminalActivity extends android.app.Activity {
     private ListView mLeftList, mRightList;
     private String mRightListSavedLocation;
     private String mLeftListSavedLocation;
+    private TerminalPreferences mPreferences;
     private boolean isPaused;
 
     @Override
@@ -123,6 +125,9 @@ public class TerminalActivity extends android.app.Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
         mSelectionVisualItems = new SelectionVisualItems(this);
+        mPreferences = new TerminalPreferences(this);
+        mLeftListSavedLocation = mPreferences.loadLastLeftLocations();
+        mRightListSavedLocation = mPreferences.loadLastRightLocations();
         initView();
     }
 
@@ -228,6 +233,13 @@ public class TerminalActivity extends android.app.Activity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        mPreferences.saveLastLocations(mLeftAdapter.getPathLabel().getFullPath(),
+                mRightAdapter.getPathLabel().getFullPath());
+        super.onDestroy();
+    }
+
     private void initView() {
         findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
@@ -242,26 +254,12 @@ public class TerminalActivity extends android.app.Activity {
         TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
         List<ListViewItem> leftFilesList = null;
         List<ListViewItem> rightFilesList = null;
-        if (mLeftListSavedLocation == null) { // filling not necessary when we restoring from saved state
-            leftFilesList = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(leftFilesList, StringUtil.PATH_SEPARATOR, null);
-            rightFilesList = new ArrayList<ListViewItem>(leftFilesList);
-            mLeftAdapter = new ListViewAdapter(this, leftFilesList,
-                    new CurrentPathLabel(leftPathLabel));
-            mRightAdapter = new ListViewAdapter(this, rightFilesList,
-                    new CurrentPathLabel(rightPathLabel));
-        } else {
-            leftFilesList = new ArrayList<ListViewItem>();
-            rightFilesList = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
-            ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
-            mLeftAdapter = new ListViewAdapter(this, leftFilesList,
-                    new CurrentPathLabel(leftPathLabel));
-            mRightAdapter = new ListViewAdapter(this, rightFilesList,
-                    new CurrentPathLabel(rightPathLabel));
-            mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
-            mRightAdapter.restoreBackPath(mRightListSavedLocation);
-        }
+        leftFilesList = new ArrayList<ListViewItem>();
+        rightFilesList = new ArrayList<ListViewItem>();
+        ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
+        ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
+        mLeftAdapter = new ListViewAdapter(this, leftFilesList, new CurrentPathLabel(leftPathLabel));
+        mRightAdapter = new ListViewAdapter(this, rightFilesList, new CurrentPathLabel(rightPathLabel));
         mLeftList.setAdapter(mLeftAdapter);
         mRightList.setAdapter(mRightAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
@@ -270,6 +268,8 @@ public class TerminalActivity extends android.app.Activity {
         mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
         mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
         mRightList.setOnTouchListener(mListTouchListener);
+        mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
+        mRightAdapter.restoreBackPath(mRightListSavedLocation);
         hideProgress();
     }
 
