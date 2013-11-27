@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/COLOR_3D8BFF">
+                android:background="@color/COLOR_C2C2C2">
     <RelativeLayout android:layout_width="@dimen/terminal_history_dialog_width"
                     android:layout_height="@dimen/terminal_history_dialog_height"
                     android:paddingBottom="@dimen/terminal_dialog_padding_bottom"
@@ -72,7 +72,7 @@
                     android:id="@+id/history_dialog_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:listSelector="@drawable/list_cursor"
+                    android:listSelector="@drawable/list_dark_gray_cursor"
                     android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>

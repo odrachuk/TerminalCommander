@@ -62,7 +62,7 @@ public class TerminalHistoryDialog extends DialogFragment {
         title.setText(mActivePage.equals(TerminalActivity.ActivePage.LEFT)?
             "Left panel history" : "Right panel history");
         ListView list = (ListView) v.findViewById(R.id.history_dialog_list);
-        ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
+        ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), R.layout.terminal_history_list_row_layout,
                 mHistoryLocations);
         list.setAdapter(listAdapter);
         list.setOnItemClickListener(mItemClickListener);

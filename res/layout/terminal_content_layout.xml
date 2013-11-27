@@ -134,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@id/left_list_title"
-                    android:listSelector="@drawable/list_cursor"
+                    android:listSelector="@drawable/list_blue_cursor"
                     android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>
@@ -263,7 +263,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@id/right_list_title"
-                    android:listSelector="@drawable/list_cursor"
+                    android:listSelector="@drawable/list_blue_cursor"
                     android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>
