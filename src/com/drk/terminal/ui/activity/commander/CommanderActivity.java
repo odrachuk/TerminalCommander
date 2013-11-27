@@ -27,7 +27,6 @@ public class CommanderActivity extends Activity {
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
 
     private ProcessController mProcessController;
-    private KeyboardController mProcessKeyboardController;
     private UiController mProcessUiController;
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
@@ -60,10 +59,8 @@ public class CommanderActivity extends Activity {
         commItem.setVisible(false);
         // setup tab
         MenuItem tabItem = menu.findItem(R.id.action_tab);
-        if (ctrlItem != null) {
-            Button tabBtn = (Button) tabItem.getActionView();
-            tabBtn.setOnClickListener(mOnClickListener);
-        }
+        Button tabBtn = (Button) tabItem.getActionView();
+        tabBtn.setOnClickListener(mOnClickListener);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -109,7 +106,6 @@ public class CommanderActivity extends Activity {
         // create controllers
         mProcessUiController = new UiController(this, mTerminalInView, mTerminalOutView, mTerminalPromptView);
         mProcessController = new ProcessController(mProcessUiController, path);
-        mProcessKeyboardController = new KeyboardController(mProcessUiController, mProcessController);
         // config ui components
         mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
@@ -117,7 +113,7 @@ public class CommanderActivity extends Activity {
         mTerminalInView.setBackgroundColor(android.R.color.transparent);
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mTerminalInView.setOnEditorActionListener(mProcessKeyboardController);
+        mTerminalInView.setOnEditorActionListener(new KeyboardController(mProcessUiController, mProcessController));
         initActionBar();
     }
 

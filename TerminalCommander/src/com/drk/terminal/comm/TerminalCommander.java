@@ -25,7 +25,7 @@ public class TerminalCommander {
     private static final String LOG_TAG = TerminalCommander.class.getSimpleName();
     private static final String RESULT_KEY = "result";
     private static final String SYSTEM_EXECUTOR = "sh";
-    Handler mResponseHandler = new Handler() {
+    private final Handler mResponseHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -34,6 +34,8 @@ public class TerminalCommander {
                 StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
                 // write result to console
                 for (String s : results) {
+
+
                     oldText.append(LINE_SEPARATOR);
                     oldText.append(s);
                 }

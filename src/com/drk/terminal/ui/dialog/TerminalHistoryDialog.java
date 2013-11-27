@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.drk.terminal.R;
+import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.ui.activity.terminal.TerminalActivity;
+import com.drk.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.drk.terminal.ui.command.MakeDirectoryCommand;
 import com.drk.terminal.utils.StringUtil;
 
@@ -28,7 +30,13 @@ public class TerminalHistoryDialog extends DialogFragment {
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            String selectedPath = mHistoryLocations[position];
+            if (mActivePage.equals(TerminalActivity.ActivePage.LEFT)) {
+                ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(selectedPath);
+            } else {
+                ((TerminalActivity) getActivity()).getRightListAdapter().changeDirectory(selectedPath);
+            }
+            getDialog().cancel();
         }
     };
 
