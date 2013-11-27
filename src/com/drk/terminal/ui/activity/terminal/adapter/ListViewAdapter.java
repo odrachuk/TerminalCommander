@@ -2,8 +2,6 @@ package com.drk.terminal.ui.activity.terminal.adapter;
 
 import android.app.Activity;
 import android.graphics.Paint;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import com.drk.terminal.R;
 import com.drk.terminal.model.listview.ListViewFiller;
 import com.drk.terminal.model.listview.ListViewItem;
 import com.drk.terminal.model.shpref.HistoryLocationsManager;
-import com.drk.terminal.model.shpref.TerminalPreferences;
 import com.drk.terminal.ui.activity.terminal.CurrentPathLabel;
 import com.drk.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.drk.terminal.utils.StringUtil;
@@ -33,17 +30,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private final LinkedList<String> pathStack;
     private final HistoryLocationsManager historyLocationsManager;
     private final Activity activity;
-    private final Handler notifyHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            notifyDataSetChanged();
-            pathLabel.setPath(labelPath);
-            historyLocationsManager.addLocation(pathLabel.getFullPath());
-        }
-    };
     private Map<Integer, ViewHolder> cache;
     private boolean inFirst = true;
-    private String labelPath;
 
     public ListViewAdapter(Activity activity,
                            List<ListViewItem> filesInfo,
@@ -80,8 +68,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         // update filesystem
         inFirst = true;
         filesInfo.clear();
-        labelPath = pathStack.getLast();
-        ListViewFiller.fillingList(filesInfo, labelPath, notifyHandler);
+        pathLabel.setPath(pathStack.getLast());
+        historyLocationsManager.addLocation(pathLabel.getFullPath());
+        ListViewFiller.fillingList(filesInfo, pathStack.getLast());
+        notifyDataSetChanged();
     }
 
     private boolean isContinueForPrev(String prevPath, String newPath) {

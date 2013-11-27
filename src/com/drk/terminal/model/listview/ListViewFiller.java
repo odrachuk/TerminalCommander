@@ -1,9 +1,6 @@
 package com.drk.terminal.model.listview;
 
-import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 import com.drk.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.utils.FileUtil;
 import com.drk.terminal.utils.StringUtil;
@@ -21,7 +18,7 @@ import java.util.List;
 public class ListViewFiller {
     private static final String LOG_TAG = ListViewFiller.class.getSimpleName();
 
-    public static void fillingList(final List<ListViewItem> filesList, final String path, Handler notifyHandler) {
+    public static void fillingList(final List<ListViewItem> filesList, final String path) {
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
 
             @Override
@@ -73,8 +70,5 @@ public class ListViewFiller {
             }
         }, "").start(path);
         Collections.sort(filesList);
-        if (notifyHandler != null) {
-            notifyHandler.sendEmptyMessage(0);
-        }
     }
 }

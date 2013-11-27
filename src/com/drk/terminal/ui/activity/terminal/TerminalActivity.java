@@ -187,8 +187,8 @@ public class TerminalActivity extends android.app.Activity {
         super.onResume();
         if (!isPaused) {
             isPaused = false;
-            showProgress();
-            new LoadInfoTask().execute();
+            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -281,32 +281,6 @@ public class TerminalActivity extends android.app.Activity {
         mRightList = (ListView) findViewById(R.id.right_directory_list);
     }
 
-    private void fillLists() {
-        TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
-        TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
-        List<ListViewItem> leftFilesList = null;
-        List<ListViewItem> rightFilesList = null;
-        leftFilesList = new ArrayList<ListViewItem>();
-        rightFilesList = new ArrayList<ListViewItem>();
-        ListViewFiller.fillingList(leftFilesList, mLeftListSavedLocation, null);
-        ListViewFiller.fillingList(rightFilesList, mRightListSavedLocation, null);
-        mLeftAdapter = new ListViewAdapter(this, leftFilesList, new CurrentPathLabel(leftPathLabel),
-                mLeftHistoryLocationManager);
-        mRightAdapter = new ListViewAdapter(this, rightFilesList, new CurrentPathLabel(rightPathLabel),
-                mRightHistoryLocationManager);
-        mLeftList.setAdapter(mLeftAdapter);
-        mRightList.setAdapter(mRightAdapter);
-        mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
-        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
-        mLeftList.setOnTouchListener(mListTouchListener);
-        mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
-        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
-        mRightList.setOnTouchListener(mListTouchListener);
-        mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
-        mRightAdapter.restoreBackPath(mRightListSavedLocation);
-        hideProgress();
-    }
-
     public ListViewAdapter getLeftListAdapter() {
         return mLeftAdapter;
     }
@@ -334,24 +308,6 @@ public class TerminalActivity extends android.app.Activity {
     public enum ActivePage {
         LEFT,
         RIGHT
-    }
-
-    private final class LoadInfoTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                Log.e(LOG_TAG, "LoadInfoTask", e);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            fillLists();
-        }
     }
 
     private final class ListViewItemClickListener implements AdapterView.OnItemClickListener {
@@ -447,6 +403,52 @@ public class TerminalActivity extends android.app.Activity {
         protected void onPostExecute(Long size) {
             Toast.makeText(TerminalActivity.this, "Directory size = " + ListViewItem.readableFileSize(size),
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private final class LoadLeftListTask extends AsyncTask<Void, Void, List<ListViewItem>> {
+
+        @Override
+        protected List<ListViewItem> doInBackground(Void... params) {
+            List<ListViewItem> list = new ArrayList<ListViewItem>();
+            ListViewFiller.fillingList(list, mLeftListSavedLocation);
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<ListViewItem> list) {
+            TextView leftPathLabel = (TextView) findViewById(R.id.path_location_in_left);
+            mLeftAdapter = new ListViewAdapter(TerminalActivity.this, list,
+                    new CurrentPathLabel(leftPathLabel),
+                    mLeftHistoryLocationManager);
+            mLeftList.setAdapter(mLeftAdapter);
+            mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
+            mLeftList.setOnItemClickListener(new ListViewItemClickListener(mLeftAdapter, mLeftList));
+            mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(mLeftAdapter));
+            mLeftList.setOnTouchListener(mListTouchListener);
+        }
+    }
+
+    private final class LoadRightListTask extends AsyncTask<Void, Void, List<ListViewItem>> {
+
+        @Override
+        protected List<ListViewItem> doInBackground(Void... params) {
+            List<ListViewItem> list = new ArrayList<ListViewItem>();
+            ListViewFiller.fillingList(list, mRightListSavedLocation);
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<ListViewItem> list) {
+            TextView rightPathLabel = (TextView) findViewById(R.id.path_location_in_right);
+            mRightAdapter = new ListViewAdapter(TerminalActivity.this, list,
+                    new CurrentPathLabel(rightPathLabel),
+                    mRightHistoryLocationManager);
+            mRightList.setAdapter(mRightAdapter);
+            mRightAdapter.restoreBackPath(mRightListSavedLocation);
+            mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
+            mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
+            mRightList.setOnTouchListener(mListTouchListener);
         }
     }
 }
