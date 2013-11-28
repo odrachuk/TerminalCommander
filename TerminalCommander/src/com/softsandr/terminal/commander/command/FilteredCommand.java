@@ -3,6 +3,7 @@ package com.softsandr.terminal.commander.command;
 import com.softsandr.terminal.commander.command.filtered.CdCommand;
 import com.softsandr.terminal.commander.command.filtered.ClearCommand;
 import com.softsandr.terminal.commander.command.filtered.ExitCommand;
+import com.softsandr.terminal.commander.command.filtered.LsCommand;
 
 import static com.drk.terminal.util.utils.StringUtil.EMPTY;
 
@@ -31,6 +32,13 @@ public enum FilteredCommand {
         public Command getCommand() {
             return new ExitCommand();
         }
+    },
+
+    LS("ls") {
+        @Override
+        public Command getCommand() {
+            return new LsCommand();
+        }
     };
 
     String text;
@@ -57,7 +65,7 @@ public enum FilteredCommand {
     }
 
     public static String parseCommandTextFromString(String command) {
-        String commandPrefix = EMPTY;
+        String commandPrefix;
         command = command.trim();
         if (command.contains(" ")) {
             commandPrefix = command.substring(0, command.indexOf(' '));

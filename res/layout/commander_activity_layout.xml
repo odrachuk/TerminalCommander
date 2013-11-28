@@ -4,7 +4,9 @@
             android:layout_height="match_parent">
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/commander_text_padding_left"
+            android:paddingRight="@dimen/commander_text_padding_right">
         <TextView
                 android:id="@+id/terminal_out_text_view"
                 android:layout_width="match_parent"
