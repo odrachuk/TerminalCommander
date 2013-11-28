@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 
@@ -23,11 +27,13 @@ public class TerminalHistoryDialog extends DialogFragment {
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String selectedPath = mHistoryLocations[position];
+            String[] splitPath = mHistoryLocations[position].substring(1).split(StringUtil.PATH_SEPARATOR);
             if (mActivePage.equals(TerminalActivity.ActivePage.LEFT)) {
-                ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(selectedPath);
+                ((TerminalActivity) getActivity()).getLeftListAdapter().clearBackPath(splitPath);
+                ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             } else {
-                ((TerminalActivity) getActivity()).getRightListAdapter().changeDirectory(selectedPath);
+                ((TerminalActivity) getActivity()).getRightListAdapter().clearBackPath(splitPath);
+                ((TerminalActivity) getActivity()).getRightListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             }
             getDialog().cancel();
         }

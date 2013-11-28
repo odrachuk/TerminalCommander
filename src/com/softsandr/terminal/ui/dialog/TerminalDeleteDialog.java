@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.command.DeleteFileCommand;
-import com.drk.terminal.util.utils.StringUtil;
 
 import java.util.ArrayList;
 

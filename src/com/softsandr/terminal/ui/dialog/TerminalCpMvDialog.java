@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.command.CopyFileCommand;
 import com.softsandr.terminal.ui.command.MoveRenameFileCommand;
-import com.drk.terminal.util.utils.StringUtil;
 
 import java.util.ArrayList;
 

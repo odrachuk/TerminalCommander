@@ -1,9 +1,9 @@
 package com.softsandr.terminal.model.listview;
 
 import android.util.Log;
-import com.softsandr.terminal.model.filesystem.ProcessDirectory;
 import com.drk.terminal.util.utils.FileUtil;
 import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.terminal.model.filesystem.ProcessDirectory;
 
 import java.io.File;
 import java.io.IOException;

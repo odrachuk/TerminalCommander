@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.shpref.HistoryLocationsManager;
 import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
-import com.drk.terminal.util.utils.StringUtil;
 
 import java.util.*;
 
@@ -175,6 +175,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     public void restoreBackPath(String listSavedLocation) {
+        pathStack.clear();
+        pathStack.add(StringUtil.PATH_SEPARATOR);
         if (listSavedLocation.length() > 1) {
             String correctSavedListLocation = listSavedLocation.endsWith(StringUtil.PATH_SEPARATOR) ?
                     listSavedLocation.substring(0, listSavedLocation.length() - 1) : listSavedLocation;

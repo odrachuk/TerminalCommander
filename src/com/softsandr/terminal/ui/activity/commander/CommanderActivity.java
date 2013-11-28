@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.commander.controller.KeyboardController;
 import com.softsandr.terminal.commander.controller.ProcessController;
 import com.softsandr.terminal.commander.controller.UiController;
-import com.drk.terminal.util.utils.StringUtil;
 
 /**
  * Date: 11/24/13

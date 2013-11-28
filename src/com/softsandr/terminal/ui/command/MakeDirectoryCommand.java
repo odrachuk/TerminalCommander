@@ -2,9 +2,9 @@ package com.softsandr.terminal.ui.command;
 
 import android.util.Log;
 import android.widget.Toast;
-import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.drk.terminal.util.utils.FileUtil;
 import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 
 import java.io.File;
 import java.io.IOException;

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.drk.terminal.util.utils.FileUtil;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
@@ -17,8 +19,6 @@ import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems;
 import com.softsandr.terminal.ui.dialog.TerminalDialogUtil;
-import com.drk.terminal.util.utils.FileUtil;
-import com.drk.terminal.util.utils.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -200,7 +200,6 @@ public class TerminalActivity extends android.app.Activity {
                         substring(1).split(StringUtil.PATH_SEPARATOR);
                 switch (activePage) {
                     case LEFT:
-                        // todo save instance state on this activity
                         mLeftAdapter.clearBackPath(splitPath);
                         mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
                         break;
