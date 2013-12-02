@@ -1,49 +1,35 @@
-package com.softsandr.terminal.commander.command;
-
-import com.softsandr.terminal.commander.command.filtered.CdCommand;
-import com.softsandr.terminal.commander.command.filtered.ClearCommand;
-import com.softsandr.terminal.commander.command.filtered.ExitCommand;
-import com.softsandr.terminal.commander.command.filtered.LsCommand;
-
-import static com.drk.terminal.util.utils.StringUtil.EMPTY;
+package com.softsandr.terminal.commander.command.local;
 
 /**
  * Date: 11/24/13
  *
  * @author Drachuk O.V.
  */
-public enum FilteredCommand {
+public enum LocalCommands {
     CD("cd") {
         @Override
-        public Command getCommand() {
+        public LocalCommand getCommand() {
             return new CdCommand();
         }
     },
 
     CLEAR("clear") {
         @Override
-        public Command getCommand() {
+        public LocalCommand getCommand() {
             return new ClearCommand();
         }
     },
 
     EXIT("exit") {
         @Override
-        public Command getCommand() {
+        public LocalCommand getCommand() {
             return new ExitCommand();
-        }
-    },
-
-    LS("ls") {
-        @Override
-        public Command getCommand() {
-            return new LsCommand();
         }
     };
 
     String text;
 
-    private FilteredCommand(String text) {
+    private LocalCommands(String text) {
         this.text = text;
     }
 
@@ -51,11 +37,11 @@ public enum FilteredCommand {
         return text;
     }
 
-    public abstract Command getCommand();
+    public abstract LocalCommand getCommand();
 
-    public static boolean isFilteredCommand(String command) {
+    public static boolean isLocalCommand(String command) {
         boolean isFiltered = false;
-        for (FilteredCommand fc : values()) {
+        for (LocalCommands fc : values()) {
             if (fc.text.equals(parseCommandTextFromString(command))) {
                 isFiltered = true;
                 break;
@@ -75,10 +61,10 @@ public enum FilteredCommand {
         return commandPrefix;
     }
 
-    public static FilteredCommand parseCommandTypeFromString(String command) {
-        FilteredCommand filteredCommand = null;
+    public static LocalCommands parseCommandTypeFromString(String command) {
+        LocalCommands filteredCommand = null;
         String onlyCommand = parseCommandTextFromString(command);
-        for (FilteredCommand fc : values()) {
+        for (LocalCommands fc : values()) {
             if (fc.text.equals(onlyCommand)) {
                 filteredCommand = fc;
                 break;

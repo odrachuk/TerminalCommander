@@ -1,7 +1,6 @@
-package com.softsandr.terminal.commander.command.filtered;
+package com.softsandr.terminal.commander.command.local;
 
 import com.softsandr.terminal.commander.TerminalCommander;
-import com.softsandr.terminal.commander.command.Command;
 import com.drk.terminal.util.utils.FileUtil;
 import com.drk.terminal.util.utils.StringUtil;
 
@@ -13,7 +12,7 @@ import static com.drk.terminal.util.utils.StringUtil.PATH_SEPARATOR;
  *
  * @author Drachuk O.V.
  */
-public class CdCommand implements Command {
+public class CdCommand implements LocalCommand {
     @Override
     public String isExecutable(TerminalCommander terminalProcess) {
         String callbackString = EMPTY;
@@ -52,7 +51,7 @@ public class CdCommand implements Command {
                 terminalProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString += "Command execution exception";
+            callbackString += "LocalCommand execution exception";
         }
         return callbackString;
     }

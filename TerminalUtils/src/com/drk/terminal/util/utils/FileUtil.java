@@ -319,7 +319,7 @@ public class FileUtil {
     }
 
     /**
-     * Copies a filtered directory to a new location preserving the file dates.
+     * Copies a local directory to a new location preserving the file dates.
      * <p/>
      * This method copies the contents of the specified source directory
      * to within the specified destination directory.
@@ -367,7 +367,7 @@ public class FileUtil {
     }
 
     /**
-     * Copies a filtered directory to a new location.
+     * Copies a local directory to a new location.
      * <p/>
      * This method copies the contents of the specified source directory
      * to within the specified destination directory.

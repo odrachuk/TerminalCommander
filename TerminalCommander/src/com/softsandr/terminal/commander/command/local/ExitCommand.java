@@ -1,8 +1,6 @@
-package com.softsandr.terminal.commander.command.filtered;
+package com.softsandr.terminal.commander.command.local;
 
 import com.softsandr.terminal.commander.TerminalCommander;
-import com.softsandr.terminal.commander.command.Command;
-import com.softsandr.terminal.commander.command.FilteredCommand;
 
 import static com.drk.terminal.util.utils.StringUtil.EMPTY;
 
@@ -11,7 +9,7 @@ import static com.drk.terminal.util.utils.StringUtil.EMPTY;
  *
  * @author Drachuk O.V.
  */
-public class ExitCommand implements Command {
+public class ExitCommand implements LocalCommand {
     @Override
     public String isExecutable(TerminalCommander terminalProcess) {
         return EMPTY;
@@ -20,6 +18,6 @@ public class ExitCommand implements Command {
     @Override
     public String onExecute(TerminalCommander terminalProcess) {
         terminalProcess.onExit();
-        return FilteredCommand.EXIT.getText();
+        return LocalCommands.EXIT.getText();
     }
 }

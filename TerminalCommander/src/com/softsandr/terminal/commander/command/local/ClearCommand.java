@@ -1,7 +1,6 @@
-package com.softsandr.terminal.commander.command.filtered;
+package com.softsandr.terminal.commander.command.local;
 
 import com.softsandr.terminal.commander.TerminalCommander;
-import com.softsandr.terminal.commander.command.Command;
 
 import static com.drk.terminal.util.utils.StringUtil.EMPTY;
 
@@ -10,7 +9,7 @@ import static com.drk.terminal.util.utils.StringUtil.EMPTY;
  *
  * @author Drachuk O.V.
  */
-public class ClearCommand implements Command {
+public class ClearCommand implements LocalCommand {
     @Override
     public String isExecutable(TerminalCommander terminalProcess) {
         return EMPTY;

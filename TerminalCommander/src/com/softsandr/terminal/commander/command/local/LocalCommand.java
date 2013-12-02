@@ -1,4 +1,4 @@
-package com.softsandr.terminal.commander.command;
+package com.softsandr.terminal.commander.command.local;
 
 import com.softsandr.terminal.commander.TerminalCommander;
 
@@ -7,7 +7,7 @@ import com.softsandr.terminal.commander.TerminalCommander;
  *
  * @author Drachuk O.V.
  */
-public interface Command {
+public interface LocalCommand {
     String isExecutable(TerminalCommander terminalProcess);
     String onExecute(TerminalCommander terminalProcess);
 }

@@ -5,7 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.command.FilteredCommand;
+import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
+import com.softsandr.terminal.commander.command.local.LocalCommands;
 import com.softsandr.terminal.commander.controller.UiController;
 import com.softsandr.terminal.commander.prompt.TerminalPrompt;
 
@@ -23,29 +24,11 @@ import static com.drk.terminal.util.utils.StringUtil.LINE_SEPARATOR;
  */
 public class TerminalCommander {
     private static final String LOG_TAG = TerminalCommander.class.getSimpleName();
-    private static final String RESULT_KEY = "result";
     private static final String SYSTEM_EXECUTOR = "sh";
-    private final Handler mResponseHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            String[] results = msg.getData().getStringArray(RESULT_KEY);
-            if (results != null && results.length != 0) {
-                StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
-                // write result to console
-                for (String s : results) {
-
-
-                    oldText.append(LINE_SEPARATOR);
-                    oldText.append(s);
-                }
-                mTerminalOutView.setText(oldText.toString());
-            }
-        }
-    };
-    private TerminalPrompt mTerminalPrompt;
-    private UiController mUiController;
-    private TextView mTerminalOutView;
+    private final CommandResponseHandler mResponseHandler;
+    private final TerminalPrompt mTerminalPrompt;
+    private final UiController mUiController;
+    private final TextView mTerminalOutView;
     private Process mExecutionProcess;
     private String mCommandText;
 
@@ -56,6 +39,7 @@ public class TerminalCommander {
         mUiController = uiController;
         mTerminalOutView = uiController.getTerminalOutView();
         mTerminalPrompt = uiController.getPrompt();
+        mResponseHandler = new CommandResponseHandler(mTerminalOutView);
     }
 
     public void startExecutionProcess(String path) throws IOException {
@@ -80,9 +64,9 @@ public class TerminalCommander {
 
     public void execCommand(String commandText) {
         mCommandText = commandText;
-        if (FilteredCommand.isFilteredCommand(mCommandText)) {
+        if (LocalCommands.isLocalCommand(mCommandText)) {
             String responseMessage = EMPTY;
-            FilteredCommand filteredCommand = FilteredCommand.parseCommandTypeFromString(mCommandText);
+            LocalCommands filteredCommand = LocalCommands.parseCommandTypeFromString(mCommandText);
             String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
             if (isExecutableCallback.isEmpty()) { // executable
                 responseMessage += filteredCommand.getCommand().onExecute(this);
@@ -92,7 +76,8 @@ public class TerminalCommander {
             if (!responseMessage.isEmpty()) {
                 String[] resultArray = new String[]{responseMessage};
                 Bundle resultBundle = new Bundle();
-                resultBundle.putStringArray(RESULT_KEY, resultArray);
+                resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+                resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
                 Message resultMessage = mResponseHandler.obtainMessage();
                 resultMessage.setData(resultBundle);
                 mResponseHandler.sendMessage(resultMessage);
@@ -134,7 +119,8 @@ public class TerminalCommander {
             i++;
         }
         Bundle resultBundle = new Bundle();
-        resultBundle.putStringArray(RESULT_KEY, resultArray);
+        resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, command);
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);
