@@ -1,9 +1,9 @@
 package com.softsandr.terminal.commander;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.TextView;
 import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
 
@@ -19,9 +19,11 @@ public class CommandResponseHandler extends Handler {
     public static final String COMMAND_EXECUTION_RESPONSE_KEY = LOG_TAG + ".COMMAND_EXECUTION_RESPONSE";
     public static final String COMMAND_EXECUTION_STRING_KEY = LOG_TAG + ".COMMAND_EXECUTION_STRING";
     private final TextView mTerminalOutView;
+    private final Resources mResources;
 
-    public CommandResponseHandler(TextView terminalOutView) {
+    public CommandResponseHandler(Resources resources, TextView terminalOutView) {
         mTerminalOutView = terminalOutView;
+        mResources = resources;
     }
 
     @Override
@@ -35,7 +37,9 @@ public class CommandResponseHandler extends Handler {
             if (isFilteredCommand) {
                 FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
                 if (filteredCommand != null) {
-                    filteredCommand.getAlignResponse(results);
+                    StringBuilder result = new StringBuilder(oldText).append(LINE_SEPARATOR);
+                    result.append(filteredCommand.alignResponse(mResources, results));
+                    mTerminalOutView.setText(result.toString());
                 }
             } else {
                 // write result to console

@@ -39,7 +39,7 @@ public class TerminalCommander {
         mUiController = uiController;
         mTerminalOutView = uiController.getTerminalOutView();
         mTerminalPrompt = uiController.getPrompt();
-        mResponseHandler = new CommandResponseHandler(mTerminalOutView);
+        mResponseHandler = new CommandResponseHandler(uiController.getActivity().getResources(), mTerminalOutView);
     }
 
     public void startExecutionProcess(String path) throws IOException {

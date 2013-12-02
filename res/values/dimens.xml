@@ -39,4 +39,5 @@
     <dimen name="terminal_history_dialog_height">500dp</dimen>
     <dimen name="commander_text_padding_left">5dp</dimen>
     <dimen name="commander_text_padding_right">5dp</dimen>
+    <dimen name="commander_out_text_size">16sp</dimen>
 </resources>

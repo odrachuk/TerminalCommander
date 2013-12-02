@@ -1,7 +1,9 @@
 package com.softsandr.terminal.commander.command.filtered;
 
+import android.content.res.Resources;
 import android.util.Log;
-import com.softsandr.terminal.commander.command.local.*;
+import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.terminal.R;
 
 /**
  * Date: 11/24/13
@@ -9,23 +11,26 @@ import com.softsandr.terminal.commander.command.local.*;
  * @author Drachuk O.V.
  */
 public enum FilteredCommands {
-    LS("ls") {
+    LS("ls -l") {
         @Override
-        public LocalCommand getCommand() {
-            return new LsCommand();
-        }
-
-        @Override
-        public String getAlignResponse(String[] commandResponse) {
+        public String alignResponse(Resources resources, String[] commandResponse) {
             StringBuilder alignResponse = new StringBuilder();
-            for (int i = 0; i < commandResponse.length; i++) {
-                String oneRowResponse = commandResponse[i];
+            for (String oneRowResponse : commandResponse) {
                 String[] oneRowTokens = oneRowResponse.split("\\s+");
-                String response = "";
-                for (int j = 0; j < oneRowTokens.length; j++) {
-                    response += "<>" + oneRowTokens[j];
+                StringBuilder oneRow = new StringBuilder();
+                int i = 0;
+                for (String oneRowToken : oneRowTokens) {
+                    if (i < 6) {
+                        oneRow.append(oneRowToken)
+                                .append(resources.getString(R.string.tabulate))
+                                .append(resources.getString(R.string.tabulate))
+                                .append(resources.getString(R.string.tabulate));
+                    } else {
+                        oneRow.append(oneRowToken).append(resources.getString(R.string.whitespace));
+                    }
                 }
-                Log.d(LOG_TAG, response);
+                alignResponse.append(oneRow.toString()).append(StringUtil.LINE_SEPARATOR);
+                Log.d(LOG_TAG, oneRow.toString());
             }
             return alignResponse.toString();
         }
@@ -43,13 +48,12 @@ public enum FilteredCommands {
         return text;
     }
 
-    public abstract LocalCommand getCommand();
-    public abstract String getAlignResponse(String[] commandResponse);
+    public abstract String alignResponse(Resources resources, String[] commandResponse);
 
     public static boolean isFilteredCommand(String command) {
         boolean isFiltered = false;
         for (FilteredCommands fc : values()) {
-            if (fc.text.equals(parseCommandTextFromString(command))) {
+            if (fc.text.equals(command.trim())) {
                 isFiltered = true;
                 break;
             }
@@ -57,22 +61,10 @@ public enum FilteredCommands {
         return isFiltered;
     }
 
-    private static String parseCommandTextFromString(String command) {
-        String commandPrefix;
-        command = command.trim();
-        if (command.contains(" ")) {
-            commandPrefix = command.substring(0, command.indexOf(' '));
-        } else {
-            commandPrefix = command;
-        }
-        return commandPrefix;
-    }
-
     public static FilteredCommands parseCommandTypeFromString(String command) {
         FilteredCommands filteredCommand = null;
-        String onlyCommand = parseCommandTextFromString(command);
         for (FilteredCommands fc : values()) {
-            if (fc.text.equals(onlyCommand)) {
+            if (fc.text.equals(command.trim())) {
                 filteredCommand = fc;
                 break;
             }
