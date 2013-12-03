@@ -25,12 +25,26 @@ import com.softsandr.terminal.commander.controller.UiController;
 public class CommanderActivity extends Activity {
     private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
-
+    public static final String OTHER_PATH_EXTRA = LOG_TAG + ".OTHER_PATH";
+    public static final String ACTIVE_PAGE_EXTRA = LOG_TAG + ".ACTIVE_PAGE";
     private ProcessController mProcessController;
     private UiController mProcessUiController;
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
     private EditText mTerminalInView;
+    private String mInitialPath;
+    private String mOtherPath;
+    private boolean mInitialPageLeft;
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int viewId = v.getId();
+            if (viewId == R.id.action_tab) {
+                // todo
+                Toast.makeText(CommanderActivity.this, "Tabulate", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +54,6 @@ public class CommanderActivity extends Activity {
         mTerminalPromptView = (TextView) findViewById(R.id.terminal_prompt_text_view);
         mTerminalInView = (EditText) findViewById(R.id.terminal_input_edit_text);
         mTerminalInView.requestFocus();
-        init();
         showSoftKeyboard();
     }
 
@@ -82,10 +95,18 @@ public class CommanderActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        init();
+    }
+
+    @Override
     public void finish() {
         // Prepare data intent
         Intent data = new Intent();
         data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
+        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
         // TerminalActivity finished ok, return the data
         setResult(RESULT_OK, data);
         super.finish();
@@ -97,15 +118,35 @@ public class CommanderActivity extends Activity {
         mProcessController.onDestroyExecutionProcess();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        outState.putString(OTHER_PATH_EXTRA, mOtherPath);
+        outState.putBoolean(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mInitialPath = savedInstanceState.getString(WORK_PATH_EXTRA);
+        mOtherPath = savedInstanceState.getString(OTHER_PATH_EXTRA);
+        mInitialPageLeft = savedInstanceState.getBoolean(ACTIVE_PAGE_EXTRA);
+    }
+
     private void init() {
         Intent startIntent = getIntent();
-        String path = StringUtil.PATH_SEPARATOR;
-        if (startIntent != null) {
-            path = startIntent.getStringExtra(WORK_PATH_EXTRA);
+        if (mInitialPath == null) {
+            mInitialPath = StringUtil.PATH_SEPARATOR;
+            if (startIntent != null) {
+                mInitialPath = startIntent.getStringExtra(WORK_PATH_EXTRA);
+                mOtherPath = startIntent.getStringExtra(OTHER_PATH_EXTRA);
+                mInitialPageLeft = startIntent.getBooleanExtra(ACTIVE_PAGE_EXTRA, true);
+            }
         }
         // create controllers
         mProcessUiController = new UiController(this, mTerminalInView, mTerminalOutView, mTerminalPromptView);
-        mProcessController = new ProcessController(mProcessUiController, path);
+        mProcessController = new ProcessController(mProcessUiController, mInitialPath);
         // config ui components
         mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
@@ -129,15 +170,4 @@ public class CommanderActivity extends Activity {
             imm.showSoftInput(mTerminalInView, InputMethodManager.SHOW_IMPLICIT);
         }
     }
-
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_tab) {
-                // todo
-                Toast.makeText(CommanderActivity.this, "Tabulate", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 }

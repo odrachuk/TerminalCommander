@@ -80,9 +80,9 @@ public class TerminalActivity extends android.app.Activity {
                     mRightAdapter.getPathLabel().getFullPath();
             if (viewId == R.id.action_commander) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
-                startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA,
-                        activePage == ActivePage.LEFT ? mLeftAdapter.getPathLabel().getCurrentLabel() :
-                                mRightAdapter.getPathLabel().getCurrentLabel());
+                startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA, currentLocation);
+                startIntent.putExtra(CommanderActivity.OTHER_PATH_EXTRA, destinationLocation);
+                startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, activePage.equals(ActivePage.LEFT));
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (viewId == R.id.copy_btn) {
                 if (!getOperationItems().isEmpty()) {
@@ -185,10 +185,10 @@ public class TerminalActivity extends android.app.Activity {
         Log.d(LOG_TAG, "onResume");
         super.onResume();
         if (!isPaused) {
-            isPaused = false;
             new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+        isPaused = false;
     }
 
     @Override
@@ -196,30 +196,39 @@ public class TerminalActivity extends android.app.Activity {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             if (data.hasExtra(CommanderActivity.WORK_PATH_EXTRA)) {
                 String pathFromCommander = data.getStringExtra(CommanderActivity.WORK_PATH_EXTRA);
+                boolean isLeftActive = data.getBooleanExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, true);
+                String destinationPath = data.getStringExtra(CommanderActivity.OTHER_PATH_EXTRA);
                 String[] splitPath = pathFromCommander.
                         substring(1).split(StringUtil.PATH_SEPARATOR);
-                switch (activePage) {
-                    case LEFT:
-                        if (mLeftAdapter != null) {
+                if (mLeftAdapter != null && mRightAdapter != null) {
+                    switch (activePage) {
+                        case LEFT:
                             mLeftAdapter.clearBackPath(splitPath);
                             mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
-                        } else {
-                            mLeftListSavedLocation = pathFromCommander;
-                            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }
-                        break;
-                    case RIGHT:
-                        if (mRightAdapter != null) {
+                            break;
+                        case RIGHT:
                             mRightAdapter.clearBackPath(splitPath);
                             mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
-                        } else {
+                            break;
+                    }
+                } else {
+                    activePage = isLeftActive ? ActivePage.LEFT : ActivePage.RIGHT;
+                    switch (activePage) {
+                        case LEFT:
+                            mLeftListSavedLocation = pathFromCommander;
+                            mRightListSavedLocation = destinationPath;
+                            break;
+                        case RIGHT:
                             mRightListSavedLocation = pathFromCommander;
+                            mLeftListSavedLocation = destinationPath;
+                            break;
+                        default:
                             new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }
-                        break;
+                    }
                 }
+
+
             }
         }
     }
