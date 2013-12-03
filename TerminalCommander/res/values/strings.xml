@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tabulate">\u0009</string>
-    <string name="whitespace">\u0020</string>
-    <string name="dash">\u2014</string> <!--&#8211;-->
+    <string name="whitespace">\u00A0</string>
+    <string name="dash">\u2014</string>
 </resources>

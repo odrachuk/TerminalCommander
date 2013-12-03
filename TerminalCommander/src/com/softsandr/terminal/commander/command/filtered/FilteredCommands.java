@@ -21,15 +21,7 @@ public enum FilteredCommands {
                     switch (i) {
                         case 0:
                             rowRecord = new LsRowRecord();
-                            StringBuilder permBuilder = new StringBuilder();
-                            for(Character c : oneRowToken.toCharArray()) {
-                                if (c == '-') {
-                                    permBuilder.append(resources.getString(R.string.dash));
-                                } else {
-                                    permBuilder.append(c);
-                                }
-                            }
-                            rowRecord.setPermissionsToken(permBuilder.toString());
+                            rowRecord.setPermissionsToken(oneRowToken);
                             break;
                         case 1:
                             rowRecord.setOwnerToken(oneRowToken);
@@ -75,7 +67,7 @@ public enum FilteredCommands {
             return rowRecords.toString(resources);
         }
     };
-    private static final String LOG_TAG = FilteredCommands.class.getSimpleName();
+
     String text;
 
     private FilteredCommands(String text) {

@@ -200,12 +200,24 @@ public class TerminalActivity extends android.app.Activity {
                         substring(1).split(StringUtil.PATH_SEPARATOR);
                 switch (activePage) {
                     case LEFT:
-                        mLeftAdapter.clearBackPath(splitPath);
-                        mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        if (mLeftAdapter != null) {
+                            mLeftAdapter.clearBackPath(splitPath);
+                            mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        } else {
+                            mLeftListSavedLocation = pathFromCommander;
+                            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                         break;
                     case RIGHT:
-                        mRightAdapter.clearBackPath(splitPath);
-                        mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        if (mRightAdapter != null) {
+                            mRightAdapter.clearBackPath(splitPath);
+                            mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
+                        } else {
+                            mRightListSavedLocation = pathFromCommander;
+                            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
                         break;
                 }
             }

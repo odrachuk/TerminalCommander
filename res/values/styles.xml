@@ -55,5 +55,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
     </style>
+    <style name="Commander_Out_Text_View_Theme">
+        <item name="android:textSize">@dimen/commander_out_text_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">monospace</item>
+    </style>
 
 </resources>

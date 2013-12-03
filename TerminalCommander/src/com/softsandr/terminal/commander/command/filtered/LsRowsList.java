@@ -56,7 +56,6 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
             int sizeSub = maxSizeLength - sizeToken.length();
             int dateSub = maxDateLength - dateToken.length();
             int nameSub = maxNameLength - nameToken.length();
-
             if (permissionSub > 0) {
                 StringBuilder sb = new StringBuilder(permissionsToken);
                 for (int i = 0; i < permissionSub; i++) {
@@ -92,13 +91,6 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
                 }
                 rr.setDateToken(sb.toString());
             }
-            if (nameSub > 0) {
-                StringBuilder sb = new StringBuilder(nameToken);
-                for (int i = 0; i < nameSub; i++) {
-                    sb.append(" ");
-                }
-                rr.setNameToken(sb.toString());
-            }
         }
     }
 
@@ -106,13 +98,15 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < this.size(); i++) {
             LsRowRecord rr = get(i);
-            result.append(rr.getPermissionsToken()).append(resources.getString(R.string.tabulate))
-                    .append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
-                    .append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
-                    .append(rr.getOwnerToken()).append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
-                    .append(rr.getGroupToken()).append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
-                    .append(rr.getSizeToken()).append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
-                    .append(rr.getDateToken()).append(resources.getString(R.string.tabulate)).append(resources.getString(R.string.tabulate))
+            result.append(rr.getPermissionsToken())
+                    .append(resources.getString(R.string.whitespace))
+                    .append(rr.getOwnerToken())
+                    .append(resources.getString(R.string.whitespace))
+                    .append(rr.getGroupToken())
+                    .append(resources.getString(R.string.tabulate))
+                    .append(rr.getSizeToken())
+                    .append(resources.getString(R.string.tabulate))
+                    .append(rr.getDateToken())
                     .append(rr.getNameToken().trim())
                     .append(i == (this.size() - 1)? "" : StringUtil.LINE_SEPARATOR);
         }
