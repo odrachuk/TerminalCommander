@@ -1,8 +1,6 @@
 package com.softsandr.terminal.commander.command.filtered;
 
 import android.content.res.Resources;
-import android.util.Log;
-import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 
 /**
@@ -14,41 +12,75 @@ public enum FilteredCommands {
     LS("ls -l") {
         @Override
         public String alignResponse(Resources resources, String[] commandResponse) {
-            StringBuilder alignResponse = new StringBuilder();
+            LsRowsList rowRecords = new LsRowsList();
             for (String oneRowResponse : commandResponse) {
                 String[] oneRowTokens = oneRowResponse.split("\\s+");
-                StringBuilder oneRow = new StringBuilder();
-                int i = 0;
-                for (String oneRowToken : oneRowTokens) {
-                    if (i < 6) {
-                        oneRow.append(oneRowToken)
-                                .append(resources.getString(R.string.tabulate))
-                                .append(resources.getString(R.string.tabulate))
-                                .append(resources.getString(R.string.tabulate));
-                    } else {
-                        oneRow.append(oneRowToken).append(resources.getString(R.string.whitespace));
+                LsRowRecord rowRecord = null;
+                for (int i = 0; i < oneRowTokens.length; i++) {
+                    String oneRowToken = oneRowTokens[i];
+                    switch (i) {
+                        case 0:
+                            rowRecord = new LsRowRecord();
+                            StringBuilder permBuilder = new StringBuilder();
+                            for(Character c : oneRowToken.toCharArray()) {
+                                if (c == '-') {
+                                    permBuilder.append(resources.getString(R.string.dash));
+                                } else {
+                                    permBuilder.append(c);
+                                }
+                            }
+                            rowRecord.setPermissionsToken(permBuilder.toString());
+                            break;
+                        case 1:
+                            rowRecord.setOwnerToken(oneRowToken);
+                            break;
+                        case 2:
+                            rowRecord.setGroupToken(oneRowToken);
+                            break;
+                        case 3:
+                            if (oneRowToken.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                rowRecord.setDateToken(oneRowToken);
+                            } else {
+                                rowRecord.setSizeToken(oneRowToken);
+                            }
+                            break;
+                        case 4:
+                            if (oneRowToken.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                rowRecord.setDateToken(oneRowToken);
+                            } else if (oneRowToken.matches("\\d{2}:\\d{2}")) {
+                                rowRecord.setDateToken(rowRecord.getDateToken() +
+                                        resources.getString(R.string.whitespace) + oneRowToken);
+                            }
+                            break;
+                        default:
+                            if (rowRecord.getSizeToken() != null && oneRowToken.matches("\\d{2}:\\d{2}")) {
+                                rowRecord.setDateToken(rowRecord.getDateToken() +
+                                        resources.getString(R.string.whitespace) + oneRowToken);
+                            } else {
+                                if (rowRecord.getNameToken() != null) {
+                                    rowRecord.setNameToken(rowRecord.getNameToken() +
+                                            resources.getString(R.string.whitespace) + oneRowToken);
+                                } else {
+                                    rowRecord.setNameToken(oneRowToken);
+                                }
+                            }
+                            break;
+                    }
+                    if (i == oneRowTokens.length - 1) {
+                        rowRecords.add(rowRecord);
                     }
                 }
-                alignResponse.append(oneRow.toString()).append(StringUtil.LINE_SEPARATOR);
-                Log.d(LOG_TAG, oneRow.toString());
             }
-            return alignResponse.toString();
+            rowRecords.alignTokens(resources);
+            return rowRecords.toString(resources);
         }
     };
-
     private static final String LOG_TAG = FilteredCommands.class.getSimpleName();
-
     String text;
 
     private FilteredCommands(String text) {
         this.text = text;
     }
-
-    public String getText() {
-        return text;
-    }
-
-    public abstract String alignResponse(Resources resources, String[] commandResponse);
 
     public static boolean isFilteredCommand(String command) {
         boolean isFiltered = false;
@@ -71,4 +103,10 @@ public enum FilteredCommands {
         }
         return filteredCommand;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public abstract String alignResponse(Resources resources, String[] commandResponse);
 }

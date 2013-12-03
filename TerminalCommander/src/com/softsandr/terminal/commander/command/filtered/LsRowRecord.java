@@ -6,12 +6,12 @@ package com.softsandr.terminal.commander.command.filtered;
  * @author Drachuk O.V.
  */
 public class LsRowRecord {
-    private String permissionsToken;
-    private String ownerToken;
-    private String groupToken;
-    private String sizeToken;
-    private String dateToken;
-    private String nameToken;
+    private String permissionsToken = "";
+    private String ownerToken = "";
+    private String groupToken = "";
+    private String sizeToken = "";
+    private String dateToken = "";
+    private String nameToken = "";
 
     public String getPermissionsToken() {
         return permissionsToken;
