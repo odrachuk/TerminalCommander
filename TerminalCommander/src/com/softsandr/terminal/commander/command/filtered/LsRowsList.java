@@ -81,7 +81,7 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
             if (sizeSub > 0) {
                 StringBuilder sb = new StringBuilder(sizeToken);
                 for (int i = 0; i < sizeSub; i++) {
-                    sb.append("0");
+                    sb.append(resources.getString(R.string.whitespace));
                 }
                 rr.setSizeToken(sb.toString());
             }
