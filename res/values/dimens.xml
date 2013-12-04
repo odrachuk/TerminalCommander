@@ -35,7 +35,7 @@
     <dimen name="terminal_mk_dir_dialog_width">450dp</dimen>
     <dimen name="terminal_mk_dir_dialog_height">150dp</dimen>
     <dimen name="file_size_margin_right">2dp</dimen>
-    <dimen name="terminal_history_dialog_width">350dp</dimen>
+    <dimen name="terminal_history_dialog_width">450dp</dimen>
     <dimen name="terminal_history_dialog_height">500dp</dimen>
     <dimen name="commander_text_padding_left">5dp</dimen>
     <dimen name="commander_text_padding_right">5dp</dimen>
