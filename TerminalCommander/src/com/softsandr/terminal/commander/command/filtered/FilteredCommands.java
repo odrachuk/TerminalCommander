@@ -1,6 +1,7 @@
 package com.softsandr.terminal.commander.command.filtered;
 
 import android.content.res.Resources;
+import android.widget.TextView;
 import com.softsandr.terminal.R;
 
 /**
@@ -11,7 +12,8 @@ import com.softsandr.terminal.R;
 public enum FilteredCommands {
     LS("ls -l") {
         @Override
-        public String alignResponse(Resources resources, String[] commandResponse) {
+        public String alignResponse(TextView outTextView, int screenWidth,
+                                    Resources resources, String[] commandResponse) {
             LsRowsList rowRecords = new LsRowsList();
             for (String oneRowResponse : commandResponse) {
                 String[] oneRowTokens = oneRowResponse.split("\\s+");
@@ -64,7 +66,7 @@ public enum FilteredCommands {
                 }
             }
             rowRecords.alignTokens(resources);
-            return rowRecords.toString(resources);
+            return rowRecords.toString(outTextView, screenWidth, resources);
         }
     };
 
@@ -100,5 +102,5 @@ public enum FilteredCommands {
         return text;
     }
 
-    public abstract String alignResponse(Resources resources, String[] commandResponse);
+    public abstract String alignResponse(TextView outTextView, int screenWidth, Resources resources, String[] commandResponse);
 }

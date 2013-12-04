@@ -3,6 +3,7 @@ package com.softsandr.terminal.commander;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
@@ -39,7 +40,11 @@ public class TerminalCommander {
         mUiController = uiController;
         mTerminalOutView = uiController.getTerminalOutView();
         mTerminalPrompt = uiController.getPrompt();
-        mResponseHandler = new CommandResponseHandler(uiController.getActivity().getResources(), mTerminalOutView);
+        DisplayMetrics dm = new DisplayMetrics();
+        mUiController.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        mResponseHandler = new CommandResponseHandler(
+                dm.widthPixels,
+                uiController.getActivity().getResources(), mTerminalOutView);
     }
 
     public void startExecutionProcess(String path) throws IOException {

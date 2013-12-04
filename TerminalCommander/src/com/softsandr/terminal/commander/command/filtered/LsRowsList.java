@@ -1,6 +1,7 @@
 package com.softsandr.terminal.commander.command.filtered;
 
 import android.content.res.Resources;
+import android.widget.TextView;
 import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 
@@ -12,6 +13,7 @@ import java.util.LinkedList;
  * @author Drachuk O.V.
  */
 public class LsRowsList extends LinkedList<LsRowRecord> {
+    private static final String SOME_SYMBOL_FOR_PROBE = "a";
     private int maxPermissionsLength;
     private int maxOwnerLength;
     private int maxGroupLength;
@@ -94,22 +96,38 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
         }
     }
 
-    public String toString(Resources resources) {
+    public String toString(TextView outTextView, int screenWidth, Resources resources) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < this.size(); i++) {
             LsRowRecord rr = get(i);
-            result.append(rr.getPermissionsToken())
+            StringBuilder rowRecordText = new StringBuilder();
+            rowRecordText.append(rr.getPermissionsToken())
                     .append(resources.getString(R.string.whitespace))
                     .append(rr.getOwnerToken())
                     .append(resources.getString(R.string.whitespace))
                     .append(rr.getGroupToken())
-                    .append(resources.getString(R.string.tabulate))
+                    .append(resources.getString(R.string.whitespace))
                     .append(rr.getSizeToken())
-                    .append(resources.getString(R.string.tabulate))
+                    .append(resources.getString(R.string.whitespace))
                     .append(rr.getDateToken())
-                    .append(rr.getNameToken().trim())
-                    .append(i == (this.size() - 1)? "" : StringUtil.LINE_SEPARATOR);
+                    .append(rr.getNameToken().trim());
+            String rowRecordAfterCut = cutStringIfNeeds(outTextView, screenWidth, rowRecordText.toString());
+            result.append(rowRecordAfterCut).append(i == (this.size() - 1)? "" : StringUtil.LINE_SEPARATOR);
         }
         return result.toString();
+    }
+
+    private String cutStringIfNeeds(TextView outTextView, int screenWidth, String text) {
+        float textWidth = outTextView.getPaint().measureText(text);
+        float someSymbolWidth = outTextView.getPaint().measureText(SOME_SYMBOL_FOR_PROBE);
+        int countOfSymbolsPerScreen = (int) (screenWidth / someSymbolWidth);
+        int countOfSymbolsInText = (int) (textWidth / someSymbolWidth);
+        if (countOfSymbolsInText >= countOfSymbolsPerScreen) {
+            StringBuilder resultText = new StringBuilder();
+            resultText.append(text.substring(0, countOfSymbolsPerScreen - 3)).append("..");
+            return resultText.toString();
+        } else {
+            return text;
+        }
     }
 }

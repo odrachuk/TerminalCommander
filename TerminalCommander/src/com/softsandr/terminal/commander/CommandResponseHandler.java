@@ -20,9 +20,11 @@ public class CommandResponseHandler extends Handler {
     public static final String COMMAND_EXECUTION_STRING_KEY = LOG_TAG + ".COMMAND_EXECUTION_STRING";
     private final TextView mTerminalOutView;
     private final Resources mResources;
+    private final int mScreenWidth;
 
-    public CommandResponseHandler(Resources resources, TextView terminalOutView) {
+    public CommandResponseHandler(int screenWidth, Resources resources, TextView terminalOutView) {
         mTerminalOutView = terminalOutView;
+        mScreenWidth = screenWidth;
         mResources = resources;
     }
 
@@ -38,7 +40,7 @@ public class CommandResponseHandler extends Handler {
                 FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
                 if (filteredCommand != null) {
                     StringBuilder result = new StringBuilder(oldText).append(LINE_SEPARATOR);
-                    result.append(filteredCommand.alignResponse(mResources, results));
+                    result.append(filteredCommand.alignResponse(mTerminalOutView, mScreenWidth, mResources, results));
                     mTerminalOutView.setText(result.toString());
                 }
             } else {
