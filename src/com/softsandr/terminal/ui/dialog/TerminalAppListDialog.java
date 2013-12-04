@@ -59,7 +59,7 @@ public class TerminalAppListDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_app_dialog_layout, container, false);
         ListView appListView = (ListView) v.findViewById(R.id.app_dialog_list);
-        String fileExtension = parseFileExtension();
+        String fileExtension = parseFileExtension(mFileName);
         PackageManager packageManager = getActivity().getPackageManager();
         Intent searchIntent = new Intent(Intent.ACTION_VIEW);
         searchIntent.setType("application/" + fileExtension);
@@ -72,9 +72,9 @@ public class TerminalAppListDialog extends DialogFragment {
         return v;
     }
 
-    private String parseFileExtension() {
-        int dotIndex = mFileName.lastIndexOf(".");
-        return mFileName.substring(dotIndex + 1, mFileName.length());
+    public static String parseFileExtension(String fileName) {
+        int dotIndex = fileName.lastIndexOf(".");
+        return fileName.substring(dotIndex + 1, fileName.length());
     }
 
     private final class ResolveInfoAdapter extends ArrayAdapter<ResolveInfo> {
