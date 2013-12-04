@@ -40,4 +40,6 @@
     <dimen name="commander_text_padding_left">5dp</dimen>
     <dimen name="commander_text_padding_right">5dp</dimen>
     <dimen name="commander_out_text_size">16sp</dimen>
+    <dimen name="terminal_app_dialog_width">450dp</dimen>
+    <dimen name="terminal_app_dialog_height">250dp</dimen>
 </resources>

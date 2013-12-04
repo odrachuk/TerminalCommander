@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/COLOR_C2C2C2">
+    <RelativeLayout android:layout_width="@dimen/terminal_app_dialog_width"
+                    android:layout_height="@dimen/terminal_app_dialog_height"
+                    android:paddingBottom="@dimen/terminal_dialog_padding_bottom"
+                    android:paddingLeft="@dimen/terminal_dialog_padding_left"
+                    android:paddingRight="@dimen/terminal_dialog_padding_right">
+        <!--Top border container-->
+        <RelativeLayout
+                android:id="@+id/terminal_app_dialog_top_border_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+            <!--Title-->
+            <TextView android:id="@+id/terminal_app_dialog_title"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@android:color/white"
+                      android:textSize="@dimen/terminal_dialog_title_text_size"
+                      android:text="@string/select_app"
+                      android:layout_centerInParent="true"
+                      android:paddingLeft="@dimen/terminal_dialog_title_text_padding_left"
+                      android:paddingRight="@dimen/terminal_dialog_title_text_padding_right"/>
+            <!--Left part-->
+            <View android:id="@+id/terminal_app_dialog_top_border_left_image"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@android:color/white"
+                  android:layout_toLeftOf="@id/terminal_app_dialog_title"
+                  android:layout_marginTop="@dimen/terminal_dialog_border_margin_top"/>
+            <!--Right part-->
+            <View android:id="@+id/terminal_app_dialog_top_border_right_image"
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@android:color/white"
+                  android:layout_toRightOf="@id/terminal_app_dialog_title"
+                  android:layout_marginTop="@dimen/terminal_dialog_border_margin_top"/>
+        </RelativeLayout>
+        <!--Bottom border-->
+        <View android:id="@+id/terminal_app_dialog_bottom_border_image"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@android:color/white"
+              android:layout_alignParentBottom="true"/>
+        <!--Left border-->
+        <View android:id="@+id/terminal_app_dialog_left_border_image"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:layout_alignParentLeft="true"
+              android:layout_marginTop="@dimen/terminal_dialog_border_margin_top"/>
+        <!--Right border-->
+        <View android:id="@+id/terminal_app_dialog_right_border_image"
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:layout_alignParentRight="true"
+              android:layout_marginTop="@dimen/terminal_dialog_border_margin_top"/>
+        <!--Main content container-->
+        <RelativeLayout
+                android:id="@+id/terminal_app_dialog_main_content_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/terminal_app_dialog_left_border_image"
+                android:layout_toLeftOf="@id/terminal_app_dialog_right_border_image"
+                android:layout_below="@id/terminal_app_dialog_top_border_container"
+                android:layout_above="@id/terminal_app_dialog_bottom_border_image">
+            <ListView
+                    android:id="@+id/app_dialog_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:listSelector="@drawable/list_dark_gray_cursor"
+                    android:persistentDrawingCache="none"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

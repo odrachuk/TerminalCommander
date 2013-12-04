@@ -374,9 +374,8 @@ public class TerminalActivity extends android.app.Activity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(TerminalActivity.this, "Selected file " +
-                                adapter.getItem(position).getFileName() + ".",
-                                Toast.LENGTH_SHORT).show();
+                        TerminalDialogUtil.showAppDialog(TerminalActivity.this,
+                                adapter.getItem(position).getFileName());
                     }
                 }
             }

@@ -22,6 +22,7 @@ public final class TerminalDialogUtil {
     public static final String MK_DIR_DIALOG_TAG = TerminalMkDirDialog.class.getCanonicalName();
     public static final String DELETE_DIALOG_TAG = TerminalDeleteDialog.class.getCanonicalName();
     public static final String HISTORY_DIALOG_TAG = TerminalHistoryDialog.class.getCanonicalName();
+    public static final String APP_DIALOG_TAG = TerminalAppListDialog.class.getCanonicalName();
 
     private TerminalDialogUtil() {
     }
@@ -112,5 +113,20 @@ public final class TerminalDialogUtil {
         // Create and show the dialog.
         DialogFragment newFragment = TerminalHistoryDialog.newInstance(activePage, historyLocations);
         newFragment.show(ft, HISTORY_DIALOG_TAG);
+    }
+
+    public static void showAppDialog(Activity activity, String fileName) {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+        Fragment prev = activity.getFragmentManager().findFragmentByTag(APP_DIALOG_TAG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        // Create and show the dialog.
+        DialogFragment newFragment = TerminalAppListDialog.newInstance(fileName);
+        newFragment.show(ft, APP_DIALOG_TAG);
     }
 }
