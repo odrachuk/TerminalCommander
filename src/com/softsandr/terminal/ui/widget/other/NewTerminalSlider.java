@@ -176,11 +176,11 @@ public class NewTerminalSlider extends ViewGroup {
         }
         final boolean isVertical = mVertical;
         if (mTracking || mAnimating) {
-                canvas.save();
-                canvas.translate(isVertical ? 0 : handle.getLeft() - mSliderOffset,
-                        isVertical ? handle.getTop() - mSliderOffset : 0);
-                drawChild(canvas, mContent, drawingTime);
-                canvas.restore();
+            canvas.save();
+            canvas.translate(isVertical ? 0 : handle.getLeft() - mSliderOffset,
+                    isVertical ? handle.getTop() - mSliderOffset : 0);
+            drawChild(canvas, mContent, drawingTime);
+            canvas.restore();
         } else if (mExpanded) {
             drawChild(canvas, mContent, drawingTime);
         }
@@ -491,22 +491,24 @@ public class NewTerminalSlider extends ViewGroup {
         // Something changed in the content, we need to honor the layout request
         // before creating the cached bitmap
         final View content = mContent;
-            if (mVertical) {
-                final int childHeight = mHandleHeight;
-                int height = getBottom() - getTop() - childHeight - mSliderOffset;
-                content.measure(View.MeasureSpec.makeMeasureSpec(getRight() - getLeft(), View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
-                content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
-                        mSliderOffset + childHeight + content.getMeasuredHeight());
-            } else {
-                final int childWidth = mHandle.getWidth();
-                int width = getRight() - getLeft() - childWidth - mSliderOffset;
-                content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(getBottom() - getTop(), View.MeasureSpec.EXACTLY));
-                content.layout(childWidth + mSliderOffset, 0,
-                        mSliderOffset + childWidth + content.getMeasuredWidth(),
-                        content.getMeasuredHeight());
-            }
+        if (mVertical) {
+            final int childHeight = mHandleHeight;
+            int height = getBottom() - getTop() - childHeight - mSliderOffset;
+            content.measure(View.MeasureSpec.makeMeasureSpec(getRight() - getLeft(), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
+            content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
+                    mSliderOffset + childHeight + content.getMeasuredHeight());
+        } else {
+//            if (mExpanded) {
+            final int childWidth = mHandle.getWidth();
+            int width = getRight() - getLeft() - childWidth - mSliderOffset;
+            content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(getBottom() - getTop(), View.MeasureSpec.EXACTLY));
+            content.layout(childWidth + mSliderOffset, 0,
+                    mSliderOffset + childWidth + content.getMeasuredWidth(),
+                    content.getMeasuredHeight());
+//            }
+        }
         // Try only once... we should really loop but it's not a big deal
         // if the draw was cancelled, it will only be temporary anyway
         content.getViewTreeObserver().dispatchOnPreDraw();
