@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- NewTerminalSlider specific attributes. These attributes are used to configure
+        a NewTerminalSlider from XML. -->
+    <declare-styleable name="TerminalSlider">
+        <!-- Identifier for the child that represents the drawer's handle. -->
+        <attr name="handle" format="reference"/>
+        <!-- Identifier for the child that represents the drawer's content. -->
+        <attr name="content" format="reference"/>
+        <!-- Orientation of the NewTerminalSlider. -->
+        <attr name="orientation">
+            <flag name="horizontal" value="0"/>
+            <flag name="vertical" value="1"/>
+        </attr>
+        <!-- Extra offset for the handle at the left of the NewTerminalSlider. -->
+        <attr name="offset" format="dimension"/>
+    </declare-styleable>
+</resources>
