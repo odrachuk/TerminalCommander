@@ -176,20 +176,11 @@ public class NewTerminalSlider extends ViewGroup {
         }
         final boolean isVertical = mVertical;
         if (mTracking || mAnimating) {
-            final Bitmap cache = mContent.getDrawingCache();
-            if (cache != null) {
-                if (isVertical) {
-                    canvas.drawBitmap(cache, 0, handle.getBottom(), null);
-                } else {
-                    canvas.drawBitmap(cache, handle.getRight(), 0, null);
-                }
-            } else {
                 canvas.save();
                 canvas.translate(isVertical ? 0 : handle.getLeft() - mSliderOffset,
                         isVertical ? handle.getTop() - mSliderOffset : 0);
                 drawChild(canvas, mContent, drawingTime);
                 canvas.restore();
-            }
         } else if (mExpanded) {
             drawChild(canvas, mContent, drawingTime);
         }
@@ -251,7 +242,7 @@ public class NewTerminalSlider extends ViewGroup {
         }
         if (action == MotionEvent.ACTION_DOWN) {
             mTracking = true;
-            handle.setPressed(true);
+//            handle.setPressed(true);
             // Must be called before prepareTracking()
             prepareContent();
             // Must be called after prepareContent()
@@ -500,7 +491,6 @@ public class NewTerminalSlider extends ViewGroup {
         // Something changed in the content, we need to honor the layout request
         // before creating the cached bitmap
         final View content = mContent;
-        if (content.isLayoutRequested()) {
             if (mVertical) {
                 final int childHeight = mHandleHeight;
                 int height = getBottom() - getTop() - childHeight - mSliderOffset;
@@ -517,7 +507,6 @@ public class NewTerminalSlider extends ViewGroup {
                         mSliderOffset + childWidth + content.getMeasuredWidth(),
                         content.getMeasuredHeight());
             }
-        }
         // Try only once... we should really loop but it's not a big deal
         // if the draw was cancelled, it will only be temporary anyway
         content.getViewTreeObserver().dispatchOnPreDraw();
