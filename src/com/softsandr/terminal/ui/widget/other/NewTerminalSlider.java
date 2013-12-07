@@ -260,6 +260,7 @@ public class NewTerminalSlider extends ViewGroup {
             }
             mVelocityTracker.addMovement(event);
         }
+        moveHandle((int) (mVertical ? event.getY() : event.getX()) - mTouchDelta);
         return true;
     }
 
@@ -268,7 +269,6 @@ public class NewTerminalSlider extends ViewGroup {
         if (mLocked) {
             return true;
         }
-
         if (mTracking) {
             mVelocityTracker.addMovement(event);
             final int action = event.getAction();
@@ -303,12 +303,10 @@ public class NewTerminalSlider extends ViewGroup {
                             yVelocity = mMaximumMinorVelocity;
                         }
                     }
-
                     float velocity = (float) Math.hypot(xVelocity, yVelocity);
                     if (negative) {
                         velocity = -velocity;
                     }
-
                     final int top = mHandle.getTop();
                     final int left = mHandle.getLeft();
 
@@ -330,7 +328,6 @@ public class NewTerminalSlider extends ViewGroup {
                 break;
             }
         }
-
         return mTracking || mAnimating || super.onTouchEvent(event);
     }
 
@@ -347,7 +344,6 @@ public class NewTerminalSlider extends ViewGroup {
     private void performFling(int position, float velocity, boolean always) {
         mAnimationPosition = position;
         mAnimatedVelocity = velocity;
-
         if (mExpanded) {
             if (always || (velocity > mMaximumMajorVelocity ||
                     (position > mSliderOffset + (mVertical ? mHandleHeight : mHandleWidth) &&
@@ -383,7 +379,6 @@ public class NewTerminalSlider extends ViewGroup {
                 }
             }
         }
-
         long now = SystemClock.uptimeMillis();
         mAnimationLastTime = now;
         mCurrentAnimationTime = now + ANIMATION_FRAME_DURATION;
@@ -393,33 +388,8 @@ public class NewTerminalSlider extends ViewGroup {
         stopTracking();
     }
 
-    private void prepareTracking(int position) {
-        mTracking = true;
-        mVelocityTracker = VelocityTracker.obtain();
-        boolean opening = !mExpanded;
-        if (opening) {
-            mAnimatedAcceleration = mMaximumAcceleration;
-            mAnimatedVelocity = mMaximumMajorVelocity;
-            mAnimationPosition = (mVertical ? getHeight() - mHandleHeight : getWidth() - mHandleWidth);
-            moveHandle((int) mAnimationPosition);
-            mAnimating = true;
-            mHandler.removeMessages(MSG_ANIMATE);
-            long now = SystemClock.uptimeMillis();
-            mAnimationLastTime = now;
-            mCurrentAnimationTime = now + ANIMATION_FRAME_DURATION;
-            mAnimating = true;
-        } else {
-            if (mAnimating) {
-                mAnimating = false;
-                mHandler.removeMessages(MSG_ANIMATE);
-            }
-            moveHandle(position);
-        }
-    }
-
     private void moveHandle(int position) {
         final View handle = mHandle;
-
         if (mVertical) {
             if (position == EXPANDED_FULL_OPEN) {
                 handle.offsetTopAndBottom(mSliderOffset - handle.getTop());
@@ -487,7 +457,6 @@ public class NewTerminalSlider extends ViewGroup {
         if (mAnimating) {
             return;
         }
-
         // Something changed in the content, we need to honor the layout request
         // before creating the cached bitmap
         final View content = mContent;
@@ -513,6 +482,30 @@ public class NewTerminalSlider extends ViewGroup {
         if (!content.isHardwareAccelerated()) content.buildDrawingCache();
 
         content.setVisibility(View.GONE);
+    }
+
+    private void prepareTracking(int position) {
+        mTracking = true;
+        mVelocityTracker = VelocityTracker.obtain();
+        boolean opening = !mExpanded;
+        if (opening) {
+            mAnimatedAcceleration = mMaximumAcceleration;
+            mAnimatedVelocity = mMaximumMajorVelocity;
+            mAnimationPosition = (mVertical ? getHeight() - mHandleHeight : getWidth() - mHandleWidth);
+            moveHandle((int) mAnimationPosition);
+            mAnimating = true;
+            mHandler.removeMessages(MSG_ANIMATE);
+            long now = SystemClock.uptimeMillis();
+            mAnimationLastTime = now;
+            mCurrentAnimationTime = now + ANIMATION_FRAME_DURATION;
+            mAnimating = true;
+        } else {
+            if (mAnimating) {
+                mAnimating = false;
+                mHandler.removeMessages(MSG_ANIMATE);
+            }
+            moveHandle(position);
+        }
     }
 
     private void stopTracking() {
