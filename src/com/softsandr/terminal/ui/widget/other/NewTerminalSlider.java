@@ -425,7 +425,7 @@ public class NewTerminalSlider extends ViewGroup {
                 handle.offsetTopAndBottom(mSliderOffset - handle.getTop());
                 invalidate();
             } else if (position == COLLAPSED_FULL_CLOSED) {
-                handle.offsetTopAndBottom(getBottom() - getTop() -
+                handle.offsetTopAndBottom(getHeight() -
                         mHandleHeight - handle.getTop());
                 invalidate();
             } else {
@@ -433,8 +433,8 @@ public class NewTerminalSlider extends ViewGroup {
                 int deltaY = position - top;
                 if (position < mSliderOffset) {
                     deltaY = mSliderOffset - top;
-                } else if (deltaY > getBottom() - getTop() - mHandleHeight - top) {
-                    deltaY = getBottom() - getTop() - mHandleHeight - top;
+                } else if (deltaY > getHeight() - mHandleHeight - top) {
+                    deltaY = getHeight() - mHandleHeight - top;
                 }
                 handle.offsetTopAndBottom(deltaY);
 
@@ -455,7 +455,7 @@ public class NewTerminalSlider extends ViewGroup {
                 handle.offsetLeftAndRight(mSliderOffset - handle.getLeft());
                 invalidate();
             } else if (position == COLLAPSED_FULL_CLOSED) {
-                handle.offsetLeftAndRight(getRight() - getLeft() -
+                handle.offsetLeftAndRight(getWidth() -
                         mHandleWidth - handle.getLeft());
                 invalidate();
             } else {
@@ -463,8 +463,8 @@ public class NewTerminalSlider extends ViewGroup {
                 int deltaX = position - left;
                 if (position < mSliderOffset) {
                     deltaX = mSliderOffset - left;
-                } else if (deltaX > getRight() - getLeft() - mHandleWidth - left) {
-                    deltaX = getRight() - getLeft() - mHandleWidth - left;
+                } else if (deltaX > getWidth() - mHandleWidth - left) {
+                    deltaX = getWidth() - mHandleWidth - left;
                 }
                 handle.offsetLeftAndRight(deltaX);
 
@@ -493,21 +493,21 @@ public class NewTerminalSlider extends ViewGroup {
         final View content = mContent;
         if (mVertical) {
             final int childHeight = mHandleHeight;
-            int height = getBottom() - getTop() - childHeight - mSliderOffset;
-            content.measure(View.MeasureSpec.makeMeasureSpec(getRight() - getLeft(), View.MeasureSpec.EXACTLY),
+            int height = getWidth() - childHeight - mSliderOffset;
+            content.measure(View.MeasureSpec.makeMeasureSpec(getWidth(), View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
             content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
                     mSliderOffset + childHeight + content.getMeasuredHeight());
         } else {
-//            if (mExpanded) {
-            final int childWidth = mHandle.getWidth();
-            int width = getRight() - getLeft() - childWidth - mSliderOffset;
-            content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                    View.MeasureSpec.makeMeasureSpec(getBottom() - getTop(), View.MeasureSpec.EXACTLY));
-            content.layout(childWidth + mSliderOffset, 0,
+            if (mExpanded) {
+                final int childWidth = mHandle.getWidth();
+                int width = getWidth() - childWidth - mSliderOffset;
+                content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(getHeight(), View.MeasureSpec.EXACTLY));
+                content.layout(childWidth + mSliderOffset, 0,
                     mSliderOffset + childWidth + content.getMeasuredWidth(),
                     content.getMeasuredHeight());
-//            }
+            }
         }
         // Try only once... we should really loop but it's not a big deal
         // if the draw was cancelled, it will only be temporary anyway
