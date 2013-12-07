@@ -1,7 +1,9 @@
 package com.softsandr.terminal.ui.activity.terminal;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import com.softsandr.terminal.R;
 
 /**
