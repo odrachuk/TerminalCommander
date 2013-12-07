@@ -18,7 +18,7 @@
             app:content="@+id/contentLayout"
             app:handle="@+id/handle"
             app:orientation="horizontal"
-            app:offset="100dp">
+            app:offset="150dp">
         <ImageView android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:background="@color/COLOR_FFFFCC"
