@@ -42,4 +42,17 @@
     <dimen name="commander_out_text_size">16sp</dimen>
     <dimen name="terminal_app_dialog_width">450dp</dimen>
     <dimen name="terminal_app_dialog_height">250dp</dimen>
+    <dimen name="terminal_left_content_page_padding_right">180dp</dimen>
+    <dimen name="terminal_slider_offset">150dp</dimen>
+    <dimen name="terminal_app_list_row_text_size">18sp</dimen>
+    <dimen name="terminal_app_list_row_padding_left">5dp</dimen>
+    <dimen name="terminal_app_list_row_padding_right">5dp</dimen>
+    <dimen name="terminal_app_list_row_padding_top">10dp</dimen>
+    <dimen name="terminal_app_list_row_padding_bottom">10dp</dimen>
+    <dimen name="terminal_control_buttons_text_size">14sp</dimen>
+    <dimen name="terminal_history_list_row_text_size">18sp</dimen>
+    <dimen name="terminal_history_list_row_padding_left">5dp</dimen>
+    <dimen name="terminal_history_list_row_padding_right">5dp</dimen>
+    <dimen name="terminal_history_list_row_padding_top">10dp</dimen>
+    <dimen name="terminal_history_list_row_padding_bottom">10dp</dimen>
 </resources>
