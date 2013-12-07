@@ -499,15 +499,13 @@ public class NewTerminalSlider extends ViewGroup {
             content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
                     mSliderOffset + childHeight + content.getMeasuredHeight());
         } else {
-//            if (mExpanded) {
-                final int childWidth = mHandle.getWidth();
-                int width = getWidth() - childWidth - mSliderOffset;
-                content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+            final int childWidth = mHandle.getWidth();
+            int width = getWidth() - childWidth - mSliderOffset;
+            content.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
                     View.MeasureSpec.makeMeasureSpec(getHeight(), View.MeasureSpec.EXACTLY));
-                content.layout(childWidth + mSliderOffset, 0,
+            content.layout(childWidth + mSliderOffset, 0,
                     mSliderOffset + childWidth + content.getMeasuredWidth(),
                     content.getMeasuredHeight());
-//            }
         }
         // Try only once... we should really loop but it's not a big deal
         // if the draw was cancelled, it will only be temporary anyway
