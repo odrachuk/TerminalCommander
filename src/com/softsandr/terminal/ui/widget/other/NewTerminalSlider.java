@@ -425,10 +425,10 @@ public class NewTerminalSlider extends ViewGroup {
                 handle.offsetLeftAndRight(mSliderOffset - handle.getLeft());
                 invalidate();
             } else if (position == COLLAPSED_FULL_CLOSED) {
-                handle.offsetLeftAndRight(getWidth() -
-                        mHandleWidth - handle.getLeft());
+                handle.offsetLeftAndRight(getWidth() - mHandleWidth - handle.getLeft());
                 invalidate();
             } else {
+                if (position < getWidth() - mHandleWidth - mSliderOffset) {
                 final int left = handle.getLeft();
                 int deltaX = position - left;
                 if (position < mSliderOffset) {
@@ -449,6 +449,7 @@ public class NewTerminalSlider extends ViewGroup {
                         frame.right - deltaX + mContent.getWidth(), getHeight());
 
                 invalidate(region);
+                }
             }
         }
     }
