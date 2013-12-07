@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res/com.softsandr.terminal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/controll_btns_container">
+    <!-- Left Side -->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="180dp"
+                    android:background="@color/COLOR_002EB8">
+        <include layout="@layout/terminal_content_left_layout"/>
+    </RelativeLayout>
+    <!-- Right Side -->
+    <com.softsandr.terminal.ui.widget.other.TerminalSlider
+            android:id="@+id/SlidingDrawer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:content="@+id/contentLayout"
+            app:handle="@+id/handle"
+            app:orientation="horizontal"
+            app:offset="150dp">
+        <ImageView android:layout_width="30dp"
+                   android:layout_height="match_parent"
+                   android:background="@color/COLOR_002AA5"
+                   android:id="@id/handle"/>
+        <LinearLayout
+                android:id="@id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/COLOR_002EB8">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent">
+                <include layout="@layout/terminal_content_right_layout"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.softsandr.terminal.ui.widget.other.TerminalSlider>
+</RelativeLayout>

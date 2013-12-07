@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/controll_btns_container">
+    <!--Central divider-->
+    <View android:id="@+id/fakeView1"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_centerInParent="true"/>
+    <!--Left Side-->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/fakeView1">
+        <include layout="@layout/terminal_content_left_layout"/>
+    </RelativeLayout>
+    <!--Right Side-->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/fakeView1">
+        <include layout="@layout/terminal_content_right_layout"/>
+    </RelativeLayout>
+</RelativeLayout>
