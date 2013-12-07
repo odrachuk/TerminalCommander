@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="terminal_control_buttons_text_size">9sp</dimen>
+    <dimen name="terminal_btn_height">25dp</dimen>
+    <dimen name="terminal_history_btn_width">30dp</dimen>
+    <dimen name="terminal_slider_offset">55dp</dimen>
+    <dimen name="terminal_slider_handle_width">15dp</dimen>
+    <dimen name="terminal_left_content_page_padding_right">70dp</dimen>
+    <dimen name="terminal_list_item_text_size">10sp</dimen>
+    <dimen name="terminal_content_page_simple_top_border_margin_top">10dp</dimen>
+    <dimen name="terminal_content_path_location_margin_top">0dp</dimen>
+    <dimen name="terminal_content_border_triangle_margin_top">8dp</dimen>
 </resources>

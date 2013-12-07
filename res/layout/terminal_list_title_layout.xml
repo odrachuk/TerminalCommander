@@ -20,12 +20,12 @@
             android:layout_width="@dimen/terminal_size_column_width"
             android:layout_height="wrap_content">
         <View android:id="@+id/left_border_image"
-              android:layout_width="1dp"
+              android:layout_width="@dimen/terminal_content_page_simple_border_height_width"
               android:layout_height="match_parent"
               android:background="@color/COLOR_C2C2C2"
               android:layout_alignParentLeft="true"/>
         <View android:id="@+id/right_border_image"
-              android:layout_width="1dp"
+              android:layout_width="@dimen/terminal_content_page_simple_border_height_width"
               android:layout_height="match_parent"
               android:background="@color/COLOR_C2C2C2"
               android:layout_alignParentRight="true"/>

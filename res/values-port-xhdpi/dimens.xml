@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="terminal_local_path_max_width">315dp</dimen>
+    <dimen name="terminal_size_column_width">75dp</dimen>
+    <dimen name="terminal_modify_column_width">100dp</dimen>
 </resources>

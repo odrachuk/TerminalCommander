@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="terminal_btn_height">28dp</dimen>
+    <dimen name="terminal_history_btn_width">30dp</dimen>
+    <dimen name="terminal_list_item_text_size">16sp</dimen>
+    <dimen name="terminal_slider_offset">110dp</dimen>
+    <dimen name="terminal_slider_handle_width">30dp</dimen>
+    <dimen name="terminal_left_content_page_padding_right">140dp</dimen>
 </resources>

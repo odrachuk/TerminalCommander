@@ -21,7 +21,7 @@
             app:handle="@+id/handle"
             app:orientation="horizontal"
             app:offset="@dimen/terminal_slider_offset">
-        <ImageView android:layout_width="30dp"
+        <ImageView android:layout_width="@dimen/terminal_slider_handle_width"
                    android:layout_height="match_parent"
                    android:background="@color/COLOR_002AA5"
                    android:id="@id/handle"/>
