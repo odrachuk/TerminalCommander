@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Terminal_Theme" parent="android:Theme.Holo.Light"/>
+    <style name="Terminal_Theme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/Terminal_Theme.ActionBar</item>
+        <item name="android:actionBarSize">@dimen/action_bar_height</item>
+    </style>
+    <style name="Terminal_Theme.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid">
+    </style>
     <style name="Terminal_Theme.List_Item_Style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -60,5 +65,5 @@
         <item name="android:textStyle">normal</item>
         <item name="android:typeface">monospace</item>
     </style>
-
+    <dimen name="action_bar_height">40dp</dimen>
 </resources>

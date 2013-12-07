@@ -55,4 +55,17 @@
     <dimen name="terminal_history_list_row_padding_right">5dp</dimen>
     <dimen name="terminal_history_list_row_padding_top">10dp</dimen>
     <dimen name="terminal_history_list_row_padding_bottom">10dp</dimen>
+    <dimen name="terminal_content_page_layout_margin">3dp</dimen>
+    <dimen name="terminal_content_page_top_border_edge_image_width">5dp</dimen>
+    <dimen name="terminal_content_page_simple_border_height_width">1dp</dimen>
+    <dimen name="terminal_content_page_simple_top_border_margin_top">14dp</dimen>
+    <dimen name="terminal_content_border_triangle_width">10dp</dimen>
+    <dimen name="terminal_content_border_triangle_height">6dp</dimen>
+    <dimen name="terminal_content_border_triangle_margin_left_right">2dp</dimen>
+    <dimen name="terminal_content_history_btn_text_size">12sp</dimen>
+    <dimen name="terminal_content_border_triangle_margin_top">12dp</dimen>
+    <dimen name="terminal_content_path_location_text_size">16sp</dimen>
+    <dimen name="terminal_content_path_location_margin_top">3dp</dimen>
+    <dimen name="terminal_content_path_location_margin_bottom">0dp</dimen>
+    <dimen name="terminal_content_path_location_margin_right_left">2dp</dimen>
 </resources>
