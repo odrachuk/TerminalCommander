@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.drk.terminal.util.utils.FileOpeningUtil;
 import com.drk.terminal.util.utils.FileUtil;
 import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
@@ -378,17 +379,13 @@ public class TerminalActivity extends android.app.Activity {
                         }
                     } else {
                         String fileName = adapter.getItem(position).getFileName();
-                        PackageManager packageManager = getPackageManager();
-                        Intent searchIntent = new Intent(Intent.ACTION_VIEW);
-                        searchIntent.setType("application/" + TerminalAppListDialog.parseFileExtension(fileName));
-                        List<ResolveInfo> possibleAppList = packageManager.
-                                queryIntentActivities(searchIntent, PackageManager.MATCH_DEFAULT_ONLY);
-                        if (!possibleAppList.isEmpty()) {
+//                        if (FileOpeningUtil.checkOpening(fileName, getPackageManager())) {
                             TerminalDialogUtil.showAppDialog(TerminalActivity.this, fileName);
-                        } else {
-                            Toast.makeText(TerminalActivity.this, getString(R.string.not_app_for_openning_file),
-                                    Toast.LENGTH_SHORT).show();
-                        }
+//                        }
+//                        else {
+//                            Toast.makeText(TerminalActivity.this, getString(R.string.not_app_for_openning_file),
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 }
             }

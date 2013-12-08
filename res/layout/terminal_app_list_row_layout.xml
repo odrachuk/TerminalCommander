@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/terminal_app_list_text"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:textColor="@color/COLOR_525252"
-          android:textSize="@dimen/terminal_app_list_row_text_size"
-          android:paddingLeft="@dimen/terminal_app_list_row_padding_left"
-          android:paddingRight="@dimen/terminal_app_list_row_padding_right"
-          android:paddingTop="@dimen/terminal_app_list_row_padding_top"
-          android:paddingBottom="@dimen/terminal_app_list_row_padding_bottom"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/terminal_app_lis_components_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <ImageView android:id="@+id/terminal_app_list_image"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:padding="@dimen/terminal_app_list_row_image_padding"
+               android:contentDescription="@string/description"
+               android:layout_centerVertical="true"/>
+    <RadioButton android:id="@+id/terminal_app_list_radio_btn"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_alignParentRight="true"
+                 android:textColor="@color/COLOR_525252"
+                 android:text="@string/set_default"
+                 android:paddingRight="@dimen/terminal_app_list_row_radio_btn_padding"
+                 android:paddingLeft="@dimen/terminal_app_list_row_radio_btn_padding"/>
+    <TextView android:id="@+id/terminal_app_list_text"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_centerVertical="true"
+              android:textColor="@color/COLOR_525252"
+              android:textSize="@dimen/terminal_app_list_row_text_size"
+              android:paddingLeft="@dimen/terminal_app_list_row_padding_left"
+              android:paddingRight="@dimen/terminal_app_list_row_padding_right"
+              android:layout_toRightOf="@id/terminal_app_list_image"
+              android:layout_toLeftOf="@id/terminal_app_list_radio_btn"/>
+</RelativeLayout>

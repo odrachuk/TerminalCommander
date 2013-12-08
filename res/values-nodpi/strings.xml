@@ -27,5 +27,7 @@
     <string name="create_new_directory">Create a new Directory</string>
     <string name="select_app">Select application</string>
     <string name="not_app_for_openning_file">Your device doesn\'t have any application that can open this file.</string>
+    <string name="description">Component Description</string>
+    <string name="set_default">def.</string>
     <!--<string name="up_dir">UP&#45;&#45;DIR\u0020</string>-->
 </resources>

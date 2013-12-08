@@ -69,12 +69,11 @@
                 android:layout_toLeftOf="@id/terminal_app_dialog_right_border_image"
                 android:layout_below="@id/terminal_app_dialog_top_border_container"
                 android:layout_above="@id/terminal_app_dialog_bottom_border_image">
-            <ListView
-                    android:id="@+id/app_dialog_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:listSelector="@drawable/list_dark_gray_cursor"
-                    android:persistentDrawingCache="none"/>
+            <ListView android:id="@+id/app_dialog_list"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:listSelector="@drawable/list_dark_gray_cursor"
+                      android:persistentDrawingCache="none"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
