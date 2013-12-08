@@ -1,10 +1,11 @@
 package com.drk.terminal.util.utils;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.webkit.MimeTypeMap;
 
-import java.util.List;
+import java.io.File;
 
 /**
  * Date: 12/8/13
@@ -16,16 +17,21 @@ public final class FileOpeningUtil {
     private FileOpeningUtil() {
     }
 
-    public static boolean checkOpening(String fileName, PackageManager packageManager) {
-        Intent searchIntent = new Intent(Intent.ACTION_VIEW);
-        searchIntent.setType("application/" + parseFileExtension(fileName));
-        List<ResolveInfo> possibleAppList = packageManager.
-                queryIntentActivities(searchIntent, PackageManager.MATCH_DEFAULT_ONLY);
-        return !possibleAppList.isEmpty();
-    }
+    public static void openFile(Activity activity, String filePath) {
+        File file = new File(filePath);
+        MimeTypeMap map = MimeTypeMap.getSingleton();
+        String ext = MimeTypeMap.getFileExtensionFromUrl(file.getName());
+        String type = map.getMimeTypeFromExtension(ext);
 
-    public static String parseFileExtension(String fileName) {
-        int dotIndex = fileName.lastIndexOf(".");
-        return fileName.substring(dotIndex + 1, fileName.length());
+        if (type == null) {
+            type = "*/*";
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data = Uri.fromFile(file);
+
+        intent.setDataAndType(data, type);
+
+        activity.startActivity(intent);
     }
 }

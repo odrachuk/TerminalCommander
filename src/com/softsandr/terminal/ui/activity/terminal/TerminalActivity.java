@@ -1,8 +1,6 @@
 package com.softsandr.terminal.ui.activity.terminal;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +19,6 @@ import com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems;
-import com.softsandr.terminal.ui.dialog.TerminalAppListDialog;
 import com.softsandr.terminal.ui.dialog.TerminalDialogUtil;
 
 import java.io.File;
@@ -378,14 +375,7 @@ public class TerminalActivity extends android.app.Activity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        String fileName = adapter.getItem(position).getFileName();
-//                        if (FileOpeningUtil.checkOpening(fileName, getPackageManager())) {
-                            TerminalDialogUtil.showAppDialog(TerminalActivity.this, fileName);
-//                        }
-//                        else {
-//                            Toast.makeText(TerminalActivity.this, getString(R.string.not_app_for_openning_file),
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
+                        FileOpeningUtil.openFile(TerminalActivity.this, selectedItem.getAbsPath());
                     }
                 }
             }
