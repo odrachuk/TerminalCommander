@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="ab_toggle_btn_width">200</integer>
+    <integer name="action_bar_middle_item_padding_left_right">40</integer>
 </resources>

@@ -16,6 +16,7 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.commander.controller.KeyboardController;
 import com.softsandr.terminal.commander.controller.ProcessController;
 import com.softsandr.terminal.commander.controller.UiController;
+import com.softsandr.terminal.ui.widget.actionbar.ActionBarTabMenuItem;
 
 /**
  * Date: 11/24/13
@@ -62,17 +63,17 @@ public class CommanderActivity extends Activity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
         // setup shift
-        MenuItem shiftItem = menu.findItem(R.id.action_shift);
+        MenuItem shiftItem = menu.findItem(R.id.action_shift_menu_item);
         shiftItem.setVisible(false);
         // setup ctrl
-        MenuItem ctrlItem = menu.findItem(R.id.action_ctrl);
+        MenuItem ctrlItem = menu.findItem(R.id.action_ctrl_menu_item);
         ctrlItem.setVisible(false);
         // setup comm
-        MenuItem commItem = menu.findItem(R.id.action_commander);
+        MenuItem commItem = menu.findItem(R.id.action_comm_menu_item);
         commItem.setVisible(false);
         // setup tab
         MenuItem tabItem = menu.findItem(R.id.action_tab);
-        Button tabBtn = (Button) tabItem.getActionView();
+        ActionBarTabMenuItem tabBtn = (ActionBarTabMenuItem) tabItem.getActionView();
         tabBtn.setOnClickListener(mOnClickListener);
         return super.onCreateOptionsMenu(menu);
     }
