@@ -199,14 +199,16 @@ public class TerminalSlider extends ViewGroup {
         int childTop;
         final View content = mContent;
         if (mVertical) {
-            if (mExpanded) {
-            } else {
-            }
-
             childLeft = (width - childWidth) / 2;
-            childTop = mExpanded ? mSliderOffset : height - childHeight - mSliderOffset;
-            content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
-                    mSliderOffset + childHeight + content.getMeasuredHeight());
+            if (mExpanded) {
+                childTop = mSliderOffset;
+                content.layout(0, mSliderOffset + childHeight, content.getMeasuredWidth(),
+                        mSliderOffset + childHeight + content.getMeasuredHeight());
+            } else {
+                childTop =  height - childHeight - mSliderOffset;
+                content.layout(0, height - mSliderOffset, content.getMeasuredWidth(),
+                        height);
+            }
         } else {
             childTop = (height - childHeight) / 2;
             if (mExpanded) {
@@ -391,63 +393,64 @@ public class TerminalSlider extends ViewGroup {
         final View handle = mHandle;
         if (mVertical) {
             if (position == EXPANDED_FULL_OPEN) {
-                handle.offsetTopAndBottom(mSliderOffset - handle.getTop());
+                handle.offsetTopAndBottom(mSliderOffset);
                 invalidate();
             } else if (position == COLLAPSED_FULL_CLOSED) {
-                handle.offsetTopAndBottom(getHeight() -
-                        mHandleHeight - handle.getTop());
+                handle.offsetTopAndBottom(getHeight() - mSliderOffset - mHandleHeight);
                 invalidate();
             } else {
-                final int top = handle.getTop();
-                int deltaY = position - top;
-                if (position < mSliderOffset) {
-                    deltaY = mSliderOffset - top;
-                } else if (deltaY > getHeight() - mHandleHeight - top) {
-                    deltaY = getHeight() - mHandleHeight - top;
+                if (position <= getHeight() - mHandleHeight - mSliderOffset) {
+                    final int top = handle.getTop();
+                    int deltaY = position - top;
+                    if (position < mSliderOffset) {
+                        deltaY = mSliderOffset - top;
+                    } else if (deltaY > getHeight() - mHandleHeight - top) {
+                        deltaY = getHeight() - mHandleHeight - top;
+                    }
+                    handle.offsetTopAndBottom(deltaY);
+
+                    final Rect frame = mFrame;
+                    final Rect region = mInvalidate;
+
+                    handle.getHitRect(frame);
+                    region.set(frame);
+
+                    region.union(frame.left, frame.top - deltaY, frame.right, frame.bottom - deltaY);
+                    region.union(0, frame.bottom - deltaY, getWidth(),
+                            frame.bottom - deltaY + mContent.getHeight());
+
+                    invalidate(region);
                 }
-                handle.offsetTopAndBottom(deltaY);
-
-                final Rect frame = mFrame;
-                final Rect region = mInvalidate;
-
-                handle.getHitRect(frame);
-                region.set(frame);
-
-                region.union(frame.left, frame.top - deltaY, frame.right, frame.bottom - deltaY);
-                region.union(0, frame.bottom - deltaY, getWidth(),
-                        frame.bottom - deltaY + mContent.getHeight());
-
-                invalidate(region);
             }
         } else {
             if (position == EXPANDED_FULL_OPEN) {
-                handle.offsetLeftAndRight(mSliderOffset - handle.getLeft());
+                handle.offsetLeftAndRight(mSliderOffset);
                 invalidate();
             } else if (position == COLLAPSED_FULL_CLOSED) {
-                handle.offsetLeftAndRight(getWidth() - mHandleWidth - handle.getLeft());
+                handle.offsetLeftAndRight(getWidth() - mSliderOffset - mHandleWidth);
                 invalidate();
             } else {
-                if (position < getWidth() - mHandleWidth - mSliderOffset) {
-                final int left = handle.getLeft();
-                int deltaX = position - left;
-                if (position < mSliderOffset) {
-                    deltaX = mSliderOffset - left;
-                } else if (deltaX > getWidth() - mHandleWidth - left) {
-                    deltaX = getWidth() - mHandleWidth - left;
-                }
-                handle.offsetLeftAndRight(deltaX);
+                if (position <= getWidth() - mHandleWidth - mSliderOffset) {
+                    final int left = handle.getLeft();
+                    int deltaX = position - left;
+                    if (position < mSliderOffset) {
+                        deltaX = mSliderOffset - left;
+                    } else if (deltaX > getWidth() - mHandleWidth - left) {
+                        deltaX = getWidth() - mHandleWidth - left;
+                    }
+                    handle.offsetLeftAndRight(deltaX);
 
-                final Rect frame = mFrame;
-                final Rect region = mInvalidate;
+                    final Rect frame = mFrame;
+                    final Rect region = mInvalidate;
 
-                handle.getHitRect(frame);
-                region.set(frame);
+                    handle.getHitRect(frame);
+                    region.set(frame);
 
-                region.union(frame.left - deltaX, frame.top, frame.right - deltaX, frame.bottom);
-                region.union(frame.right - deltaX, 0,
-                        frame.right - deltaX + mContent.getWidth(), getHeight());
+                    region.union(frame.left - deltaX, frame.top, frame.right - deltaX, frame.bottom);
+                    region.union(frame.right - deltaX, 0,
+                            frame.right - deltaX + mContent.getWidth(), getHeight());
 
-                invalidate(region);
+                    invalidate(region);
                 }
             }
         }
