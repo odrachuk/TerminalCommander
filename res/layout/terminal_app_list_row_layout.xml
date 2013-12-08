@@ -15,6 +15,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_alignParentRight="true"
+                 android:focusable="false"
                  android:textColor="@color/COLOR_525252"
                  android:text="@string/set_default"
                  android:paddingRight="@dimen/terminal_app_list_row_radio_btn_padding"
@@ -28,5 +29,6 @@
               android:paddingLeft="@dimen/terminal_app_list_row_padding_left"
               android:paddingRight="@dimen/terminal_app_list_row_padding_right"
               android:layout_toRightOf="@id/terminal_app_list_image"
-              android:layout_toLeftOf="@id/terminal_app_list_radio_btn"/>
+              android:layout_toLeftOf="@id/terminal_app_list_radio_btn"
+              android:background="@drawable/list_dark_gray_cursor"/>
 </RelativeLayout>

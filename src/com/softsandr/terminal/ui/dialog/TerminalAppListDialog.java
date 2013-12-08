@@ -36,7 +36,7 @@ public class TerminalAppListDialog extends DialogFragment {
         }
     };
 
-    private final CompoundButton.OnClickListener mRadionBtnClickListener = new CompoundButton.OnClickListener() {
+    private final CompoundButton.OnClickListener mRadioBtnClickListener = new CompoundButton.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -111,7 +111,7 @@ public class TerminalAppListDialog extends DialogFragment {
                 viewHolder.appIcon = (ImageView) convertView.findViewById(R.id.terminal_app_list_image);
                 viewHolder.appTitle = (TextView) convertView.findViewById(R.id.terminal_app_list_text);
                 viewHolder.radioButton = (RadioButton) convertView.findViewById(R.id.terminal_app_list_radio_btn);
-                viewHolder.radioButton.setOnClickListener(mRadionBtnClickListener);
+                viewHolder.radioButton.setOnClickListener(mRadioBtnClickListener);
                 viewHolder.radioButton.setTag(position);
                 mRadioButtons.add(viewHolder.radioButton);
                 convertView.setTag(viewHolder);
