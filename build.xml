@@ -16,7 +16,7 @@
 		 out.dir
 			 The name of the output filesystem. Default is 'bin'.
 
-		 For other overridable properties, look at the beginning of the rules
+		 For slider overridable properties, look at the beginning of the rules
 		 files in the SDK, at tools/ant/build.xml
 
 		 Properties related to the SDK location or the project target should

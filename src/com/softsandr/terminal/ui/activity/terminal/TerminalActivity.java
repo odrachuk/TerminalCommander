@@ -1,5 +1,6 @@
 package com.softsandr.terminal.ui.activity.terminal;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,9 +21,6 @@ import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems;
 import com.softsandr.terminal.ui.dialog.TerminalDialogUtil;
-import com.softsandr.terminal.ui.widget.actionbar.ActionBarCommMenuItem;
-import com.softsandr.terminal.ui.widget.actionbar.ActionBarCtrlMenuItem;
-import com.softsandr.terminal.ui.widget.actionbar.ActionBarShiftMenuItem;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,30 +59,30 @@ public class TerminalActivity extends android.app.Activity {
             String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
                     mRightAdapter.getPathLabel().getFullPath();
             /* Menu items */
-            if (viewId == R.id.action_comm_menu_item) {
+            if (v.equals(mCommMenuBtn)) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
                 startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA, currentLocation);
                 startIntent.putExtra(CommanderActivity.OTHER_PATH_EXTRA, destinationLocation);
                 startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, activePage.equals(ActivePage.LEFT));
                 startActivityForResult(startIntent, REQUEST_CODE);
-            } else if (viewId == R.id.action_shift_menu_item) {
-                mShiftMenuItem.onToggle();
-                mLeftAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuItem.isToggled());
-                mRightAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuItem.isToggled());
-                if (mShiftMenuItem.isToggled() && mCtrlMenuItem.isToggled()) {
-                    mCtrlMenuItem.onToggle();
-                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
-                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
-                }
-            } else if (viewId == R.id.action_ctrl_menu_item) {
-                mCtrlMenuItem.onToggle();
-                mLeftAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuItem.isToggled());
-                mRightAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuItem.isToggled());
-                if (mCtrlMenuItem.isToggled() && mShiftMenuItem.isToggled()) {
-                    mShiftMenuItem.onToggle();
-                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
-                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
-                }
+            } else if (v.equals(mShiftMenuBtn)) {
+//                mShiftMenuBtn.onToggle();
+//                mLeftAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuBtn.isToggled());
+//                mRightAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuBtn.isToggled());
+//                if (mShiftMenuBtn.isToggled() && mCtrlMenuBtn.isToggled()) {
+//                    mCtrlMenuBtn.onToggle();
+//                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+//                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
+//                }
+            } else if (v.equals(mCommMenuBtn)) {
+//                mCtrlMenuBtn.onToggle();
+//                mLeftAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuBtn.isToggled());
+//                mRightAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuBtn.isToggled());
+//                if (mCtrlMenuBtn.isToggled() && mShiftMenuBtn.isToggled()) {
+//                    mShiftMenuBtn.onToggle();
+//                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+//                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
+//                }
             }
             /* Control buttons */
             else if (viewId == R.id.copy_btn) {
@@ -131,8 +129,8 @@ public class TerminalActivity extends android.app.Activity {
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
-    private ActionBarShiftMenuItem mShiftMenuItem;
-    private ActionBarCtrlMenuItem mCtrlMenuItem;
+    private Button mShiftMenuBtn;
+    private Button mCommMenuBtn;
     private ListView mLeftList, mRightList;
     private String mRightListSavedLocation;
     private String mLeftListSavedLocation;
@@ -148,6 +146,24 @@ public class TerminalActivity extends android.app.Activity {
         mSelectionVisualItems = new SelectionVisualItems(this);
         readPreferences();
         initView();
+        initActionBar();
+    }
+
+    private void initActionBar() {
+        ActionBar bar = getActionBar();
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.RIGHT;
+        LayoutInflater li = getLayoutInflater();
+        View customView = li.inflate(R.layout.terminal_action_bar_custom_view, null);
+        mShiftMenuBtn = (Button) customView.findViewById(R.id.action_bar_shift_btn);
+        mCommMenuBtn = (Button) customView.findViewById(R.id.action_bar_comm_btn);
+        mShiftMenuBtn.setOnClickListener(mOnClickListener);
+        mCommMenuBtn.setOnClickListener(mOnClickListener);
+        Button mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
+        mCtrlMenuBtn.setOnClickListener(mOnClickListener);
+        bar.setCustomView(customView, lp);
     }
 
     private void readPreferences() {
@@ -243,27 +259,6 @@ public class TerminalActivity extends android.app.Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        MenuItem shiftMenuItem = menu.findItem(R.id.action_shift_menu_item);
-        // setup shift
-        if (shiftMenuItem != null) {
-            mShiftMenuItem = (ActionBarShiftMenuItem) shiftMenuItem.getActionView();
-            mShiftMenuItem.setOnClickListener(mOnClickListener);
-        }
-        // setup ctrl
-        MenuItem ctrlItem = menu.findItem(R.id.action_ctrl_menu_item);
-        if (ctrlItem != null) {
-            mCtrlMenuItem = (ActionBarCtrlMenuItem) ctrlItem.getActionView();
-            mCtrlMenuItem.setOnClickListener(mOnClickListener);
-        }
-        // setup commander
-        MenuItem commItem = menu.findItem(R.id.action_comm_menu_item);
-        if (ctrlItem != null) {
-            ActionBarCommMenuItem tabBtn = (ActionBarCommMenuItem) commItem.getActionView();
-            tabBtn.setOnClickListener(mOnClickListener);
-        }
-        // setup tab
-        MenuItem tabItem = menu.findItem(R.id.action_tab);
-        tabItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

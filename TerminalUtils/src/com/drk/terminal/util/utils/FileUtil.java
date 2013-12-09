@@ -641,7 +641,7 @@ public class FileUtil {
             }
         } else {
             if (!directory.mkdirs()) {
-                // Double-check that some other thread or process hasn't made
+                // Double-check that some slider thread or process hasn't made
                 // the directory in the background
                 if (!directory.isDirectory()) {
                     String message =

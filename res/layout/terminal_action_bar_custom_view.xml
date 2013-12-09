@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+    <Button android:id="@+id/action_bar_shift_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_shift"
+            android:background="@drawable/list_blue_cursor"/>
+    <Button android:id="@+id/action_bar_ctrl_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_ctrl"
+            android:background="@drawable/list_blue_cursor"
+            android:layout_toRightOf="@id/action_bar_shift_btn"/>
+    <Button android:id="@+id/action_bar_comm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_commander"
+            android:background="@drawable/list_blue_cursor"
+            android:layout_toRightOf="@id/action_bar_ctrl_btn"/>
+</RelativeLayout>

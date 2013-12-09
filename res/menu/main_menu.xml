@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Menu items -->
-    <item android:id="@+id/action_shift_menu_item"
-          android:showAsAction="ifRoom"
-          android:actionViewClass="com.softsandr.terminal.ui.widget.actionbar.ActionBarShiftMenuItem"/>
-    <item android:id="@+id/action_ctrl_menu_item"
-          android:showAsAction="ifRoom"
-          android:actionViewClass="com.softsandr.terminal.ui.widget.actionbar.ActionBarCtrlMenuItem"/>
-    <item android:id="@+id/action_comm_menu_item"
-          android:showAsAction="ifRoom"
-          android:actionViewClass="com.softsandr.terminal.ui.widget.actionbar.ActionBarCommMenuItem"/>
-    <!--Buttons-->
-    <item android:id="@+id/action_tab"
-          android:title="@string/action_tab"
-          android:showAsAction="ifRoom"
-          android:actionViewClass="com.softsandr.terminal.ui.widget.actionbar.ActionBarTabMenuItem"/>
-    <!--Menus-->
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:showAsAction="never"/>

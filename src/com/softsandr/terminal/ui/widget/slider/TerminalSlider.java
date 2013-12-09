@@ -1,4 +1,4 @@
-package com.softsandr.terminal.ui.widget.other;
+package com.softsandr.terminal.ui.widget.slider;
 
 import android.content.Context;
 import android.content.res.TypedArray;

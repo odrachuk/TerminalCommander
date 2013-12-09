@@ -16,7 +16,6 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.commander.controller.KeyboardController;
 import com.softsandr.terminal.commander.controller.ProcessController;
 import com.softsandr.terminal.commander.controller.UiController;
-import com.softsandr.terminal.ui.widget.actionbar.ActionBarTabMenuItem;
 
 /**
  * Date: 11/24/13
@@ -36,11 +35,11 @@ public class CommanderActivity extends Activity {
     private String mInitialPath;
     private String mOtherPath;
     private boolean mInitialPageLeft;
+    private Button mTabMenuBtn;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int viewId = v.getId();
-            if (viewId == R.id.action_tab) {
+            if (v.equals(mTabMenuBtn)) {
                 // todo
                 Toast.makeText(CommanderActivity.this, "Tabulate", Toast.LENGTH_SHORT).show();
             }
@@ -56,25 +55,13 @@ public class CommanderActivity extends Activity {
         mTerminalInView = (EditText) findViewById(R.id.terminal_input_edit_text);
         mTerminalInView.requestFocus();
         showSoftKeyboard();
+        initActionBar();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        // setup shift
-        MenuItem shiftItem = menu.findItem(R.id.action_shift_menu_item);
-        shiftItem.setVisible(false);
-        // setup ctrl
-        MenuItem ctrlItem = menu.findItem(R.id.action_ctrl_menu_item);
-        ctrlItem.setVisible(false);
-        // setup comm
-        MenuItem commItem = menu.findItem(R.id.action_comm_menu_item);
-        commItem.setVisible(false);
-        // setup tab
-        MenuItem tabItem = menu.findItem(R.id.action_tab);
-        ActionBarTabMenuItem tabBtn = (ActionBarTabMenuItem) tabItem.getActionView();
-        tabBtn.setOnClickListener(mOnClickListener);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -156,13 +143,21 @@ public class CommanderActivity extends Activity {
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mTerminalInView.setOnEditorActionListener(new KeyboardController(mProcessUiController, mProcessController));
-        initActionBar();
     }
 
     private void initActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(getResources().getString(R.string.commander));
         actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.RIGHT;
+        LayoutInflater li = getLayoutInflater();
+        View customView = li.inflate(R.layout.commander_action_bar_custom_view, null);
+        mTabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
+        mTabMenuBtn.setOnClickListener(mOnClickListener);
+        actionBar.setCustomView(customView, lp);
     }
 
     public void showSoftKeyboard() {
