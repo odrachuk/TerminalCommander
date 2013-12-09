@@ -66,23 +66,9 @@ public class TerminalActivity extends android.app.Activity {
                 startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, activePage.equals(ActivePage.LEFT));
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (v.equals(mShiftMenuBtn)) {
-//                mShiftMenuBtn.onToggle();
-//                mLeftAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuBtn.isToggled());
-//                mRightAdapter.getSelectionStrategy().setShiftToggle(mShiftMenuBtn.isToggled());
-//                if (mShiftMenuBtn.isToggled() && mCtrlMenuBtn.isToggled()) {
-//                    mCtrlMenuBtn.onToggle();
-//                    mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
-//                    mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
-//                }
-            } else if (v.equals(mCommMenuBtn)) {
-//                mCtrlMenuBtn.onToggle();
-//                mLeftAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuBtn.isToggled());
-//                mRightAdapter.getSelectionStrategy().setCtrlToggle(mCtrlMenuBtn.isToggled());
-//                if (mCtrlMenuBtn.isToggled() && mShiftMenuBtn.isToggled()) {
-//                    mShiftMenuBtn.onToggle();
-//                    mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
-//                    mRightAdapter.getSelectionStrategy().setShiftToggle(false);
-//                }
+                mActionBarToggleMonitor.onClickShift();
+            } else if (v.equals(mCtrlMenuBtn)) {
+                mActionBarToggleMonitor.onClickCtrl();
             }
             /* Control buttons */
             else if (viewId == R.id.copy_btn) {
@@ -129,8 +115,9 @@ public class TerminalActivity extends android.app.Activity {
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
-    private Button mShiftMenuBtn;
-    private Button mCommMenuBtn;
+    private ActionBarButtonsToggleMonitor mActionBarToggleMonitor;
+    private Button mShiftMenuBtn, mCommMenuBtn, mCtrlMenuBtn;
+    private View mShiftBtnContainer, mCtrlBtnContainer;
     private ListView mLeftList, mRightList;
     private String mRightListSavedLocation;
     private String mLeftListSavedLocation;
@@ -157,12 +144,15 @@ public class TerminalActivity extends android.app.Activity {
         lp.gravity = Gravity.RIGHT;
         LayoutInflater li = getLayoutInflater();
         View customView = li.inflate(R.layout.terminal_action_bar_custom_view, null);
+        mShiftBtnContainer = customView.findViewById(R.id.action_bar_shift_btn_container);
+        mCtrlBtnContainer = customView.findViewById(R.id.action_bar_ctrl_btn_container);
         mShiftMenuBtn = (Button) customView.findViewById(R.id.action_bar_shift_btn);
+        mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
         mCommMenuBtn = (Button) customView.findViewById(R.id.action_bar_comm_btn);
         mShiftMenuBtn.setOnClickListener(mOnClickListener);
         mCommMenuBtn.setOnClickListener(mOnClickListener);
-        Button mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
         mCtrlMenuBtn.setOnClickListener(mOnClickListener);
+        mActionBarToggleMonitor = new ActionBarButtonsToggleMonitor();
         bar.setCustomView(customView, lp);
     }
 
@@ -467,6 +457,47 @@ public class TerminalActivity extends android.app.Activity {
             mRightList.setOnItemClickListener(new ListViewItemClickListener(mRightAdapter, mRightList));
             mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(mRightAdapter));
             mRightList.setOnTouchListener(mListTouchListener);
+        }
+    }
+
+    private final class ActionBarButtonsToggleMonitor {
+        boolean isShiftToggled;
+        boolean isCtrlToggled;
+
+        private void onClickShift() {
+            if (isCtrlToggled) {
+                isCtrlToggled = false;
+                mCtrlBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                mLeftAdapter.getSelectionStrategy().setCtrlToggle(false);
+                mRightAdapter.getSelectionStrategy().setCtrlToggle(false);
+            }
+            if (isShiftToggled) {
+                isShiftToggled = false;
+                mShiftBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            } else {
+                isShiftToggled = true;
+                mShiftBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+            }
+            mLeftAdapter.getSelectionStrategy().setShiftToggle(isShiftToggled);
+            mRightAdapter.getSelectionStrategy().setShiftToggle(isShiftToggled);
+        }
+
+        private void onClickCtrl() {
+            if (isShiftToggled) {
+                isShiftToggled = false;
+                mShiftBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                mLeftAdapter.getSelectionStrategy().setShiftToggle(false);
+                mRightAdapter.getSelectionStrategy().setShiftToggle(false);
+            }
+            if (isCtrlToggled) {
+                isCtrlToggled = false;
+                mCtrlBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            } else {
+                isCtrlToggled = true;
+                mCtrlBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+            }
+            mLeftAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);
+            mRightAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);
         }
     }
 }
