@@ -459,8 +459,8 @@ public class TerminalActivity extends android.app.Activity {
     }
 
     private final class ActionBarButtonsToggleMonitor {
-        boolean isShiftToggled;
-        boolean isCtrlToggled;
+        private boolean isShiftToggled;
+        private boolean isCtrlToggled;
 
         private void onClickShift() {
             if (isCtrlToggled) {
