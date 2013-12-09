@@ -239,8 +239,6 @@ public class TerminalActivity extends android.app.Activity {
                             new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 }
-
-
             }
         }
     }
