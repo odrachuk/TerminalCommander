@@ -8,5 +8,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_tab"
+            android:textSize="@dimen/terminal_action_bar_button_size"
+            android:textColor="@color/COLOR_717171"
+            android:textStyle="bold"
             android:background="@drawable/orange_cursor_bg"/>
 </RelativeLayout>

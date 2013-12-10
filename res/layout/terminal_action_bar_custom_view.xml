@@ -12,6 +12,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shift"
+                android:textSize="@dimen/terminal_action_bar_button_size"
+                android:textColor="@color/COLOR_717171"
+                android:textStyle="bold"
                 android:background="@drawable/orange_cursor_bg"/>
     </RelativeLayout>
     <RelativeLayout
@@ -23,12 +26,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_ctrl"
+                android:textSize="@dimen/terminal_action_bar_button_size"
+                android:textColor="@color/COLOR_717171"
+                android:textStyle="bold"
                 android:background="@drawable/orange_cursor_bg"/>
     </RelativeLayout>
     <Button android:id="@+id/action_bar_comm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_commander"
+            android:textSize="@dimen/terminal_action_bar_button_size"
+            android:textColor="@color/COLOR_717171"
+            android:textStyle="bold"
             android:background="@drawable/orange_cursor_bg"
             android:layout_toRightOf="@id/action_bar_ctrl_btn_container"/>
 </RelativeLayout>

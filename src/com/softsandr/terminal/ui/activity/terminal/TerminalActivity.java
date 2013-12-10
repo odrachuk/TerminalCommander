@@ -256,6 +256,20 @@ public class TerminalActivity extends android.app.Activity {
             case R.id.action_settings:
                 //todo
                 return true;
+            case R.id.action_refresh:
+                switch (activePage) {
+                    case LEFT:
+                        if (mLeftAdapter != null) {
+                            mLeftAdapter.changeDirectory(mLeftAdapter.getPathLabel().getFullPath());
+                        }
+                        break;
+                    case RIGHT:
+                        if (mRightAdapter != null) {
+                            mRightAdapter.changeDirectory(mRightAdapter.getPathLabel().getFullPath());
+                        }
+                        break;
+                }
+                return true;
             case R.id.action_quit:
                 //todo
                 finish();

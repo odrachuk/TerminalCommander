@@ -71,6 +71,9 @@ public class CommanderActivity extends Activity {
             case R.id.action_settings:
                 //todo
                 return true;
+            case R.id.action_refresh:
+                mProcessController.getProcess().onClear();
+                return true;
             case R.id.action_quit:
                 //todo
                 finish();

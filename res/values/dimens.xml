@@ -65,4 +65,5 @@
     <dimen name="action_bar_height">40dp</dimen>
     <dimen name="terminal_list_item_text_size">16sp</dimen>
     <dimen name="action_bar_menu_ite_text_size">9sp</dimen>
+    <dimen name="terminal_action_bar_button_size">20sp</dimen>
 </resources>
