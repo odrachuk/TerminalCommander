@@ -222,7 +222,7 @@ public class TerminalSlider extends ViewGroup {
                         content.getMeasuredHeight());
             }
         }
-        handle.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
+        handle.layout(childLeft, childTop + 35, childLeft + childWidth, childTop + childHeight - 7);
         mHandleHeight = handle.getHeight();
         mHandleWidth = handle.getWidth();
     }
@@ -242,6 +242,7 @@ public class TerminalSlider extends ViewGroup {
             return false;
         }
         if (action == MotionEvent.ACTION_DOWN) {
+            mHandle.setBackgroundColor(getResources().getColor(R.color.COLOR_FEA50A));
             mTracking = true;
 //            handle.setPressed(true);
             // Must be called before prepareTracking()
@@ -278,7 +279,7 @@ public class TerminalSlider extends ViewGroup {
                     moveHandle((int) (mVertical ? event.getY() : event.getX()) - mTouchDelta);
                     break;
                 case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL: {
+                case MotionEvent.ACTION_CANCEL:
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(mVelocityUnits);
 
@@ -325,7 +326,7 @@ public class TerminalSlider extends ViewGroup {
                     } else {
                         performFling(vertical ? top : left, velocity, false);
                     }
-                }
+                mHandle.setBackgroundColor(getResources().getColor(R.color.COLOR_C2C2C2));
                 break;
             }
         }

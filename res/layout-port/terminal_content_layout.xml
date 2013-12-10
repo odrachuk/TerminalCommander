@@ -21,9 +21,9 @@
             app:handle="@+id/handle"
             app:orientation="horizontal"
             app:offset="@dimen/terminal_slider_offset">
-        <ImageView android:layout_width="@dimen/terminal_slider_handle_width"
+        <Button android:layout_width="@dimen/terminal_slider_handle_width"
                    android:layout_height="match_parent"
-                   android:background="@color/COLOR_002AA5"
+                   android:background="@color/COLOR_C2C2C2"
                    android:id="@id/handle"/>
         <LinearLayout
                 android:id="@id/contentLayout"
