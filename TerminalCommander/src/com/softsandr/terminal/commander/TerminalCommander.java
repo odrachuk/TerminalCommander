@@ -120,7 +120,7 @@ public class TerminalCommander {
         String[] resultArray = new String[resultList.size()];
         int i = 0;
         for (String s : resultList) {
-            resultArray[i] = s;
+            resultArray[i] = eraseAbsent(s);
             i++;
         }
         Bundle resultBundle = new Bundle();
@@ -129,6 +129,17 @@ public class TerminalCommander {
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);
+    }
+
+    private String eraseAbsent(String message) {
+        String result = message;
+        if (message.contains("<stdin>[")) {
+            StringBuilder msg = new StringBuilder();
+            msg.append(message.substring(0, 2));
+            msg.append(message.substring(message.indexOf("]:") + 1, message.length()));
+            result = msg.toString();
+        }
+        return result;
     }
 
     public void onChangeDirectory(String targetPath) throws Exception {
