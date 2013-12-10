@@ -105,7 +105,13 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public int compareTo(ListViewItem another) {
         if (this.isDirectory()) {
             if (another.isDirectory()) {
-                return fileName.substring(1).compareTo(another.getFileName().substring(1));
+                if (StringUtil.isStringNumber(fileName.substring(1)) &&
+                        StringUtil.isStringNumber(another.getFileName().substring(1))) {
+                    return ((Integer) Integer.parseInt(fileName.substring(1))).
+                            compareTo(Integer.parseInt(another.getFileName().substring(1)));
+                } else {
+                    return fileName.substring(1).compareTo(another.getFileName().substring(1));
+                }
             } else {
                 return -1;
             }
@@ -114,12 +120,30 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
                 return 1;
             } else if (this.getFileName().startsWith(StringUtil.FILE_LINK_PREFIX)) {
                 if (another.getFileName().startsWith(StringUtil.FILE_LINK_PREFIX)) {
-                    return fileName.substring(1).compareTo(another.getFileName().substring(1));
+                    if (StringUtil.isStringNumber(fileName.substring(1)) &&
+                            StringUtil.isStringNumber(another.getFileName().substring(1))) {
+                        return ((Integer) Integer.parseInt(fileName.substring(1))).
+                                compareTo(Integer.parseInt(another.getFileName().substring(1)));
+                    } else {
+                        return fileName.substring(1).compareTo(another.getFileName().substring(1));
+                    }
                 } else {
-                    return fileName.substring(1).compareTo(another.getFileName());
+                    if (StringUtil.isStringNumber(fileName.substring(1)) &&
+                            StringUtil.isStringNumber(another.getFileName())) {
+                        return ((Integer) Integer.parseInt(fileName.substring(1))).
+                                compareTo(Integer.parseInt(another.getFileName()));
+                    } else {
+                        return fileName.substring(1).compareTo(another.getFileName());
+                    }
                 }
             } else {
-                return fileName.compareTo(another.getFileName());
+                if (StringUtil.isStringNumber(fileName) &&
+                        StringUtil.isStringNumber(another.getFileName())) {
+                    return ((Integer) Integer.parseInt(fileName)).
+                            compareTo(Integer.parseInt(another.getFileName()));
+                } else {
+                    return fileName.compareTo(another.getFileName());
+                }
             }
         }
     }

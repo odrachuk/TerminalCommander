@@ -25,4 +25,12 @@ public class StringUtil {
         return count;
     }
 
+    public static boolean isStringNumber(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 }
