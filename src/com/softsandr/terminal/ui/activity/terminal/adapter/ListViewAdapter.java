@@ -114,11 +114,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         ViewHolder viewHolder = cache.get(position);
         if (selectionStrategy.getSelectedItems().contains(position)) {
             viewHolder.fileNameView.setTextColor(
-                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+                    activity.getResources().getColor(R.color.COLOR_FECE0A));
             viewHolder.fileSizeView.setTextColor(
-                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+                    activity.getResources().getColor(R.color.COLOR_FECE0A));
             viewHolder.fileModifyTimeView.setTextColor(
-                    activity.getResources().getColor(R.color.COLOR_FFFF00));
+                    activity.getResources().getColor(R.color.COLOR_FECE0A));
         }
         if (selectionStrategy.getUnselectedItems().contains(position)) {
             ListViewItem info = filesInfo.get(position);

@@ -474,7 +474,7 @@ public class TerminalActivity extends android.app.Activity {
                 mShiftBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             } else {
                 isShiftToggled = true;
-                mShiftBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+                mShiftBtnContainer.setBackgroundColor(getResources().getColor(R.color.COLOR_FEA50A));
             }
             mLeftAdapter.getSelectionStrategy().setShiftToggle(isShiftToggled);
             mRightAdapter.getSelectionStrategy().setShiftToggle(isShiftToggled);
@@ -492,7 +492,7 @@ public class TerminalActivity extends android.app.Activity {
                 mCtrlBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.transparent));
             } else {
                 isCtrlToggled = true;
-                mCtrlBtnContainer.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+                mCtrlBtnContainer.setBackgroundColor(getResources().getColor(R.color.COLOR_FEA50A));
             }
             mLeftAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);
             mRightAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);

@@ -8,5 +8,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_tab"
-            android:background="@drawable/list_blue_cursor"/>
+            android:background="@drawable/orange_cursor_bg"/>
 </RelativeLayout>

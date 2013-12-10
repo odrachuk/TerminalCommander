@@ -12,7 +12,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_shift"
-                android:background="@drawable/list_blue_cursor"/>
+                android:background="@drawable/orange_cursor_bg"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/action_bar_ctrl_btn_container"
@@ -23,12 +23,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_ctrl"
-                android:background="@drawable/list_blue_cursor"/>
+                android:background="@drawable/orange_cursor_bg"/>
     </RelativeLayout>
     <Button android:id="@+id/action_bar_comm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_commander"
-            android:background="@drawable/list_blue_cursor"
+            android:background="@drawable/orange_cursor_bg"
             android:layout_toRightOf="@id/action_bar_ctrl_btn_container"/>
 </RelativeLayout>

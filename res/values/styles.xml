@@ -36,7 +36,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/terminal_list_item_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/COLOR_FFFF00</item>
+        <item name="android:textColor">@color/COLOR_FECE0A</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_marginLeft">3dp</item>
         <item name="android:layout_marginRight">3dp</item>

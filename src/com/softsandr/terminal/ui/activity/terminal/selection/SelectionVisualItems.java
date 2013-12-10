@@ -52,23 +52,23 @@ public class SelectionVisualItems {
 
     public void selectLeft() {
         for (View left : leftPanelBorders) {
-            left.setBackgroundColor(resources.getColor(R.color.COLOR_FFFF00));
+            left.setBackgroundColor(resources.getColor(R.color.COLOR_FECE0A));
         }
         for (View right : rightPanelBorders) {
             right.setBackgroundColor(resources.getColor(R.color.COLOR_C2C2C2));
         }
-        leftPathLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
+        leftPathLabel.setTextColor(resources.getColor(R.color.COLOR_FECE0A));
         rightPathLabel.setTextColor(resources.getColor(R.color.COLOR_C2C2C2));
     }
 
     public void selectRight() {
         for (View right : rightPanelBorders) {
-            right.setBackgroundColor(resources.getColor(R.color.COLOR_FFFF00));
+            right.setBackgroundColor(resources.getColor(R.color.COLOR_FECE0A));
         }
         for (View left : leftPanelBorders) {
             left.setBackgroundColor(resources.getColor(R.color.COLOR_C2C2C2));
         }
-        rightPathLabel.setTextColor(resources.getColor(R.color.COLOR_FFFF00));
+        rightPathLabel.setTextColor(resources.getColor(R.color.COLOR_FECE0A));
         leftPathLabel.setTextColor(resources.getColor(R.color.COLOR_C2C2C2));
     }
 }
