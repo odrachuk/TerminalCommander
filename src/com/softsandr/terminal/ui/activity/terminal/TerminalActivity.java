@@ -261,11 +261,13 @@ public class TerminalActivity extends android.app.Activity {
                     case LEFT:
                         if (mLeftAdapter != null) {
                             mLeftAdapter.changeDirectory(mLeftAdapter.getPathLabel().getFullPath());
+                            mLeftAdapter.getSelectionStrategy().clear();
                         }
                         break;
                     case RIGHT:
                         if (mRightAdapter != null) {
                             mRightAdapter.changeDirectory(mRightAdapter.getPathLabel().getFullPath());
+                            mRightAdapter.getSelectionStrategy().clear();
                         }
                         break;
                 }
