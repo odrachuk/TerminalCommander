@@ -25,7 +25,7 @@ import static com.drk.terminal.util.utils.StringUtil.LINE_SEPARATOR;
  */
 public class TerminalCommander {
     private static final String LOG_TAG = TerminalCommander.class.getSimpleName();
-    private static final String SYSTEM_EXECUTOR = "sh";
+    private static final String SYSTEM_EXECUTOR = "/system/bin/sh";
     private final CommandResponseHandler mResponseHandler;
     private final TerminalPrompt mTerminalPrompt;
     private final UiController mUiController;
@@ -48,7 +48,7 @@ public class TerminalCommander {
     }
 
     public void startExecutionProcess(String path) throws IOException {
-        Log.d(LOG_TAG, "startProcess");
+        Log.d(LOG_TAG, "startExecutionProcess");
         File pathDirectory = new File(path);
         if (pathDirectory.isDirectory()) {
             ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR);
@@ -57,12 +57,12 @@ public class TerminalCommander {
             try {
                 mExecutionProcess = builder.start();
             } catch (IOException ex) {
-                Log.e(LOG_TAG, "Exception when create console main comm: " + ex.getMessage());
+                Log.e(LOG_TAG, "Exception when start execution process: " + ex.getMessage());
                 throw ex;
             }
         } else {
-            Log.d(LOG_TAG, "Wrong comm init filesystem ");
-            mTerminalOutView.setText("FAIL!");
+            Log.d(LOG_TAG, "Wrong initial process directory");
+            mTerminalOutView.setText("The initial process directory wrong");
         }
         mTerminalPrompt.setUserLocation(path);
     }
@@ -135,7 +135,7 @@ public class TerminalCommander {
         String result = message;
         if (message.contains("<stdin>[")) {
             StringBuilder msg = new StringBuilder();
-            msg.append(message.substring(0, 2));
+            msg.append(message.substring(0, message.indexOf("<s") - 2));
             msg.append(message.substring(message.indexOf("]:") + 1, message.length()));
             result = msg.toString();
         }

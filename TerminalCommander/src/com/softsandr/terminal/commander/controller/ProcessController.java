@@ -33,7 +33,7 @@ public class ProcessController {
         try {
             mProcess.startExecutionProcess(path);
         } catch (IOException e) {
-            Toast.makeText(mUiController.getActivity(), "Can't start main comm!", Toast.LENGTH_LONG).show();
+            Toast.makeText(mUiController.getActivity(), "Can't start main execution process", Toast.LENGTH_LONG).show();
         }
     }
 
