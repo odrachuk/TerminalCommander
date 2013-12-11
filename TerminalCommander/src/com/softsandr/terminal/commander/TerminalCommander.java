@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
 import com.softsandr.terminal.commander.command.local.LocalCommands;
@@ -91,7 +92,7 @@ public class TerminalCommander {
             try {
                 nativeExecute(mCommandText);
             } catch (IOException e) {
-                mTerminalOutView.setText("FAIL!!!");
+                mTerminalOutView.setText("System can't execute command");
             }
         }
         mCommandText = null;
@@ -153,8 +154,13 @@ public class TerminalCommander {
     }
 
     public void onClear() {
-        mTerminalOutView.setText("");
-        mUiController.setHideOutView(true);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                mTerminalOutView.setText("");
+                mTerminalOutView.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void stopExecutionProcess() {

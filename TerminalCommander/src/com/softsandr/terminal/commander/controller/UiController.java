@@ -13,7 +13,6 @@ import com.softsandr.terminal.commander.prompt.TerminalPrompt;
 public class UiController {
     private Activity mProcessActivity;
     private TerminalPrompt mPrompt;
-    private boolean hideOutView;
     private EditText mTerminalInView;
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
@@ -37,14 +36,6 @@ public class UiController {
 
     public TerminalPrompt getPrompt() {
         return mPrompt;
-    }
-
-    public boolean isHideOutView() {
-        return hideOutView;
-    }
-
-    public void setHideOutView(boolean hideOutView) {
-        this.hideOutView = hideOutView;
     }
 
     public EditText getTerminalInView() {

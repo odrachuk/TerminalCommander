@@ -28,7 +28,7 @@ public class KeyboardController implements TextView.OnEditorActionListener {
         boolean handled = false;
         if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                mUiController.setHideOutView(false);
+                mUiController.getTerminalOutView().setVisibility(View.VISIBLE);
                 String fullCommandText = mUiController.getTerminalInView().getText().toString();
                 StringBuilder resultText = new StringBuilder(mUiController.getTerminalOutView().getText().toString());
                 if (inFirst) {
@@ -42,7 +42,9 @@ public class KeyboardController implements TextView.OnEditorActionListener {
                     inFirst = false;
                 } else {
                     if (!fullCommandText.isEmpty()) {
-                        resultText.append(LINE_SEPARATOR);
+                        if (!TextUtils.isEmpty(mUiController.getTerminalOutView().getText())) {
+                            resultText.append(LINE_SEPARATOR);
+                        }
                         resultText.append(mUiController.getPrompt().getPromptText());
                         resultText.append(fullCommandText);
                         mProcessController.getProcess().execCommand(fullCommandText);
@@ -53,22 +55,11 @@ public class KeyboardController implements TextView.OnEditorActionListener {
                         resultText.append(mUiController.getPrompt().getPromptText());
                     }
                 }
-                if (!mUiController.isHideOutView()) {
-                    mUiController.getTerminalOutView().setText(resultText);
-                }
+                mUiController.getTerminalOutView().setText(resultText);
                 mUiController.getTerminalInView().setText(EMPTY);
-                checkVisibility();
             }
             handled = true;
         }
         return handled;
-    }
-
-    private void checkVisibility() {
-        if (mUiController.isHideOutView()) {
-            mUiController.getTerminalOutView().setVisibility(View.GONE);
-        } else {
-            mUiController.getTerminalOutView().setVisibility(View.VISIBLE);
-        }
     }
 }
