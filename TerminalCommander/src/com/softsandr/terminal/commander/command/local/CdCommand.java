@@ -51,7 +51,7 @@ public class CdCommand implements LocalCommand {
                 terminalProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString += "LocalCommand execution exception";
+            callbackString += "Execution exception";
         }
         return callbackString;
     }
