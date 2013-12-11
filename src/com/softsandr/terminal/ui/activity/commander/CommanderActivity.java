@@ -45,11 +45,21 @@ public class CommanderActivity extends Activity {
             }
         }
     };
+    private final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                showSoftKeyboard();
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commander_activity_layout);
+        findViewById(R.id.commander_main_container).setOnTouchListener(mOnTouchListener);
         mTerminalOutView = (TextView) findViewById(R.id.terminal_out_text_view);
         mTerminalPromptView = (TextView) findViewById(R.id.terminal_prompt_text_view);
         mTerminalInView = (EditText) findViewById(R.id.terminal_input_edit_text);
