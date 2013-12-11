@@ -85,6 +85,7 @@ public class CommanderActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_sorting).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

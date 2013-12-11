@@ -104,6 +104,10 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
 
     @Override
     public int compareTo(ListViewItem another) {
+        return compareFileNames(another);
+    }
+
+    private int compareFileNames(ListViewItem another) {
         if (this.isDirectory()) {
             if (another.isDirectory()) {
                 return new AlphanumComparator().compare(fileName.substring(1),
@@ -126,6 +130,14 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
                 return new AlphanumComparator().compare(fileName, another.getFileName());
             }
         }
+    }
+
+    private int compareSize(ListViewItem another) {
+        return 0;
+    }
+
+    private int compareModifyTime(ListViewItem another) {
+        return 0;
     }
 
     @Override

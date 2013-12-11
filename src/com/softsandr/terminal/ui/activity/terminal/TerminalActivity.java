@@ -138,6 +138,7 @@ public class TerminalActivity extends android.app.Activity {
     private HistoryLocationsManager mLeftHistoryLocationManager;
     private HistoryLocationsManager mRightHistoryLocationManager;
     private boolean isPaused;
+    private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +262,11 @@ public class TerminalActivity extends android.app.Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.action_sorting).setVisible(true);
+        MenuItem sortByName = menu.findItem(R.id.sorting_by_name);
+        MenuItem sortBySize = menu.findItem(R.id.sorting_by_size);
+        MenuItem sortByModify = menu.findItem(R.id.sorting_by_modify);
+        mSortingMenuItemsMonitor = new SortingMenuItemsMonitor(sortByName, sortBySize, sortByModify);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -288,6 +294,15 @@ public class TerminalActivity extends android.app.Activity {
                 return true;
             case R.id.action_quit:
                 sendBroadcast(new Intent(COMMON_EXIT_INTENT));
+                return true;
+            case R.id.sorting_by_name:
+                mSortingMenuItemsMonitor.onMenuSelected(item);
+                return true;
+            case R.id.sorting_by_size:
+                mSortingMenuItemsMonitor.onMenuSelected(item);
+                return true;
+            case R.id.sorting_by_modify:
+                mSortingMenuItemsMonitor.onMenuSelected(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -526,6 +541,31 @@ public class TerminalActivity extends android.app.Activity {
             }
             mLeftAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);
             mRightAdapter.getSelectionStrategy().setCtrlToggle(isCtrlToggled);
+        }
+    }
+
+    private final class SortingMenuItemsMonitor {
+        private final MenuItem mSortByName;
+        private final MenuItem mSortBySize;
+        private final MenuItem mSortByModify;
+
+        private SortingMenuItemsMonitor(MenuItem mSortByName, MenuItem mSortBySize, MenuItem mSortByModify) {
+            this.mSortByName = mSortByName;
+            this.mSortBySize = mSortBySize;
+            this.mSortByModify = mSortByModify;
+        }
+
+        public void onMenuSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            if (!menuItem.equals(mSortByName)) {
+                mSortByName.setChecked(false);
+            }
+            if (!menuItem.equals(mSortBySize)) {
+                mSortBySize.setChecked(false);
+            }
+            if (!menuItem.equals(mSortByModify)) {
+                mSortByModify.setChecked(false);
+            }
         }
     }
 }
