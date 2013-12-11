@@ -2,6 +2,7 @@ package com.softsandr.terminal.model.listview;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.drk.terminal.util.utils.AlphanumComparator;
 import com.drk.terminal.util.utils.StringUtil;
 
 import java.text.DecimalFormat;
@@ -105,13 +106,8 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public int compareTo(ListViewItem another) {
         if (this.isDirectory()) {
             if (another.isDirectory()) {
-                if (StringUtil.isStringNumber(fileName.substring(1)) &&
-                        StringUtil.isStringNumber(another.getFileName().substring(1))) {
-                    return ((Integer) Integer.parseInt(fileName.substring(1))).
-                            compareTo(Integer.parseInt(another.getFileName().substring(1)));
-                } else {
-                    return fileName.substring(1).compareTo(another.getFileName().substring(1));
-                }
+                return new AlphanumComparator().compare(fileName.substring(1),
+                        another.getFileName().substring(1));
             } else {
                 return -1;
             }
@@ -120,30 +116,14 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
                 return 1;
             } else if (this.getFileName().startsWith(StringUtil.FILE_LINK_PREFIX)) {
                 if (another.getFileName().startsWith(StringUtil.FILE_LINK_PREFIX)) {
-                    if (StringUtil.isStringNumber(fileName.substring(1)) &&
-                            StringUtil.isStringNumber(another.getFileName().substring(1))) {
-                        return ((Integer) Integer.parseInt(fileName.substring(1))).
-                                compareTo(Integer.parseInt(another.getFileName().substring(1)));
-                    } else {
-                        return fileName.substring(1).compareTo(another.getFileName().substring(1));
-                    }
+                    return new AlphanumComparator().compare(fileName.substring(1),
+                            another.getFileName().substring(1));
                 } else {
-                    if (StringUtil.isStringNumber(fileName.substring(1)) &&
-                            StringUtil.isStringNumber(another.getFileName())) {
-                        return ((Integer) Integer.parseInt(fileName.substring(1))).
-                                compareTo(Integer.parseInt(another.getFileName()));
-                    } else {
-                        return fileName.substring(1).compareTo(another.getFileName());
-                    }
+                    return new AlphanumComparator().compare(fileName.substring(1),
+                            StringUtil.isStringDigital(another.getFileName()));
                 }
             } else {
-                if (StringUtil.isStringNumber(fileName) &&
-                        StringUtil.isStringNumber(another.getFileName())) {
-                    return ((Integer) Integer.parseInt(fileName)).
-                            compareTo(Integer.parseInt(another.getFileName()));
-                } else {
-                    return fileName.compareTo(another.getFileName());
-                }
+                return new AlphanumComparator().compare(fileName, another.getFileName());
             }
         }
     }
