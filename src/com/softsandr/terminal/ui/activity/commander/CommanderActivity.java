@@ -2,7 +2,10 @@ package com.softsandr.terminal.ui.activity.commander;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
@@ -16,6 +19,7 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.commander.controller.KeyboardController;
 import com.softsandr.terminal.commander.controller.ProcessController;
 import com.softsandr.terminal.commander.controller.UiController;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 
 /**
  * Date: 11/24/13
@@ -27,15 +31,6 @@ public class CommanderActivity extends Activity {
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
     public static final String OTHER_PATH_EXTRA = LOG_TAG + ".OTHER_PATH";
     public static final String ACTIVE_PAGE_EXTRA = LOG_TAG + ".ACTIVE_PAGE";
-    private ProcessController mProcessController;
-    private UiController mProcessUiController;
-    private TextView mTerminalOutView;
-    private TextView mTerminalPromptView;
-    private EditText mTerminalInView;
-    private String mInitialPath;
-    private String mOtherPath;
-    private boolean mInitialPageLeft;
-    private Button mTabMenuBtn;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -54,6 +49,24 @@ public class CommanderActivity extends Activity {
             return false;
         }
     };
+    private final BroadcastReceiver mFinishBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(TerminalActivity.COMMON_EXIT_INTENT)) {
+                finish();
+            }
+        }
+    };
+    private ProcessController mProcessController;
+    private UiController mProcessUiController;
+    private TextView mTerminalOutView;
+    private TextView mTerminalPromptView;
+    private EditText mTerminalInView;
+    private String mInitialPath;
+    private String mOtherPath;
+    private boolean mInitialPageLeft;
+    private Button mTabMenuBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,10 +98,17 @@ public class CommanderActivity extends Activity {
                 mProcessController.getProcess().onClear();
                 return true;
             case R.id.action_quit:
-                //todo
-                finish();
+                sendBroadcast(new Intent(TerminalActivity.COMMON_EXIT_INTENT));
                 return true;
             case android.R.id.home:
+                // Stop processes
+                mProcessController.getProcess().stopExecutionProcess();
+                // Prepare data intent
+                Intent data = new Intent();
+                data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+                data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
+                data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+                setResult(RESULT_OK, data);
                 finish();
             default:
                 return super.onOptionsItemSelected(item);
@@ -98,23 +118,18 @@ public class CommanderActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(TerminalActivity.COMMON_EXIT_INTENT));
         init();
     }
 
     @Override
-    public void finish() {
-        // Prepare data intent
-        Intent data = new Intent();
-        data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
-        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
-        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
-        // TerminalActivity finished ok, return the data
-        setResult(RESULT_OK, data);
-        super.finish();
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        unregisterReceiver(mFinishBroadcastReceiver);
         super.onDestroy();
         mProcessController.onDestroyExecutionProcess();
     }

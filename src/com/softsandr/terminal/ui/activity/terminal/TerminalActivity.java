@@ -1,7 +1,10 @@
 package com.softsandr.terminal.ui.activity.terminal;
 
 import android.app.ActionBar;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +39,7 @@ public class TerminalActivity extends android.app.Activity {
     private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
     private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
     private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
+    public static final String COMMON_EXIT_INTENT = TerminalActivity.class.getSimpleName() + ".COMMON_EXIT_INTENT";
     private final AbsListView.OnTouchListener mListTouchListener = new AbsListView.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -112,6 +116,15 @@ public class TerminalActivity extends android.app.Activity {
             }
         }
     };
+    private final BroadcastReceiver mFinishBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(COMMON_EXIT_INTENT)) {
+                finish();
+            }
+        }
+    };
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
@@ -167,6 +180,18 @@ public class TerminalActivity extends android.app.Activity {
     }
 
     @Override
+    protected void onResume() {
+        Log.d(LOG_TAG, "onResume");
+        super.onResume();
+        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(COMMON_EXIT_INTENT));
+        if (!isPaused) {
+            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        isPaused = false;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         isPaused = true;
@@ -190,17 +215,6 @@ public class TerminalActivity extends android.app.Activity {
             mLeftListSavedLocation = savedInstanceState.getString(LEFT_FILE_LIST_PATH_BUNDLE);
             mRightListSavedLocation = savedInstanceState.getString(RIGHT_FILE_LIST_PATH_BUNDLE);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d(LOG_TAG, "onResume");
-        super.onResume();
-        if (!isPaused) {
-            new LoadLeftListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new LoadRightListTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        isPaused = false;
     }
 
     @Override
@@ -273,8 +287,7 @@ public class TerminalActivity extends android.app.Activity {
                 }
                 return true;
             case R.id.action_quit:
-                //todo
-                finish();
+                sendBroadcast(new Intent(COMMON_EXIT_INTENT));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -283,6 +296,7 @@ public class TerminalActivity extends android.app.Activity {
 
     @Override
     protected void onDestroy() {
+        unregisterReceiver(mFinishBroadcastReceiver);
         saveDataBeforeDestroy();
         super.onDestroy();
     }
