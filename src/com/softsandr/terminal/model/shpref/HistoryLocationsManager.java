@@ -15,7 +15,7 @@ public class HistoryLocationsManager {
 
     public HistoryLocationsManager(TerminalPreferences terminalPreferences, TerminalActivity.ActivePage activePage) {
         this.historyLocationsQueue = new LinkedList<String>();
-        String[] prefLocations = null;
+        String[] prefLocations;
         if (activePage.equals(TerminalActivity.ActivePage.LEFT)) {
             prefLocations = terminalPreferences.loadLeftHistoryLocation();
         } else {

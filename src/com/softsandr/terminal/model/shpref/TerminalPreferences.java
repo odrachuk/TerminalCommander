@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.terminal.model.listview.ListViewItem;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -20,6 +21,7 @@ public class TerminalPreferences {
     private static final String RIGHT_PANEL_LAST_LOCATION_PREF = LOG_NAME + ".RIGHT_PANEL_LAST_LOCATION_PREF";
     private static final String LEFT_HISTORY_LOCATIONS = LOG_NAME + ".LEFT_HISTORY_LOCATIONS";
     private static final String RIGHT_HISTORY_LOCATIONS = LOG_NAME + ".RIGHT_HISTORY_LOCATIONS";
+    private static final String SORTING_STRATEGY = LOG_NAME + ".SORTING_STRATEGY";
 
     private final SharedPreferences mPreferences;
 
@@ -61,9 +63,7 @@ public class TerminalPreferences {
         if (actualHistoryLocations != null) {
             SharedPreferences.Editor editor = mPreferences.edit();
             Set<String> stringSet = new LinkedHashSet<String>(actualHistoryLocations.length);
-            for (int i = 0; i < actualHistoryLocations.length; i++) {
-                stringSet.add(actualHistoryLocations[i]);
-            }
+            Collections.addAll(stringSet, actualHistoryLocations);
             editor.putStringSet(RIGHT_HISTORY_LOCATIONS, stringSet);
             editor.commit();
         }
@@ -72,5 +72,17 @@ public class TerminalPreferences {
     public String[] loadRightHistoryLocation() {
         Set<String> stringSet = mPreferences.getStringSet(RIGHT_HISTORY_LOCATIONS, new LinkedHashSet<String>());
         return stringSet.toArray(new String[stringSet.size()]);
+    }
+
+    public ListViewItem.SortingStrategy loadSortingStrategy() {
+        String sortingStrategy = mPreferences.getString(SORTING_STRATEGY,
+                ListViewItem.SortingStrategy.NAME.toString());
+        return ListViewItem.SortingStrategy.valueOf(sortingStrategy);
+    }
+
+    public void saveSortingStrategy(ListViewItem.SortingStrategy sortingStrategy) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(SORTING_STRATEGY, sortingStrategy.toString());
+        editor.commit();
     }
 }

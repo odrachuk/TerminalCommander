@@ -39,17 +39,18 @@ public class Directory {
         if (startDir != null) {
             File[] files = startDir.listFiles();
             if (files != null) {
-                for (File item : startDir.listFiles()) {
-                    if (item.isDirectory()) {
-                        result.dirs.add(item);
-                    } else {
-                        if (item.getName().matches(regex)) {
-                            result.files.add(item);
+                File[] fileArray = startDir.listFiles();
+                if (fileArray != null) {
+                    for (File item : fileArray) {
+                        if (item.isDirectory()) {
+                            result.dirs.add(item);
+                        } else {
+                            if (item.getName().matches(regex)) {
+                                result.files.add(item);
+                            }
                         }
                     }
                 }
-            } else {
-                // todo empty filesystem or link
             }
         }
         return result;

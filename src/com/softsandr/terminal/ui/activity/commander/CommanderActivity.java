@@ -53,8 +53,10 @@ public class CommanderActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(TerminalActivity.COMMON_EXIT_INTENT)) {
-                finish();
+            if (action != null) {
+                if (action.equals(TerminalActivity.COMMON_EXIT_INTENT)) {
+                    finish();
+                }
             }
         }
     };
@@ -63,10 +65,10 @@ public class CommanderActivity extends Activity {
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
     private EditText mTerminalInView;
+    private Button mTabMenuBtn;
     private String mInitialPath;
     private String mOtherPath;
     private boolean mInitialPageLeft;
-    private Button mTabMenuBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,10 @@ public class CommanderActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.action_sorting).setVisible(false);
+        MenuItem sortingItem = menu.findItem(R.id.action_sorting);
+        if (sortingItem != null) {
+            sortingItem.setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -168,7 +173,7 @@ public class CommanderActivity extends Activity {
         mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
         mTerminalInView.setGravity(Gravity.TOP | Gravity.LEFT);
-        mTerminalInView.setBackgroundColor(android.R.color.transparent);
+        mTerminalInView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mTerminalInView.setOnEditorActionListener(new KeyboardController(mProcessUiController, mProcessController));
@@ -176,17 +181,21 @@ public class CommanderActivity extends Activity {
 
     private void initActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle(getResources().getString(R.string.commander));
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.RIGHT;
-        LayoutInflater li = getLayoutInflater();
-        View customView = li.inflate(R.layout.commander_action_bar_custom_view, null);
-        mTabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
-        mTabMenuBtn.setOnClickListener(mOnClickListener);
-        actionBar.setCustomView(customView, lp);
+        if (actionBar != null) {
+            actionBar.setTitle(getResources().getString(R.string.commander));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ActionBar.LayoutParams.WRAP_CONTENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT);
+            lp.gravity = Gravity.RIGHT;
+            LayoutInflater li = getLayoutInflater();
+            View customView = li.inflate(R.layout.commander_action_bar_custom_view, null);
+            if (customView != null) {
+                mTabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
+                mTabMenuBtn.setOnClickListener(mOnClickListener);
+                actionBar.setCustomView(customView, lp);
+            }
+        }
     }
 
     public void showSoftKeyboard() {

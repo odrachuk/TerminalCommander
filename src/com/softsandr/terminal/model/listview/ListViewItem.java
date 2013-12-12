@@ -2,11 +2,14 @@ package com.softsandr.terminal.model.listview;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import com.drk.terminal.util.utils.AlphanumComparator;
 import com.drk.terminal.util.utils.StringUtil;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -15,6 +18,7 @@ import java.util.Locale;
  * @author Drachuk O.V.
  */
 public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
+    private static final String LOG_TAG = ListViewItem.class.getSimpleName();
     public static final String DATE_FORMAT = "MMM dd yyyy";
     public static final long DIRECTORY_DEF_SIZE = -1;
     public static final long UP_LINK_DEF_SIZE = -2;
@@ -25,12 +29,14 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     private String absPath;
     private boolean isDirectory;
     private boolean isLink;
-
     private boolean canRead;
+    private SortingStrategy sortingStrategy;
 
-    public ListViewItem(String fileName,
+    public ListViewItem(SortingStrategy sortingStrategy,
+                        String fileName,
                         long fileSize,
                         long fileModifyTime) {
+        this.sortingStrategy = sortingStrategy;
         this.fileName = fileName;
         this.fileSize = readableFileSize(fileSize);
         this.fileModifyTime = sdf.format(fileModifyTime);
@@ -48,6 +54,22 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         } else {
             return "0 b";
         }
+    }
+
+    public static long fileSizeFromReadableString(String size) {
+        long longSize = 0l;
+        if (size.contains("Tb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("T") - 1)) * 1024 * 1024 * 1024 * 1024);
+        } else if (size.contains("Gb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("G") - 1)) * 1024 * 1024 * 1024);
+        } else if (size.contains("Mb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("M") - 1)) * 1024 * 1024);
+        } else if (size.contains("Kb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("K") - 1)) * 1024);
+        } else if (size.contains("b")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("b") - 1)));
+        }
+        return longSize;
     }
 
     public String getFileModifyTime() {
@@ -104,7 +126,16 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
 
     @Override
     public int compareTo(ListViewItem another) {
-        return compareFileNames(another);
+        switch (sortingStrategy) {
+            case DATE:
+                return compareModifyTime(another);
+            case NAME:
+                return compareFileNames(another);
+            case SIZE:
+                return compareSize(another);
+            default:
+                return compareFileNames(another);
+        }
     }
 
     private int compareFileNames(ListViewItem another) {
@@ -133,26 +164,36 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     }
 
     private int compareSize(ListViewItem another) {
-        return 0;
+        return Long.valueOf(fileSizeFromReadableString(fileSize)).
+                compareTo(fileSizeFromReadableString(another.fileSize));
     }
 
     private int compareModifyTime(ListViewItem another) {
+        try {
+            Date thisDate = sdf.parse(fileModifyTime);
+            Date anotherDate = sdf.parse(another.fileModifyTime);
+            return thisDate.compareTo(anotherDate);
+        } catch (ParseException e) {
+            Log.e(LOG_TAG, "compareModifyTime", e);
+        }
         return 0;
     }
 
     @Override
     public boolean equals(Object o) {
-        ListViewItem other = (ListViewItem) o;
-        if (this.fileName.equals(other.fileName) &&
-                this.fileSize.equals(other.fileSize) &&
-                this.fileModifyTime.equals(other.fileModifyTime) &&
-                this.absPath.equals(other.absPath)  &&
-                this.isDirectory == other.isDirectory &&
-                this.isLink == other.isLink) {
+        if (this == o) {
             return true;
-        } else {
+        }
+        if (!o.getClass().isInstance(ListViewItem.class)) {
             return false;
         }
+        ListViewItem other = (ListViewItem) o;
+        return !(!fileName.equals(other.fileName) ||
+                !fileSize.equals(other.fileSize) ||
+                !fileModifyTime.equals(other.fileModifyTime) ||
+                !absPath.equals(other.absPath) ||
+                isDirectory != other.isDirectory ||
+                isLink != other.isLink);
     }
 
     @Override
@@ -161,9 +202,9 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         result = 37 * result + fileName.hashCode();
         result = 37 * result + fileSize.hashCode();
         result = 37 * result + fileModifyTime.hashCode();
-        result = 37 * result + (absPath != null? absPath.hashCode() : 0);
-        result = 37 * result + (isDirectory? 0: 1);
-        result = 37 * result + (isLink? 0: 1);
+        result = 37 * result + (absPath != null ? absPath.hashCode() : 0);
+        result = 37 * result + (isDirectory ? 0 : 1);
+        result = 37 * result + (isLink ? 0 : 1);
         return result;
     }
 
@@ -178,6 +219,7 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         dest.writeString(fileSize);
         dest.writeString(fileModifyTime);
         dest.writeString(absPath);
+        dest.writeSerializable(sortingStrategy);
         dest.writeBooleanArray(new boolean[]{isDirectory});
         dest.writeBooleanArray(new boolean[]{isLink});
     }
@@ -206,4 +248,10 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
             return new ListViewItem[0];
         }
     };
+
+    public enum SortingStrategy {
+        NAME,
+        SIZE,
+        DATE
+    }
 }

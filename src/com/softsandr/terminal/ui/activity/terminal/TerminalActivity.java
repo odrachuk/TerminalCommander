@@ -120,11 +120,14 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(COMMON_EXIT_INTENT)) {
-                finish();
+            if (action != null) {
+                if (action.equals(COMMON_EXIT_INTENT)) {
+                    finish();
+                }
             }
         }
     };
+    private ListViewItem.SortingStrategy mSortingStrategy = ListViewItem.SortingStrategy.NAME;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
@@ -137,8 +140,8 @@ public class TerminalActivity extends android.app.Activity {
     private TerminalPreferences mPreferences;
     private HistoryLocationsManager mLeftHistoryLocationManager;
     private HistoryLocationsManager mRightHistoryLocationManager;
-    private boolean isPaused;
     private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
+    private boolean isPaused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,22 +155,26 @@ public class TerminalActivity extends android.app.Activity {
 
     private void initActionBar() {
         ActionBar bar = getActionBar();
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.RIGHT;
-        LayoutInflater li = getLayoutInflater();
-        View customView = li.inflate(R.layout.terminal_action_bar_custom_view, null);
-        mShiftBtnContainer = customView.findViewById(R.id.action_bar_shift_btn_container);
-        mCtrlBtnContainer = customView.findViewById(R.id.action_bar_ctrl_btn_container);
-        mShiftMenuBtn = (Button) customView.findViewById(R.id.action_bar_shift_btn);
-        mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
-        mCommMenuBtn = (Button) customView.findViewById(R.id.action_bar_comm_btn);
-        mShiftMenuBtn.setOnClickListener(mOnClickListener);
-        mCommMenuBtn.setOnClickListener(mOnClickListener);
-        mCtrlMenuBtn.setOnClickListener(mOnClickListener);
-        mActionBarToggleMonitor = new ActionBarButtonsToggleMonitor();
-        bar.setCustomView(customView, lp);
+        if (bar != null) {
+            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                    ActionBar.LayoutParams.WRAP_CONTENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT);
+            lp.gravity = Gravity.RIGHT;
+            LayoutInflater li = getLayoutInflater();
+            View customView = li.inflate(R.layout.terminal_action_bar_custom_view, null);
+            if (customView != null) {
+                mShiftBtnContainer = customView.findViewById(R.id.action_bar_shift_btn_container);
+                mCtrlBtnContainer = customView.findViewById(R.id.action_bar_ctrl_btn_container);
+                mShiftMenuBtn = (Button) customView.findViewById(R.id.action_bar_shift_btn);
+                mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
+                mCommMenuBtn = (Button) customView.findViewById(R.id.action_bar_comm_btn);
+                mShiftMenuBtn.setOnClickListener(mOnClickListener);
+                mCommMenuBtn.setOnClickListener(mOnClickListener);
+                mCtrlMenuBtn.setOnClickListener(mOnClickListener);
+                mActionBarToggleMonitor = new ActionBarButtonsToggleMonitor();
+                bar.setCustomView(customView, lp);
+            }
+        }
     }
 
     private void readPreferences() {
@@ -175,6 +182,7 @@ public class TerminalActivity extends android.app.Activity {
         // read last locations
         mLeftListSavedLocation = mPreferences.loadLastLeftLocations();
         mRightListSavedLocation = mPreferences.loadLastRightLocations();
+        mSortingStrategy = mPreferences.loadSortingStrategy();
         // read locations history
         mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.LEFT);
         mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.RIGHT);
@@ -225,8 +233,10 @@ public class TerminalActivity extends android.app.Activity {
                 String pathFromCommander = data.getStringExtra(CommanderActivity.WORK_PATH_EXTRA);
                 boolean isLeftActive = data.getBooleanExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, true);
                 String destinationPath = data.getStringExtra(CommanderActivity.OTHER_PATH_EXTRA);
-                String[] splitPath = pathFromCommander.
-                        substring(1).split(StringUtil.PATH_SEPARATOR);
+                String[] splitPath = new String[0];
+                if (pathFromCommander != null) {
+                    splitPath = pathFromCommander.substring(1).split(StringUtil.PATH_SEPARATOR);
+                }
                 if (mLeftAdapter != null && mRightAdapter != null) {
                     switch (activePage) {
                         case LEFT:
@@ -262,10 +272,30 @@ public class TerminalActivity extends android.app.Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.action_sorting).setVisible(true);
+        MenuItem sortingItem = menu.findItem(R.id.action_sorting);
+        if (sortingItem != null) {
+            sortingItem.setVisible(true);
+        }
         MenuItem sortByName = menu.findItem(R.id.sorting_by_name);
         MenuItem sortBySize = menu.findItem(R.id.sorting_by_size);
         MenuItem sortByModify = menu.findItem(R.id.sorting_by_modify);
+        switch (mSortingStrategy) {
+            case NAME:
+                if (sortByModify != null) {
+                    sortByModify.setChecked(true);
+                }
+                break;
+            case SIZE:
+                if (sortBySize != null) {
+                    sortBySize.setChecked(true);
+                }
+                break;
+            case DATE:
+                if (sortByModify != null) {
+                    sortByModify.setChecked(true);
+                }
+                break;
+        }
         mSortingMenuItemsMonitor = new SortingMenuItemsMonitor(sortByName, sortBySize, sortByModify);
         return super.onCreateOptionsMenu(menu);
     }
@@ -321,6 +351,7 @@ public class TerminalActivity extends android.app.Activity {
                 mRightAdapter.getPathLabel().getFullPath());
         mPreferences.saveLeftHistoryLocations(mLeftHistoryLocationManager.getActualHistoryLocations());
         mPreferences.saveRightHistoryLocations(mRightHistoryLocationManager.getActualHistoryLocations());
+        mPreferences.saveSortingStrategy(mSortingStrategy);
     }
 
     private void initView() {
@@ -346,16 +377,20 @@ public class TerminalActivity extends android.app.Activity {
         return activePage == ActivePage.LEFT ? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
     }
 
-    public void showProgress() {
-        startActivity(new Intent(this, TerminalProgressActivity.class));
-    }
-
-    public void hideProgress() {
-        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
-    }
+//    public void showProgress() {
+//        startActivity(new Intent(this, TerminalProgressActivity.class));
+//    }
+//
+//    public void hideProgress() {
+//        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
+//    }
 
     public ActivePage getActivePage() {
         return activePage;
+    }
+
+    public ListViewItem.SortingStrategy getSortingStrategy() {
+        return mSortingStrategy;
     }
 
     public enum ActivePage {
@@ -462,7 +497,7 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         protected List<ListViewItem> doInBackground(Void... params) {
             List<ListViewItem> list = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(list, mLeftListSavedLocation);
+            ListViewFiller.fillingList(mSortingStrategy, list, mLeftListSavedLocation);
             return list;
         }
 
@@ -485,7 +520,7 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         protected List<ListViewItem> doInBackground(Void... params) {
             List<ListViewItem> list = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(list, mRightListSavedLocation);
+            ListViewFiller.fillingList(mSortingStrategy, list, mRightListSavedLocation);
             return list;
         }
 
@@ -566,6 +601,18 @@ public class TerminalActivity extends android.app.Activity {
             if (!menuItem.equals(mSortByModify)) {
                 mSortByModify.setChecked(false);
             }
+            // sorting type
+            if (menuItem.equals(mSortByName)) {
+                mSortingStrategy = ListViewItem.SortingStrategy.NAME;
+            } else if (menuItem.equals(mSortBySize)) {
+                mSortingStrategy = ListViewItem.SortingStrategy.SIZE;
+            } else if (menuItem.equals(mSortByModify)) {
+                mSortingStrategy = ListViewItem.SortingStrategy.DATE;
+            }
+            mLeftAdapter.changeDirectory(mLeftAdapter.getPathLabel().getFullPath());
+            mRightAdapter.changeDirectory(mRightAdapter.getPathLabel().getFullPath());
+            mLeftAdapter.getSelectionStrategy().clear();
+            mRightAdapter.getSelectionStrategy().clear();
         }
     }
 }

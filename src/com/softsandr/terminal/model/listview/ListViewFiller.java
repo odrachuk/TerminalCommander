@@ -18,12 +18,12 @@ import java.util.List;
 public class ListViewFiller {
     private static final String LOG_TAG = ListViewFiller.class.getSimpleName();
 
-    public static void fillingList(final List<ListViewItem> filesList, final String path) {
+    public static void fillingList(final ListViewItem.SortingStrategy sortingStrategy, final List<ListViewItem> filesList, final String path) {
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
 
             @Override
             public void initParentPath(String parentPath) {
-                ListViewItem firstItem = new ListViewItem(StringUtil.PARENT_DOTS,
+                ListViewItem firstItem = new ListViewItem(sortingStrategy, StringUtil.PARENT_DOTS,
                         ListViewItem.UP_LINK_DEF_SIZE, 0l).setIsDirectory(true).setAbsPath(parentPath);
                 filesList.add(firstItem);
             }
@@ -32,6 +32,7 @@ public class ListViewFiller {
             public void processDirectory(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
+                            sortingStrategy,
                             FileUtil.isSymlink(path, file) ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
                                             file.getName() :
@@ -53,6 +54,7 @@ public class ListViewFiller {
             public void processFile(File file) {
                 try {
                     ListViewItem item = new ListViewItem(
+                            sortingStrategy,
                             FileUtil.isSymlink(path, file) ?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName() :

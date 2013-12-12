@@ -23,10 +23,6 @@ public class CurrentPathLabel {
         }
     }
 
-    public String getCurrentLabel() {
-        return pathLabel.getText().toString();
-    }
-
     public String getFullPath() {
         return fullPath;
     }
