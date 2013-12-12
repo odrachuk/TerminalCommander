@@ -92,9 +92,9 @@ public class CommanderActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            /*case R.id.action_settings:
                 //todo
-                return true;
+                return true;*/
             case R.id.action_refresh:
                 mProcessController.getProcess().onClear();
                 return true;

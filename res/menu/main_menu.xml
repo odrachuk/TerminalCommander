@@ -5,9 +5,9 @@
           android:icon="@drawable/navigation_refresh"
           android:title="@string/refresh"
           android:showAsAction="ifRoom"/>
-    <item android:id="@+id/action_settings"
+<!--    <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
-          android:showAsAction="never"/>
+          android:showAsAction="never"/>-->
     <item android:id="@+id/action_sorting"
           android:title="@string/sorting"
           android:showAsAction="never">

@@ -273,9 +273,9 @@ public class TerminalActivity extends android.app.Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+      /*      case R.id.action_settings:
                 //todo
-                return true;
+                return true;*/
             case R.id.action_refresh:
                 switch (activePage) {
                     case LEFT:
