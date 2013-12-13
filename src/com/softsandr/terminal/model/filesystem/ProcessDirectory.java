@@ -1,6 +1,7 @@
 package com.softsandr.terminal.model.filesystem;
 
 import android.util.Log;
+import com.drk.terminal.util.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,9 @@ public class ProcessDirectory {
         DirectoryTree treeInfo = Directory.walkDir(
                 root.getAbsolutePath(), ".*" + ext);
         // init parent dots
-        strategy.initParentPath(root.getAbsolutePath());
+        if (!root.getPath().equals(StringUtil.PATH_SEPARATOR)) {
+            strategy.initParentPath(root.getAbsolutePath());
+        }
         // process all directories
         Iterator<File> dirsIterator = treeInfo.getDirsIterator();
         while (dirsIterator.hasNext()) {
