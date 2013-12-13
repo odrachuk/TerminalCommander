@@ -34,6 +34,9 @@ public class HistoryLocationsManager {
                 historyLocationsQueue.removeLast();
             }
             historyLocationsQueue.addFirst(location);
+        } else {
+            historyLocationsQueue.remove(location);
+            historyLocationsQueue.addFirst(location);
         }
     }
 
