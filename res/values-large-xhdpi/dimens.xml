@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This is dimensions for Nexus 7 2013 -->
 <resources>
     <dimen name="terminal_btn_height">33dp</dimen>
     <dimen name="terminal_history_btn_width">40dp</dimen>
