@@ -16,14 +16,17 @@
                 <item android:id="@+id/sorting_by_name"
                       android:title="@string/sorting_by_file_name"
                       android:checkable="true"
+                      android:checked="false"
                       android:showAsAction="never"/>
                 <item android:id="@+id/sorting_by_size"
                       android:title="@string/sorting_by_size"
                       android:checkable="true"
+                      android:checked="false"
                       android:showAsAction="never"/>
                 <item android:id="@+id/sorting_by_modify"
                       android:title="@string/sorting_by_modify_time"
                       android:checkable="true"
+                      android:checked="false"
                       android:showAsAction="never"/>
             </group>
         </menu>

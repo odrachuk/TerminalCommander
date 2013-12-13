@@ -281,8 +281,8 @@ public class TerminalActivity extends android.app.Activity {
         MenuItem sortByModify = menu.findItem(R.id.sorting_by_modify);
         switch (mSortingStrategy) {
             case NAME:
-                if (sortByModify != null) {
-                    sortByModify.setChecked(true);
+                if (sortByName != null) {
+                    sortByName.setChecked(true);
                 }
                 break;
             case SIZE:
