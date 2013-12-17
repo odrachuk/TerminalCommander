@@ -4,4 +4,5 @@
     <dimen name="terminal_history_btn_width">30dp</dimen>
     <dimen name="terminal_list_item_text_size">14sp</dimen>
     <dimen name="action_bar_height">25dp</dimen>
+    <dimen name="terminal_action_bar_button_size">14sp</dimen>
 </resources>
