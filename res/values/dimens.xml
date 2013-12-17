@@ -4,7 +4,6 @@
     <dimen name="terminal_modify_column_width">100dp</dimen>
     <dimen name="terminal_btn_height">33dp</dimen>
     <dimen name="terminal_history_btn_width">40dp</dimen>
-    <dimen name="terminal_commander_btn_width">40dp</dimen>
     <dimen name="terminal_title_height">20dp</dimen>
     <dimen name="terminal_list_row_height">40dp</dimen>
     <dimen name="terminal_list_padding_right">6dp</dimen>
@@ -41,7 +40,6 @@
     <dimen name="commander_text_padding_right">5dp</dimen>
     <dimen name="commander_out_text_size">16sp</dimen>
     <dimen name="terminal_left_content_page_padding_right">180dp</dimen>
-    <dimen name="terminal_slider_offset">150dp</dimen>
     <dimen name="terminal_control_buttons_text_size">14sp</dimen>
     <dimen name="terminal_history_list_row_text_size">18sp</dimen>
     <dimen name="terminal_history_list_row_padding_left">5dp</dimen>
@@ -61,7 +59,6 @@
     <dimen name="terminal_content_path_location_margin_top">3dp</dimen>
     <dimen name="terminal_content_path_location_margin_bottom">0dp</dimen>
     <dimen name="terminal_content_path_location_margin_right_left">2dp</dimen>
-    <dimen name="terminal_slider_handle_width">30dp</dimen>
     <dimen name="action_bar_height">40dp</dimen>
     <dimen name="terminal_list_item_text_size">16sp</dimen>
     <dimen name="action_bar_menu_ite_text_size">9sp</dimen>

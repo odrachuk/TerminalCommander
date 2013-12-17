@@ -55,8 +55,8 @@
     <style name="Terminal_Dialog_Button_Style" parent="android:Widget.DeviceDefault.Button.Borderless.Small">
         <item name="android:background">@drawable/dialog_btn_bg</item>
         <item name="android:paddingTop">0dp</item>
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:textSize">@dimen/terminal_editable_dialog_btn_text_size</item>
         <item name="android:layout_width">match_parent</item>
