@@ -3,7 +3,7 @@
     <dimen name="terminal_local_path_max_width">65dp</dimen>
     <dimen name="terminal_size_column_width">42dp</dimen>
     <dimen name="terminal_modify_column_width">73dp</dimen>
-
-    <dimen name="terminal_slider_handle_width">30dp</dimen>
-    <dimen name="terminal_slider_offset">150dp</dimen>
+    <dimen name="terminal_left_content_page_padding_right">70dp</dimen>
+    <dimen name="terminal_slider_handle_width">20dp</dimen>
+    <dimen name="terminal_slider_offset">50dp</dimen>
 </resources>
