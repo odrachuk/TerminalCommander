@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="terminal_slider_handler_bottom_padding">7</integer>
+    <integer name="terminal_slider_handler_top_padding">35</integer>
+</resources>

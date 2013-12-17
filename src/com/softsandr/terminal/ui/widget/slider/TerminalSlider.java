@@ -62,6 +62,7 @@ public class TerminalSlider extends ViewGroup {
     private long mCurrentAnimationTime;
     private int mTouchDelta;
     private boolean mAnimating;
+    private int mTopHandlerPadding, mBottomHandlerPadding;
 
     /**
      * Creates a new TerminalSlider from a specified set of attributes defined in XML.
@@ -135,6 +136,9 @@ public class TerminalSlider extends ViewGroup {
             throw new IllegalArgumentException("The content attribute is must refer to an"
                     + " existing child.");
         }
+
+        mTopHandlerPadding = getResources().getInteger(R.integer.terminal_slider_handler_top_padding);
+        mBottomHandlerPadding = getResources().getInteger(R.integer.terminal_slider_handler_bottom_padding);
     }
 
     @Override
@@ -222,7 +226,10 @@ public class TerminalSlider extends ViewGroup {
                         content.getMeasuredHeight());
             }
         }
-        handle.layout(childLeft, childTop + 35, childLeft + childWidth, childTop + childHeight - 7);
+        handle.layout(childLeft,
+                childTop + mTopHandlerPadding,
+                childLeft + childWidth,
+                childTop + childHeight - mBottomHandlerPadding);
         mHandleHeight = handle.getHeight();
         mHandleWidth = handle.getWidth();
     }
