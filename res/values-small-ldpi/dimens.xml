@@ -4,5 +4,12 @@
     <dimen name="terminal_history_btn_width">30dp</dimen>
     <dimen name="terminal_list_item_text_size">14sp</dimen>
     <dimen name="action_bar_height">25dp</dimen>
-    <dimen name="terminal_action_bar_button_size">14sp</dimen>
+    <dimen name="terminal_action_bar_button_size">12sp</dimen>
+    <dimen name="terminal_control_buttons_text_size">12sp</dimen>
+    <dimen name="terminal_content_page_layout_margin">1dp</dimen>
+    <dimen name="terminal_content_path_location_text_size">12sp</dimen>
+    <dimen name="terminal_content_border_triangle_margin_top">9dp</dimen>
+    <dimen name="terminal_content_page_simple_top_border_margin_top">12dp</dimen>
+    <dimen name="terminal_list_padding_right">1dp</dimen>
+    <dimen name="terminal_list_padding_left">1dp</dimen>
 </resources>
