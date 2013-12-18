@@ -7,7 +7,9 @@
     <dimen name="terminal_list_row_height">40dp</dimen>
     <dimen name="terminal_list_padding_right">6dp</dimen>
     <dimen name="terminal_list_padding_left">6dp</dimen>
+    <dimen name="terminal_list_row_file_size_margin_right">2dp</dimen>
     <dimen name="terminal_progress_bar_width_height">73dp</dimen>
+
     <dimen name="terminal_cp_mv_dialog_width">450dp</dimen>
     <dimen name="terminal_cp_mv_dialog_height">175dp</dimen>
     <dimen name="terminal_editable_dialog_btn_text_size">20sp</dimen>
@@ -32,18 +34,22 @@
     <dimen name="terminal_dialog_describe_max_width">400dp</dimen>
     <dimen name="terminal_mk_dir_dialog_width">450dp</dimen>
     <dimen name="terminal_mk_dir_dialog_height">150dp</dimen>
-    <dimen name="file_size_margin_right">2dp</dimen>
     <dimen name="terminal_history_dialog_width">450dp</dimen>
     <dimen name="terminal_history_dialog_height">500dp</dimen>
+    <dimen name="terminal_history_dialog_list_row_text_size">18sp</dimen>
+    <dimen name="terminal_history_dialog_list_row_padding_left">5dp</dimen>
+    <dimen name="terminal_history_dialog_list_row_padding_right">5dp</dimen>
+    <dimen name="terminal_history_dialog_list_row_padding_top">10dp</dimen>
+    <dimen name="terminal_history_dialog_list_row_padding_bottom">10dp</dimen>
+    <dimen name="terminal_dialog_btn_height">40dp</dimen>
+
     <dimen name="commander_text_padding_left">5dp</dimen>
     <dimen name="commander_text_padding_right">5dp</dimen>
     <dimen name="commander_out_text_size">16sp</dimen>
     <dimen name="terminal_control_buttons_text_size">14sp</dimen>
-    <dimen name="terminal_history_list_row_text_size">18sp</dimen>
-    <dimen name="terminal_history_list_row_padding_left">5dp</dimen>
-    <dimen name="terminal_history_list_row_padding_right">5dp</dimen>
-    <dimen name="terminal_history_list_row_padding_top">10dp</dimen>
-    <dimen name="terminal_history_list_row_padding_bottom">10dp</dimen>
+
+
+
     <dimen name="terminal_content_page_layout_margin">3dp</dimen>
     <dimen name="terminal_content_page_top_border_edge_image_width">5dp</dimen>
     <dimen name="terminal_content_page_simple_border_height_width">1dp</dimen>
@@ -57,6 +63,7 @@
     <dimen name="terminal_content_path_location_margin_top">3dp</dimen>
     <dimen name="terminal_content_path_location_margin_bottom">0dp</dimen>
     <dimen name="terminal_content_path_location_margin_right_left">2dp</dimen>
+
     <dimen name="action_bar_height">40dp</dimen>
     <dimen name="terminal_list_item_text_size">16sp</dimen>
     <dimen name="action_bar_menu_ite_text_size">9sp</dimen>
