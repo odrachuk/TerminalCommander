@@ -4,20 +4,20 @@
     <dimen name="action_bar_height">25dp</dimen>
     <dimen name="terminal_action_bar_btn_text_size">12sp</dimen>
     <dimen name="terminal_btn_height">28dp</dimen>
-    <dimen name="terminal_history_btn_width">30dp</dimen>
+    <dimen name="terminal_history_btn_width">33dp</dimen>
+    <dimen name="commander_out_text_size">14sp</dimen>
     <dimen name="commander_text_padding_left">2dp</dimen>
     <dimen name="commander_text_padding_right">2dp</dimen>
-    <dimen name="commander_out_text_size">12sp</dimen>
     <!-- Content -->
     <dimen name="terminal_control_buttons_text_size">12sp</dimen>
-    <dimen name="terminal_content_page_layout_margin">1dp</dimen>
-    <dimen name="terminal_content_path_location_text_size">12sp</dimen>
+    <dimen name="terminal_content_page_layout_margin">3dp</dimen>
+    <dimen name="terminal_content_path_location_text_size">14sp</dimen>
     <dimen name="terminal_content_border_triangle_margin_top">9dp</dimen>
     <dimen name="terminal_content_page_simple_top_border_margin_top">12dp</dimen>
-    <dimen name="terminal_list_item_text_size">12sp</dimen>
-    <dimen name="terminal_list_padding_right">1dp</dimen>
-    <dimen name="terminal_list_padding_left">1dp</dimen>
-    <dimen name="terminal_list_row_height">25dp</dimen>
+    <dimen name="terminal_list_item_text_size">14sp</dimen>
+    <dimen name="terminal_list_padding_right">3dp</dimen>
+    <dimen name="terminal_list_padding_left">3dp</dimen>
+    <dimen name="terminal_list_row_height">30dp</dimen>
     <!-- Dialogs -->
     <dimen name="terminal_dialog_btn_height">36dp</dimen>
     <dimen name="terminal_cp_mv_dialog_width">270dp</dimen>
@@ -46,7 +46,7 @@
     <dimen name="terminal_mk_dir_dialog_height">105dp</dimen>
     <dimen name="terminal_history_dialog_width">250dp</dimen>
     <dimen name="terminal_history_dialog_height">300dp</dimen>
-    <dimen name="terminal_history_dialog_list_row_text_size">12sp</dimen>
+    <dimen name="terminal_history_dialog_list_row_text_size">14sp</dimen>
     <dimen name="terminal_history_dialog_list_row_padding_left">2dp</dimen>
     <dimen name="terminal_history_dialog_list_row_padding_right">2dp</dimen>
     <dimen name="terminal_history_dialog_list_row_padding_top">5dp</dimen>
