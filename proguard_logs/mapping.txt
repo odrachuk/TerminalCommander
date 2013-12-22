@@ -1,0 +1,812 @@
+com.drk.terminal.util.exceptions.FileExistsException -> com.a.a.a.a.a:
+com.drk.terminal.util.utils.AccountUtil -> com.a.a.a.b.a:
+    android.accounts.Account getAccount(android.accounts.AccountManager) -> a
+    java.lang.String getUserName(android.content.Context) -> a
+com.drk.terminal.util.utils.AlphanumComparator -> com.a.a.a.b.b:
+    boolean isDigit(char) -> a
+    java.lang.String getChunk(java.lang.String,int,int) -> a
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.drk.terminal.util.utils.FileOpeningUtil -> com.a.a.a.b.c:
+    void openFile(android.app.Activity,java.lang.String) -> a
+com.drk.terminal.util.utils.FileUtil -> com.a.a.a.b.d:
+    void copyFileToDirectory(java.io.File,java.io.File,boolean) -> a
+    void copyFile(java.io.File,java.io.File) -> a
+    void copyFile(java.io.File,java.io.File,boolean) -> b
+    void doCopyFile(java.io.File,java.io.File,boolean) -> g
+    void copyDirectoryToDirectory(java.io.File,java.io.File) -> b
+    void copyDirectory(java.io.File,java.io.File) -> c
+    void copyDirectory(java.io.File,java.io.File,boolean) -> c
+    void copyDirectory(java.io.File,java.io.File,java.io.FileFilter,boolean) -> a
+    void doCopyDirectory(java.io.File,java.io.File,java.io.FileFilter,boolean,java.util.List) -> a
+    void deleteDirectory(java.io.File) -> a
+    boolean deleteQuietly(java.io.File) -> b
+    void cleanDirectory(java.io.File) -> c
+    void forceDelete(java.io.File) -> d
+    void forceMakeDir(java.io.File) -> e
+    void moveDirectory(java.io.File,java.io.File) -> d
+    void moveDirectoryToDirectory(java.io.File,java.io.File,boolean) -> d
+    void moveFile(java.io.File,java.io.File) -> e
+    void moveFileToDirectory(java.io.File,java.io.File,boolean) -> e
+    void moveToDirectory(java.io.File,java.io.File,boolean) -> f
+    void closeQuietly(java.io.Closeable) -> a
+    boolean isSymlink(java.lang.String,java.io.File) -> a
+    boolean isDirectoryExist(java.lang.String,java.lang.String) -> a
+    boolean canChangeDirectory(java.lang.String,java.lang.String) -> b
+    java.lang.String buildDirectoryPath(java.lang.String,java.lang.String) -> c
+    java.lang.String trimLastSlash(java.lang.String) -> a
+    long getDirectorySize(java.io.File) -> f
+com.drk.terminal.util.utils.StringUtil -> com.a.a.a.b.e:
+    java.lang.String LINE_SEPARATOR -> a
+    int countOccurrences(java.lang.String,char) -> a
+    boolean isStringDigital(java.lang.String) -> a
+com.softsandr.terminal.R -> com.softsandr.terminal.a:
+com.softsandr.terminal.R$string -> com.softsandr.terminal.b:
+    int action_commander -> action_commander
+    int action_ctrl -> action_ctrl
+    int action_quit -> action_quit
+    int action_settings -> action_settings
+    int action_shift -> action_shift
+    int action_tab -> action_tab
+    int app_name -> app_name
+    int cancel -> cancel
+    int commander -> commander
+    int copy_string -> copy_string
+    int create_new_directory -> create_new_directory
+    int ctrl_off -> ctrl_off
+    int ctrl_on -> ctrl_on
+    int dash -> dash
+    int delete_string -> delete_string
+    int description -> description
+    int history_up -> history_up
+    int make_dir_string -> make_dir_string
+    int move_string -> move_string
+    int not_app_for_openning_file -> not_app_for_openning_file
+    int ok -> ok
+    int refresh -> refresh
+    int rename_or_move_string -> rename_or_move_string
+    int select_app -> select_app
+    int set_default -> set_default
+    int shift_off -> shift_off
+    int shift_on -> shift_on
+    int slash -> slash
+    int sorting -> sorting
+    int sorting_by_file_name -> sorting_by_file_name
+    int sorting_by_modify_time -> sorting_by_modify_time
+    int sorting_by_size -> sorting_by_size
+    int tabulate -> tabulate
+    int title_file_modify_time -> title_file_modify_time
+    int title_file_name -> title_file_name
+    int title_file_size -> title_file_size
+    int whitespace -> whitespace
+com.softsandr.terminal.R$styleable -> com.softsandr.terminal.c:
+    int[] TerminalSlider -> TerminalSlider
+    int TerminalSlider_content -> TerminalSlider_content
+    int TerminalSlider_handle -> TerminalSlider_handle
+    int TerminalSlider_offset -> TerminalSlider_offset
+    int TerminalSlider_orientation -> TerminalSlider_orientation
+com.softsandr.terminal.commander.CommandResponseHandler -> com.softsandr.terminal.a.a:
+    java.lang.String LOG_TAG -> c
+    java.lang.String COMMAND_EXECUTION_RESPONSE_KEY -> a
+    java.lang.String COMMAND_EXECUTION_STRING_KEY -> b
+    android.widget.TextView mTerminalOutView -> d
+    android.content.res.Resources mResources -> e
+    int mScreenWidth -> f
+    void handleMessage(android.os.Message) -> handleMessage
+com.softsandr.terminal.commander.TerminalCommander -> com.softsandr.terminal.a.b:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.commander.CommandResponseHandler mResponseHandler -> b
+    com.softsandr.terminal.commander.prompt.TerminalPrompt mTerminalPrompt -> c
+    com.softsandr.terminal.commander.controller.UiController mUiController -> d
+    android.widget.TextView mTerminalOutView -> e
+    java.lang.Process mExecutionProcess -> f
+    java.lang.String mCommandText -> g
+    void startExecutionProcess(java.lang.String) -> a
+    void execCommand(java.lang.String) -> b
+    void nativeExecute(java.lang.String) -> d
+    java.lang.String eraseAbsent(java.lang.String) -> e
+    void onChangeDirectory(java.lang.String) -> c
+    void onExit() -> a
+    void onClear() -> b
+    void stopExecutionProcess() -> c
+    java.lang.String getCommandText() -> d
+    java.lang.String getProcessPath() -> e
+    android.widget.TextView access$000(com.softsandr.terminal.commander.TerminalCommander) -> a
+com.softsandr.terminal.commander.TerminalCommander$1 -> com.softsandr.terminal.a.c:
+    com.softsandr.terminal.commander.TerminalCommander this$0 -> a
+    void run() -> run
+com.softsandr.terminal.commander.command.filtered.FilteredCommands -> com.softsandr.terminal.a.a.a.a:
+    com.softsandr.terminal.commander.command.filtered.FilteredCommands LS -> a
+    java.lang.String text -> b
+    com.softsandr.terminal.commander.command.filtered.FilteredCommands[] $VALUES -> c
+    com.softsandr.terminal.commander.command.filtered.FilteredCommands[] values() -> values
+    com.softsandr.terminal.commander.command.filtered.FilteredCommands valueOf(java.lang.String) -> valueOf
+    boolean isFilteredCommand(java.lang.String) -> a
+    com.softsandr.terminal.commander.command.filtered.FilteredCommands parseCommandTypeFromString(java.lang.String) -> b
+    java.lang.String alignResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
+com.softsandr.terminal.commander.command.filtered.FilteredCommands$1 -> com.softsandr.terminal.a.a.a.b:
+    java.lang.String alignResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
+com.softsandr.terminal.commander.command.filtered.LsRowRecord -> com.softsandr.terminal.a.a.a.c:
+    java.lang.String permissionsToken -> a
+    java.lang.String ownerToken -> b
+    java.lang.String groupToken -> c
+    java.lang.String sizeToken -> d
+    java.lang.String dateToken -> e
+    java.lang.String nameToken -> f
+    java.lang.String getPermissionsToken() -> a
+    void setPermissionsToken(java.lang.String) -> a
+    java.lang.String getOwnerToken() -> b
+    void setOwnerToken(java.lang.String) -> b
+    java.lang.String getGroupToken() -> c
+    void setGroupToken(java.lang.String) -> c
+    java.lang.String getSizeToken() -> d
+    void setSizeToken(java.lang.String) -> d
+    java.lang.String getDateToken() -> e
+    void setDateToken(java.lang.String) -> e
+    java.lang.String getNameToken() -> f
+    void setNameToken(java.lang.String) -> f
+com.softsandr.terminal.commander.command.filtered.LsRowsList -> com.softsandr.terminal.a.a.a.d:
+    int maxPermissionsLength -> a
+    int maxOwnerLength -> b
+    int maxGroupLength -> c
+    int maxSizeLength -> d
+    int maxDateLength -> e
+    int maxNameLength -> f
+    boolean add(com.softsandr.terminal.commander.command.filtered.LsRowRecord) -> a
+    void alignTokens(android.content.res.Resources) -> a
+    java.lang.String toString(android.widget.TextView,int,android.content.res.Resources) -> a
+    java.lang.String cutStringIfNeeds(android.widget.TextView,int,java.lang.String) -> a
+    boolean add(java.lang.Object) -> add
+com.softsandr.terminal.commander.command.local.CdCommand -> com.softsandr.terminal.a.a.b.a:
+    java.lang.String isExecutable(com.softsandr.terminal.commander.TerminalCommander) -> a
+    java.lang.String onExecute(com.softsandr.terminal.commander.TerminalCommander) -> b
+com.softsandr.terminal.commander.command.local.CdCommand$1 -> com.softsandr.terminal.a.a.b.b:
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation -> com.softsandr.terminal.a.a.b.c:
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation DOT -> a
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation DOT_SLASH -> b
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation MANY_DOT_SLASH -> c
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation SLASH_DOT -> d
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation MANY_SLASH_DOT -> e
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation TWICE_DOT -> f
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation TWICE_DOT_SLASH -> g
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation MANY_TWICE_DOT_SLASH -> h
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation SLASH_TWICE_DOT -> i
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation MANY_SLASH_TWICE_DOT -> j
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation SLASH -> k
+    java.lang.String location -> l
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation[] $VALUES -> m
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation[] values() -> values
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation valueOf(java.lang.String) -> valueOf
+    java.lang.String getLocation() -> a
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+    boolean isPredefinedLocation(java.lang.String) -> a
+    com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation getType(java.lang.String) -> b
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$1 -> com.softsandr.terminal.a.a.b.d:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$10 -> com.softsandr.terminal.a.a.b.e:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$11 -> com.softsandr.terminal.a.a.b.f:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$2 -> com.softsandr.terminal.a.a.b.g:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$3 -> com.softsandr.terminal.a.a.b.h:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$4 -> com.softsandr.terminal.a.a.b.i:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$5 -> com.softsandr.terminal.a.a.b.j:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$6 -> com.softsandr.terminal.a.a.b.k:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$7 -> com.softsandr.terminal.a.a.b.l:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$8 -> com.softsandr.terminal.a.a.b.m:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.CdCommand$PredefinedLocation$9 -> com.softsandr.terminal.a.a.b.n:
+    java.lang.String getTransformedPath(java.lang.String,java.lang.String) -> a
+com.softsandr.terminal.commander.command.local.ClearCommand -> com.softsandr.terminal.a.a.b.o:
+    java.lang.String isExecutable(com.softsandr.terminal.commander.TerminalCommander) -> a
+    java.lang.String onExecute(com.softsandr.terminal.commander.TerminalCommander) -> b
+com.softsandr.terminal.commander.command.local.ExitCommand -> com.softsandr.terminal.a.a.b.p:
+    java.lang.String isExecutable(com.softsandr.terminal.commander.TerminalCommander) -> a
+    java.lang.String onExecute(com.softsandr.terminal.commander.TerminalCommander) -> b
+com.softsandr.terminal.commander.command.local.LocalCommand -> com.softsandr.terminal.a.a.b.q:
+    java.lang.String isExecutable(com.softsandr.terminal.commander.TerminalCommander) -> a
+    java.lang.String onExecute(com.softsandr.terminal.commander.TerminalCommander) -> b
+com.softsandr.terminal.commander.command.local.LocalCommands -> com.softsandr.terminal.a.a.b.r:
+    com.softsandr.terminal.commander.command.local.LocalCommands CD -> a
+    com.softsandr.terminal.commander.command.local.LocalCommands CLEAR -> b
+    com.softsandr.terminal.commander.command.local.LocalCommands EXIT -> c
+    java.lang.String text -> d
+    com.softsandr.terminal.commander.command.local.LocalCommands[] $VALUES -> e
+    com.softsandr.terminal.commander.command.local.LocalCommands[] values() -> values
+    com.softsandr.terminal.commander.command.local.LocalCommands valueOf(java.lang.String) -> valueOf
+    java.lang.String getText() -> a
+    com.softsandr.terminal.commander.command.local.LocalCommand getCommand() -> b
+    boolean isLocalCommand(java.lang.String) -> a
+    java.lang.String parseCommandTextFromString(java.lang.String) -> b
+    com.softsandr.terminal.commander.command.local.LocalCommands parseCommandTypeFromString(java.lang.String) -> c
+com.softsandr.terminal.commander.command.local.LocalCommands$1 -> com.softsandr.terminal.a.a.b.s:
+    com.softsandr.terminal.commander.command.local.LocalCommand getCommand() -> b
+com.softsandr.terminal.commander.command.local.LocalCommands$2 -> com.softsandr.terminal.a.a.b.t:
+    com.softsandr.terminal.commander.command.local.LocalCommand getCommand() -> b
+com.softsandr.terminal.commander.command.local.LocalCommands$3 -> com.softsandr.terminal.a.a.b.u:
+    com.softsandr.terminal.commander.command.local.LocalCommand getCommand() -> b
+com.softsandr.terminal.commander.controller.KeyboardController -> com.softsandr.terminal.a.b.a:
+    com.softsandr.terminal.commander.controller.ProcessController mProcessController -> a
+    com.softsandr.terminal.commander.controller.UiController mUiController -> b
+    boolean inFirst -> c
+    boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent) -> onEditorAction
+com.softsandr.terminal.commander.controller.ProcessController -> com.softsandr.terminal.a.b.b:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.commander.controller.UiController mUiController -> b
+    com.softsandr.terminal.commander.TerminalCommander mProcess -> c
+    void createTerminalProcess(java.lang.String) -> a
+    void onDestroyExecutionProcess() -> a
+    com.softsandr.terminal.commander.TerminalCommander getProcess() -> b
+com.softsandr.terminal.commander.controller.UiController -> com.softsandr.terminal.a.b.c:
+    android.app.Activity mProcessActivity -> a
+    com.softsandr.terminal.commander.prompt.TerminalPrompt mPrompt -> b
+    android.widget.EditText mTerminalInView -> c
+    android.widget.TextView mTerminalOutView -> d
+    android.widget.TextView mTerminalPromptView -> e
+    android.app.Activity getActivity() -> a
+    com.softsandr.terminal.commander.prompt.TerminalPrompt getPrompt() -> b
+    android.widget.EditText getTerminalInView() -> c
+    android.widget.TextView getTerminalPromptView() -> d
+    android.widget.TextView getTerminalOutView() -> e
+com.softsandr.terminal.commander.prompt.TerminalPrompt -> com.softsandr.terminal.a.c.a:
+    java.lang.String mUserName -> a
+    java.lang.String mUserSymbol -> b
+    java.lang.String mUserLocation -> c
+    com.softsandr.terminal.commander.controller.UiController mUiController -> d
+    java.lang.String getPromptText() -> a
+    void setUserLocation(java.lang.String) -> a
+    java.lang.String getUserLocation() -> b
+com.softsandr.terminal.model.filesystem.Directory -> com.softsandr.terminal.model.a.a:
+    com.softsandr.terminal.model.filesystem.DirectoryTree walkDir(java.lang.String,java.lang.String) -> a
+    com.softsandr.terminal.model.filesystem.DirectoryTree readDirFiles(java.io.File,java.lang.String) -> a
+com.softsandr.terminal.model.filesystem.DirectoryTree -> com.softsandr.terminal.model.a.b:
+    java.util.List files -> a
+    java.util.List dirs -> b
+    java.util.Iterator getFilesIterator() -> a
+    java.util.Iterator getDirsIterator() -> b
+    java.lang.String toString() -> toString
+com.softsandr.terminal.model.filesystem.ProcessDirectory -> com.softsandr.terminal.model.a.c:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.model.filesystem.ProcessDirectory$ProcessDirectoryStrategy strategy -> b
+    java.lang.String ext -> c
+    void start(java.lang.String) -> a
+    void processDirectoryTree(java.io.File) -> a
+com.softsandr.terminal.model.filesystem.ProcessDirectory$ProcessDirectoryStrategy -> com.softsandr.terminal.model.a.d:
+    void initParentPath(java.lang.String) -> a
+    void processDirectory(java.io.File) -> a
+    void processFile(java.io.File) -> b
+com.softsandr.terminal.model.listview.ListViewFiller -> com.softsandr.terminal.model.listview.a:
+    java.lang.String LOG_TAG -> a
+    void fillingList(com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy,java.util.List,java.lang.String) -> a
+    java.lang.String access$000() -> a
+com.softsandr.terminal.model.listview.ListViewFiller$1 -> com.softsandr.terminal.model.listview.b:
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy val$sortingStrategy -> a
+    java.util.List val$filesList -> b
+    java.lang.String val$path -> c
+    void initParentPath(java.lang.String) -> a
+    void processDirectory(java.io.File) -> a
+    void processFile(java.io.File) -> b
+com.softsandr.terminal.model.listview.ListViewItem -> com.softsandr.terminal.model.listview.ListViewItem:
+    java.lang.String LOG_TAG -> a
+    java.text.SimpleDateFormat sdf -> b
+    java.lang.String fileName -> c
+    java.lang.String fileSize -> d
+    java.lang.String fileModifyTime -> e
+    java.lang.String absPath -> f
+    boolean isDirectory -> g
+    boolean isLink -> h
+    boolean canRead -> i
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy sortingStrategy -> j
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    java.lang.String readableFileSize(long) -> a
+    long fileSizeFromReadableString(java.lang.String) -> a
+    java.lang.String getFileModifyTime() -> a
+    java.lang.String getFileSize() -> b
+    java.lang.String getFileName() -> c
+    com.softsandr.terminal.model.listview.ListViewItem setIsDirectory(boolean) -> a
+    boolean isDirectory() -> d
+    com.softsandr.terminal.model.listview.ListViewItem setCanRead(boolean) -> b
+    boolean canRead() -> e
+    com.softsandr.terminal.model.listview.ListViewItem setAbsPath(java.lang.String) -> b
+    java.lang.String getAbsPath() -> f
+    com.softsandr.terminal.model.listview.ListViewItem setIsLink(boolean) -> c
+    boolean isLink() -> g
+    boolean isParentDots() -> h
+    int compareTo(com.softsandr.terminal.model.listview.ListViewItem) -> a
+    int compareFileNames(com.softsandr.terminal.model.listview.ListViewItem) -> b
+    int compareSize(com.softsandr.terminal.model.listview.ListViewItem) -> c
+    int compareModifyTime(com.softsandr.terminal.model.listview.ListViewItem) -> d
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    int compareTo(java.lang.Object) -> compareTo
+com.softsandr.terminal.model.listview.ListViewItem$1 -> com.softsandr.terminal.model.listview.c:
+    com.softsandr.terminal.model.listview.ListViewItem createFromParcel(android.os.Parcel) -> a
+    com.softsandr.terminal.model.listview.ListViewItem[] newArray(int) -> a
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.softsandr.terminal.model.listview.ListViewItem$2 -> com.softsandr.terminal.model.listview.d:
+    int[] $SwitchMap$com$softsandr$terminal$model$listview$ListViewItem$SortingStrategy -> a
+com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy -> com.softsandr.terminal.model.listview.e:
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy NAME -> a
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy SIZE -> b
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy DATE -> c
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy[] $VALUES -> d
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy[] values() -> values
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy valueOf(java.lang.String) -> valueOf
+com.softsandr.terminal.model.shpref.HistoryLocationsManager -> com.softsandr.terminal.model.b.a:
+    java.util.LinkedList historyLocationsQueue -> a
+    void addLocation(java.lang.String) -> a
+    java.lang.String[] getActualHistoryLocations() -> a
+com.softsandr.terminal.model.shpref.TerminalPreferences -> com.softsandr.terminal.model.b.b:
+    java.lang.String LOG_NAME -> a
+    java.lang.String LEFT_PANEL_LAST_LOCATION_PREF -> b
+    java.lang.String RIGHT_PANEL_LAST_LOCATION_PREF -> c
+    java.lang.String LEFT_HISTORY_LOCATIONS -> d
+    java.lang.String RIGHT_HISTORY_LOCATIONS -> e
+    java.lang.String SORTING_STRATEGY -> f
+    android.content.SharedPreferences mPreferences -> g
+    java.lang.String loadLastLeftLocations() -> a
+    java.lang.String loadLastRightLocations() -> b
+    void saveLastLocations(java.lang.String,java.lang.String) -> a
+    void saveLeftHistoryLocations(java.lang.String[]) -> a
+    java.lang.String[] loadLeftHistoryLocation() -> c
+    void saveRightHistoryLocations(java.lang.String[]) -> b
+    java.lang.String[] loadRightHistoryLocation() -> d
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy loadSortingStrategy() -> e
+    void saveSortingStrategy(com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy) -> a
+com.softsandr.terminal.ui.activity.commander.CommanderActivity -> com.softsandr.terminal.ui.activity.commander.CommanderActivity:
+    java.lang.String LOG_TAG -> d
+    java.lang.String WORK_PATH_EXTRA -> a
+    java.lang.String OTHER_PATH_EXTRA -> b
+    java.lang.String ACTIVE_PAGE_EXTRA -> c
+    android.view.View$OnClickListener mOnClickListener -> e
+    android.view.View$OnTouchListener mOnTouchListener -> f
+    android.content.BroadcastReceiver mFinishBroadcastReceiver -> g
+    com.softsandr.terminal.commander.controller.ProcessController mProcessController -> h
+    com.softsandr.terminal.commander.controller.UiController mProcessUiController -> i
+    android.widget.TextView mTerminalOutView -> j
+    android.widget.TextView mTerminalPromptView -> k
+    android.widget.EditText mTerminalInView -> l
+    android.widget.Button mTabMenuBtn -> m
+    java.lang.String mInitialPath -> n
+    java.lang.String mOtherPath -> o
+    boolean mInitialPageLeft -> p
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void onResume() -> onResume
+    void onPause() -> onPause
+    void onDestroy() -> onDestroy
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
+    void init() -> b
+    void initActionBar() -> c
+    void showSoftKeyboard() -> a
+    android.widget.Button access$000(com.softsandr.terminal.ui.activity.commander.CommanderActivity) -> a
+com.softsandr.terminal.ui.activity.commander.CommanderActivity$1 -> com.softsandr.terminal.ui.activity.commander.a:
+    com.softsandr.terminal.ui.activity.commander.CommanderActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.activity.commander.CommanderActivity$2 -> com.softsandr.terminal.ui.activity.commander.b:
+    com.softsandr.terminal.ui.activity.commander.CommanderActivity this$0 -> a
+    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
+com.softsandr.terminal.ui.activity.commander.CommanderActivity$3 -> com.softsandr.terminal.ui.activity.commander.c:
+    com.softsandr.terminal.ui.activity.commander.CommanderActivity this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity -> com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity:
+    java.lang.String PROGRESS_DISMISS_ACTION -> a
+    android.content.BroadcastReceiver mDismissListener -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onResume() -> onResume
+    void onPause() -> onPause
+com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity$1 -> com.softsandr.terminal.ui.activity.progress.a:
+    com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel -> com.softsandr.terminal.ui.activity.terminal.a:
+    android.widget.TextView pathLabel -> a
+    java.lang.String fullPath -> b
+    void setPath(java.lang.String) -> a
+    java.lang.String getFullPath() -> a
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity -> com.softsandr.terminal.ui.activity.terminal.TerminalActivity:
+    java.lang.String LOG_TAG -> b
+    java.lang.String LEFT_FILE_LIST_PATH_BUNDLE -> c
+    java.lang.String RIGHT_FILE_LIST_PATH_BUNDLE -> d
+    java.lang.String COMMON_EXIT_INTENT -> a
+    android.view.View$OnTouchListener mListTouchListener -> e
+    android.view.View$OnClickListener mOnClickListener -> f
+    android.content.BroadcastReceiver mFinishBroadcastReceiver -> g
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy mSortingStrategy -> h
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter mLeftAdapter -> i
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter mRightAdapter -> j
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems mSelectionVisualItems -> k
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage activePage -> l
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor mActionBarToggleMonitor -> m
+    android.widget.Button mShiftMenuBtn -> n
+    android.widget.Button mCommMenuBtn -> o
+    android.widget.Button mCtrlMenuBtn -> p
+    android.view.View mShiftBtnContainer -> q
+    android.view.View mCtrlBtnContainer -> r
+    android.widget.ListView mLeftList -> s
+    android.widget.ListView mRightList -> t
+    java.lang.String mRightListSavedLocation -> u
+    java.lang.String mLeftListSavedLocation -> v
+    com.softsandr.terminal.model.shpref.TerminalPreferences mPreferences -> w
+    com.softsandr.terminal.model.shpref.HistoryLocationsManager mLeftHistoryLocationManager -> x
+    com.softsandr.terminal.model.shpref.HistoryLocationsManager mRightHistoryLocationManager -> y
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$SortingMenuItemsMonitor mSortingMenuItemsMonitor -> z
+    boolean isPaused -> A
+    void onCreate(android.os.Bundle) -> onCreate
+    void initActionBar() -> f
+    void readPreferences() -> g
+    void onResume() -> onResume
+    void onPause() -> onPause
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void onDestroy() -> onDestroy
+    void saveDataBeforeDestroy() -> h
+    void initView() -> i
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter getLeftListAdapter() -> a
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter getRightListAdapter() -> b
+    java.util.ArrayList getOperationItems() -> j
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage getActivePage() -> c
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy getSortingStrategy() -> d
+    android.widget.ListView access$000(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage access$102(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage) -> a
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems access$200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> b
+    android.widget.ListView access$300(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> c
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage access$100(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> d
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$400(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> e
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$500(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> f
+    android.widget.Button access$600(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> g
+    android.widget.Button access$700(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> h
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor access$800(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> i
+    android.widget.Button access$1000(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> j
+    java.util.ArrayList access$1200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> k
+    com.softsandr.terminal.model.shpref.HistoryLocationsManager access$1300(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> l
+    com.softsandr.terminal.model.shpref.HistoryLocationsManager access$1400(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> m
+    java.lang.String access$2000() -> e
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy access$2100(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> n
+    java.lang.String access$2200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> o
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$402(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter) -> a
+    android.view.View$OnTouchListener access$2500(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> p
+    java.lang.String access$2600(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> q
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$502(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter) -> b
+    android.view.View access$2700(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> r
+    android.view.View access$2800(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> s
+    com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy access$2102(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy) -> a
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$1 -> com.softsandr.terminal.ui.activity.terminal.b:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$2 -> com.softsandr.terminal.ui.activity.terminal.c:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$3 -> com.softsandr.terminal.ui.activity.terminal.d:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$4 -> com.softsandr.terminal.ui.activity.terminal.e:
+    int[] $SwitchMap$com$softsandr$terminal$ui$activity$terminal$TerminalActivity$ActivePage -> a
+    int[] $SwitchMap$com$softsandr$terminal$model$listview$ListViewItem$SortingStrategy -> b
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor -> com.softsandr.terminal.ui.activity.terminal.f:
+    boolean isShiftToggled -> b
+    boolean isCtrlToggled -> c
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    void onClickShift() -> a
+    void onClickCtrl() -> b
+    void access$900(com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor) -> a
+    void access$1100(com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor) -> b
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage -> com.softsandr.terminal.ui.activity.terminal.g:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage LEFT -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage RIGHT -> b
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage[] $VALUES -> c
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage[] values() -> values
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage valueOf(java.lang.String) -> valueOf
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$DirectorySizeComputationTask -> com.softsandr.terminal.ui.activity.terminal.h:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    java.lang.Long doInBackground(com.softsandr.terminal.model.listview.ListViewItem[]) -> a
+    void onPostExecute(java.lang.Long) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ListViewItemClickListener -> com.softsandr.terminal.ui.activity.terminal.i:
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy selectionStrategy -> b
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter adapter -> c
+    android.widget.ListView listView -> d
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ListViewItemLongClickListener -> com.softsandr.terminal.ui.activity.terminal.j:
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter adapter -> b
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$LoadLeftListTask -> com.softsandr.terminal.ui.activity.terminal.k:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    java.util.List doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(java.util.List) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$LoadRightListTask -> com.softsandr.terminal.ui.activity.terminal.l:
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    java.util.List doInBackground(java.lang.Void[]) -> a
+    void onPostExecute(java.util.List) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.softsandr.terminal.ui.activity.terminal.TerminalActivity$SortingMenuItemsMonitor -> com.softsandr.terminal.ui.activity.terminal.m:
+    android.view.MenuItem mSortByName -> b
+    android.view.MenuItem mSortBySize -> c
+    android.view.MenuItem mSortByModify -> d
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
+    void onMenuSelected(android.view.MenuItem) -> a
+com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter -> com.softsandr.terminal.ui.activity.terminal.a.a:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy selectionStrategy -> b
+    com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel pathLabel -> c
+    java.util.List filesInfo -> d
+    java.util.LinkedList pathStack -> e
+    com.softsandr.terminal.model.shpref.HistoryLocationsManager historyLocationsManager -> f
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> g
+    java.util.Map cache -> h
+    boolean inFirst -> i
+    void changeDirectory(java.lang.String) -> a
+    boolean isContinueForPrev(java.lang.String,java.lang.String) -> a
+    void initCache(android.view.ViewGroup) -> a
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void clearBackPath(java.lang.String[]) -> a
+    java.lang.String getBackPath() -> a
+    void goBackToPath(java.lang.String) -> b
+    void restoreBackPath(java.lang.String) -> c
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy getSelectionStrategy() -> b
+    java.util.ArrayList getSelectedItems() -> c
+    com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel getPathLabel() -> d
+    void clearSelection() -> e
+com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter$ViewHolder -> com.softsandr.terminal.ui.activity.terminal.a.b:
+    android.view.View view -> a
+    android.widget.TextView fileNameView -> b
+    android.widget.TextView fileSizeView -> c
+    android.widget.TextView fileModifyTimeView -> d
+    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter this$0 -> e
+com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy -> com.softsandr.terminal.ui.activity.terminal.b.a:
+    java.util.Set selectedItems -> a
+    java.util.Set unselectedItems -> b
+    android.widget.ArrayAdapter adapter -> c
+    boolean isShiftToggle -> d
+    boolean isCtrlToggle -> e
+    int lastShiftPosition -> f
+    boolean isCtrlToggle() -> a
+    void setCtrlToggle(boolean) -> a
+    boolean isShiftToggle() -> b
+    void setShiftToggle(boolean) -> b
+    void addSelection(int) -> a
+    void makeCtrlSelection(int) -> b
+    void makeShiftSelection(int) -> c
+    void makeClearSelected() -> c
+    void addElement(int) -> d
+    void removeElement(int) -> e
+    java.util.Set getSelectedItems() -> d
+    java.util.Set getUnselectedItems() -> e
+    void clear() -> f
+com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems -> com.softsandr.terminal.ui.activity.terminal.b.b:
+    android.content.res.Resources resources -> a
+    java.util.List leftPanelBorders -> b
+    java.util.List rightPanelBorders -> c
+    android.widget.TextView rightPathLabel -> d
+    android.widget.TextView leftPathLabel -> e
+    void selectLeft() -> a
+    void selectRight() -> b
+com.softsandr.terminal.ui.command.CopyFileCommand -> com.softsandr.terminal.ui.a.a:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> b
+    java.util.List items -> c
+    java.lang.String destinationPath -> d
+    boolean pathChanged -> e
+    void onExecute() -> a
+    void makeClearSelection() -> b
+    void makeRefreshDirectory() -> c
+com.softsandr.terminal.ui.command.CopyFileCommand$1 -> com.softsandr.terminal.ui.a.b:
+    int[] $SwitchMap$com$softsandr$terminal$ui$activity$terminal$TerminalActivity$ActivePage -> a
+com.softsandr.terminal.ui.command.DeleteFileCommand -> com.softsandr.terminal.ui.a.c:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> b
+    java.util.List items -> c
+    java.lang.String currentPath -> d
+    java.lang.String destinationPath -> e
+    void onExecute() -> a
+    void makeClearSelection() -> b
+com.softsandr.terminal.ui.command.DeleteFileCommand$1 -> com.softsandr.terminal.ui.a.d:
+    int[] $SwitchMap$com$softsandr$terminal$ui$activity$terminal$TerminalActivity$ActivePage -> a
+com.softsandr.terminal.ui.command.MakeDirectoryCommand -> com.softsandr.terminal.ui.a.e:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> b
+    java.lang.String directoryName -> c
+    java.lang.String currentPath -> d
+    java.lang.String destinationPath -> e
+    void onExecute() -> a
+    void makeClearSelection() -> b
+com.softsandr.terminal.ui.command.MakeDirectoryCommand$1 -> com.softsandr.terminal.ui.a.f:
+    int[] $SwitchMap$com$softsandr$terminal$ui$activity$terminal$TerminalActivity$ActivePage -> a
+com.softsandr.terminal.ui.command.MoveRenameFileCommand -> com.softsandr.terminal.ui.a.g:
+    java.lang.String LOG_TAG -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> b
+    java.util.List items -> c
+    java.lang.String destinationPath -> d
+    java.lang.String destinationOldPath -> e
+    java.lang.String currentPath -> f
+    boolean pathChanged -> g
+    void onExecute() -> a
+    void makeClearSelection() -> b
+    void makeRefreshDirectory() -> c
+com.softsandr.terminal.ui.command.MoveRenameFileCommand$1 -> com.softsandr.terminal.ui.a.h:
+    int[] $SwitchMap$com$softsandr$terminal$ui$activity$terminal$TerminalActivity$ActivePage -> a
+com.softsandr.terminal.ui.dialog.TerminalCpMvDialog -> com.softsandr.terminal.ui.b.a:
+    java.lang.String LOG_TAG -> a
+    java.lang.String FILE_PATH_LIST -> b
+    java.lang.String DST_DIRECTORY_PATH -> c
+    java.lang.String CUR_DIRECTORY_PATH -> d
+    java.lang.String OPERATION_TYPE -> e
+    java.util.ArrayList mFileAbsPathList -> f
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType mOperationType -> g
+    java.lang.String mCurrentAbsPath -> h
+    java.lang.String mDstDirAbsPath -> i
+    android.widget.EditText mInput -> j
+    android.view.View$OnClickListener mOnClickListener -> k
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog newInstance(java.util.ArrayList,java.lang.String,java.lang.String,com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    java.lang.String truncateFileName() -> a
+    android.widget.EditText access$000(com.softsandr.terminal.ui.dialog.TerminalCpMvDialog) -> a
+    java.lang.String access$100(com.softsandr.terminal.ui.dialog.TerminalCpMvDialog) -> b
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType access$200(com.softsandr.terminal.ui.dialog.TerminalCpMvDialog) -> c
+    java.util.ArrayList access$300(com.softsandr.terminal.ui.dialog.TerminalCpMvDialog) -> d
+    java.lang.String access$400(com.softsandr.terminal.ui.dialog.TerminalCpMvDialog) -> e
+com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$1 -> com.softsandr.terminal.ui.b.b:
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$2 -> com.softsandr.terminal.ui.b.c:
+    int[] $SwitchMap$com$softsandr$terminal$ui$dialog$TerminalCpMvDialog$TransferOperationType -> a
+com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType -> com.softsandr.terminal.ui.b.d:
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType COPY_OPERATION -> a
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType MOVE_OPERATION -> b
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType[] $VALUES -> c
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType[] values() -> values
+    com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType valueOf(java.lang.String) -> valueOf
+com.softsandr.terminal.ui.dialog.TerminalDeleteDialog -> com.softsandr.terminal.ui.b.e:
+    java.lang.String LOG_TAG -> a
+    java.lang.String CUR_DIRECTORY_PATH -> b
+    java.lang.String DST_DIRECTORY_PATH -> c
+    java.lang.String FILE_PATH_LIST -> d
+    java.util.ArrayList mFileAbsPathList -> e
+    java.lang.String mCurrentAbsPath -> f
+    java.lang.String mDestinationPath -> g
+    android.view.View$OnClickListener mOnClickListener -> h
+    com.softsandr.terminal.ui.dialog.TerminalDeleteDialog newInstance(java.util.ArrayList,java.lang.String,java.lang.String) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    java.lang.String truncateFileName() -> a
+    java.util.ArrayList access$000(com.softsandr.terminal.ui.dialog.TerminalDeleteDialog) -> a
+    java.lang.String access$100(com.softsandr.terminal.ui.dialog.TerminalDeleteDialog) -> b
+    java.lang.String access$200(com.softsandr.terminal.ui.dialog.TerminalDeleteDialog) -> c
+com.softsandr.terminal.ui.dialog.TerminalDeleteDialog$1 -> com.softsandr.terminal.ui.b.f:
+    com.softsandr.terminal.ui.dialog.TerminalDeleteDialog this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.dialog.TerminalDialogUtil -> com.softsandr.terminal.ui.b.g:
+    java.lang.String COPY_DIALOG_TAG -> a
+    java.lang.String MOVE_RENAME_DIALOG_TAG -> b
+    java.lang.String MK_DIR_DIALOG_TAG -> c
+    java.lang.String DELETE_DIALOG_TAG -> d
+    java.lang.String HISTORY_DIALOG_TAG -> e
+    void showCopyDialog(android.app.Activity,java.util.ArrayList,java.lang.String,java.lang.String) -> a
+    void showMoveRenameDialog(android.app.Activity,java.util.ArrayList,java.lang.String,java.lang.String) -> b
+    void showMkDirDialog(android.app.Activity,java.lang.String,java.lang.String) -> a
+    void showDeleteDialog(android.app.Activity,java.util.ArrayList,java.lang.String,java.lang.String) -> c
+    void showHistoryDialog(android.app.Activity,java.lang.String[],com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage) -> a
+com.softsandr.terminal.ui.dialog.TerminalHistoryDialog -> com.softsandr.terminal.ui.b.h:
+    java.lang.String LOG_TAG -> a
+    java.lang.String ACTIVE_PAGE -> b
+    java.lang.String HISTORY_LOCATIONS -> c
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage mActivePage -> d
+    java.lang.String[] mHistoryLocations -> e
+    android.widget.AdapterView$OnItemClickListener mItemClickListener -> f
+    com.softsandr.terminal.ui.dialog.TerminalHistoryDialog newInstance(com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage,java.lang.String[]) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    java.lang.String[] access$000(com.softsandr.terminal.ui.dialog.TerminalHistoryDialog) -> a
+    com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage access$100(com.softsandr.terminal.ui.dialog.TerminalHistoryDialog) -> b
+com.softsandr.terminal.ui.dialog.TerminalHistoryDialog$1 -> com.softsandr.terminal.ui.b.i:
+    com.softsandr.terminal.ui.dialog.TerminalHistoryDialog this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.softsandr.terminal.ui.dialog.TerminalMkDirDialog -> com.softsandr.terminal.ui.b.j:
+    java.lang.String LOG_TAG -> a
+    java.lang.String CUR_DIRECTORY_PATH -> b
+    java.lang.String DST_DIRECTORY_PATH -> c
+    java.lang.String mCurrentAbsPath -> d
+    java.lang.String mDestinationPath -> e
+    android.widget.EditText mInput -> f
+    android.view.View$OnClickListener mOnClickListener -> g
+    com.softsandr.terminal.ui.dialog.TerminalMkDirDialog newInstance(java.lang.String,java.lang.String) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    android.widget.EditText access$000(com.softsandr.terminal.ui.dialog.TerminalMkDirDialog) -> a
+    java.lang.String access$100(com.softsandr.terminal.ui.dialog.TerminalMkDirDialog) -> b
+    java.lang.String access$200(com.softsandr.terminal.ui.dialog.TerminalMkDirDialog) -> c
+com.softsandr.terminal.ui.dialog.TerminalMkDirDialog$1 -> com.softsandr.terminal.ui.b.k:
+    com.softsandr.terminal.ui.dialog.TerminalMkDirDialog this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.widget.slider.TerminalSlider -> com.softsandr.terminal.ui.widget.slider.TerminalSlider:
+    int mHandleId -> a
+    int mContentId -> b
+    android.graphics.Rect mFrame -> c
+    android.graphics.Rect mInvalidate -> d
+    android.os.Handler mHandler -> e
+    int mTapThreshold -> f
+    int mMaximumTapVelocity -> g
+    int mMaximumMinorVelocity -> h
+    int mMaximumMajorVelocity -> i
+    int mMaximumAcceleration -> j
+    int mVelocityUnits -> k
+    android.view.View mHandle -> l
+    android.view.View mContent -> m
+    boolean mTracking -> n
+    boolean mLocked -> o
+    android.view.VelocityTracker mVelocityTracker -> p
+    boolean mVertical -> q
+    boolean mExpanded -> r
+    int mSliderOffset -> s
+    int mHandleHeight -> t
+    int mHandleWidth -> u
+    com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerOpenListener mOnDrawerOpenListener -> v
+    com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerCloseListener mOnDrawerCloseListener -> w
+    com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerScrollListener mOnDrawerScrollListener -> x
+    float mAnimatedAcceleration -> y
+    float mAnimatedVelocity -> z
+    float mAnimationPosition -> A
+    long mAnimationLastTime -> B
+    long mCurrentAnimationTime -> C
+    int mTouchDelta -> D
+    boolean mAnimating -> E
+    int mTopHandlerPadding -> F
+    int mBottomHandlerPadding -> G
+    void onFinishInflate() -> onFinishInflate
+    void onMeasure(int,int) -> onMeasure
+    void dispatchDraw(android.graphics.Canvas) -> dispatchDraw
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    void performFling(int,float,boolean) -> a
+    void moveHandle(int) -> a
+    void prepareContent() -> b
+    void prepareTracking(int) -> b
+    void stopTracking() -> c
+    void doAnimation() -> d
+    void incrementAnimation() -> e
+    void toggle() -> a
+    void onInitializeAccessibilityEvent(android.view.accessibility.AccessibilityEvent) -> onInitializeAccessibilityEvent
+    void onInitializeAccessibilityNodeInfo(android.view.accessibility.AccessibilityNodeInfo) -> onInitializeAccessibilityNodeInfo
+    void closeDrawer() -> f
+    void openDrawer() -> g
+    void setOnDrawerOpenListener(com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerOpenListener) -> setOnDrawerOpenListener
+    void setOnDrawerCloseListener(com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerCloseListener) -> setOnDrawerCloseListener
+    void setOnDrawerScrollListener(com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerScrollListener) -> setOnDrawerScrollListener
+    android.view.View getHandle() -> getHandle
+    android.view.View getContent() -> getContent
+    boolean access$200(com.softsandr.terminal.ui.widget.slider.TerminalSlider) -> a
+    void access$300(com.softsandr.terminal.ui.widget.slider.TerminalSlider) -> b
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$1 -> com.softsandr.terminal.ui.widget.slider.a:
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$DrawerToggler -> com.softsandr.terminal.ui.widget.slider.b:
+    com.softsandr.terminal.ui.widget.slider.TerminalSlider this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerCloseListener -> com.softsandr.terminal.ui.widget.slider.c:
+    void onDrawerClosed() -> a
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerOpenListener -> com.softsandr.terminal.ui.widget.slider.d:
+    void onDrawerOpened() -> a
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$OnDrawerScrollListener -> com.softsandr.terminal.ui.widget.slider.e:
+    void onScrollStarted() -> a
+    void onScrollEnded() -> b
+com.softsandr.terminal.ui.widget.slider.TerminalSlider$SlidingHandler -> com.softsandr.terminal.ui.widget.slider.f:
+    com.softsandr.terminal.ui.widget.slider.TerminalSlider this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
