@@ -70,7 +70,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         filesInfo.clear();
         pathLabel.setPath(pathStack.getLast());
         historyLocationsManager.addLocation(pathLabel.getFullPath());
-        ListViewFiller.fillingList(terminalActivity.getSortingStrategy(), filesInfo, pathStack.getLast());
+        ListViewFiller.fillListContent(terminalActivity.getSortingStrategy(), filesInfo, pathStack.getLast());
         notifyDataSetChanged();
     }
 

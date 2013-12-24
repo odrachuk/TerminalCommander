@@ -262,9 +262,9 @@ com.softsandr.terminal.commander.prompt.TerminalPrompt -> com.softsandr.terminal
     void setUserLocation(java.lang.String) -> a
     java.lang.String getUserLocation() -> b
 com.softsandr.terminal.model.filesystem.Directory -> com.softsandr.terminal.model.a.a:
-    com.softsandr.terminal.model.filesystem.DirectoryTree walkDir(java.lang.String,java.lang.String) -> a
-    com.softsandr.terminal.model.filesystem.DirectoryTree readDirFiles(java.io.File,java.lang.String) -> a
-com.softsandr.terminal.model.filesystem.DirectoryTree -> com.softsandr.terminal.model.a.b:
+    com.softsandr.terminal.model.filesystem.DirectoryContent walkDir(java.lang.String,java.lang.String) -> a
+    com.softsandr.terminal.model.filesystem.DirectoryContent readDirFiles(java.io.File,java.lang.String) -> a
+com.softsandr.terminal.model.filesystem.DirectoryContent -> com.softsandr.terminal.model.a.b:
     java.util.List files -> a
     java.util.List dirs -> b
     java.util.Iterator getFilesIterator() -> a

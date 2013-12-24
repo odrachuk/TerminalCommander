@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Drachuk O.V.
  */
-public class DirectoryTree {
+public class DirectoryContent {
     public List<File> files = new ArrayList<File>();
     public List<File> dirs = new ArrayList<File>();
 
@@ -22,7 +22,7 @@ public class DirectoryTree {
         return dirs.iterator();
     }
 
-    void addAll(DirectoryTree other) {
+    void addAll(DirectoryContent other) {
         files.addAll(other.files);
         dirs.addAll(other.dirs);
     }

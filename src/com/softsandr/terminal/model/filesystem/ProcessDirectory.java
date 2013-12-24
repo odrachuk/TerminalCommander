@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class ProcessDirectory {
     private static final String LOG_TAG = ProcessDirectory.class.getSimpleName();
     private ProcessDirectoryStrategy strategy;
-    private String ext;
+    private String fileExtension;
 
     public interface ProcessDirectoryStrategy {
         void initParentPath(String parentPath);
@@ -25,7 +25,7 @@ public class ProcessDirectory {
 
     public ProcessDirectory(ProcessDirectoryStrategy strategy, String ext) {
         this.strategy = strategy;
-        this.ext = ext;
+        this.fileExtension = ext;
     }
 
     public void start(String path) {
@@ -37,8 +37,7 @@ public class ProcessDirectory {
     }
 
     public void processDirectoryTree(File root) throws IOException {
-        DirectoryTree treeInfo = Directory.walkDir(
-                root.getAbsolutePath(), ".*" + ext);
+        DirectoryContent treeInfo = Directory.walkDir(root.getAbsolutePath(), ".*" + fileExtension);
         // init parent dots
         if (!root.getPath().equals(StringUtil.PATH_SEPARATOR)) {
             strategy.initParentPath(root.getAbsolutePath());

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.drk.terminal.util.utils.StringUtil;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -74,13 +74,13 @@ public class TerminalPreferences {
         return stringSet.toArray(new String[stringSet.size()]);
     }
 
-    public ListViewItem.SortingStrategy loadSortingStrategy() {
+    public ListViewSortingStrategy loadSortingStrategy() {
         String sortingStrategy = mPreferences.getString(SORTING_STRATEGY,
-                ListViewItem.SortingStrategy.NAME.toString());
-        return ListViewItem.SortingStrategy.valueOf(sortingStrategy);
+                ListViewSortingStrategy.SORT_BY_NAME.toString());
+        return ListViewSortingStrategy.valueOf(sortingStrategy);
     }
 
-    public void saveSortingStrategy(ListViewItem.SortingStrategy sortingStrategy) {
+    public void saveSortingStrategy(ListViewSortingStrategy sortingStrategy) {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(SORTING_STRATEGY, sortingStrategy.toString());
         editor.commit();

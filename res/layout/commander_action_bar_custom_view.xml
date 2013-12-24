@@ -11,5 +11,6 @@
             android:textSize="@dimen/terminal_action_bar_btn_text_size"
             android:textColor="@color/COLOR_717171"
             android:textStyle="bold"
+            android:visibility="gone"
             android:background="@drawable/orange_cursor_bg"/>
 </RelativeLayout>

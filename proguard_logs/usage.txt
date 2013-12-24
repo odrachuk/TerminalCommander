@@ -60,10 +60,10 @@ com.softsandr.terminal.model.filesystem.Directory:
     12:12:public Directory()
     15:15:public static java.io.File[] local(java.io.File,java.lang.String)
     26:26:public static java.io.File[] local(java.lang.String,java.lang.String)
-    34:34:public static com.softsandr.terminal.model.filesystem.DirectoryTree walkDir(java.lang.String)
+    34:34:public static com.softsandr.terminal.model.filesystem.DirectoryContent walkDir(java.lang.String)
 com.softsandr.terminal.model.filesystem.Directory$1
-com.softsandr.terminal.model.filesystem.DirectoryTree:
-    26:28:void addAll(com.softsandr.terminal.model.filesystem.DirectoryTree)
+com.softsandr.terminal.model.filesystem.DirectoryContent:
+    26:28:void addAll(com.softsandr.terminal.model.filesystem.DirectoryContent)
 com.softsandr.terminal.model.listview.ListViewItem:
     public static final java.lang.String DATE_FORMAT
     public static final long DIRECTORY_DEF_SIZE

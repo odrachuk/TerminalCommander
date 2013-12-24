@@ -26,16 +26,16 @@ public class Directory {
         return local(new File(path), regex);
     }
 
-    public static DirectoryTree walkDir(String start, String regex) {
+    public static DirectoryContent walkDir(String start, String regex) {
         return readDirFiles(new File(start), regex);
     }
 
-    public static DirectoryTree walkDir(String start) { // Overloaded
+    public static DirectoryContent walkDir(String start) { // Overloaded
         return readDirFiles(new File(start), ".*");
     }
 
-    static DirectoryTree readDirFiles(File startDir, String regex) {
-        DirectoryTree result = new DirectoryTree();
+    static DirectoryContent readDirFiles(File startDir, String regex) {
+        DirectoryContent result = new DirectoryContent();
         if (startDir != null) {
             File[] files = startDir.listFiles();
             if (files != null) {

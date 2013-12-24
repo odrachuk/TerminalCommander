@@ -16,10 +16,10 @@ import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.shpref.HistoryLocationsManager;
 import com.softsandr.terminal.model.shpref.TerminalPreferences;
 import com.softsandr.terminal.ui.activity.commander.CommanderActivity;
-import com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity;
 import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems;
@@ -127,7 +127,7 @@ public class TerminalActivity extends android.app.Activity {
             }
         }
     };
-    private ListViewItem.SortingStrategy mSortingStrategy = ListViewItem.SortingStrategy.NAME;
+    private ListViewSortingStrategy mSortingStrategy = ListViewSortingStrategy.SORT_BY_NAME;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionVisualItems mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
@@ -280,17 +280,17 @@ public class TerminalActivity extends android.app.Activity {
         MenuItem sortBySize = menu.findItem(R.id.sorting_by_size);
         MenuItem sortByModify = menu.findItem(R.id.sorting_by_modify);
         switch (mSortingStrategy) {
-            case NAME:
+            case SORT_BY_NAME:
                 if (sortByName != null) {
                     sortByName.setChecked(true);
                 }
                 break;
-            case SIZE:
+            case SORT_BY_SIZE:
                 if (sortBySize != null) {
                     sortBySize.setChecked(true);
                 }
                 break;
-            case DATE:
+            case SORT_BY_DATE:
                 if (sortByModify != null) {
                     sortByModify.setChecked(true);
                 }
@@ -389,7 +389,7 @@ public class TerminalActivity extends android.app.Activity {
         return activePage;
     }
 
-    public ListViewItem.SortingStrategy getSortingStrategy() {
+    public ListViewSortingStrategy getSortingStrategy() {
         return mSortingStrategy;
     }
 
@@ -497,7 +497,7 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         protected List<ListViewItem> doInBackground(Void... params) {
             List<ListViewItem> list = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(mSortingStrategy, list, mLeftListSavedLocation);
+            ListViewFiller.fillListContent(mSortingStrategy, list, mLeftListSavedLocation);
             return list;
         }
 
@@ -520,7 +520,7 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         protected List<ListViewItem> doInBackground(Void... params) {
             List<ListViewItem> list = new ArrayList<ListViewItem>();
-            ListViewFiller.fillingList(mSortingStrategy, list, mRightListSavedLocation);
+            ListViewFiller.fillListContent(mSortingStrategy, list, mRightListSavedLocation);
             return list;
         }
 
@@ -603,11 +603,11 @@ public class TerminalActivity extends android.app.Activity {
             }
             // sorting type
             if (menuItem.equals(mSortByName)) {
-                mSortingStrategy = ListViewItem.SortingStrategy.NAME;
+                mSortingStrategy = ListViewSortingStrategy.SORT_BY_NAME;
             } else if (menuItem.equals(mSortBySize)) {
-                mSortingStrategy = ListViewItem.SortingStrategy.SIZE;
+                mSortingStrategy = ListViewSortingStrategy.SORT_BY_SIZE;
             } else if (menuItem.equals(mSortByModify)) {
-                mSortingStrategy = ListViewItem.SortingStrategy.DATE;
+                mSortingStrategy = ListViewSortingStrategy.SORT_BY_DATE;
             }
             mLeftAdapter.changeDirectory(mLeftAdapter.getPathLabel().getFullPath());
             mRightAdapter.changeDirectory(mRightAdapter.getPathLabel().getFullPath());

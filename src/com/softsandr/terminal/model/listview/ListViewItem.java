@@ -23,16 +23,16 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public static final long DIRECTORY_DEF_SIZE = -1;
     public static final long UP_LINK_DEF_SIZE = -2;
     private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+    private final String fileModifyTime;
     private final String fileName;
     private final String fileSize;
-    private final String fileModifyTime;
-    private String absPath;
+    private ListViewSortingStrategy sortingStrategy;
     private boolean isDirectory;
-    private boolean isLink;
     private boolean canRead;
-    private SortingStrategy sortingStrategy;
+    private boolean isLink;
+    private String absPath;
 
-    public ListViewItem(SortingStrategy sortingStrategy,
+    public ListViewItem(ListViewSortingStrategy sortingStrategy,
                         String fileName,
                         long fileSize,
                         long fileModifyTime) {
@@ -127,11 +127,11 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     @Override
     public int compareTo(ListViewItem another) {
         switch (sortingStrategy) {
-            case DATE:
+            case SORT_BY_DATE:
                 return compareModifyTime(another);
-            case NAME:
+            case SORT_BY_NAME:
                 return compareFileNames(another);
-            case SIZE:
+            case SORT_BY_SIZE:
                 return compareSize(another);
             default:
                 return compareFileNames(another);
@@ -248,10 +248,4 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
             return new ListViewItem[0];
         }
     };
-
-    public enum SortingStrategy {
-        NAME,
-        SIZE,
-        DATE
-    }
 }
