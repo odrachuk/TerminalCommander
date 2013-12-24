@@ -1,4 +1,4 @@
-package com.softsandr.terminal.model.shpref;
+package com.softsandr.terminal.model.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

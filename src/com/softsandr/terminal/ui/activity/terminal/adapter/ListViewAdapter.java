@@ -10,7 +10,7 @@ import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.model.shpref.HistoryLocationsManager;
+import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
