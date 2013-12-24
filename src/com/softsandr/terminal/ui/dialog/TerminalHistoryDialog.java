@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivePage;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 
 /**
@@ -22,13 +23,13 @@ public class TerminalHistoryDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalHistoryDialog.class.getSimpleName();
     private static final String ACTIVE_PAGE = LOG_TAG + ".ACTIVE_PAGE";
     private static final String HISTORY_LOCATIONS = LOG_TAG + ".HISTORY_LOCATIONS";
-    private TerminalActivity.ActivePage mActivePage;
+    private TerminalActivePage mActivePage;
     private String[] mHistoryLocations;
     private final AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String[] splitPath = mHistoryLocations[position].substring(1).split(StringUtil.PATH_SEPARATOR);
-            if (mActivePage.equals(TerminalActivity.ActivePage.LEFT)) {
+            if (mActivePage.equals(TerminalActivePage.LEFT)) {
                 ((TerminalActivity) getActivity()).getLeftListAdapter().clearBackPath(splitPath);
                 ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             } else {
@@ -40,10 +41,10 @@ public class TerminalHistoryDialog extends DialogFragment {
     };
 
     /**
-     * Create a new instance of TerminalHistoryDialog, providing {@link TerminalActivity.ActivePage}
+     * Create a new instance of TerminalHistoryDialog, providing {@link TerminalActivePage}
      * as argument.
      */
-    static TerminalHistoryDialog newInstance(TerminalActivity.ActivePage activePage, String[] historyLocations) {
+    static TerminalHistoryDialog newInstance(TerminalActivePage activePage, String[] historyLocations) {
         TerminalHistoryDialog f = new TerminalHistoryDialog();
         // Supply arguments
         Bundle args = new Bundle();
@@ -56,7 +57,7 @@ public class TerminalHistoryDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivePage = (TerminalActivity.ActivePage) getArguments().getSerializable(ACTIVE_PAGE);
+        mActivePage = (TerminalActivePage) getArguments().getSerializable(ACTIVE_PAGE);
         mHistoryLocations = getArguments().getStringArray(HISTORY_LOCATIONS);
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
@@ -66,7 +67,7 @@ public class TerminalHistoryDialog extends DialogFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_history_dialog_layout, container, false);
         TextView title = (TextView) v.findViewById(R.id.terminal_history_dialog_title);
-        title.setText(mActivePage.equals(TerminalActivity.ActivePage.LEFT)?
+        title.setText(mActivePage.equals(TerminalActivePage.LEFT)?
             "Left panel history" : "Right panel history");
         ListView list = (ListView) v.findViewById(R.id.history_dialog_list);
         ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), R.layout.terminal_history_list_row_layout,

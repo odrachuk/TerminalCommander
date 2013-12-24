@@ -9,8 +9,8 @@ import com.drk.terminal.util.utils.StringUtil;
  * @author Drachuk O.V.
  */
 public class CurrentPathLabel {
-    private final TextView pathLabel;
     private String fullPath = StringUtil.PATH_SEPARATOR;
+    private final TextView pathLabel;
 
     public CurrentPathLabel(TextView ownLabel) {
         this.pathLabel = ownLabel;

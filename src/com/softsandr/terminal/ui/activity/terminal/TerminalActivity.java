@@ -20,9 +20,8 @@ import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.model.preferences.TerminalPreferences;
 import com.softsandr.terminal.ui.activity.commander.CommanderActivity;
-import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
-import com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems;
+import com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents;
 import com.softsandr.terminal.ui.dialog.TerminalDialogUtil;
 
 import java.io.File;
@@ -45,10 +44,10 @@ public class TerminalActivity extends android.app.Activity {
         public boolean onTouch(View v, MotionEvent event) {
             // Detect active list
             if (v.getId() == mLeftList.getId()) {
-                activePage = ActivePage.LEFT;
+                activePage = TerminalActivePage.LEFT;
                 mSelectionVisualItems.selectLeft();
             } else if (v.getId() == mRightList.getId()) {
-                activePage = ActivePage.RIGHT;
+                activePage = TerminalActivePage.RIGHT;
                 mSelectionVisualItems.selectRight();
             }
             return false;
@@ -58,16 +57,16 @@ public class TerminalActivity extends android.app.Activity {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
-            String destinationLocation = !activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+            String destinationLocation = !activePage.equals(TerminalActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
                     mRightAdapter.getPathLabel().getFullPath();
-            String currentLocation = activePage.equals(ActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
+            String currentLocation = activePage.equals(TerminalActivePage.LEFT) ? mLeftAdapter.getPathLabel().getFullPath() :
                     mRightAdapter.getPathLabel().getFullPath();
             /* Menu items */
             if (v.equals(mCommMenuBtn)) {
                 Intent startIntent = new Intent(TerminalActivity.this, CommanderActivity.class);
                 startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA, currentLocation);
                 startIntent.putExtra(CommanderActivity.OTHER_PATH_EXTRA, destinationLocation);
-                startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, activePage.equals(ActivePage.LEFT));
+                startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, activePage.equals(TerminalActivePage.LEFT));
                 startActivityForResult(startIntent, REQUEST_CODE);
             } else if (v.equals(mShiftMenuBtn)) {
                 mActionBarToggleMonitor.onClickShift();
@@ -104,14 +103,14 @@ public class TerminalActivity extends android.app.Activity {
                 if (locations.length > 0) {
                     TerminalDialogUtil.showHistoryDialog(TerminalActivity.this,
                             locations,
-                            ActivePage.LEFT);
+                            TerminalActivePage.LEFT);
                 }
             } else if (viewId == R.id.history_btn_in_right) {
                 String[] locations = mRightHistoryLocationManager.getActualHistoryLocations();
                 if (locations.length > 0) {
                     TerminalDialogUtil.showHistoryDialog(TerminalActivity.this,
                             locations,
-                            ActivePage.RIGHT);
+                            TerminalActivePage.RIGHT);
                 }
             }
         }
@@ -129,8 +128,8 @@ public class TerminalActivity extends android.app.Activity {
     };
     private ListViewSortingStrategy mSortingStrategy = ListViewSortingStrategy.SORT_BY_NAME;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private SelectionVisualItems mSelectionVisualItems;
-    private ActivePage activePage = ActivePage.LEFT;
+    private SelectionViewComponents mSelectionVisualItems;
+    private TerminalActivePage activePage = TerminalActivePage.LEFT;
     private ActionBarButtonsToggleMonitor mActionBarToggleMonitor;
     private Button mShiftMenuBtn, mCommMenuBtn, mCtrlMenuBtn;
     private View mShiftBtnContainer, mCtrlBtnContainer;
@@ -147,7 +146,7 @@ public class TerminalActivity extends android.app.Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
-        mSelectionVisualItems = new SelectionVisualItems(this);
+        mSelectionVisualItems = new SelectionViewComponents(this);
         readPreferences();
         initView();
         initActionBar();
@@ -184,8 +183,8 @@ public class TerminalActivity extends android.app.Activity {
         mRightListSavedLocation = mPreferences.loadLastRightLocations();
         mSortingStrategy = mPreferences.loadSortingStrategy();
         // read locations history
-        mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.LEFT);
-        mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.RIGHT);
+        mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, TerminalActivePage.LEFT);
+        mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, TerminalActivePage.RIGHT);
     }
 
     @Override
@@ -249,7 +248,7 @@ public class TerminalActivity extends android.app.Activity {
                             break;
                     }
                 } else {
-                    activePage = isLeftActive ? ActivePage.LEFT : ActivePage.RIGHT;
+                    activePage = isLeftActive ? TerminalActivePage.LEFT : TerminalActivePage.RIGHT;
                     switch (activePage) {
                         case LEFT:
                             mLeftListSavedLocation = pathFromCommander;
@@ -374,7 +373,7 @@ public class TerminalActivity extends android.app.Activity {
     }
 
     private ArrayList<ListViewItem> getOperationItems() {
-        return activePage == ActivePage.LEFT ? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
+        return activePage == TerminalActivePage.LEFT ? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
     }
 
 //    public void showProgress() {
@@ -385,17 +384,12 @@ public class TerminalActivity extends android.app.Activity {
 //        sendStickyBroadcast(new Intent(TerminalProgressActivity.PROGRESS_DISMISS_ACTION));
 //    }
 
-    public ActivePage getActivePage() {
+    public TerminalActivePage getActivePage() {
         return activePage;
     }
 
     public ListViewSortingStrategy getSortingStrategy() {
         return mSortingStrategy;
-    }
-
-    public enum ActivePage {
-        LEFT,
-        RIGHT
     }
 
     private final class ListViewItemClickListener implements AdapterView.OnItemClickListener {

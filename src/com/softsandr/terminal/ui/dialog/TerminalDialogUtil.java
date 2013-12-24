@@ -5,7 +5,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivePage;
 
 import java.util.ArrayList;
 
@@ -98,7 +98,7 @@ public final class TerminalDialogUtil {
     }
 
     public static void showHistoryDialog(Activity activity, String[] historyLocations,
-                                         TerminalActivity.ActivePage activePage) {
+                                         TerminalActivePage activePage) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.

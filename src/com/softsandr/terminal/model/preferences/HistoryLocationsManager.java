@@ -1,6 +1,6 @@
 package com.softsandr.terminal.model.preferences;
 
-import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivePage;
 
 import java.util.LinkedList;
 
@@ -13,10 +13,10 @@ public class HistoryLocationsManager {
     private static final int MAX_HISTORY_SIZE = 20;
     private final LinkedList<String> historyLocationsQueue;
 
-    public HistoryLocationsManager(TerminalPreferences terminalPreferences, TerminalActivity.ActivePage activePage) {
+    public HistoryLocationsManager(TerminalPreferences terminalPreferences, TerminalActivePage activePage) {
         this.historyLocationsQueue = new LinkedList<String>();
         String[] prefLocations;
-        if (activePage.equals(TerminalActivity.ActivePage.LEFT)) {
+        if (activePage.equals(TerminalActivePage.LEFT)) {
             prefLocations = terminalPreferences.loadLeftHistoryLocation();
         } else {
             prefLocations = terminalPreferences.loadRightHistoryLocation();

@@ -11,16 +11,16 @@ import java.util.TreeSet;
  * @author Drachuk O.V.
  */
 public class SelectionStrategy {
-    private final Set<Integer> selectedItems;
     private final Set<Integer> unselectedItems;
+    private final Set<Integer> selectedItems;
     private final ArrayAdapter adapter;
     private boolean isShiftToggle;
     private boolean isCtrlToggle;
     private int lastShiftPosition;
 
     public SelectionStrategy(ArrayAdapter adapter) {
-        this.selectedItems = new TreeSet<Integer>();
         this.unselectedItems = new TreeSet<Integer>();
+        this.selectedItems = new TreeSet<Integer>();
         this.adapter = adapter;
     }
 

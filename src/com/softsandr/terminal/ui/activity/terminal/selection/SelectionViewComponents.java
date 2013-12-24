@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Drachuk O.V.
  */
-public class SelectionVisualItems {
+public class SelectionViewComponents {
     private final Resources resources;
     private final List<View> leftPanelBorders = new ArrayList<View>();
     private final List<View> rightPanelBorders = new ArrayList<View>();
@@ -22,7 +22,7 @@ public class SelectionVisualItems {
     private final TextView leftPathLabel;
 
 
-    public SelectionVisualItems(TerminalActivity activity) {
+    public SelectionViewComponents(TerminalActivity activity) {
         this.resources = activity.getResources();
         // left panel
         leftPanelBorders.add(activity.findViewById(R.id.top_border_image_1_in_left));

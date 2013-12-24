@@ -422,9 +422,9 @@ com.softsandr.terminal.ui.activity.terminal.TerminalActivity -> com.softsandr.te
     android.view.View$OnClickListener mOnClickListener -> f
     android.content.BroadcastReceiver mFinishBroadcastReceiver -> g
     com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy mSortingStrategy -> h
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter mLeftAdapter -> i
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter mRightAdapter -> j
-    com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems mSelectionVisualItems -> k
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter mLeftAdapter -> i
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter mRightAdapter -> j
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents mSelectionVisualItems -> k
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage activePage -> l
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor mActionBarToggleMonitor -> m
     android.widget.Button mShiftMenuBtn -> n
@@ -454,18 +454,18 @@ com.softsandr.terminal.ui.activity.terminal.TerminalActivity -> com.softsandr.te
     void onDestroy() -> onDestroy
     void saveDataBeforeDestroy() -> h
     void initView() -> i
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter getLeftListAdapter() -> a
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter getRightListAdapter() -> b
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter getLeftListAdapter() -> a
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter getRightListAdapter() -> b
     java.util.ArrayList getOperationItems() -> j
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage getActivePage() -> c
     com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy getSortingStrategy() -> d
     android.widget.ListView access$000(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> a
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage access$102(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage) -> a
-    com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems access$200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> b
+    com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents access$200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> b
     android.widget.ListView access$300(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> c
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage access$100(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> d
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$400(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> e
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$500(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> f
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter access$400(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> e
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter access$500(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> f
     android.widget.Button access$600(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> g
     android.widget.Button access$700(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> h
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActionBarButtonsToggleMonitor access$800(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> i
@@ -476,10 +476,10 @@ com.softsandr.terminal.ui.activity.terminal.TerminalActivity -> com.softsandr.te
     java.lang.String access$2000() -> e
     com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy access$2100(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> n
     java.lang.String access$2200(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> o
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$402(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter) -> a
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter access$402(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.ListViewAdapter) -> a
     android.view.View$OnTouchListener access$2500(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> p
     java.lang.String access$2600(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> q
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter access$502(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter) -> b
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter access$502(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.ui.activity.terminal.ListViewAdapter) -> b
     android.view.View access$2700(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> r
     android.view.View access$2800(com.softsandr.terminal.ui.activity.terminal.TerminalActivity) -> s
     com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy access$2102(com.softsandr.terminal.ui.activity.terminal.TerminalActivity,com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy) -> a
@@ -517,12 +517,12 @@ com.softsandr.terminal.ui.activity.terminal.TerminalActivity$DirectorySizeComput
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ListViewItemClickListener -> com.softsandr.terminal.ui.activity.terminal.i:
     com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy selectionStrategy -> b
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter adapter -> c
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter adapter -> c
     android.widget.ListView listView -> d
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ListViewItemLongClickListener -> com.softsandr.terminal.ui.activity.terminal.j:
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter adapter -> b
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter adapter -> b
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
     boolean onItemLongClick(android.widget.AdapterView,android.view.View,int,long) -> onItemLongClick
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity$LoadLeftListTask -> com.softsandr.terminal.ui.activity.terminal.k:
@@ -543,7 +543,7 @@ com.softsandr.terminal.ui.activity.terminal.TerminalActivity$SortingMenuItemsMon
     android.view.MenuItem mSortByModify -> d
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity this$0 -> a
     void onMenuSelected(android.view.MenuItem) -> a
-com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter -> com.softsandr.terminal.ui.activity.terminal.a.a:
+com.softsandr.terminal.ui.activity.terminal.ListViewAdapter -> com.softsandr.terminal.ui.activity.terminal.a.a:
     java.lang.String LOG_TAG -> a
     com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy selectionStrategy -> b
     com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel pathLabel -> c
@@ -565,12 +565,12 @@ com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter -> com.softs
     java.util.ArrayList getSelectedItems() -> c
     com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel getPathLabel() -> d
     void clearSelection() -> e
-com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter$ViewHolder -> com.softsandr.terminal.ui.activity.terminal.a.b:
+com.softsandr.terminal.ui.activity.terminal.ListViewAdapter$ViewHolder -> com.softsandr.terminal.ui.activity.terminal.a.b:
     android.view.View view -> a
     android.widget.TextView fileNameView -> b
     android.widget.TextView fileSizeView -> c
     android.widget.TextView fileModifyTimeView -> d
-    com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter this$0 -> e
+    com.softsandr.terminal.ui.activity.terminal.ListViewAdapter this$0 -> e
 com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy -> com.softsandr.terminal.ui.activity.terminal.b.a:
     java.util.Set selectedItems -> a
     java.util.Set unselectedItems -> b
@@ -591,7 +591,7 @@ com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy -> com.s
     java.util.Set getSelectedItems() -> d
     java.util.Set getUnselectedItems() -> e
     void clear() -> f
-com.softsandr.terminal.ui.activity.terminal.selection.SelectionVisualItems -> com.softsandr.terminal.ui.activity.terminal.b.b:
+com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents -> com.softsandr.terminal.ui.activity.terminal.b.b:
     android.content.res.Resources resources -> a
     java.util.List leftPanelBorders -> b
     java.util.List rightPanelBorders -> c
