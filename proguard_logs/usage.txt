@@ -46,10 +46,10 @@ com.softsandr.terminal.R$integer
 com.softsandr.terminal.R$layout
 com.softsandr.terminal.R$menu
 com.softsandr.terminal.R$string:
-    319:319:public R$string()
+    335:335:public R$string()
 com.softsandr.terminal.R$style
 com.softsandr.terminal.R$styleable:
-    370:370:public R$styleable()
+    387:387:public R$styleable()
 com.softsandr.terminal.commander.TerminalCommander:
     private static final java.lang.String SYSTEM_EXECUTOR
 com.softsandr.terminal.commander.command.filtered.FilteredCommands:
@@ -68,7 +68,7 @@ com.softsandr.terminal.model.listview.ListViewItem:
     public static final java.lang.String DATE_FORMAT
     public static final long DIRECTORY_DEF_SIZE
     public static final long UP_LINK_DEF_SIZE
-com.softsandr.terminal.model.shpref.HistoryLocationsManager:
+com.softsandr.terminal.model.preferences.HistoryLocationsManager:
     private static final int MAX_HISTORY_SIZE
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity:
     public static final int REQUEST_CODE
@@ -88,13 +88,13 @@ com.softsandr.terminal.ui.widget.slider.TerminalSlider:
     private static final int ANIMATION_FRAME_DURATION
     private static final int EXPANDED_FULL_OPEN
     private static final int COLLAPSED_FULL_CLOSED
-    344:346:private void animateClose(int)
-    349:351:private void animateOpen(int)
-    591:596:public void open()
-    606:609:public void close()
-    620:630:public void animateClose()
-    641:653:public void animateOpen()
-    754:755:public void unlock()
-    763:764:public void lock()
-    772:772:public boolean isOpened()
-    781:781:public boolean isMoving()
+    347:349:private void animateClose(int)
+    352:354:private void animateOpen(int)
+    594:599:public void open()
+    609:612:public void close()
+    623:633:public void animateClose()
+    644:656:public void animateOpen()
+    757:758:public void unlock()
+    766:767:public void lock()
+    775:775:public boolean isOpened()
+    784:784:public boolean isMoving()

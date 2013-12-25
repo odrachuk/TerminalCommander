@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.softsandr.terminal"
           android:versionCode="1"
-          android:versionName="1.0 beta">
+          android:versionName="1.0">
     <!-- For reading account information -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
@@ -16,9 +16,7 @@
             android:icon="@drawable/terminal_icon"
             android:theme="@style/Terminal_Theme"
             android:hardwareAccelerated="true">
-        <activity android:name=".ui.activity.terminal.TerminalActivity"
-                  android:label="@string/terminal"
-                android:screenOrientation="landscape">
+        <activity android:name=".ui.activity.terminal.TerminalActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

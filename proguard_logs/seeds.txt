@@ -274,6 +274,7 @@ com.softsandr.terminal.R$string: int sorting_by_file_name
 com.softsandr.terminal.R$string: int sorting_by_modify_time
 com.softsandr.terminal.R$string: int sorting_by_size
 com.softsandr.terminal.R$string: int tabulate
+com.softsandr.terminal.R$string: int terminal
 com.softsandr.terminal.R$string: int title_file_modify_time
 com.softsandr.terminal.R$string: int title_file_name
 com.softsandr.terminal.R$string: int title_file_size
@@ -301,16 +302,16 @@ com.softsandr.terminal.commander.command.local.LocalCommands: com.softsandr.term
 com.softsandr.terminal.commander.command.local.LocalCommands: com.softsandr.terminal.commander.command.local.LocalCommands valueOf(java.lang.String)
 com.softsandr.terminal.model.listview.ListViewItem
 com.softsandr.terminal.model.listview.ListViewItem: android.os.Parcelable$Creator CREATOR
-com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy: com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy[] values()
-com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy: com.softsandr.terminal.model.listview.ListViewItem$SortingStrategy valueOf(java.lang.String)
+com.softsandr.terminal.model.listview.ListViewSortingStrategy: com.softsandr.terminal.model.listview.ListViewSortingStrategy[] values()
+com.softsandr.terminal.model.listview.ListViewSortingStrategy: com.softsandr.terminal.model.listview.ListViewSortingStrategy valueOf(java.lang.String)
 com.softsandr.terminal.ui.activity.commander.CommanderActivity
 com.softsandr.terminal.ui.activity.commander.CommanderActivity: CommanderActivity()
 com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity
 com.softsandr.terminal.ui.activity.progress.TerminalProgressActivity: TerminalProgressActivity()
+com.softsandr.terminal.ui.activity.terminal.TerminalActivePage: com.softsandr.terminal.ui.activity.terminal.TerminalActivePage[] values()
+com.softsandr.terminal.ui.activity.terminal.TerminalActivePage: com.softsandr.terminal.ui.activity.terminal.TerminalActivePage valueOf(java.lang.String)
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity
 com.softsandr.terminal.ui.activity.terminal.TerminalActivity: TerminalActivity()
-com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage: com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage[] values()
-com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage: com.softsandr.terminal.ui.activity.terminal.TerminalActivity$ActivePage valueOf(java.lang.String)
 com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType: com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType[] values()
 com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType: com.softsandr.terminal.ui.dialog.TerminalCpMvDialog$TransferOperationType valueOf(java.lang.String)
 com.softsandr.terminal.ui.widget.slider.TerminalSlider
