@@ -155,6 +155,7 @@ public class TerminalActivity extends android.app.Activity {
     private void initActionBar() {
         ActionBar bar = getActionBar();
         if (bar != null) {
+            bar.setTitle(getString(R.string.terminal));
             ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
                     ActionBar.LayoutParams.WRAP_CONTENT,
                     ActionBar.LayoutParams.WRAP_CONTENT);

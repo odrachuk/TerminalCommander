@@ -19,6 +19,7 @@
     <string name="make_dir_string">Make directory</string>
     <string name="delete_string">Delete</string>
     <string name="commander">Commander</string>
+    <string name="terminal">Terminal</string>
     <string name="history_up">[ ^ ]</string>
     <string name="slash">/</string>
     <string name="ok">[ OK ]</string>
