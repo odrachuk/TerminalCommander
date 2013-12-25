@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="terminal_local_path_max_width">520dp</dimen>
+    <dimen name="terminal_size_column_width">95dp</dimen>
+    <dimen name="terminal_modify_column_width">125dp</dimen>
+    <dimen name="terminal_left_content_page_padding_right">200dp</dimen>
+    <dimen name="terminal_slider_handle_width">20dp</dimen>
+    <dimen name="terminal_slider_offset">180dp</dimen>
+</resources>
