@@ -199,12 +199,12 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     @Override
     public int hashCode() {
         int result = 17;
-        result = 37 * result + fileName.hashCode();
-        result = 37 * result + fileSize.hashCode();
-        result = 37 * result + fileModifyTime.hashCode();
-        result = 37 * result + (absPath != null ? absPath.hashCode() : 0);
-        result = 37 * result + (isDirectory ? 0 : 1);
-        result = 37 * result + (isLink ? 0 : 1);
+        result = 31 * result + fileName.hashCode();
+        result = 31 * result + fileSize.hashCode();
+        result = 31 * result + fileModifyTime.hashCode();
+        result = 31 * result + (absPath != null ? absPath.hashCode() : 0);
+        result = 31 * result + (isDirectory ? 0 : 1);
+        result = 31 * result + (isLink ? 0 : 1);
         return result;
     }
 

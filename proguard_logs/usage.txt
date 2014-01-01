@@ -46,10 +46,10 @@ com.softsandr.terminal.R$integer
 com.softsandr.terminal.R$layout
 com.softsandr.terminal.R$menu
 com.softsandr.terminal.R$string:
-    335:335:public R$string()
+    338:338:public R$string()
 com.softsandr.terminal.R$style
 com.softsandr.terminal.R$styleable:
-    387:387:public R$styleable()
+    390:390:public R$styleable()
 com.softsandr.terminal.commander.TerminalCommander:
     private static final java.lang.String SYSTEM_EXECUTOR
 com.softsandr.terminal.commander.command.filtered.FilteredCommands:

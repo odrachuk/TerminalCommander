@@ -13137,7 +13137,7 @@ Methods (count = 27):
     + Code attribute instructions (code length = 104, locals = 2, stack = 2):
       [0] bipush 17
       [2] istore_1 v1
-      [3] bipush 37
+      [3] bipush 31
       [5] iload_1 v1
       [6] imul
       [7] aload_0 v0
@@ -13147,7 +13147,7 @@ Methods (count = 27):
         + Methodref [java/lang/String.hashCode ()I]
       [14] iadd
       [15] istore_1 v1
-      [16] bipush 37
+      [16] bipush 31
       [18] iload_1 v1
       [19] imul
       [20] aload_0 v0
@@ -13157,7 +13157,7 @@ Methods (count = 27):
         + Methodref [java/lang/String.hashCode ()I]
       [27] iadd
       [28] istore_1 v1
-      [29] bipush 37
+      [29] bipush 31
       [31] iload_1 v1
       [32] imul
       [33] aload_0 v0
@@ -13167,7 +13167,7 @@ Methods (count = 27):
         + Methodref [java/lang/String.hashCode ()I]
       [40] iadd
       [41] istore_1 v1
-      [42] bipush 37
+      [42] bipush 31
       [44] iload_1 v1
       [45] imul
       [46] aload_0 v0
@@ -13183,7 +13183,7 @@ Methods (count = 27):
       [63] iconst_0
       [64] iadd
       [65] istore_1 v1
-      [66] bipush 37
+      [66] bipush 31
       [68] iload_1 v1
       [69] imul
       [70] aload_0 v0
@@ -13195,7 +13195,7 @@ Methods (count = 27):
       [81] iconst_1
       [82] iadd
       [83] istore_1 v1
-      [84] bipush 37
+      [84] bipush 31
       [86] iload_1 v1
       [87] imul
       [88] aload_0 v0
