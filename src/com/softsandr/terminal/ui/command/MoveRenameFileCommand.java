@@ -3,6 +3,7 @@ package com.softsandr.terminal.ui.command;
 import android.util.Log;
 import android.widget.Toast;
 import com.drk.terminal.util.utils.FileUtil;
+import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 
@@ -19,10 +20,10 @@ public class MoveRenameFileCommand implements FileCommand {
     private static final String LOG_TAG = MoveRenameFileCommand.class.getSimpleName();
     private final TerminalActivity terminalActivity;
     private final List<ListViewItem> items;
-    private final String destinationPath;
     private final String destinationOldPath;
     private final String currentPath;
     private final boolean pathChanged;
+    private String destinationPath;
 
     public MoveRenameFileCommand(TerminalActivity terminalActivity,
                                  List<ListViewItem> items,
@@ -42,28 +43,30 @@ public class MoveRenameFileCommand implements FileCommand {
     public void onExecute() {
         if (items != null && !items.isEmpty()) {
             try {
-                File dstDirectory = new File(destinationPath);
-                if (dstDirectory.exists()) {
-                    if (dstDirectory.canWrite()) {
-                        for (ListViewItem item : items) {
-                            File srcFile = new File(item.getAbsPath());
-                            if (srcFile.canRead()) {
-                                FileUtil.moveToDirectory(srcFile, dstDirectory, true);
-                            } else {
-                                Toast.makeText(terminalActivity, "No enough permission to read source file.", Toast.LENGTH_SHORT).show();
-                                makeClearSelection();
-                            }
-                        }
-                        // clear selected
-                        makeClearSelection();
-                        makeRefreshDirectory();
-                    } else {
-                        Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
-                        makeClearSelection();
-                    }
-                } else {
-                    Toast.makeText(terminalActivity, "Destination directory " + destinationPath + " not exists.", Toast.LENGTH_SHORT).show();
+                String renamingString = null;
+                if (destinationPath.contains(".")) { // determining rename situation for simple file - not directory
+                    renamingString = FileUtil.getFileNameFromPath(destinationPath);
+                    destinationPath = FileUtil.getDirectoryNameFromPath(destinationPath);
+                }
+                if (renamingString != null && items.size() > 1) {
+                    Toast.makeText(terminalActivity, "You cannot rename multiple objects.", Toast.LENGTH_SHORT).show();
                     makeClearSelection();
+                } else {
+                    File dstDirectory = new File(destinationPath);
+                    for (ListViewItem item : items) {
+                        File srcFile = new File(item.getAbsPath());
+                        if (renamingString != null) {
+                            // rename simple file - not directory
+                            File destinationFile = new File(destinationPath + StringUtil.PATH_SEPARATOR + renamingString);
+                            FileUtil.renameFile(srcFile, destinationFile);
+                        } else {
+                            // rename or move directory
+                            FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                        }
+                    }
+                    // clear selected
+                    makeClearSelection();
+                    makeRefreshDirectory();
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Move/Rename", e);
@@ -71,8 +74,7 @@ public class MoveRenameFileCommand implements FileCommand {
                 makeClearSelection();
             }
         } else {
-            // todo show message about "Not object selected for copy operation"
-            Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, "No object selected.", Toast.LENGTH_SHORT).show();
         }
     }
 

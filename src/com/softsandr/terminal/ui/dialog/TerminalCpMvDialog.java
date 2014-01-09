@@ -59,12 +59,12 @@ public class TerminalCpMvDialog extends DialogFragment {
                                 operationDestinationPath,
                                 pathChanged).onExecute();
                     } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
-                            new MoveRenameFileCommand((TerminalActivity) getActivity(),
-                                    mFileAbsPathList,
-                                    operationDestinationPath,
-                                    mDstDirAbsPath,
-                                    mCurrentAbsPath,
-                                    pathChanged).onExecute();
+                        new MoveRenameFileCommand((TerminalActivity) getActivity(),
+                                mFileAbsPathList,
+                                operationDestinationPath,
+                                mDstDirAbsPath,
+                                mCurrentAbsPath,
+                                pathChanged).onExecute();
                     }
                     dialog = TerminalCpMvDialog.this.getDialog();
                     if (dialog != null) {

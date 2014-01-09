@@ -50,7 +50,6 @@ public class DeleteFileCommand implements FileCommand {
                 makeClearSelection();
             }
         } else {
-            // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
         }
     }

@@ -526,7 +526,7 @@ public class FileUtil {
      *
      * @param file file or directory to delete, can be {@code null}
      * @return {@code true} if the file or directory was deleted, otherwise
-     *         {@code false}
+     * {@code false}
      * @since 1.4
      */
     public static boolean deleteQuietly(File file) {
@@ -726,7 +726,6 @@ public class FileUtil {
             throw new IOException("Destination '" + destDir + "' is not a directory");
         }
         moveDirectory(src, new File(destDir, src.getName()));
-
     }
 
     /**
@@ -837,6 +836,33 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Rename a file.
+     *
+     * @param oldFile   the file to be renamed
+     * @param newFile   the file after rename
+     * @throws NullPointerException if source or destination is {@code null}
+     * @throws FileExistsException  if the destination directory exists
+     * @throws java.io.IOException  if source or destination is invalid
+     * @throws java.io.IOException  if an IO error occurs moving the file
+     * @since 1.4
+     */
+    public static void renameFile(File oldFile, File newFile) throws IOException {
+        if (oldFile == null) {
+            throw new NullPointerException("Source must not be null");
+        }
+        if (newFile == null) {
+            throw new NullPointerException("Destination must not be null");
+        }
+        if (!oldFile.exists()) {
+            throw new FileNotFoundException("Source '" + oldFile + "' does not exist");
+        }
+        boolean rename = oldFile.renameTo(newFile);
+        if (!rename) {
+            throw new IOException("Failed to rename original file '" + oldFile +"'.");
+        }
+    }
+
     public static void closeQuietly(Closeable closeable) {
         try {
             if (closeable != null) {
@@ -943,6 +969,26 @@ public class FileUtil {
             resultPath.append(targetDirectory);
         }
         return resultPath.toString();
+    }
+
+    public static String getFileNameFromPath(String path) {
+        if (path != null && !path.isEmpty()) {
+            int lastSlashIndex = path.lastIndexOf(StringUtil.PATH_SEPARATOR);
+            if (lastSlashIndex != path.length()) {
+                return path.substring(lastSlashIndex, path.length());
+            }
+        }
+        return null;
+    }
+
+    public static String getDirectoryNameFromPath(String path) {
+        if (path != null && !path.isEmpty()) {
+            int lastSlashIndex = path.lastIndexOf(StringUtil.PATH_SEPARATOR);
+            if (lastSlashIndex != path.length()) {
+                return path.substring(0, lastSlashIndex);
+            }
+        }
+        return null;
     }
 
     public static long getDirectorySize(File directory) {

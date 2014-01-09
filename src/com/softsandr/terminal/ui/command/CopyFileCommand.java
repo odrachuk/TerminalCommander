@@ -36,40 +36,22 @@ public class CopyFileCommand implements FileCommand {
     public void onExecute() {
         if (items != null && !items.isEmpty()) {
             try {
-                File dstDirectory = new File(destinationPath);
-                if (dstDirectory.exists()) {
-                    if (dstDirectory.canWrite()) {
-                        for (ListViewItem item : items) {
-                            File srcFile = new File(item.getAbsPath());
-                            if (srcFile.canRead()) {
-                                if (item.isDirectory()) {
-                                    FileUtil.copyDirectoryToDirectory(new File(item.getAbsPath()), new File(destinationPath));
-                                } else {
-                                    FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
-                                }
-                            } else {
-                                Toast.makeText(terminalActivity, "No enough permission to read file " + srcFile + ".", Toast.LENGTH_SHORT).show();
-                                makeClearSelection();
-                            }
-                        }
-                        // clear selected
-                        makeClearSelection();
-                        makeRefreshDirectory();
+                for (ListViewItem item : items) {
+                    if (item.isDirectory()) {
+                        FileUtil.copyDirectoryToDirectory(new File(item.getAbsPath()), new File(destinationPath));
                     } else {
-                        Toast.makeText(terminalActivity, "No enough permission to write in directory " + destinationPath + ".", Toast.LENGTH_SHORT).show();
-                        makeClearSelection();
+                        FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
                     }
-                } else {
-                    Toast.makeText(terminalActivity, "Destination directory " + destinationPath + " not exists.", Toast.LENGTH_SHORT).show();
-                    makeClearSelection();
                 }
+                // clear selected
+                makeClearSelection();
+                makeRefreshDirectory();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "copyFile", e);
                 Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
                 makeClearSelection();
             }
         } else {
-            // todo show message about "Not object selected for copy operation"
             Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
         }
     }
