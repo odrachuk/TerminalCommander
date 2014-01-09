@@ -28,12 +28,15 @@ com.drk.terminal.util.utils.FileUtil -> com.a.a.a.b.d:
     void moveFile(java.io.File,java.io.File) -> e
     void moveFileToDirectory(java.io.File,java.io.File,boolean) -> e
     void moveToDirectory(java.io.File,java.io.File,boolean) -> f
+    void renameFile(java.io.File,java.io.File) -> f
     void closeQuietly(java.io.Closeable) -> a
     boolean isSymlink(java.lang.String,java.io.File) -> a
     boolean isDirectoryExist(java.lang.String,java.lang.String) -> a
     boolean canChangeDirectory(java.lang.String,java.lang.String) -> b
     java.lang.String buildDirectoryPath(java.lang.String,java.lang.String) -> c
     java.lang.String trimLastSlash(java.lang.String) -> a
+    java.lang.String getFileNameFromPath(java.lang.String) -> b
+    java.lang.String getDirectoryNameFromPath(java.lang.String) -> c
     long getDirectorySize(java.io.File) -> f
 com.drk.terminal.util.utils.StringUtil -> com.a.a.a.b.e:
     java.lang.String LINE_SEPARATOR -> a
@@ -93,7 +96,9 @@ com.softsandr.terminal.commander.CommandResponseHandler -> com.softsandr.termina
     android.content.res.Resources mResources -> e
     int mScreenWidth -> f
     void handleMessage(android.os.Message) -> handleMessage
-com.softsandr.terminal.commander.TerminalCommander -> com.softsandr.terminal.a.b:
+com.softsandr.terminal.commander.Commander -> com.softsandr.terminal.a.b:
+    void exitActivity() -> a
+com.softsandr.terminal.commander.TerminalCommander -> com.softsandr.terminal.a.c:
     java.lang.String LOG_TAG -> a
     com.softsandr.terminal.commander.CommandResponseHandler mResponseHandler -> b
     com.softsandr.terminal.commander.prompt.TerminalPrompt mTerminalPrompt -> c
@@ -106,13 +111,13 @@ com.softsandr.terminal.commander.TerminalCommander -> com.softsandr.terminal.a.b
     void nativeExecute(java.lang.String) -> d
     java.lang.String eraseAbsent(java.lang.String) -> e
     void onChangeDirectory(java.lang.String) -> c
-    void onExit() -> a
-    void onClear() -> b
-    void stopExecutionProcess() -> c
+    void onClear() -> a
+    void stopExecutionProcess() -> b
+    com.softsandr.terminal.commander.controller.UiController getUiController() -> c
     java.lang.String getCommandText() -> d
     java.lang.String getProcessPath() -> e
     android.widget.TextView access$000(com.softsandr.terminal.commander.TerminalCommander) -> a
-com.softsandr.terminal.commander.TerminalCommander$1 -> com.softsandr.terminal.a.c:
+com.softsandr.terminal.commander.TerminalCommander$1 -> com.softsandr.terminal.a.d:
     com.softsandr.terminal.commander.TerminalCommander this$0 -> a
     void run() -> run
 com.softsandr.terminal.commander.command.filtered.FilteredCommands -> com.softsandr.terminal.a.a.a.a:
@@ -382,14 +387,15 @@ com.softsandr.terminal.ui.activity.commander.CommanderActivity -> com.softsandr.
     void onCreate(android.os.Bundle) -> onCreate
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void exitActivity() -> a
     void onResume() -> onResume
     void onPause() -> onPause
     void onDestroy() -> onDestroy
     void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
-    void init() -> b
-    void initActionBar() -> c
-    void showSoftKeyboard() -> a
+    void init() -> c
+    void initActionBar() -> d
+    void showSoftKeyboard() -> b
     android.widget.Button access$000(com.softsandr.terminal.ui.activity.commander.CommanderActivity) -> a
 com.softsandr.terminal.ui.activity.commander.CommanderActivity$1 -> com.softsandr.terminal.ui.activity.commander.a:
     com.softsandr.terminal.ui.activity.commander.CommanderActivity this$0 -> a
@@ -635,10 +641,10 @@ com.softsandr.terminal.ui.command.MoveRenameFileCommand -> com.softsandr.termina
     java.lang.String LOG_TAG -> a
     com.softsandr.terminal.ui.activity.terminal.TerminalActivity terminalActivity -> b
     java.util.List items -> c
-    java.lang.String destinationPath -> d
-    java.lang.String destinationOldPath -> e
-    java.lang.String currentPath -> f
-    boolean pathChanged -> g
+    java.lang.String destinationOldPath -> d
+    java.lang.String currentPath -> e
+    boolean pathChanged -> f
+    java.lang.String destinationPath -> g
     void onExecute() -> a
     void makeClearSelection() -> b
     void makeRefreshDirectory() -> c

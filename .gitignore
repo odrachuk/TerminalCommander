@@ -4,6 +4,7 @@ gen/
 out/
 classes/
 .idea/
+proguard_logs/
 
 # Directory content #
 .settings/*

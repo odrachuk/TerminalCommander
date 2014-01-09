@@ -22,8 +22,8 @@ com.drk.terminal.util.utils.FileUtil:
     26:26:public FileUtil()
     65:66:public static void copyFileToDirectory(java.io.File,java.io.File)
     366:367:public static void copyDirectory(java.io.File,java.io.File,java.io.FileFilter)
-    884:889:public static boolean isDirectoryExist(java.lang.String)
-    900:905:public static boolean checkWritePermissions(java.lang.String,java.lang.String)
+    910:915:public static boolean isDirectoryExist(java.lang.String)
+    926:931:public static boolean checkWritePermissions(java.lang.String,java.lang.String)
 com.drk.terminal.util.utils.OrientationUtil
 com.drk.terminal.util.utils.StringUtil:
     public static final java.lang.String EMPTY
@@ -52,6 +52,7 @@ com.softsandr.terminal.R$styleable:
     390:390:public R$styleable()
 com.softsandr.terminal.commander.TerminalCommander:
     private static final java.lang.String SYSTEM_EXECUTOR
+    152:154:public void onExit()
 com.softsandr.terminal.commander.command.filtered.FilteredCommands:
     102:102:public java.lang.String getText()
 com.softsandr.terminal.commander.command.filtered.LsRowsList:
