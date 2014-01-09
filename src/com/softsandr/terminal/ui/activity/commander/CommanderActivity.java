@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.commander.Commander;
 import com.softsandr.terminal.commander.controller.KeyboardController;
 import com.softsandr.terminal.commander.controller.ProcessController;
 import com.softsandr.terminal.commander.controller.UiController;
@@ -26,7 +27,7 @@ import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
  *
  * @author Drachuk O.V.
  */
-public class CommanderActivity extends Activity {
+public class CommanderActivity extends Activity implements Commander {
     private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
     public static final String OTHER_PATH_EXTRA = LOG_TAG + ".OTHER_PATH";
@@ -107,18 +108,23 @@ public class CommanderActivity extends Activity {
                 sendBroadcast(new Intent(TerminalActivity.COMMON_EXIT_INTENT));
                 return true;
             case android.R.id.home:
-                // Stop processes
-                mProcessController.getProcess().stopExecutionProcess();
-                // Prepare data intent
-                Intent data = new Intent();
-                data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
-                data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
-                data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
-                setResult(RESULT_OK, data);
-                finish();
+                exitActivity();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void exitActivity() {
+        // Stop processes
+        mProcessController.getProcess().stopExecutionProcess();
+        // Prepare data intent
+        Intent data = new Intent();
+        data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
+        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     @Override

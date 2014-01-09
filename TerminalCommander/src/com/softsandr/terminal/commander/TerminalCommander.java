@@ -170,6 +170,10 @@ public class TerminalCommander {
         }
     }
 
+    public UiController getUiController() {
+        return mUiController;
+    }
+
     public String getCommandText() {
         return mCommandText;
     }
