@@ -20,6 +20,7 @@ import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.model.preferences.TerminalPreferences;
 import com.softsandr.terminal.ui.activity.commander.CommanderActivity;
+import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents;
 import com.softsandr.terminal.ui.dialog.TerminalDialogUtil;

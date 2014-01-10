@@ -1,4 +1,4 @@
-package com.softsandr.terminal.ui.activity.terminal;
+package com.softsandr.terminal.ui.activity.terminal.adapter;
 
 import android.graphics.Paint;
 import android.util.Log;
@@ -11,6 +11,8 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
+import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
+import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 
 import java.util.*;

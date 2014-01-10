@@ -18,6 +18,14 @@ import java.util.List;
 public class ListViewFiller {
     private static final String LOG_TAG = ListViewFiller.class.getSimpleName();
 
+    /**
+     * Processing target path and collect all found elements to list.
+     * Used predefined sorting strategy from {@link com.softsandr.terminal.model.listview.ListViewSortingStrategy}.
+     * After processing data is not sorting in resulting list.
+     * @param sortingStrategy   the enum type that determine variant of sorting field
+     * @param filesList         the result list of data
+     * @param path              the target location path
+     */
     public static void fillListContent(final ListViewSortingStrategy sortingStrategy, final List<ListViewItem> filesList, final String path) {
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
 
@@ -73,6 +81,6 @@ public class ListViewFiller {
                 }
             }
         }, "").start(path);
-        Collections.sort(filesList);
+//        Collections.sort(filesList);
     }
 }

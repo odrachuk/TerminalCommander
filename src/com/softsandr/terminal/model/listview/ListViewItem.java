@@ -19,19 +19,28 @@ import java.util.Locale;
  */
 public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     private static final String LOG_TAG = ListViewItem.class.getSimpleName();
-    public static final String DATE_FORMAT = "MMM dd yyyy";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy", Locale.US);
+
     public static final long DIRECTORY_DEF_SIZE = -1;
     public static final long UP_LINK_DEF_SIZE = -2;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+
     private final String fileModifyTime;
     private final String fileName;
     private final String fileSize;
+
     private ListViewSortingStrategy sortingStrategy;
     private boolean isDirectory;
     private boolean canRead;
     private boolean isLink;
     private String absPath;
 
+    /**
+     * Constractor of object that represent file object in list
+     * @param sortingStrategy   The type enum  {@link ListViewSortingStrategy}
+     * @param fileName          The file name only
+     * @param fileSize          The size of file in bytes
+     * @param fileModifyTime    The time of last file modify in millisecond
+     */
     public ListViewItem(ListViewSortingStrategy sortingStrategy,
                         String fileName,
                         long fileSize,
@@ -93,15 +102,6 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         return isDirectory;
     }
 
-    public ListViewItem setCanRead(boolean canRead) {
-        this.canRead = canRead;
-        return this;
-    }
-
-    public boolean canRead() {
-        return canRead;
-    }
-
     public ListViewItem setAbsPath(String absPath) {
         this.absPath = absPath;
         return this;
@@ -122,6 +122,15 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
 
     public boolean isParentDots() {
         return fileName.equals(StringUtil.PARENT_DOTS);
+    }
+
+    public ListViewItem setCanRead(boolean canRead) {
+        this.canRead = canRead;
+        return this;
+    }
+
+    public boolean canRead() {
+        return canRead;
     }
 
     @Override
@@ -179,35 +188,7 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         return 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!o.getClass().isInstance(ListViewItem.class)) {
-            return false;
-        }
-        ListViewItem other = (ListViewItem) o;
-        return !(!fileName.equals(other.fileName) ||
-                !fileSize.equals(other.fileSize) ||
-                !fileModifyTime.equals(other.fileModifyTime) ||
-                !absPath.equals(other.absPath) ||
-                isDirectory != other.isDirectory ||
-                isLink != other.isLink);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + fileName.hashCode();
-        result = 31 * result + fileSize.hashCode();
-        result = 31 * result + fileModifyTime.hashCode();
-        result = 31 * result + (absPath != null ? absPath.hashCode() : 0);
-        result = 31 * result + (isDirectory ? 0 : 1);
-        result = 31 * result + (isLink ? 0 : 1);
-        return result;
-    }
-
+    /* Start Parcelable declarations */
     @Override
     public int describeContents() {
         return 0;
@@ -248,4 +229,29 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
             return new ListViewItem[0];
         }
     };
+    /* End Parcelable declarations */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ListViewItem)) return false;
+        ListViewItem that = (ListViewItem) o;
+        return isDirectory == that.isDirectory
+                && isLink == that.isLink
+                && !(absPath != null ? !absPath.equals(that.absPath) : that.absPath != null)
+                && !(fileModifyTime != null ? !fileModifyTime.equals(that.fileModifyTime) : that.fileModifyTime != null)
+                && !(fileName != null ? !fileName.equals(that.fileName) : that.fileName != null)
+                && !(fileSize != null ? !fileSize.equals(that.fileSize) : that.fileSize != null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fileModifyTime != null ? fileModifyTime.hashCode() : 0;
+        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+        result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
+        result = 31 * result + (isDirectory ? 1 : 0);
+        result = 31 * result + (isLink ? 1 : 0);
+        result = 31 * result + (absPath != null ? absPath.hashCode() : 0);
+        return result;
+    }
 }
