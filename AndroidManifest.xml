@@ -16,7 +16,8 @@
             android:icon="@drawable/terminal_icon"
             android:theme="@style/Terminal_Theme"
             android:hardwareAccelerated="true">
-        <activity android:name=".ui.activity.terminal.TerminalActivity">
+        <activity android:name=".ui.activity.terminal.TerminalActivity"
+                  android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
