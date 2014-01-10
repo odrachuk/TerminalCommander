@@ -81,6 +81,6 @@ public class ListViewFiller {
                 }
             }
         }, "").start(path);
-//        Collections.sort(filesList);
+        Collections.sort(filesList);
     }
 }

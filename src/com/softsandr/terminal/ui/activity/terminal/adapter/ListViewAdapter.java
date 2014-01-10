@@ -24,6 +24,7 @@ import java.util.*;
  */
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
+
     private final SelectionStrategy selectionStrategy;
     private final CurrentPathLabel pathLabel;
     private final List<ListViewItem> filesInfo;
