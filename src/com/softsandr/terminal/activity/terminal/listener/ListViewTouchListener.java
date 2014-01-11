@@ -22,15 +22,15 @@ import android.view.View;
 import android.widget.AbsListView;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.ActivePage;
-import com.softsandr.terminal.activity.terminal.Terminal;
+import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 /**
  * This class used for management visual selection of panels
  */
 public class ListViewTouchListener implements AbsListView.OnTouchListener {
-    private final Terminal terminal;
+    private final TerminalActivity terminal;
 
-    public ListViewTouchListener(Terminal terminal) {
+    public ListViewTouchListener(TerminalActivity terminal) {
         this.terminal = terminal;
     }
 

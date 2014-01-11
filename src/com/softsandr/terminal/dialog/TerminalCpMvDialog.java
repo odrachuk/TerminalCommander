@@ -24,10 +24,10 @@ import android.text.Editable;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.command.CopyFileCommand;
 import com.softsandr.terminal.command.MoveRenameFileCommand;
 
@@ -69,12 +69,12 @@ public class TerminalCpMvDialog extends DialogFragment {
                         pathChanged = true;
                     }
                     if (mOperationType.equals(TransferOperationType.COPY_OPERATION)) {
-                        new CopyFileCommand((TerminalActivity) getActivity(),
+                        new CopyFileCommand((TerminalActivityImpl) getActivity(),
                                 mFileAbsPathList,
                                 operationDestinationPath,
                                 pathChanged).onExecute();
                     } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
-                        new MoveRenameFileCommand((TerminalActivity) getActivity(),
+                        new MoveRenameFileCommand((TerminalActivityImpl) getActivity(),
                                 mFileAbsPathList,
                                 operationDestinationPath,
                                 mDstDirAbsPath,

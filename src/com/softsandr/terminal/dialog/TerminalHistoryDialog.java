@@ -26,10 +26,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.ActivePage;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 /**
  * This class contain logic for constructing history locations dialog
@@ -45,11 +45,11 @@ public class TerminalHistoryDialog extends DialogFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String[] splitPath = mHistoryLocations[position].substring(1).split(StringUtil.PATH_SEPARATOR);
             if (mActivePage.equals(ActivePage.LEFT)) {
-                ((TerminalActivity) getActivity()).getLeftListAdapter().clearLocationHistory(splitPath);
-                ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
+                ((TerminalActivityImpl) getActivity()).getLeftListAdapter().clearLocationHistory(splitPath);
+                ((TerminalActivityImpl) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             } else {
-                ((TerminalActivity) getActivity()).getRightListAdapter().clearLocationHistory(splitPath);
-                ((TerminalActivity) getActivity()).getRightListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
+                ((TerminalActivityImpl) getActivity()).getRightListAdapter().clearLocationHistory(splitPath);
+                ((TerminalActivityImpl) getActivity()).getRightListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             }
             getDialog().cancel();
         }

@@ -27,7 +27,7 @@ import com.softsandr.terminal.activity.terminal.async.SizeComputationTask;
 
 /**
  * This class used uniform {@link com.softsandr.terminal.activity.terminal.listener.ListViewItemLongClickListener}
- * for specific panel of Terminal.
+ * for specific panel of TerminalActivity.
  */
 public class ListViewItemLongClickListener implements AdapterView.OnItemLongClickListener {
     private final ListViewAdapter adapter;

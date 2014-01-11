@@ -19,7 +19,7 @@ package com.softsandr.terminal.activity.terminal.monitor;
 
 import android.view.MenuItem;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
-import com.softsandr.terminal.activity.terminal.Terminal;
+import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 /**
  * This class used for configuring sorting mode of list by user options from main menu
@@ -28,9 +28,9 @@ public class SortingMenuItemsMonitor {
     private final MenuItem sortByName;
     private final MenuItem sortBySize;
     private final MenuItem sortByModify;
-    private final Terminal terminal;
+    private final TerminalActivity terminal;
 
-    public SortingMenuItemsMonitor(Terminal terminal, MenuItem sortByName,
+    public SortingMenuItemsMonitor(TerminalActivity terminal, MenuItem sortByName,
                                    MenuItem sortBySize, MenuItem sortByModify) {
         this.terminal = terminal;
         this.sortByName = sortByName;

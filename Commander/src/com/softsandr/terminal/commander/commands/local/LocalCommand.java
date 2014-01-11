@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Created by o.drachuk on 09/01/2014. 
+ * Created by o.drachuk on 10/01/2014.
  *
  * Copyright Oleksandr Drachuk.
  *
@@ -15,14 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander;
+package com.softsandr.terminal.commander.commands.local;
+
+import com.softsandr.terminal.commander.TerminalCommander;
 
 /**
- * This interface declare public features of specific activity for commander
+ * The instantiation of the interface represent command logic of that will be customized
  */
-public interface Commander {
-    /**
-     * Used for declaration common exit operation
-     */
-    void exitActivity();
+public interface LocalCommand {
+    String isExecutable(TerminalCommander terminalProcess);
+    String onExecute(TerminalCommander terminalProcess);
 }

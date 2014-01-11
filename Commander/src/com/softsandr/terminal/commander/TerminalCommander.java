@@ -24,10 +24,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.command.interactive.InteractiveCommands;
-import com.softsandr.terminal.commander.command.local.LocalCommands;
-import com.softsandr.terminal.commander.controller.UiController;
-import com.softsandr.terminal.commander.prompt.TerminalPrompt;
+import com.softsandr.terminal.commander.commands.interactive.InteractiveCommands;
+import com.softsandr.terminal.commander.commands.local.LocalCommands;
 
 import java.io.*;
 import java.util.LinkedList;

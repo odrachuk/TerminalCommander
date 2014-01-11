@@ -24,10 +24,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.command.DeleteFileCommand;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class TerminalDeleteDialog extends DialogFragment {
             int viewId = v.getId();
             switch (viewId) {
                 case R.id.terminal_delete_dialog_btn_ok:
-                    new DeleteFileCommand((TerminalActivity) getActivity(),
+                    new DeleteFileCommand((TerminalActivityImpl) getActivity(),
                             mFileAbsPathList,
                             mCurrentAbsPath,
                             mDestinationPath).onExecute();

@@ -19,10 +19,10 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,14 +33,14 @@ import java.util.List;
  */
 public class MoveRenameFileCommand implements FileCommand {
     private static final String LOG_TAG = MoveRenameFileCommand.class.getSimpleName();
-    private final TerminalActivity terminalActivity;
+    private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
     private final String destinationOldPath;
     private final String currentPath;
     private final boolean pathChanged;
     private String destinationPath;
 
-    public MoveRenameFileCommand(TerminalActivity terminalActivity,
+    public MoveRenameFileCommand(TerminalActivityImpl terminalActivity,
                                  List<ListViewItem> items,
                                  String destinationPath,
                                  String destinationOldPath,

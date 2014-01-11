@@ -15,13 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.command.interactive;
+package com.softsandr.terminal.commander.commands.interactive;
 
 import android.content.res.Resources;
 import android.widget.TextView;
-import com.softsandr.terminal.R;
-import com.softsandr.terminal.commander.command.filtered.LsRowRecord;
-import com.softsandr.terminal.commander.command.filtered.LsRowsList;
 
 /**
  * The console commands that use console before not canceled

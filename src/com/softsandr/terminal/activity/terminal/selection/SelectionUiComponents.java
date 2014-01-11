@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.view.View;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class SelectionUiComponents {
     private final TextView leftPathLabel;
 
 
-    public SelectionUiComponents(TerminalActivity activity) {
+    public SelectionUiComponents(TerminalActivityImpl activity) {
         this.resources = activity.getResources();
         // left panel
         leftPanelBorders.add(activity.findViewById(R.id.top_border_image_1_in_left));

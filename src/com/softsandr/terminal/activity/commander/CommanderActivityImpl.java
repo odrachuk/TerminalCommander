@@ -31,19 +31,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.commander.CommanderActivity;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.commander.Commander;
-import com.softsandr.terminal.commander.controller.KeyboardController;
-import com.softsandr.terminal.commander.controller.ProcessController;
-import com.softsandr.terminal.commander.controller.UiController;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.commander.KeyboardController;
+import com.softsandr.terminal.commander.ProcessController;
+import com.softsandr.terminal.commander.UiController;
 
 /**
- * This activity represent Commander - console
+ * This activity represent CommanderActivityImpl - console
  */
-public class CommanderActivity extends Activity implements Commander {
-    private static final String LOG_TAG = CommanderActivity.class.getSimpleName();
+public class CommanderActivityImpl extends Activity implements CommanderActivity {
+    private static final String LOG_TAG = CommanderActivityImpl.class.getSimpleName();
     public static final String WORK_PATH_EXTRA = LOG_TAG + ".WORK_PATH";
     public static final String OTHER_PATH_EXTRA = LOG_TAG + ".OTHER_PATH";
     public static final String ACTIVE_PAGE_EXTRA = LOG_TAG + ".ACTIVE_PAGE";
@@ -52,7 +52,7 @@ public class CommanderActivity extends Activity implements Commander {
         public void onClick(View v) {
             if (v.equals(mTabMenuBtn)) {
                 // todo
-                Toast.makeText(CommanderActivity.this, "Tabulate", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommanderActivityImpl.this, "Tabulate", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -70,7 +70,7 @@ public class CommanderActivity extends Activity implements Commander {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action != null) {
-                if (action.equals(TerminalActivity.COMMON_EXIT_INTENT)) {
+                if (action.equals(TerminalActivityImpl.COMMON_EXIT_INTENT)) {
                     finish();
                 }
             }
@@ -120,7 +120,7 @@ public class CommanderActivity extends Activity implements Commander {
                 mProcessController.getProcess().onClear();
                 return true;
             case R.id.action_quit:
-                sendBroadcast(new Intent(TerminalActivity.COMMON_EXIT_INTENT));
+                sendBroadcast(new Intent(TerminalActivityImpl.COMMON_EXIT_INTENT));
                 return true;
             case android.R.id.home:
                 exitActivity();
@@ -145,7 +145,7 @@ public class CommanderActivity extends Activity implements Commander {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(TerminalActivity.COMMON_EXIT_INTENT));
+        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(TerminalActivityImpl.COMMON_EXIT_INTENT));
         init();
     }
 

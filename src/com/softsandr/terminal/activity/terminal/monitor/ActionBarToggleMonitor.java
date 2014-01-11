@@ -20,21 +20,21 @@ package com.softsandr.terminal.activity.terminal.monitor;
 import android.content.res.Resources;
 import android.view.View;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.terminal.Terminal;
+import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 /**
  * This class used for monitoring toggle mode of group of buttons on ActionBar of
- * {@link com.softsandr.terminal.activity.terminal.TerminalActivity}
+ * {@link com.softsandr.terminal.activity.terminal.TerminalActivityImpl}
  */
 public class ActionBarToggleMonitor {
     private final View shiftBtnContainer, ctrlBtnContainer;
     private final Resources resources;
-    private final Terminal terminal;
+    private final TerminalActivity terminal;
 
     private boolean isShiftToggled;
     private boolean isCtrlToggled;
 
-    public ActionBarToggleMonitor(Terminal terminal, View shiftBtnContainer, View ctrlBtnContainer) {
+    public ActionBarToggleMonitor(TerminalActivity terminal, View shiftBtnContainer, View ctrlBtnContainer) {
         this.terminal = terminal;
         resources = terminal.getContextResources();
         this.shiftBtnContainer = shiftBtnContainer;

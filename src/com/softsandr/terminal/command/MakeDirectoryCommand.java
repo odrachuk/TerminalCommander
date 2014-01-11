@@ -19,9 +19,9 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,12 +31,12 @@ import java.io.IOException;
  */
 public class MakeDirectoryCommand implements FileCommand {
     private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();
-    private final TerminalActivity terminalActivity;
+    private final TerminalActivityImpl terminalActivity;
     private final String directoryName;
     private final String currentPath;
     private final String destinationPath;
 
-    public MakeDirectoryCommand(TerminalActivity terminalActivity, String directoryName,
+    public MakeDirectoryCommand(TerminalActivityImpl terminalActivity, String directoryName,
                                 String currentPath,
                                 String destinationPath) {
         this.terminalActivity = terminalActivity;

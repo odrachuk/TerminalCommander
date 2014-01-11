@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Created by o.drachuk on 10/01/2014.
+ * Created by o.drachuk on 10/01/2014. 
  *
  * Copyright Oleksandr Drachuk.
  *
@@ -17,389 +17,116 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal;
 
-import android.app.ActionBar;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
-import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.ListView;
-import com.softsandr.utils.string.StringUtil;
-import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
-import com.softsandr.terminal.model.preferences.TerminalPreferences;
-import com.softsandr.terminal.activity.commander.CommanderActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
-import com.softsandr.terminal.activity.terminal.async.LoadLeftListTask;
-import com.softsandr.terminal.activity.terminal.async.LoadRightListTask;
-import com.softsandr.terminal.activity.terminal.listener.ListViewItemClickListener;
-import com.softsandr.terminal.activity.terminal.listener.ListViewItemLongClickListener;
-import com.softsandr.terminal.activity.terminal.listener.ListViewTouchListener;
-import com.softsandr.terminal.activity.terminal.listener.TerminalClickListener;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
-import com.softsandr.terminal.activity.terminal.monitor.SortingMenuItemsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
 
 import java.util.ArrayList;
 
 /**
- * The main activity that contain list of files
+ * This class used for specify interface of TerminalActivity activity
  */
-public class TerminalActivity extends android.app.Activity implements Terminal {
-    public static final int REQUEST_CODE = 0;
-    public static final String COMMON_EXIT_INTENT = TerminalActivity.class.getSimpleName() + ".COMMON_EXIT_INTENT";
+public interface TerminalActivity {
+    /**
+     * Return prepared {@link ListViewAdapter} of left panel
+     * @return instance of {@link ListViewAdapter}
+     */
+    ListViewAdapter getLeftListAdapter();
 
-    private static final String LOG_TAG = TerminalActivity.class.getSimpleName();
-    private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
-    private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
+    /**
+     * Used for init left panel adapter
+     * @param adapter an {@link ListViewAdapter}
+     */
+    void setLeftListAdapter(ListViewAdapter adapter);
 
-    private AbsListView.OnTouchListener mListTouchListener;
-    private View.OnClickListener mOnClickListener;
-    private ListViewSortingStrategy mSortingStrategy = ListViewSortingStrategy.SORT_BY_NAME;
-    private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private SelectionUiComponents mSelectionVisualItems;
-    private ActivePage activePage = ActivePage.LEFT;
-    private ActionBarToggleMonitor mActionBarToggleMonitor;
-    private ListView mLeftList, mRightList;
-    private String mRightListSavedLocation, mLeftListSavedLocation;
-    private TerminalPreferences mPreferences;
-    private HistoryLocationsManager mLeftHistoryLocationManager;
-    private HistoryLocationsManager mRightHistoryLocationManager;
-    private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
-    private boolean isPaused;
+    /**
+     * Return prepared {@link ListViewAdapter} of right panel
+     * @return instance of {@link ListViewAdapter}
+     */
+    ListViewAdapter getRightListAdapter();
 
-    private final BroadcastReceiver mFinishBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action != null) {
-                if (action.equals(COMMON_EXIT_INTENT)) {
-                    finish();
-                }
-            }
-        }
-    };
+    /**
+     * Used for init right panel adapter
+     * @param adapter an {@link ListViewAdapter}
+     */
+    void setRightListAdapter(ListViewAdapter adapter);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.terminal_activity_layout);
-        mSelectionVisualItems = new SelectionUiComponents(this);
-        mListTouchListener = new ListViewTouchListener(this);
-        mOnClickListener = new TerminalClickListener(this);
-        readPreferences();
-        initView();
-        initActionBar();
-    }
+    /**
+     * Return current activity sorting mode from possible in {@link ListViewSortingStrategy}
+     * @return enum constant
+     */
+    ListViewSortingStrategy getSortingStrategy();
 
-    private void initActionBar() {
-        ActionBar bar = getActionBar();
-        if (bar != null) {
-            bar.setTitle(getString(R.string.terminal));
-            ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
-                    ActionBar.LayoutParams.WRAP_CONTENT,
-                    ActionBar.LayoutParams.WRAP_CONTENT);
-            lp.gravity = Gravity.RIGHT;
-            LayoutInflater li = getLayoutInflater();
-            View customView = li.inflate(R.layout.terminal_action_bar_custom_view, null);
-            if (customView != null) {
-                Button mShiftMenuBtn = (Button) customView.findViewById(R.id.action_bar_shift_btn);
-                Button mCtrlMenuBtn = (Button) customView.findViewById(R.id.action_bar_ctrl_btn);
-                Button mCommMenuBtn = (Button) customView.findViewById(R.id.action_bar_comm_btn);
-                mShiftMenuBtn.setOnClickListener(mOnClickListener);
-                mCommMenuBtn.setOnClickListener(mOnClickListener);
-                mCtrlMenuBtn.setOnClickListener(mOnClickListener);
-                View mShiftBtnContainer = customView.findViewById(R.id.action_bar_shift_btn_container);
-                View mCtrlBtnContainer = customView.findViewById(R.id.action_bar_ctrl_btn_container);
-                mActionBarToggleMonitor = new ActionBarToggleMonitor(this, mShiftBtnContainer, mCtrlBtnContainer);
-                bar.setCustomView(customView, lp);
-            }
-        }
-    }
+    /**
+     * Set current activity sorting mode as enum constant from {@link ListViewSortingStrategy}
+     * @param sortingStrategy an constant {@link ListViewSortingStrategy}
+     */
+    void setSortingStrategy(ListViewSortingStrategy sortingStrategy);
 
-    private void readPreferences() {
-        mPreferences = new TerminalPreferences(this);
-        // read last locations
-        mLeftListSavedLocation = mPreferences.loadLastLeftLocations();
-        mRightListSavedLocation = mPreferences.loadLastRightLocations();
-        mSortingStrategy = mPreferences.loadSortingStrategy();
-        // read locations history
-        mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.LEFT);
-        mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.RIGHT);
-    }
+    /**
+     * Return {@link android.content.res.Resources} from Activity context
+     * @return {@link android.content.res.Resources}
+     */
+    Resources getContextResources();
 
-    @Override
-    protected void onResume() {
-        Log.d(LOG_TAG, "onResume");
-        super.onResume();
-        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(COMMON_EXIT_INTENT));
-        if (!isPaused) {
-            new LoadLeftListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new LoadRightListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-        isPaused = false;
-    }
+    /**
+     * Return left instance of {@link HistoryLocationsManager}
+     * @return {@link HistoryLocationsManager} for left panel
+     */
+    HistoryLocationsManager getLeftHistoryLocationManager();
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isPaused = true;
-    }
+    /**
+     * Return right instance of {@link HistoryLocationsManager}
+     * @return {@link HistoryLocationsManager} for right panel
+     */
+    HistoryLocationsManager getRightHistoryLocationManager();
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if (mLeftAdapter != null) {
-            outState.putString(LEFT_FILE_LIST_PATH_BUNDLE, mLeftAdapter.getLocationLabel().getPath());
-        }
-        if (mRightAdapter != null) {
-            outState.putString(RIGHT_FILE_LIST_PATH_BUNDLE, mRightAdapter.getLocationLabel().getPath());
-        }
-        super.onSaveInstanceState(outState);
-    }
+    /**
+     * Return String location for right panel
+     * @return String path
+     */
+    String getRightListSavedLocation();
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            mLeftListSavedLocation = savedInstanceState.getString(LEFT_FILE_LIST_PATH_BUNDLE);
-            mRightListSavedLocation = savedInstanceState.getString(RIGHT_FILE_LIST_PATH_BUNDLE);
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            if (data.hasExtra(CommanderActivity.WORK_PATH_EXTRA)) {
-                String pathFromCommander = data.getStringExtra(CommanderActivity.WORK_PATH_EXTRA);
-                boolean isLeftActive = data.getBooleanExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, true);
-                String destinationPath = data.getStringExtra(CommanderActivity.OTHER_PATH_EXTRA);
-                String[] splitPath = new String[0];
-                if (pathFromCommander != null) {
-                    splitPath = pathFromCommander.substring(1).split(StringUtil.PATH_SEPARATOR);
-                }
-                if (mLeftAdapter != null && mRightAdapter != null) {
-                    switch (activePage) {
-                        case LEFT:
-                            mLeftAdapter.clearLocationHistory(splitPath);
-                            mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
-                            break;
-                        case RIGHT:
-                            mRightAdapter.clearLocationHistory(splitPath);
-                            mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
-                            break;
-                    }
-                } else {
-                    activePage = isLeftActive ? ActivePage.LEFT : ActivePage.RIGHT;
-                    switch (activePage) {
-                        case LEFT:
-                            mLeftListSavedLocation = pathFromCommander;
-                            mRightListSavedLocation = destinationPath;
-                            break;
-                        case RIGHT:
-                            mRightListSavedLocation = pathFromCommander;
-                            mLeftListSavedLocation = destinationPath;
-                            break;
-                        default:
-                            new LoadLeftListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            new LoadRightListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                }
-            }
-        }
-    }
+    /**
+     * Return String location for left panel
+     * @return String path
+     */
+    String getLeftListSavedLocation();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        MenuItem sortingItem = menu.findItem(R.id.action_sorting);
-        if (sortingItem != null) {
-            sortingItem.setVisible(true);
-        }
-        MenuItem sortByName = menu.findItem(R.id.sorting_by_name);
-        MenuItem sortBySize = menu.findItem(R.id.sorting_by_size);
-        MenuItem sortByModify = menu.findItem(R.id.sorting_by_modify);
-        switch (mSortingStrategy) {
-            case SORT_BY_NAME:
-                if (sortByName != null) {
-                    sortByName.setChecked(true);
-                }
-                break;
-            case SORT_BY_SIZE:
-                if (sortBySize != null) {
-                    sortBySize.setChecked(true);
-                }
-                break;
-            case SORT_BY_DATE:
-                if (sortByModify != null) {
-                    sortByModify.setChecked(true);
-                }
-                break;
-        }
-        mSortingMenuItemsMonitor = new SortingMenuItemsMonitor(this, sortByName, sortBySize, sortByModify);
-        return super.onCreateOptionsMenu(menu);
-    }
+    /**
+     * Return List of all current files from selected panel
+     * @return {@link java.util.ArrayList} of {@link ListViewItem}
+     */
+    ArrayList<ListViewItem> getOperationItems();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-      /*      case R.id.action_settings:
-                //todo
-                return true;*/
-            case R.id.action_refresh:
-                switch (activePage) {
-                    case LEFT:
-                        if (mLeftAdapter != null) {
-                            mLeftAdapter.changeDirectory(mLeftAdapter.getLocationLabel().getPath());
-                            mLeftAdapter.getSelectionMonitor().clear();
-                        }
-                        break;
-                    case RIGHT:
-                        if (mRightAdapter != null) {
-                            mRightAdapter.changeDirectory(mRightAdapter.getLocationLabel().getPath());
-                            mRightAdapter.getSelectionMonitor().clear();
-                        }
-                        break;
-                }
-                return true;
-            case R.id.action_quit:
-                sendBroadcast(new Intent(COMMON_EXIT_INTENT));
-                return true;
-            case R.id.sorting_by_name:
-                mSortingMenuItemsMonitor.onMenuSelected(item);
-                return true;
-            case R.id.sorting_by_size:
-                mSortingMenuItemsMonitor.onMenuSelected(item);
-                return true;
-            case R.id.sorting_by_modify:
-                mSortingMenuItemsMonitor.onMenuSelected(item);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+    /**
+     * Return {@link com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents}
+     * from terminal activity instance
+     * @return {@link com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents}
+     */
+    SelectionUiComponents getSelectionVisualItems();
 
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(mFinishBroadcastReceiver);
-        saveDataBeforeDestroy();
-        super.onDestroy();
-    }
+    /**
+     * Determine current active page as {@link ActivePage}
+     * @param activePage an constant from {@link ActivePage}
+     */
+    void setActivePage(ActivePage activePage);
 
-    private void saveDataBeforeDestroy() {
-        mPreferences.saveLastLocations(mLeftAdapter.getLocationLabel().getPath(),
-                mRightAdapter.getLocationLabel().getPath());
-        mPreferences.saveLeftHistoryLocations(mLeftHistoryLocationManager.getActualHistoryLocations());
-        mPreferences.saveRightHistoryLocations(mRightHistoryLocationManager.getActualHistoryLocations());
-        mPreferences.saveSortingStrategy(mSortingStrategy);
-    }
+    /**
+     * Return active page as instance of {@link ActivePage}
+     * @return current active page
+     */
+    ActivePage getActivePage();
 
-    private void initView() {
-        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.history_btn_in_left).setOnClickListener(mOnClickListener);
-        findViewById(R.id.history_btn_in_right).setOnClickListener(mOnClickListener);
-        mLeftList = (ListView) findViewById(R.id.left_directory_list);
-        mRightList = (ListView) findViewById(R.id.right_directory_list);
-    }
-
-    @Override
-    public void setLeftListAdapter(ListViewAdapter adapter) {
-        mLeftAdapter = adapter;
-        mLeftList.setAdapter(mLeftAdapter);
-        mLeftList.setOnItemClickListener(new ListViewItemClickListener(this, mLeftAdapter, mLeftList));
-        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mLeftAdapter));
-        mLeftList.setOnTouchListener(mListTouchListener);
-        mLeftAdapter.restoreHistoryLocation(mLeftListSavedLocation);
-    }
-
-    @Override
-    public ListViewAdapter getLeftListAdapter() {
-        return mLeftAdapter;
-    }
-
-    @Override
-    public void setRightListAdapter(ListViewAdapter adapter) {
-        mRightAdapter = adapter;
-        mRightList.setAdapter(mRightAdapter);
-        mRightList.setOnItemClickListener(new ListViewItemClickListener(this, mRightAdapter, mRightList));
-        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mRightAdapter));
-        mRightList.setOnTouchListener(mListTouchListener);
-        mRightAdapter.restoreHistoryLocation(mRightListSavedLocation);
-    }
-
-    @Override
-    public ListViewAdapter getRightListAdapter() {
-        return mRightAdapter;
-    }
-
-    @Override
-    public ListViewSortingStrategy getSortingStrategy() {
-        return mSortingStrategy;
-    }
-
-    @Override
-    public void setSortingStrategy(ListViewSortingStrategy sortingStrategy) {
-        this.mSortingStrategy = sortingStrategy;
-    }
-
-    @Override
-    public Resources getContextResources() {
-        return getResources();
-    }
-
-    @Override
-    public HistoryLocationsManager getLeftHistoryLocationManager() {
-        return mLeftHistoryLocationManager;
-    }
-
-    @Override
-    public HistoryLocationsManager getRightHistoryLocationManager() {
-        return mRightHistoryLocationManager;
-    }
-
-    @Override
-    public String getRightListSavedLocation() {
-        return mRightListSavedLocation;
-    }
-
-    @Override
-    public String getLeftListSavedLocation() {
-        return mLeftListSavedLocation;
-    }
-
-    @Override
-    public ArrayList<ListViewItem> getOperationItems() {
-        return activePage == ActivePage.LEFT ? mLeftAdapter.getSelectedList() : mRightAdapter.getSelectedList();
-    }
-
-    @Override
-    public SelectionUiComponents getSelectionVisualItems() {
-        return mSelectionVisualItems;
-    }
-
-    @Override
-    public void setActivePage(ActivePage activePage) {
-        this.activePage = activePage;
-    }
-
-    @Override
-    public ActionBarToggleMonitor getActionBarToggleMonitor() {
-        return mActionBarToggleMonitor;
-    }
-
-    @Override
-    public ActivePage getActivePage() {
-        return activePage;
-    }
+    /**
+     * Return instance of {@link com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor}
+     * @return {@link com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor}
+     * from terminal activity.
+     */
+    ActionBarToggleMonitor getActionBarToggleMonitor();
 }

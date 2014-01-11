@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Created by o.drachuk on 10/01/2014.
+ * Created by o.drachuk on 09/01/2014. 
  *
  * Copyright Oleksandr Drachuk.
  *
@@ -15,24 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.command.local;
-
-import com.softsandr.terminal.commander.TerminalCommander;
-
-import static com.softsandr.utils.string.StringUtil.EMPTY;
+package com.softsandr.terminal.commander;
 
 /**
- * The custom logic for execution clear command from console
+ * This interface declare public features of specific activity for commander
  */
-public class ClearCommand implements LocalCommand {
-    @Override
-    public String isExecutable(TerminalCommander terminalProcess) {
-        return EMPTY;
-    }
-
-    @Override
-    public String onExecute(TerminalCommander terminalProcess) {
-        terminalProcess.onClear();
-        return EMPTY;
-    }
+public interface CommanderActivity {
+    /**
+     * Used for declaration common exit operation
+     */
+    void exitActivity();
 }

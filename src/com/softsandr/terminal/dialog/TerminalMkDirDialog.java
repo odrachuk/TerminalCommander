@@ -24,9 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.command.MakeDirectoryCommand;
 
 /**
@@ -46,7 +46,7 @@ public class TerminalMkDirDialog extends DialogFragment {
             switch (viewId) {
                 case R.id.terminal_mk_dir_dialog_btn_ok:
                     Editable newFileName = mInput.getText();
-                    new MakeDirectoryCommand((TerminalActivity) getActivity(),
+                    new MakeDirectoryCommand((TerminalActivityImpl) getActivity(),
                             newFileName.toString(),
                             mCurrentAbsPath,
                             mDestinationPath).onExecute();

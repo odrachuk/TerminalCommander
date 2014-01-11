@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.command.local;
+package com.softsandr.terminal.commander.commands.local;
 
 import com.softsandr.terminal.commander.TerminalCommander;
 import com.softsandr.utils.file.FileUtil;

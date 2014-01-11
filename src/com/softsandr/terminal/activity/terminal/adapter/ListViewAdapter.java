@@ -23,13 +23,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.activity.terminal.LocationLabel;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 
 import java.util.ArrayList;
@@ -44,10 +44,10 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private final HistoryLocationsManager historyLocationsManager;
     private final LinkedList<String> locationHistoryStack;
     private final SelectionMonitor selectionMonitor;
-    private final TerminalActivity terminalActivity;
+    private final TerminalActivityImpl terminalActivity;
     private final LocationLabel locationLabel;
 
-    public ListViewAdapter(TerminalActivity activity,
+    public ListViewAdapter(TerminalActivityImpl activity,
                            List<ListViewItem> filesInfo,
                            LocationLabel pathLabel,
                            HistoryLocationsManager historyLocationsManager) {

@@ -15,11 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.controller;
+package com.softsandr.terminal.commander;
 
 import android.util.Log;
 import android.widget.Toast;
-import com.softsandr.terminal.commander.TerminalCommander;
 
 import java.io.IOException;
 

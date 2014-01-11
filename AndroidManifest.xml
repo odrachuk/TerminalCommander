@@ -16,14 +16,14 @@
             android:icon="@drawable/terminal_icon"
             android:theme="@style/Terminal_Theme"
             android:hardwareAccelerated="true">
-        <activity android:name=".activity.terminal.TerminalActivity"
+        <activity android:name=".activity.terminal.TerminalActivityImpl"
                   android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.commander.CommanderActivity"
+        <activity android:name=".activity.commander.CommanderActivityImpl"
                   android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".activity.progress.TerminalProgressActivity"
                   android:theme="@style/Transparent_Activity_Theme"/>

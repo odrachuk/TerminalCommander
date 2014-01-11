@@ -21,10 +21,10 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.LocationLabel;
-import com.softsandr.terminal.activity.terminal.Terminal;
 import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 
@@ -35,13 +35,13 @@ import java.util.List;
  * This class used for loading all items from specific right directory to list and initialization relative adapter
  */
 public class LoadRightListTask extends AsyncTask<Void, Void, List<ListViewItem>> {
-    private final Terminal terminal;
+    private final TerminalActivity terminal;
 
     /**
      * Constructor by default. Please note, that terminal parameter should be an instance of {@link android.app.Activity}
      * @param terminalActivity  The terminal instance of {@link android.app.Activity}
      */
-    public LoadRightListTask(TerminalActivity terminalActivity) {
+    public LoadRightListTask(TerminalActivityImpl terminalActivity) {
         this.terminal = terminalActivity;
     }
 
@@ -55,7 +55,7 @@ public class LoadRightListTask extends AsyncTask<Void, Void, List<ListViewItem>>
     @Override
     protected void onPostExecute(List<ListViewItem> list) {
         TextView rightPathLabel = (TextView) ((Activity) terminal).findViewById(R.id.path_location_in_right);
-        ListViewAdapter rightAdapter = new ListViewAdapter((TerminalActivity) terminal, list,
+        ListViewAdapter rightAdapter = new ListViewAdapter((TerminalActivityImpl) terminal, list,
                 new LocationLabel(rightPathLabel),
                 terminal.getRightHistoryLocationManager());
         terminal.setRightListAdapter(rightAdapter);

@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.controller;
+package com.softsandr.terminal.commander;
 
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.prompt.TerminalPrompt;
+import com.softsandr.terminal.commander.TerminalPrompt;
 
 /**
  * The container of all ui elements from commander interface

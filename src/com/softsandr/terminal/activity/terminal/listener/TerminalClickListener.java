@@ -21,20 +21,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.commander.CommanderActivity;
+import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
 import com.softsandr.terminal.activity.terminal.ActivePage;
-import com.softsandr.terminal.activity.terminal.Terminal;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.dialog.TerminalDialogUtil;
 
 /**
  * This class used for localization logic of processing all possible click events on
- * {@link com.softsandr.terminal.activity.terminal.TerminalActivity}
+ * {@link com.softsandr.terminal.activity.terminal.TerminalActivityImpl}
  */
 public class TerminalClickListener implements View.OnClickListener {
-    private final Terminal terminal;
+    private final TerminalActivity terminal;
 
-    public TerminalClickListener(Terminal terminal) {
+    public TerminalClickListener(TerminalActivity terminal) {
         this.terminal = terminal;
     }
 
@@ -49,11 +49,11 @@ public class TerminalClickListener implements View.OnClickListener {
                 terminal.getRightListAdapter().getLocationLabel().getPath();
             /* Menu items */
         if (v.getId() == R.id.action_bar_comm_btn) {
-            Intent startIntent = new Intent((Activity) terminal, CommanderActivity.class);
-            startIntent.putExtra(CommanderActivity.WORK_PATH_EXTRA, currentLocation);
-            startIntent.putExtra(CommanderActivity.OTHER_PATH_EXTRA, destinationLocation);
-            startIntent.putExtra(CommanderActivity.ACTIVE_PAGE_EXTRA, terminal.getActivePage().equals(ActivePage.LEFT));
-            ((Activity) terminal).startActivityForResult(startIntent, TerminalActivity.REQUEST_CODE);
+            Intent startIntent = new Intent((Activity) terminal, CommanderActivityImpl.class);
+            startIntent.putExtra(CommanderActivityImpl.WORK_PATH_EXTRA, currentLocation);
+            startIntent.putExtra(CommanderActivityImpl.OTHER_PATH_EXTRA, destinationLocation);
+            startIntent.putExtra(CommanderActivityImpl.ACTIVE_PAGE_EXTRA, terminal.getActivePage().equals(ActivePage.LEFT));
+            ((Activity) terminal).startActivityForResult(startIntent, TerminalActivityImpl.REQUEST_CODE);
         } else if (v.getId() == R.id.action_bar_shift_btn) {
             terminal.getActionBarToggleMonitor().onClickShift();
         } else if (v.getId() == R.id.action_bar_ctrl_btn) {

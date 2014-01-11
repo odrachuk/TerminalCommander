@@ -19,9 +19,9 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 import java.io.File;
 import java.util.List;
@@ -31,12 +31,12 @@ import java.util.List;
  */
 public class DeleteFileCommand implements FileCommand {
     private static final String LOG_TAG = DeleteFileCommand.class.getSimpleName();
-    private final TerminalActivity terminalActivity;
+    private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
     private final String currentPath;
     private final String destinationPath;
 
-    public DeleteFileCommand(TerminalActivity terminalActivity, List<ListViewItem> items,
+    public DeleteFileCommand(TerminalActivityImpl terminalActivity, List<ListViewItem> items,
                              String currentPath,
                              String destinationPath) {
         this.terminalActivity = terminalActivity;

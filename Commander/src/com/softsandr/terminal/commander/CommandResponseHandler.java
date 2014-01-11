@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
+import com.softsandr.terminal.commander.commands.filtered.FilteredCommands;
 
 import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
 
