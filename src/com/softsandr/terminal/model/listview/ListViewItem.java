@@ -254,4 +254,18 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         result = 31 * result + (absPath != null ? absPath.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "ListViewItem{" +
+                "fileModifyTime='" + fileModifyTime + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", fileSize='" + fileSize + '\'' +
+                ", sortingStrategy=" + sortingStrategy +
+                ", isDirectory=" + isDirectory +
+                ", canRead=" + canRead +
+                ", isLink=" + isLink +
+                ", absPath='" + absPath + '\'' +
+                '}';
+    }
 }

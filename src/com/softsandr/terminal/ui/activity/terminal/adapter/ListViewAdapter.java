@@ -1,7 +1,7 @@
 package com.softsandr.terminal.ui.activity.terminal.adapter;
 
 import android.graphics.Paint;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,7 +15,10 @@ import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Date: 11/24/13
@@ -23,16 +26,11 @@ import java.util.*;
  * @author Drachuk O.V.
  */
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
-    private static final String LOG_TAG = ListViewAdapter.class.getSimpleName();
-
     private final SelectionStrategy selectionStrategy;
     private final CurrentPathLabel pathLabel;
-    private final List<ListViewItem> filesInfo;
     private final LinkedList<String> pathStack;
     private final HistoryLocationsManager historyLocationsManager;
     private final TerminalActivity terminalActivity;
-    private Map<Integer, ViewHolder> cache;
-    private boolean inFirst = true;
 
     public ListViewAdapter(TerminalActivity activity,
                            List<ListViewItem> filesInfo,
@@ -40,7 +38,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                            HistoryLocationsManager historyLocationsManager) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.terminalActivity = activity;
-        this.filesInfo = filesInfo;
         this.pathLabel = pathLabel;
         this.selectionStrategy = new SelectionStrategy(this);
         this.historyLocationsManager = historyLocationsManager;
@@ -67,54 +64,66 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             }
         }
         // update filesystem
-        inFirst = true;
-        filesInfo.clear();
+        clear();
         pathLabel.setPath(pathStack.getLast());
         historyLocationsManager.addLocation(pathLabel.getFullPath());
-        ListViewFiller.fillListContent(terminalActivity.getSortingStrategy(), filesInfo, pathStack.getLast());
-        notifyDataSetChanged();
+        List<ListViewItem> list = new ArrayList<ListViewItem>();
+        ListViewFiller.fillListContent(terminalActivity.getSortingStrategy(), list, pathStack.getLast());
+        addAll(list);
     }
 
     private boolean isContinueForPrev(String prevPath, String newPath) {
         return newPath.contains(prevPath);
     }
 
-    private void initCache(ViewGroup parent) {
-        cache = new LinkedHashMap<Integer, ViewHolder>(getCount());
-        for (int i = 0; i < getCount(); i++) {
-            ViewHolder viewHolder = new ViewHolder();
-            View rowView = terminalActivity.getLayoutInflater().inflate(R.layout.terminal_list_row_layout, parent, false);
-            viewHolder.view = rowView;
-            if (rowView != null) {
-                viewHolder.fileNameView = (TextView) rowView.findViewById(R.id.file_name);
-                viewHolder.fileSizeView = (TextView) rowView.findViewById(R.id.file_size);
-                viewHolder.fileModifyTimeView = (TextView) rowView.findViewById(R.id.file_modify_time);
-                ListViewItem info = filesInfo.get(i);
-                viewHolder.fileNameView.setText(info.getFileName());
-                viewHolder.fileSizeView.setText(info.getFileSize());
-                viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
-                if (!info.isDirectory()) {
-                    viewHolder.fileNameView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
-                    viewHolder.fileSizeView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
-                    viewHolder.fileModifyTimeView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
-                } else {
-                    if (!info.canRead() && !info.isParentDots()) {
-                        viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
-                                Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
-                }
-            }
-            cache.put(i, viewHolder);
-        }
-        inFirst = false;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (inFirst) {
-            initCache(parent);
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            // inflate the layout
+            LayoutInflater inflater = terminalActivity.getLayoutInflater();
+            convertView = inflater.inflate(R.layout.terminal_list_row_layout, parent, false);
+            if (convertView != null) {
+                // set up the ViewHolder
+                viewHolder = new ViewHolder();
+                viewHolder.fileNameView = (TextView) convertView.findViewById(R.id.file_name);
+                viewHolder.fileSizeView = (TextView) convertView.findViewById(R.id.file_size);
+                viewHolder.fileModifyTimeView = (TextView) convertView.findViewById(R.id.file_modify_time);
+                // store the holder with the view
+                convertView.setTag(viewHolder);
+            }
+        } else {
+            // just use the viewHolder
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        ViewHolder viewHolder = cache.get(position);
+        ListViewItem info = getItem(position);
+        // assign values if the object is not null
+        if(info != null && viewHolder != null) {
+            viewHolder.fileNameView.setText(info.getFileName());
+            viewHolder.fileSizeView.setText(info.getFileSize());
+            viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
+            // determine files types and their text colors
+            if (info.isDirectory()) {
+                viewHolder.fileNameView.setTextColor(terminalActivity.getResources().getColor(android.R.color.white));
+                viewHolder.fileSizeView.setTextColor(terminalActivity.getResources().getColor(android.R.color.white));
+                viewHolder.fileModifyTimeView.setTextColor(terminalActivity.getResources().getColor(android.R.color.white));
+                // determine directory that we can't read
+                if (!info.isParentDots() && !info.canRead()) {
+                    viewHolder.fileNameView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_TRANSLUCENT_WHITE));
+                }
+            } else {
+                viewHolder.fileNameView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
+                viewHolder.fileSizeView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
+                viewHolder.fileModifyTimeView.setTextColor(terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
+                viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
+                        Paint.LINEAR_TEXT_FLAG);
+            }
+            checkSelection(viewHolder, info, position);
+        }
+        return convertView;
+    }
+
+    private void checkSelection(ViewHolder viewHolder, ListViewItem info, int position) {
         if (selectionStrategy.getSelectedItems().contains(position)) {
             viewHolder.fileNameView.setTextColor(
                     terminalActivity.getResources().getColor(R.color.COLOR_FECE0A));
@@ -124,7 +133,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                     terminalActivity.getResources().getColor(R.color.COLOR_FECE0A));
         }
         if (selectionStrategy.getUnselectedItems().contains(position)) {
-            ListViewItem info = filesInfo.get(position);
             if (info.isDirectory()) {
                 viewHolder.fileNameView.setTextColor(
                         terminalActivity.getResources().getColor(android.R.color.white));
@@ -132,10 +140,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                         terminalActivity.getResources().getColor(android.R.color.white));
                 viewHolder.fileModifyTimeView.setTextColor(
                         terminalActivity.getResources().getColor(android.R.color.white));
-                if (!info.canRead() && !info.isParentDots()) {
-                    viewHolder.fileNameView.setPaintFlags(viewHolder.fileNameView.getPaintFlags() |
-                            Paint.STRIKE_THRU_TEXT_FLAG);
-                }
             } else {
                 viewHolder.fileNameView.setTextColor(
                         terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
@@ -145,7 +149,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                         terminalActivity.getResources().getColor(R.color.COLOR_B2B2B2));
             }
         }
-        return viewHolder.view;
     }
 
     public void clearBackPath(String[] newBackPathInArray) {
@@ -158,7 +161,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                 pathStack.add(pathStack.getLast() + StringUtil.PATH_SEPARATOR + newBackPathInArray[i]);
             }
         }
-        Log.d(LOG_TAG, "After clearing in link");
     }
 
     public String getBackPath() {
@@ -199,7 +201,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     public ArrayList<ListViewItem> getSelectedItems() {
         ArrayList<ListViewItem> selectedItems = new ArrayList<ListViewItem>();
         for (Integer selectedPosition : selectionStrategy.getSelectedItems()) {
-            selectedItems.add(filesInfo.get(selectedPosition));
+            selectedItems.add(getItem(selectedPosition));
         }
         return selectedItems;
     }
@@ -214,7 +216,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     class ViewHolder {
-        View view;
         TextView fileNameView;
         TextView fileSizeView;
         TextView fileModifyTimeView;

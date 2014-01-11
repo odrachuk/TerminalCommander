@@ -2,6 +2,7 @@
 <resources>
     <color name="COLOR_002EB8">#FF002EB8</color>
     <color name="COLOR_002AA5">#FF002AA5</color>
+    <color name="COLOR_001B6C">#FF001B6C</color>
     <color name="COLOR_FFFF00">#FFFFFF00</color>
     <color name="COLOR_FEA50A">#FFFEA50A</color>
     <color name="COLOR_FECE0A">#FFFECE0A</color>
@@ -17,4 +18,5 @@
     <color name="COLOR_3D3D3D">#FF3D3D3D</color>
     <color name="COLOR_FFFFCC">#FFFFFFCC</color>
     <color name="COLOR_E6CCFF">#FFE6CCFF</color>
+    <color name="COLOR_TRANSLUCENT_WHITE">#CCFFFFFF</color>
 </resources>
