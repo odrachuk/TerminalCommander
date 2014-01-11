@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Created by o.drachuk on 10/01/2014.
+ *
+ * Copyright Oleksandr Drachuk.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package com.softsandr.terminal.commander.command.filtered;
 
 import android.content.res.Resources;
@@ -8,9 +25,7 @@ import com.softsandr.terminal.R;
 import java.util.LinkedList;
 
 /**
- * Date: 12/2/13
- *
- * @author Drachuk O.V.
+ * The {@link java.util.LinkedList} extends for managing alignments of ls record data
  */
 public class LsRowsList extends LinkedList<LsRowRecord> {
     private static final String SOME_SYMBOL_FOR_PROBE = "a";
@@ -51,13 +66,11 @@ public class LsRowsList extends LinkedList<LsRowRecord> {
             String groupToken = rr.getGroupToken();
             String sizeToken = rr.getSizeToken();
             String dateToken = rr.getDateToken();
-            String nameToken = rr.getNameToken();
             int permissionSub = permissionsToken.length() - maxPermissionsLength;
             int ownerSub = maxOwnerLength - ownerToken.length();
             int groupSub = maxGroupLength - groupToken.length();
             int sizeSub = maxSizeLength - sizeToken.length();
             int dateSub = maxDateLength - dateToken.length();
-            int nameSub = maxNameLength - nameToken.length();
             if (permissionSub > 0) {
                 StringBuilder sb = new StringBuilder(permissionsToken);
                 for (int i = 0; i < permissionSub; i++) {
