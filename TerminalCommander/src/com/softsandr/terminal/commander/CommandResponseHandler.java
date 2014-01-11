@@ -46,25 +46,26 @@ public class CommandResponseHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         Bundle inputBundle = msg.getData();
-        String[] results = inputBundle.getStringArray(COMMAND_EXECUTION_RESPONSE_KEY);
-        String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
-        if (results != null && results.length != 0) {
-            StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
-            boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
-            if (isFilteredCommand) {
-                FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
-                if (filteredCommand != null) {
-                    StringBuilder result = new StringBuilder(oldText).append(LINE_SEPARATOR);
-                    result.append(filteredCommand.alignResponse(mTerminalOutView, mScreenWidth, mResources, results));
-                    mTerminalOutView.setText(result.toString());
+        if (inputBundle != null) {
+            String[] results = inputBundle.getStringArray(COMMAND_EXECUTION_RESPONSE_KEY);
+            String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
+            if (results != null && results.length != 0) {
+                StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
+                boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
+                if (isFilteredCommand) {
+                    FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
+                    if (filteredCommand != null) {
+                        mTerminalOutView.setText(oldText + LINE_SEPARATOR
+                                + filteredCommand.alignResponse(mTerminalOutView, mScreenWidth, mResources, results));
+                    }
+                } else {
+                    // write result to console
+                    for (String s : results) {
+                        oldText.append(LINE_SEPARATOR);
+                        oldText.append(s);
+                    }
+                    mTerminalOutView.setText(oldText.toString());
                 }
-            } else {
-                // write result to console
-                for (String s : results) {
-                    oldText.append(LINE_SEPARATOR);
-                    oldText.append(s);
-                }
-                mTerminalOutView.setText(oldText.toString());
             }
         }
     }

@@ -150,10 +150,8 @@ public class TerminalCommander {
     private String eraseAbsent(String message) {
         String result = message;
         if (message.contains("<stdin>[")) {
-            StringBuilder msg = new StringBuilder();
-            msg.append(message.substring(0, message.indexOf("<s") - 2));
-            msg.append(message.substring(message.indexOf("]:") + 1, message.length()));
-            result = msg.toString();
+            result = message.substring(0, message.indexOf("<s") - 2)
+                    + message.substring(message.indexOf("]:") + 1, message.length());
         }
         return result;
     }
