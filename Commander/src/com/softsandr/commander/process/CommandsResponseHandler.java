@@ -15,29 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander;
+package com.softsandr.commander.process;
 
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.commands.filtered.FilteredCommands;
+import com.softsandr.commander.commands.filtered.FilteredCommands;
 
 import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
 
 /**
  * The {@link android.os.Handler} extends for handling response from console input after execution an command
  */
-public class CommandResponseHandler extends Handler {
-    private static final String LOG_TAG = CommandResponseHandler.class.getSimpleName();
+public class CommandsResponseHandler extends Handler {
+    private static final String LOG_TAG = CommandsResponseHandler.class.getSimpleName();
     public static final String COMMAND_EXECUTION_RESPONSE_KEY = LOG_TAG + ".COMMAND_EXECUTION_RESPONSE";
     public static final String COMMAND_EXECUTION_STRING_KEY = LOG_TAG + ".COMMAND_EXECUTION_STRING";
     private final TextView mTerminalOutView;
     private final Resources mResources;
     private final int mScreenWidth;
 
-    public CommandResponseHandler(int screenWidth, Resources resources, TextView terminalOutView) {
+    public CommandsResponseHandler(int screenWidth, Resources resources, TextView terminalOutView) {
         mTerminalOutView = terminalOutView;
         mScreenWidth = screenWidth;
         mResources = resources;

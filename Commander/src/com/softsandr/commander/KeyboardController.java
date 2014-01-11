@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander;
+package com.softsandr.commander;
 
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -30,13 +30,11 @@ import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
  * used for console input.
  */
 public class KeyboardController implements TextView.OnEditorActionListener {
-    private ProcessController mProcessController;
-    private UiController mUiController;
     private boolean inFirst = true;
+    private Commander commander;
 
-    public KeyboardController(UiController uiController, ProcessController processController) {
-        mProcessController = processController;
-        mUiController = uiController;
+    public KeyboardController(Commander uiController) {
+        commander = uiController;
     }
 
     @Override
@@ -44,35 +42,35 @@ public class KeyboardController implements TextView.OnEditorActionListener {
         boolean handled = false;
         if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                mUiController.getTerminalOutView().setVisibility(View.VISIBLE);
-                String fullCommandText = mUiController.getTerminalInView().getText().toString();
-                StringBuilder resultText = new StringBuilder(mUiController.getTerminalOutView().getText().toString());
+                commander.getOutTextView().setVisibility(View.VISIBLE);
+                String fullCommandText = commander.getInputEditText().getText().toString();
+                StringBuilder resultText = new StringBuilder(commander.getOutTextView().getText().toString());
                 if (inFirst) {
                     if (!fullCommandText.isEmpty()) {
-                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(commander.getPrompt().getCompoundString());
                         resultText.append(fullCommandText);
-                        mProcessController.getProcess().execCommand(fullCommandText);
+                        commander.getProcess().execCommand(fullCommandText);
                     } else {
-                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(commander.getPrompt().getCompoundString());
                     }
                     inFirst = false;
                 } else {
                     if (!fullCommandText.isEmpty()) {
-                        if (!TextUtils.isEmpty(mUiController.getTerminalOutView().getText())) {
+                        if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
                             resultText.append(LINE_SEPARATOR);
                         }
-                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(commander.getPrompt().getCompoundString());
                         resultText.append(fullCommandText);
-                        mProcessController.getProcess().execCommand(fullCommandText);
+                        commander.getProcess().execCommand(fullCommandText);
                     } else {
-                        if (!TextUtils.isEmpty(mUiController.getTerminalOutView().getText())) {
+                        if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
                             resultText.append(LINE_SEPARATOR);
                         }
-                        resultText.append(mUiController.getPrompt().getPromptText());
+                        resultText.append(commander.getPrompt().getCompoundString());
                     }
                 }
-                mUiController.getTerminalOutView().setText(resultText);
-                mUiController.getTerminalInView().setText(EMPTY);
+                commander.getOutTextView().setText(resultText);
+                commander.getInputEditText().setText(EMPTY);
             }
             handled = true;
         }

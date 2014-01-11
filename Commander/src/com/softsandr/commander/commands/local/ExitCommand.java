@@ -15,14 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.commands.local;
+package com.softsandr.commander.commands.local;
 
-import com.softsandr.terminal.commander.TerminalCommander;
+import com.softsandr.commander.CommanderActivity;
+import com.softsandr.commander.process.CommanderProcess;
+
+import static com.softsandr.utils.string.StringUtil.EMPTY;
 
 /**
- * The instantiation of the interface represent command logic of that will be customized
+ * The custom logic of execution exit command from console
  */
-public interface LocalCommand {
-    String isExecutable(TerminalCommander terminalProcess);
-    String onExecute(TerminalCommander terminalProcess);
+public class ExitCommand implements LocalCommand {
+    @Override
+    public String isExecutable(CommanderProcess terminalCommander) {
+        return EMPTY;
+    }
+
+    @Override
+    public String onExecute(CommanderProcess terminalCommander) {
+        if (terminalCommander.getUiController().getActivity() instanceof CommanderActivity) {
+            ((CommanderActivity) terminalCommander.getUiController().getActivity()).exitActivity();
+        }
+        return EMPTY;
+    }
 }

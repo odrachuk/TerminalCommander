@@ -15,40 +15,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander;
+package com.softsandr.commander;
 
+import android.widget.TextView;
 import com.softsandr.utils.account.AccountUtil;
 
 /**
  * The text to left of input on console - prompt message for user
  */
-public class TerminalPrompt {
-    private String mUserName;
-    private String mUserSymbol = "$"; // todo Determine privileges
-    private String mUserLocation;
-    private UiController mUiController;
+public class PromptCompoundString {
+    private String userName;
+    private String userSymbol = "$"; // todo Add determining of real privileges
+    private String userLocation;
+    private TextView promptTextView;
 
-    public TerminalPrompt(UiController uiController) {
-        mUserName = AccountUtil.getUserName(uiController.getActivity());
-        mUiController = uiController;
+    public PromptCompoundString(Commander commander) {
+        userName = AccountUtil.getUserName(commander.getActivity());
+        promptTextView = commander.getPromptTextView();
     }
 
-    public String getPromptText() {
+    public String getCompoundString() {
         StringBuilder promptText = new StringBuilder();
         promptText.append("[");
-        promptText.append(mUserName + " ");
-        promptText.append(mUserLocation);
+        promptText.append(userName + " ");
+        promptText.append(userLocation);
         promptText.append("]");
-        promptText.append(mUserSymbol + " ");
+        promptText.append(userSymbol + " ");
         return promptText.toString();
     }
 
     public void setUserLocation(String newLocation) {
-        mUserLocation = newLocation;
-        mUiController.getTerminalPromptView().setText(getPromptText());
+        userLocation = newLocation;
+        promptTextView.setText(getCompoundString());
     }
 
     public String getUserLocation() {
-        return mUserLocation;
+        return userLocation;
     }
 }

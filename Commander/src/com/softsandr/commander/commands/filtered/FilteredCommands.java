@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.commands.filtered;
+package com.softsandr.commander.commands.filtered;
 
 import android.content.res.Resources;
 import android.widget.TextView;

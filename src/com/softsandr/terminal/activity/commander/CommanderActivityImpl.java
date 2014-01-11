@@ -31,13 +31,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.terminal.commander.CommanderActivity;
-import com.softsandr.utils.string.StringUtil;
+import com.softsandr.commander.Commander;
+import com.softsandr.commander.CommanderActivity;
+import com.softsandr.commander.KeyboardController;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.commander.KeyboardController;
-import com.softsandr.terminal.commander.ProcessController;
-import com.softsandr.terminal.commander.UiController;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.utils.string.StringUtil;
 
 /**
  * This activity represent CommanderActivityImpl - console
@@ -76,8 +75,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             }
         }
     };
-    private ProcessController mProcessController;
-    private UiController mProcessUiController;
+    private Commander commander;
     private TextView mTerminalOutView;
     private TextView mTerminalPromptView;
     private EditText mTerminalInView;
@@ -117,7 +115,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
                 //todo
                 return true;*/
             case R.id.action_refresh:
-                mProcessController.getProcess().onClear();
+                commander.getProcess().onClear();
                 return true;
             case R.id.action_quit:
                 sendBroadcast(new Intent(TerminalActivityImpl.COMMON_EXIT_INTENT));
@@ -132,10 +130,10 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     @Override
     public void exitActivity() {
         // Stop processes
-        mProcessController.getProcess().stopExecutionProcess();
+        commander.getProcess().stopExecutionProcess();
         // Prepare data intent
         Intent data = new Intent();
-        data.putExtra(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        data.putExtra(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
         data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
         data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
         setResult(RESULT_OK, data);
@@ -158,12 +156,12 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     protected void onDestroy() {
         unregisterReceiver(mFinishBroadcastReceiver);
         super.onDestroy();
-        mProcessController.onDestroyExecutionProcess();
+        commander.getProcess().stopExecutionProcess();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(WORK_PATH_EXTRA, mProcessUiController.getPrompt().getUserLocation());
+        outState.putString(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
         outState.putString(OTHER_PATH_EXTRA, mOtherPath);
         outState.putBoolean(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
         super.onSaveInstanceState(outState);
@@ -188,16 +186,16 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             }
         }
         // create controllers
-        mProcessUiController = new UiController(this, mTerminalInView, mTerminalOutView, mTerminalPromptView);
-        mProcessController = new ProcessController(mProcessUiController, mInitialPath);
+        commander = new Commander(this, mTerminalInView,
+                mTerminalOutView, mTerminalPromptView, mInitialPath);
         // config ui components
-        mTerminalPromptView.setText(mProcessUiController.getPrompt().getPromptText());
+        mTerminalPromptView.setText(commander.getPrompt().getCompoundString());
         mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
         mTerminalInView.setGravity(Gravity.TOP | Gravity.LEFT);
         mTerminalInView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         mTerminalInView.setSingleLine();
         mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mTerminalInView.setOnEditorActionListener(new KeyboardController(mProcessUiController, mProcessController));
+        mTerminalInView.setOnEditorActionListener(new KeyboardController(commander));
     }
 
     private void initActionBar() {

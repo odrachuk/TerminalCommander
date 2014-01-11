@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.commands.local;
+package com.softsandr.commander.commands.local;
 
 /**
  * The container of constants that are all supported local command in App

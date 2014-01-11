@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander;
+package com.softsandr.commander.process;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,8 +24,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.softsandr.terminal.commander.commands.interactive.InteractiveCommands;
-import com.softsandr.terminal.commander.commands.local.LocalCommands;
+import com.softsandr.commander.Commander;
+import com.softsandr.commander.PromptCompoundString;
+import com.softsandr.commander.commands.interactive.InteractiveCommands;
+import com.softsandr.commander.commands.local.LocalCommands;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -37,12 +39,12 @@ import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
 /**
  * The main class of console commander.
  */
-public class TerminalCommander {
-    private static final String LOG_TAG = TerminalCommander.class.getSimpleName();
+public class CommanderProcess {
+    private static final String LOG_TAG = CommanderProcess.class.getSimpleName();
     private static final String SYSTEM_EXECUTOR = "/system/bin/sh";
-    private final CommandResponseHandler mResponseHandler;
-    private final TerminalPrompt mTerminalPrompt;
-    private final UiController mUiController;
+    private final CommandsResponseHandler mResponseHandler;
+    private final PromptCompoundString mTerminalPrompt;
+    private final Commander mUiController;
     private final TextView mTerminalOutView;
     private Process mExecutionProcess;
     private String mCommandText;
@@ -50,13 +52,13 @@ public class TerminalCommander {
     /**
      * Create new input runtime comm
      */
-    public TerminalCommander(UiController uiController) {
+    public CommanderProcess(Commander uiController) {
         mUiController = uiController;
-        mTerminalOutView = uiController.getTerminalOutView();
+        mTerminalOutView = uiController.getOutTextView();
         mTerminalPrompt = uiController.getPrompt();
         DisplayMetrics dm = new DisplayMetrics();
         mUiController.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        mResponseHandler = new CommandResponseHandler(
+        mResponseHandler = new CommandsResponseHandler(
                 dm.widthPixels,
                 uiController.getActivity().getResources(), mTerminalOutView);
     }
@@ -100,8 +102,8 @@ public class TerminalCommander {
     private void interactiveExecute(String commandText) {
         String[] resultArray = new String[]{"NOTHING!!!"};
         Bundle resultBundle = new Bundle();
-        resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
+        resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+        resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);
@@ -123,8 +125,8 @@ public class TerminalCommander {
         if (!responseMessage.isEmpty()) {
             String[] resultArray = new String[]{responseMessage};
             Bundle resultBundle = new Bundle();
-            resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-            resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
+            resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+            resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
             Message resultMessage = mResponseHandler.obtainMessage();
             resultMessage.setData(resultBundle);
             mResponseHandler.sendMessage(resultMessage);
@@ -169,8 +171,8 @@ public class TerminalCommander {
             i++;
         }
         Bundle resultBundle = new Bundle();
-        resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
+        resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+        resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);
@@ -212,7 +214,7 @@ public class TerminalCommander {
         }
     }
 
-    public UiController getUiController() {
+    public Commander getUiController() {
         return mUiController;
     }
 

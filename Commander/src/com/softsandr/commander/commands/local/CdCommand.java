@@ -15,9 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.commander.commands.local;
+package com.softsandr.commander.commands.local;
 
-import com.softsandr.terminal.commander.TerminalCommander;
+import com.softsandr.commander.process.CommanderProcess;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 
@@ -29,7 +29,7 @@ import static com.softsandr.utils.string.StringUtil.PATH_SEPARATOR;
  */
 public class CdCommand implements LocalCommand {
     @Override
-    public String isExecutable(TerminalCommander terminalProcess) {
+    public String isExecutable(CommanderProcess terminalProcess) {
         String callbackString = EMPTY;
         String allCommand = terminalProcess.getCommandText().trim();
         if (allCommand.indexOf(' ') > 0) {
@@ -42,13 +42,13 @@ public class CdCommand implements LocalCommand {
                 callbackString += "Target is not filesystem";
             }
         } else {
-            callbackString += "Not arguments";
+            callbackString += "No arguments";
         }
         return callbackString;
     }
 
     @Override
-    public String onExecute(TerminalCommander terminalProcess) {
+    public String onExecute(CommanderProcess terminalProcess) {
         String callbackString = EMPTY;
         try {
             String allCommand = terminalProcess.getCommandText().trim();
