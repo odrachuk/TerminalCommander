@@ -44,7 +44,7 @@ public enum LocalCommands {
         }
     };
 
-    String text;
+    private final String text;
 
     private LocalCommands(String text) {
         this.text = text;

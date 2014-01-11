@@ -17,52 +17,56 @@
  ******************************************************************************/
 package com.softsandr.commander.commands.interactive;
 
-import android.content.res.Resources;
-import android.widget.TextView;
-
 /**
  * The console commands that use console before not canceled
  */
 public enum InteractiveCommands {
     TOP("top") {
         @Override
-        public String processResponse(TextView outTextView, int screenWidth,
-                                      Resources resources, String[] commandResponse) {
-            return null;
+        public String getSpecificText() {
+            return "top -n 1 -d 1";
         }
     };
 
-    String text;
+    private final String text;
 
     private InteractiveCommands(String text) {
         this.text = text;
     }
 
     public static boolean isInteractiveCommand(String command) {
-        boolean isInteractive = false;
-        for (InteractiveCommands c : values()) {
-            if (c.text.equals(command.trim())) {
-                isInteractive = true;
+        boolean isFiltered = false;
+        for (InteractiveCommands fc : values()) {
+            if (fc.text.equals(parseCommandTextFromString(command))) {
+                isFiltered = true;
                 break;
             }
         }
-        return isInteractive;
+        return isFiltered;
+    }
+
+    public static String parseCommandTextFromString(String command) {
+        String commandPrefix;
+        command = command.trim();
+        if (command.contains(" ")) {
+            commandPrefix = command.substring(0, command.indexOf(' '));
+        } else {
+            commandPrefix = command;
+        }
+        return commandPrefix;
     }
 
     public static InteractiveCommands parseCommandTypeFromString(String command) {
         InteractiveCommands interactiveCommand = null;
-        for (InteractiveCommands fc : values()) {
-            if (fc.text.equals(command.trim())) {
-                interactiveCommand = fc;
+        String onlyCommand = parseCommandTextFromString(command);
+        for (InteractiveCommands ic : values()) {
+            if (ic.text.equals(onlyCommand)) {
+                interactiveCommand = ic;
                 break;
             }
         }
         return interactiveCommand;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public abstract String processResponse(TextView outTextView, int screenWidth, Resources resources, String[] commandResponse);
+    public abstract String getSpecificText();
 }

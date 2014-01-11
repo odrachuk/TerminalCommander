@@ -54,17 +54,13 @@ public class NativeCommandExecution extends CommandExecution {
     @Override
     public void makeExecution() {
         try {
-            if (commandText.trim().equals("exit")) {
-                writer.write("exit" + LINE_SEPARATOR);
-            } else {
-                // write command to comm
-                writer.write("((" + commandText + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
-            }
+            // write command to stdIn
+            writer.write("((" + commandText + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
             writer.flush();
-            // read result of command from comm
+            // read result from strOut
             String out = reader.readLine();
             while (out != null && !out.trim().equals("--EOF--")) {
-                // write output to listview
+                // save one row result to list
                 resultList.add(out);
                 out = reader.readLine();
             }
@@ -75,12 +71,14 @@ public class NativeCommandExecution extends CommandExecution {
 
     @Override
     public void postExecution() {
+        // parsing results
         String[] resultArray = new String[resultList.size()];
         int i = 0;
         for (String s : resultList) {
             resultArray[i] = eraseAbsent(s);
             i++;
         }
+        // send results
         Bundle resultBundle = new Bundle();
         resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
         resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);

@@ -17,11 +17,12 @@
  ******************************************************************************/
 package com.softsandr.commander.process;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.TextView;
+import android.util.DisplayMetrics;
+import android.view.View;
+import com.softsandr.commander.Commander;
 import com.softsandr.commander.commands.filtered.FilteredCommands;
 
 import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
@@ -33,14 +34,16 @@ public class CommandsResponseHandler extends Handler {
     private static final String LOG_TAG = CommandsResponseHandler.class.getSimpleName();
     public static final String COMMAND_EXECUTION_RESPONSE_KEY = LOG_TAG + ".COMMAND_EXECUTION_RESPONSE";
     public static final String COMMAND_EXECUTION_STRING_KEY = LOG_TAG + ".COMMAND_EXECUTION_STRING";
-    private final TextView outTextView;
-    private final Resources resources;
+    public static final String COMMAND_EXECUTION_CLEAR_KEY = LOG_TAG + ".COMMAND_EXECUTION_CLEAR";
+    public static final String COMMAND_EXECUTION_HIDE_KEY = LOG_TAG + ".COMMAND_EXECUTION_HIDE";
+    private final Commander commander;
     private final int screenWidth;
 
-    public CommandsResponseHandler(int screenWidth, Resources resources, TextView outTextView) {
-        this.screenWidth = screenWidth;
-        this.outTextView = outTextView;
-        this.resources = resources;
+    public CommandsResponseHandler(Commander commander) {
+        DisplayMetrics dm = new DisplayMetrics();
+        commander.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        this.screenWidth = dm.widthPixels;
+        this.commander = commander;
     }
 
     @Override
@@ -49,22 +52,32 @@ public class CommandsResponseHandler extends Handler {
         if (inputBundle != null) {
             String[] results = inputBundle.getStringArray(COMMAND_EXECUTION_RESPONSE_KEY);
             String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
-            if (results != null && results.length != 0) {
-                StringBuilder oldText = new StringBuilder(outTextView.getText());
-                boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
-                if (isFilteredCommand) {
-                    FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
-                    if (filteredCommand != null) {
-                        outTextView.setText(oldText + LINE_SEPARATOR
-                                + filteredCommand.processResponse(outTextView, screenWidth, resources, results));
+            if (inputBundle.containsKey(COMMAND_EXECUTION_HIDE_KEY)) {
+                // situation when we hide input elements and display cancel button
+                // todo
+            } else {
+                if (inputBundle.containsKey(COMMAND_EXECUTION_CLEAR_KEY)) {
+                    commander.getOutTextView().setText("");
+                }
+                if (results != null && results.length != 0) {
+                    StringBuilder oldText = new StringBuilder(commander.getOutTextView().getText());
+                    boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
+                    if (isFilteredCommand) {
+                        FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
+                        if (filteredCommand != null) {
+                            commander.getOutTextView().setText(oldText
+                                    + LINE_SEPARATOR
+                                    + filteredCommand.processResponse(
+                                    commander.getOutTextView(), screenWidth,
+                                    commander.getActivity().getResources(), results));
+                        }
+                    } else {
+                        for (String s : results) {
+                            oldText.append(LINE_SEPARATOR);
+                            oldText.append(s);
+                        }
+                        commander.getOutTextView().setText(oldText.toString());
                     }
-                } else {
-                    // write result to console
-                    for (String s : results) {
-                        oldText.append(LINE_SEPARATOR);
-                        oldText.append(s);
-                    }
-                    outTextView.setText(oldText.toString());
                 }
             }
         }

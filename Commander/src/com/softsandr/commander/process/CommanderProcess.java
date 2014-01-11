@@ -36,14 +36,9 @@ import java.io.IOException;
  */
 public class CommanderProcess {
     private static final String LOG_TAG = CommanderProcess.class.getSimpleName();
-    private static final String SYSTEM_EXECUTOR = "/system/bin/sh";
+    public static final String SYSTEM_EXECUTOR = "/system/bin/sh";
     private final CommandsResponseHandler mResponseHandler;
     private final Commander commander;
-
-    public Process getProcess() {
-        return process;
-    }
-
     private Process process;
 
     /**
@@ -51,16 +46,11 @@ public class CommanderProcess {
      */
     public CommanderProcess(Commander commander) {
         this.commander = commander;
-        DisplayMetrics dm = new DisplayMetrics();
-        this.commander.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        mResponseHandler = new CommandsResponseHandler(
-                dm.widthPixels,
-                commander.getActivity().getResources(),
-                commander.getOutTextView());
+        mResponseHandler = new CommandsResponseHandler(commander);
     }
 
     public void startExecutionProcess(String path) throws IOException {
-        Log.d(LOG_TAG, "startExecutionProcess");
+        Log.d(LOG_TAG, "newExecutionProcess");
         File pathDirectory = new File(path);
         if (pathDirectory.isDirectory()) {
             ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR);
@@ -116,5 +106,9 @@ public class CommanderProcess {
 
     public Commander getCommander() {
         return commander;
+    }
+
+    public Process getProcess() {
+        return process;
     }
 }

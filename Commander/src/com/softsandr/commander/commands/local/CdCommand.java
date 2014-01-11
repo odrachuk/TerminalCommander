@@ -70,7 +70,7 @@ public class CdCommand extends LocalCommand {
                 commanderProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString += "Execution exception";
+            callbackString = "Can't start main execution process";
         }
         return callbackString;
     }
