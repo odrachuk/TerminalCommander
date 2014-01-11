@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * The container for all ui components that marking selection on ui.
  */
-public class SelectionViewComponents {
+public class SelectionUiComponents {
     private final Resources resources;
     private final List<View> leftPanelBorders = new ArrayList<View>();
     private final List<View> rightPanelBorders = new ArrayList<View>();
@@ -37,7 +37,7 @@ public class SelectionViewComponents {
     private final TextView leftPathLabel;
 
 
-    public SelectionViewComponents(TerminalActivity activity) {
+    public SelectionUiComponents(TerminalActivity activity) {
         this.resources = activity.getResources();
         // left panel
         leftPanelBorders.add(activity.findViewById(R.id.top_border_image_1_in_left));

@@ -45,10 +45,10 @@ public class TerminalHistoryDialog extends DialogFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String[] splitPath = mHistoryLocations[position].substring(1).split(StringUtil.PATH_SEPARATOR);
             if (mActivePage.equals(TerminalActivePage.LEFT)) {
-                ((TerminalActivity) getActivity()).getLeftListAdapter().clearBackPath(splitPath);
+                ((TerminalActivity) getActivity()).getLeftListAdapter().clearLocationHistory(splitPath);
                 ((TerminalActivity) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             } else {
-                ((TerminalActivity) getActivity()).getRightListAdapter().clearBackPath(splitPath);
+                ((TerminalActivity) getActivity()).getRightListAdapter().clearLocationHistory(splitPath);
                 ((TerminalActivity) getActivity()).getRightListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
             }
             getDialog().cancel();

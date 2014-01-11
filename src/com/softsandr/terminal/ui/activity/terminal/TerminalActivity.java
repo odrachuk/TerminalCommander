@@ -46,7 +46,7 @@ import com.softsandr.terminal.ui.activity.terminal.listener.ListViewTouchListene
 import com.softsandr.terminal.ui.activity.terminal.listener.TerminalClickListener;
 import com.softsandr.terminal.ui.activity.terminal.monitor.ActionBarToggleMonitor;
 import com.softsandr.terminal.ui.activity.terminal.monitor.SortingMenuItemsMonitor;
-import com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents;
+import com.softsandr.terminal.ui.activity.terminal.selection.SelectionUiComponents;
 
 import java.util.ArrayList;
 
@@ -65,7 +65,7 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
     private View.OnClickListener mOnClickListener;
     private ListViewSortingStrategy mSortingStrategy = ListViewSortingStrategy.SORT_BY_NAME;
     private ListViewAdapter mLeftAdapter, mRightAdapter;
-    private SelectionViewComponents mSelectionVisualItems;
+    private SelectionUiComponents mSelectionVisualItems;
     private TerminalActivePage activePage = TerminalActivePage.LEFT;
     private ActionBarToggleMonitor mActionBarToggleMonitor;
     private ListView mLeftList, mRightList;
@@ -92,7 +92,7 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terminal_activity_layout);
-        mSelectionVisualItems = new SelectionViewComponents(this);
+        mSelectionVisualItems = new SelectionUiComponents(this);
         mListTouchListener = new ListViewTouchListener(this);
         mOnClickListener = new TerminalClickListener(this);
         readPreferences();
@@ -157,10 +157,10 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mLeftAdapter != null) {
-            outState.putString(LEFT_FILE_LIST_PATH_BUNDLE, mLeftAdapter.getPathLabel().getFullPath());
+            outState.putString(LEFT_FILE_LIST_PATH_BUNDLE, mLeftAdapter.getLocationLabel().getPath());
         }
         if (mRightAdapter != null) {
-            outState.putString(RIGHT_FILE_LIST_PATH_BUNDLE, mRightAdapter.getPathLabel().getFullPath());
+            outState.putString(RIGHT_FILE_LIST_PATH_BUNDLE, mRightAdapter.getLocationLabel().getPath());
         }
         super.onSaveInstanceState(outState);
     }
@@ -188,11 +188,11 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
                 if (mLeftAdapter != null && mRightAdapter != null) {
                     switch (activePage) {
                         case LEFT:
-                            mLeftAdapter.clearBackPath(splitPath);
+                            mLeftAdapter.clearLocationHistory(splitPath);
                             mLeftAdapter.changeDirectory(splitPath[splitPath.length - 1]);
                             break;
                         case RIGHT:
-                            mRightAdapter.clearBackPath(splitPath);
+                            mRightAdapter.clearLocationHistory(splitPath);
                             mRightAdapter.changeDirectory(splitPath[splitPath.length - 1]);
                             break;
                     }
@@ -258,14 +258,14 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
                 switch (activePage) {
                     case LEFT:
                         if (mLeftAdapter != null) {
-                            mLeftAdapter.changeDirectory(mLeftAdapter.getPathLabel().getFullPath());
-                            mLeftAdapter.getSelectionStrategy().clear();
+                            mLeftAdapter.changeDirectory(mLeftAdapter.getLocationLabel().getPath());
+                            mLeftAdapter.getSelectionMonitor().clear();
                         }
                         break;
                     case RIGHT:
                         if (mRightAdapter != null) {
-                            mRightAdapter.changeDirectory(mRightAdapter.getPathLabel().getFullPath());
-                            mRightAdapter.getSelectionStrategy().clear();
+                            mRightAdapter.changeDirectory(mRightAdapter.getLocationLabel().getPath());
+                            mRightAdapter.getSelectionMonitor().clear();
                         }
                         break;
                 }
@@ -295,8 +295,8 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
     }
 
     private void saveDataBeforeDestroy() {
-        mPreferences.saveLastLocations(mLeftAdapter.getPathLabel().getFullPath(),
-                mRightAdapter.getPathLabel().getFullPath());
+        mPreferences.saveLastLocations(mLeftAdapter.getLocationLabel().getPath(),
+                mRightAdapter.getLocationLabel().getPath());
         mPreferences.saveLeftHistoryLocations(mLeftHistoryLocationManager.getActualHistoryLocations());
         mPreferences.saveRightHistoryLocations(mRightHistoryLocationManager.getActualHistoryLocations());
         mPreferences.saveSortingStrategy(mSortingStrategy);
@@ -320,7 +320,7 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(this, mLeftAdapter, mLeftList));
         mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mLeftAdapter));
         mLeftList.setOnTouchListener(mListTouchListener);
-        mLeftAdapter.restoreBackPath(mLeftListSavedLocation);
+        mLeftAdapter.restoreHistoryLocation(mLeftListSavedLocation);
     }
 
     @Override
@@ -335,7 +335,7 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
         mRightList.setOnItemClickListener(new ListViewItemClickListener(this, mRightAdapter, mRightList));
         mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mRightAdapter));
         mRightList.setOnTouchListener(mListTouchListener);
-        mRightAdapter.restoreBackPath(mRightListSavedLocation);
+        mRightAdapter.restoreHistoryLocation(mRightListSavedLocation);
     }
 
     @Override
@@ -380,11 +380,11 @@ public class TerminalActivity extends android.app.Activity implements Terminal {
 
     @Override
     public ArrayList<ListViewItem> getOperationItems() {
-        return activePage == TerminalActivePage.LEFT ? mLeftAdapter.getSelectedItems() : mRightAdapter.getSelectedItems();
+        return activePage == TerminalActivePage.LEFT ? mLeftAdapter.getSelectedList() : mRightAdapter.getSelectedList();
     }
 
     @Override
-    public SelectionViewComponents getSelectionVisualItems() {
+    public SelectionUiComponents getSelectionVisualItems() {
         return mSelectionVisualItems;
     }
 

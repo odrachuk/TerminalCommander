@@ -28,9 +28,9 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
-import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
+import com.softsandr.terminal.ui.activity.terminal.LocationLabel;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
-import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
+import com.softsandr.terminal.ui.activity.terminal.selection.SelectionMonitor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,38 +41,42 @@ import java.util.NoSuchElementException;
  * The {@link android.widget.ArrayAdapter} for main lists
  */
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
-    private final SelectionStrategy selectionStrategy;
-    private final CurrentPathLabel pathLabel;
-    private final LinkedList<String> pathStack;
     private final HistoryLocationsManager historyLocationsManager;
+    private final LinkedList<String> locationHistoryStack;
+    private final SelectionMonitor selectionMonitor;
     private final TerminalActivity terminalActivity;
+    private final LocationLabel locationLabel;
 
     public ListViewAdapter(TerminalActivity activity,
                            List<ListViewItem> filesInfo,
-                           CurrentPathLabel pathLabel,
+                           LocationLabel pathLabel,
                            HistoryLocationsManager historyLocationsManager) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.terminalActivity = activity;
-        this.pathLabel = pathLabel;
-        this.selectionStrategy = new SelectionStrategy(this);
+        this.locationLabel = pathLabel;
+        this.selectionMonitor = new SelectionMonitor(this);
         this.historyLocationsManager = historyLocationsManager;
-        pathStack = new LinkedList<String>();
-        pathStack.add(StringUtil.PATH_SEPARATOR);
+        locationHistoryStack = new LinkedList<String>();
+        locationHistoryStack.add(StringUtil.PATH_SEPARATOR);
     }
 
+    /**
+     * Process change directory
+     * @param path The new directory location path
+     */
     public void changeDirectory(String path) {
         if (path.equals(StringUtil.PATH_SEPARATOR)) {
-            pathStack.clear();
-            pathStack.add(StringUtil.PATH_SEPARATOR);
+            locationHistoryStack.clear();
+            locationHistoryStack.add(StringUtil.PATH_SEPARATOR);
         } else {
-            String prevPath = pathStack.getLast();
+            String prevPath = locationHistoryStack.getLast();
             if (!prevPath.equals(path)) {
-                if (isContinueForPrev(prevPath, path)) {
-                    pathStack.addLast(path);
+                if (path.contains(prevPath)) {
+                    locationHistoryStack.addLast(path);
                 } else {
                     String correctPath = path.startsWith(StringUtil.PATH_SEPARATOR) ?
                             path.substring(1) : path;
-                    pathStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
+                    locationHistoryStack.addLast(prevPath.equals(StringUtil.PATH_SEPARATOR) ?
                             prevPath + correctPath :
                             prevPath + StringUtil.PATH_SEPARATOR + correctPath);
                 }
@@ -80,15 +84,11 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         }
         // update filesystem
         clear();
-        pathLabel.setPath(pathStack.getLast());
-        historyLocationsManager.addLocation(pathLabel.getFullPath());
+        locationLabel.setPath(locationHistoryStack.getLast());
+        historyLocationsManager.addLocation(locationLabel.getPath());
         List<ListViewItem> list = new ArrayList<ListViewItem>();
-        ListViewFiller.fillListContent(terminalActivity.getSortingStrategy(), list, pathStack.getLast());
+        ListViewFiller.fillListContent(terminalActivity.getSortingStrategy(), list, locationHistoryStack.getLast());
         addAll(list);
-    }
-
-    private boolean isContinueForPrev(String prevPath, String newPath) {
-        return newPath.contains(prevPath);
     }
 
     @Override
@@ -138,8 +138,14 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         return convertView;
     }
 
+    /**
+     * Processing selection and make selected items in yellow and unselected in default color
+     * @param viewHolder    The row view holder
+     * @param info          The row instance of {@link com.softsandr.terminal.model.listview.ListViewItem}
+     * @param position      the row number (index of position) in ListView
+     */
     private void checkSelection(ViewHolder viewHolder, ListViewItem info, int position) {
-        if (selectionStrategy.getSelectedItems().contains(position)) {
+        if (selectionMonitor.getSelectedItems().contains(position)) {
             viewHolder.fileNameView.setTextColor(
                     terminalActivity.getResources().getColor(R.color.COLOR_FECE0A));
             viewHolder.fileSizeView.setTextColor(
@@ -147,7 +153,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             viewHolder.fileModifyTimeView.setTextColor(
                     terminalActivity.getResources().getColor(R.color.COLOR_FECE0A));
         }
-        if (selectionStrategy.getUnselectedItems().contains(position)) {
+        if (selectionMonitor.getUnselectedItems().contains(position)) {
             if (info.isDirectory()) {
                 viewHolder.fileNameView.setTextColor(
                         terminalActivity.getResources().getColor(android.R.color.white));
@@ -166,71 +172,101 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         }
     }
 
-    public void clearBackPath(String[] newBackPathInArray) {
-        pathStack.clear();
-        pathStack.add(StringUtil.PATH_SEPARATOR);
+    /**
+     * Make clearing and start initialization of history location stack
+     * @param newBackPathInArray    The initial history stack
+     */
+    public void clearLocationHistory(String[] newBackPathInArray) {
+        locationHistoryStack.clear();
+        locationHistoryStack.add(StringUtil.PATH_SEPARATOR);
         for (int i = 0; i < newBackPathInArray.length - 1; i++) {
-            if (pathStack.getLast().equals(StringUtil.PATH_SEPARATOR)) {
-                pathStack.add(pathStack.getLast() + newBackPathInArray[i]);
+            if (locationHistoryStack.getLast().equals(StringUtil.PATH_SEPARATOR)) {
+                locationHistoryStack.add(locationHistoryStack.getLast() + newBackPathInArray[i]);
             } else {
-                pathStack.add(pathStack.getLast() + StringUtil.PATH_SEPARATOR + newBackPathInArray[i]);
+                locationHistoryStack.add(locationHistoryStack.getLast() + StringUtil.PATH_SEPARATOR + newBackPathInArray[i]);
             }
         }
     }
 
-    public String getBackPath() {
-        pathStack.removeLast();
+    /**
+     * Return actual previous location from history location
+     * @return  String of previous location
+     */
+    public String getBackLocation() {
+        locationHistoryStack.removeLast();
         String last = StringUtil.PATH_SEPARATOR;
         try {
-            last = pathStack.getLast();
+            last = locationHistoryStack.getLast();
         } catch (NoSuchElementException ignored) {
         }
         return last;
     }
 
-    public void goBackToPath(String backPath) {
-        while (!pathStack.getLast().equals(backPath)) {
-            pathStack.removeLast();
+    /**
+     * Delete last path from history location if argument path not equal the path
+     * @param backPath  New last location in history location
+     */
+    public void makeBackHistory(String backPath) {
+        while (!locationHistoryStack.getLast().equals(backPath)) {
+            locationHistoryStack.removeLast();
         }
     }
 
-    public void restoreBackPath(String listSavedLocation) {
-        pathStack.clear();
-        pathStack.add(StringUtil.PATH_SEPARATOR);
+    /**
+     * Recreate history locations from SavedInstance string
+     * @param listSavedLocation The saved location string
+     */
+    public void restoreHistoryLocation(String listSavedLocation) {
+        locationHistoryStack.clear();
+        locationHistoryStack.add(StringUtil.PATH_SEPARATOR);
         if (listSavedLocation.length() > 1) {
             String correctSavedListLocation = listSavedLocation.endsWith(StringUtil.PATH_SEPARATOR) ?
                     listSavedLocation.substring(0, listSavedLocation.length() - 1) : listSavedLocation;
             String[] pathArray = correctSavedListLocation.split(StringUtil.PATH_SEPARATOR);
-            pathStack.addLast(pathStack.getLast() + pathArray[1]);
+            locationHistoryStack.addLast(locationHistoryStack.getLast() + pathArray[1]);
             for (int i = 2; i < pathArray.length; i++) {
-                pathStack.addLast(pathStack.getLast() + StringUtil.PATH_SEPARATOR + pathArray[i]);
+                locationHistoryStack.addLast(locationHistoryStack.getLast() + StringUtil.PATH_SEPARATOR + pathArray[i]);
             }
-            pathLabel.setPath(correctSavedListLocation);
+            locationLabel.setPath(correctSavedListLocation);
         }
     }
 
-    public SelectionStrategy getSelectionStrategy() {
-        return selectionStrategy;
+    /**
+     * The panel selection monitor {@link com.softsandr.terminal.ui.activity.terminal.selection.SelectionMonitor}
+     * @return The specific selection state monitor
+     */
+    public SelectionMonitor getSelectionMonitor() {
+        return selectionMonitor;
     }
 
-    public ArrayList<ListViewItem> getSelectedItems() {
+    /**
+     * Transform selection set to ArrayList
+     * @return {@link java.util.ArrayList} of selected items
+     */
+    public ArrayList<ListViewItem> getSelectedList() {
         ArrayList<ListViewItem> selectedItems = new ArrayList<ListViewItem>();
-        for (Integer selectedPosition : selectionStrategy.getSelectedItems()) {
+        for (Integer selectedPosition : selectionMonitor.getSelectedItems()) {
             selectedItems.add(getItem(selectedPosition));
         }
         return selectedItems;
     }
 
-    public CurrentPathLabel getPathLabel() {
-        return pathLabel;
+    public LocationLabel getLocationLabel() {
+        return locationLabel;
     }
 
+    /**
+     * Clear selection monitor anf notifyDataSetChanged
+     */
     public void clearSelection() {
-        selectionStrategy.makeClearSelected();
+        selectionMonitor.makeClearSelected();
         notifyDataSetChanged();
     }
 
-    class ViewHolder {
+    /**
+     * Container of ui elements from one row of List
+     */
+    private final class ViewHolder {
         TextView fileNameView;
         TextView fileSizeView;
         TextView fileModifyTimeView;

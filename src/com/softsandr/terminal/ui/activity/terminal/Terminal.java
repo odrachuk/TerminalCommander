@@ -23,7 +23,7 @@ import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.ui.activity.terminal.monitor.ActionBarToggleMonitor;
-import com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents;
+import com.softsandr.terminal.ui.activity.terminal.selection.SelectionUiComponents;
 
 import java.util.ArrayList;
 
@@ -105,11 +105,11 @@ public interface Terminal {
     ArrayList<ListViewItem> getOperationItems();
 
     /**
-     * Return {@link com.softsandr.terminal.ui.activity.terminal.selection.SelectionViewComponents}
+     * Return {@link com.softsandr.terminal.ui.activity.terminal.selection.SelectionUiComponents}
      * from terminal activity instance
-     * @return {@link SelectionViewComponents}
+     * @return {@link com.softsandr.terminal.ui.activity.terminal.selection.SelectionUiComponents}
      */
-    SelectionViewComponents getSelectionVisualItems();
+    SelectionUiComponents getSelectionVisualItems();
 
     /**
      * Determine current active page as {@link com.softsandr.terminal.ui.activity.terminal.TerminalActivePage}

@@ -26,14 +26,14 @@ import com.drk.terminal.util.utils.FileOpeningUtil;
 import com.drk.terminal.util.utils.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
-import com.softsandr.terminal.ui.activity.terminal.selection.SelectionStrategy;
+import com.softsandr.terminal.ui.activity.terminal.selection.SelectionMonitor;
 
 /**
  * This class represent {@link com.softsandr.terminal.ui.activity.terminal.listener.ListViewItemClickListener}
  * for specified (left or right) panel
  */
 public class ListViewItemClickListener implements AdapterView.OnItemClickListener {
-    private final SelectionStrategy selectionStrategy;
+    private final SelectionMonitor selectionStrategy;
     private final ListViewAdapter adapter;
     private final ListView listView;
     private final Activity activity;
@@ -42,7 +42,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
         this.activity = activity;
         this.adapter = adapter;
         this.listView = listView;
-        this.selectionStrategy = adapter.getSelectionStrategy();
+        this.selectionStrategy = adapter.getSelectionMonitor();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
         // If parent dots clicked go up
         ListViewItem selectedItem = adapter.getItem(position);
         if (selectedItem.isParentDots()) {
-            String backPath = adapter.getBackPath();
+            String backPath = adapter.getBackLocation();
             if (backPath != null) {
                 selectionStrategy.clear();
                 adapter.changeDirectory(backPath);
@@ -67,7 +67,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
                         if (selectedItem.isLink()) {
                             String[] splitPath = selectedItem.getAbsPath().
                                     substring(1).split(StringUtil.PATH_SEPARATOR);
-                            adapter.clearBackPath(splitPath);
+                            adapter.clearLocationHistory(splitPath);
                             adapter.changeDirectory(splitPath[splitPath.length - 1]);
                         } else {
                             adapter.changeDirectory(selectedItem.getFileName());

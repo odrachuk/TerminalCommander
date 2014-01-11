@@ -26,7 +26,7 @@ import java.util.TreeSet;
  * This class represent strategy that proceed selection items operations and contain
  * separate list of selected and unselected items.
  */
-public class SelectionStrategy {
+public class SelectionMonitor {
     private final Set<Integer> unselectedItems;
     private final Set<Integer> selectedItems;
     private final ArrayAdapter adapter;
@@ -34,7 +34,7 @@ public class SelectionStrategy {
     private boolean isCtrlToggle;
     private int lastShiftPosition;
 
-    public SelectionStrategy(ArrayAdapter adapter) {
+    public SelectionMonitor(ArrayAdapter adapter) {
         this.unselectedItems = new TreeSet<Integer>();
         this.selectedItems = new TreeSet<Integer>();
         this.adapter = adapter;

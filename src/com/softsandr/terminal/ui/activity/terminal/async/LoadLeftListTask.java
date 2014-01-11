@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.ui.activity.terminal.CurrentPathLabel;
+import com.softsandr.terminal.ui.activity.terminal.LocationLabel;
 import com.softsandr.terminal.ui.activity.terminal.Terminal;
 import com.softsandr.terminal.ui.activity.terminal.TerminalActivity;
 import com.softsandr.terminal.ui.activity.terminal.adapter.ListViewAdapter;
@@ -56,7 +56,7 @@ public class LoadLeftListTask extends AsyncTask<Void, Void, List<ListViewItem>> 
     protected void onPostExecute(List<ListViewItem> list) {
         TextView leftPathLabel = (TextView) ((Activity) terminal).findViewById(R.id.path_location_in_left);
         ListViewAdapter leftAdapter = new ListViewAdapter((TerminalActivity) terminal, list,
-                new CurrentPathLabel(leftPathLabel),
+                new LocationLabel(leftPathLabel),
                 terminal.getLeftHistoryLocationManager());
         terminal.setLeftListAdapter(leftAdapter);
     }

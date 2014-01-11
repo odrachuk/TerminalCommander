@@ -83,7 +83,7 @@ public class DeleteFileCommand implements FileCommand {
                     if (destinationPath.contains(currentPath)) {
                         terminalActivity.getRightListAdapter().clearSelection();
                         terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                        terminalActivity.getRightListAdapter().goBackToPath(currentPath);
+                        terminalActivity.getRightListAdapter().makeBackHistory(currentPath);
                     }
                     break;
                 case RIGHT:
@@ -92,7 +92,7 @@ public class DeleteFileCommand implements FileCommand {
                     if (destinationPath.contains(currentPath)) {
                         terminalActivity.getLeftListAdapter().clearSelection();
                         terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                        terminalActivity.getLeftListAdapter().goBackToPath(currentPath);
+                        terminalActivity.getLeftListAdapter().makeBackHistory(currentPath);
                     }
                     break;
             }

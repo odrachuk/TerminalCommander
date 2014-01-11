@@ -45,8 +45,8 @@ public class ActionBarToggleMonitor {
         if (isCtrlToggled) {
             isCtrlToggled = false;
             ctrlBtnContainer.setBackgroundColor(resources.getColor(android.R.color.transparent));
-            terminal.getLeftListAdapter().getSelectionStrategy().setCtrlToggle(false);
-            terminal.getRightListAdapter().getSelectionStrategy().setCtrlToggle(false);
+            terminal.getLeftListAdapter().getSelectionMonitor().setCtrlToggle(false);
+            terminal.getRightListAdapter().getSelectionMonitor().setCtrlToggle(false);
         }
         if (isShiftToggled) {
             isShiftToggled = false;
@@ -55,16 +55,16 @@ public class ActionBarToggleMonitor {
             isShiftToggled = true;
             shiftBtnContainer.setBackgroundColor(resources.getColor(R.color.COLOR_FEA50A));
         }
-        terminal.getLeftListAdapter().getSelectionStrategy().setShiftToggle(isShiftToggled);
-        terminal.getRightListAdapter().getSelectionStrategy().setShiftToggle(isShiftToggled);
+        terminal.getLeftListAdapter().getSelectionMonitor().setShiftToggle(isShiftToggled);
+        terminal.getRightListAdapter().getSelectionMonitor().setShiftToggle(isShiftToggled);
     }
 
     public void onClickCtrl() {
         if (isShiftToggled) {
             isShiftToggled = false;
             shiftBtnContainer.setBackgroundColor(resources.getColor(android.R.color.transparent));
-            terminal.getLeftListAdapter().getSelectionStrategy().setShiftToggle(false);
-            terminal.getRightListAdapter().getSelectionStrategy().setShiftToggle(false);
+            terminal.getLeftListAdapter().getSelectionMonitor().setShiftToggle(false);
+            terminal.getRightListAdapter().getSelectionMonitor().setShiftToggle(false);
         }
         if (isCtrlToggled) {
             isCtrlToggled = false;
@@ -73,7 +73,7 @@ public class ActionBarToggleMonitor {
             isCtrlToggled = true;
             ctrlBtnContainer.setBackgroundColor(resources.getColor(R.color.COLOR_FEA50A));
         }
-        terminal.getLeftListAdapter().getSelectionStrategy().setCtrlToggle(isCtrlToggled);
-        terminal.getRightListAdapter().getSelectionStrategy().setCtrlToggle(isCtrlToggled);
+        terminal.getLeftListAdapter().getSelectionMonitor().setCtrlToggle(isCtrlToggled);
+        terminal.getRightListAdapter().getSelectionMonitor().setCtrlToggle(isCtrlToggled);
     }
 }

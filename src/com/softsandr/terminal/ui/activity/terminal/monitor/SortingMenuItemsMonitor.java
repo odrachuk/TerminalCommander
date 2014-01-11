@@ -57,9 +57,9 @@ public class SortingMenuItemsMonitor {
         } else if (menuItem.equals(sortByModify)) {
             terminal.setSortingStrategy(ListViewSortingStrategy.SORT_BY_DATE);
         }
-        terminal.getLeftListAdapter().changeDirectory(terminal.getLeftListAdapter().getPathLabel().getFullPath());
-        terminal.getRightListAdapter().changeDirectory(terminal.getRightListAdapter().getPathLabel().getFullPath());
-        terminal.getLeftListAdapter().getSelectionStrategy().clear();
-        terminal.getRightListAdapter().getSelectionStrategy().clear();
+        terminal.getLeftListAdapter().changeDirectory(terminal.getLeftListAdapter().getLocationLabel().getPath());
+        terminal.getRightListAdapter().changeDirectory(terminal.getRightListAdapter().getLocationLabel().getPath());
+        terminal.getLeftListAdapter().getSelectionMonitor().clear();
+        terminal.getRightListAdapter().getSelectionMonitor().clear();
     }
 }

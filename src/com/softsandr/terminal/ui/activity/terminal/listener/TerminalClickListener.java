@@ -42,11 +42,11 @@ public class TerminalClickListener implements View.OnClickListener {
     public void onClick(View v) {
         int viewId = v.getId();
         String destinationLocation = !terminal.getActivePage().equals(TerminalActivePage.LEFT) ?
-                terminal.getLeftListAdapter().getPathLabel().getFullPath() :
-                terminal.getRightListAdapter().getPathLabel().getFullPath();
+                terminal.getLeftListAdapter().getLocationLabel().getPath() :
+                terminal.getRightListAdapter().getLocationLabel().getPath();
         String currentLocation = terminal.getActivePage().equals(TerminalActivePage.LEFT) ?
-                terminal.getLeftListAdapter().getPathLabel().getFullPath() :
-                terminal.getRightListAdapter().getPathLabel().getFullPath();
+                terminal.getLeftListAdapter().getLocationLabel().getPath() :
+                terminal.getRightListAdapter().getLocationLabel().getPath();
             /* Menu items */
         if (v.getId() == R.id.action_bar_comm_btn) {
             Intent startIntent = new Intent((Activity) terminal, CommanderActivity.class);

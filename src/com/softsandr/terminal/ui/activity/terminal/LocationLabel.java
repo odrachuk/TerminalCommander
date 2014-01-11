@@ -23,11 +23,11 @@ import com.drk.terminal.util.utils.StringUtil;
 /**
  * The class as String location of user
  */
-public class CurrentPathLabel {
+public class LocationLabel {
     private String fullPath = StringUtil.PATH_SEPARATOR;
     private final TextView pathLabel;
 
-    public CurrentPathLabel(TextView ownLabel) {
+    public LocationLabel(TextView ownLabel) {
         this.pathLabel = ownLabel;
     }
 
@@ -38,7 +38,7 @@ public class CurrentPathLabel {
         }
     }
 
-    public String getFullPath() {
+    public String getPath() {
         return fullPath;
     }
 }
