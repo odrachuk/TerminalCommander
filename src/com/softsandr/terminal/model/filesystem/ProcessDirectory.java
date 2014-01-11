@@ -18,7 +18,7 @@
 package com.softsandr.terminal.model.filesystem;
 
 import android.util.Log;
-import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.utils.string.StringUtil;
 
 import java.io.File;
 import java.io.IOException;

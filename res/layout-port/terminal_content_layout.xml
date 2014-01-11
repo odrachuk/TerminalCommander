@@ -13,7 +13,7 @@
         <include layout="@layout/terminal_content_left_layout"/>
     </RelativeLayout>
     <!-- Right Side -->
-    <com.softsandr.terminal.ui.widget.slider.TerminalSlider
+    <com.softsandr.terminal.slider.TerminalSlider
             android:id="@+id/SlidingDrawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,5 +35,5 @@
                 <include layout="@layout/terminal_content_right_layout"/>
             </LinearLayout>
         </LinearLayout>
-    </com.softsandr.terminal.ui.widget.slider.TerminalSlider>
+    </com.softsandr.terminal.slider.TerminalSlider>
 </RelativeLayout>

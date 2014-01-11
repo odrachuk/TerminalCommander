@@ -18,8 +18,8 @@
 package com.softsandr.terminal.model.listview;
 
 import android.util.Log;
-import com.drk.terminal.util.utils.FileUtil;
-import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.utils.file.FileUtil;
+import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.filesystem.ProcessDirectory;
 
 import java.io.File;

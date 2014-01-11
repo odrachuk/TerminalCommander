@@ -20,7 +20,7 @@ package com.softsandr.terminal.model.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 
 import java.util.Collections;

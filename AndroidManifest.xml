@@ -16,16 +16,16 @@
             android:icon="@drawable/terminal_icon"
             android:theme="@style/Terminal_Theme"
             android:hardwareAccelerated="true">
-        <activity android:name=".ui.activity.terminal.TerminalActivity"
+        <activity android:name=".activity.terminal.TerminalActivity"
                   android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.commander.CommanderActivity"
+        <activity android:name=".activity.commander.CommanderActivity"
                   android:windowSoftInputMode="stateVisible|adjustResize"/>
-        <activity android:name=".ui.activity.progress.TerminalProgressActivity"
+        <activity android:name=".activity.progress.TerminalProgressActivity"
                   android:theme="@style/Transparent_Activity_Theme"/>
     </application>
 </manifest>

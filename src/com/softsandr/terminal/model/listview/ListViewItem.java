@@ -20,8 +20,8 @@ package com.softsandr.terminal.model.listview;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import com.drk.terminal.util.utils.AlphanumComparator;
-import com.drk.terminal.util.utils.StringUtil;
+import com.softsandr.utils.sort.AlphanumComparator;
+import com.softsandr.utils.string.StringUtil;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
