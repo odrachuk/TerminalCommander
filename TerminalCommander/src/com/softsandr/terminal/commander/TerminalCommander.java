@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.softsandr.terminal.commander.command.filtered.FilteredCommands;
+import com.softsandr.terminal.commander.command.interactive.InteractiveCommands;
 import com.softsandr.terminal.commander.command.local.LocalCommands;
 import com.softsandr.terminal.commander.controller.UiController;
 import com.softsandr.terminal.commander.prompt.TerminalPrompt;
@@ -86,53 +87,84 @@ public class TerminalCommander {
     public void execCommand(String commandText) {
         mCommandText = commandText;
         if (LocalCommands.isLocalCommand(mCommandText)) {
-            String responseMessage = EMPTY;
-            LocalCommands filteredCommand = LocalCommands.parseCommandTypeFromString(mCommandText);
-            String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
-            if (isExecutableCallback.isEmpty()) { // executable
-                responseMessage += filteredCommand.getCommand().onExecute(this);
-            } else { // not executable
-                responseMessage += isExecutableCallback;
-            }
-            if (!responseMessage.isEmpty()) {
-                String[] resultArray = new String[]{responseMessage};
-                Bundle resultBundle = new Bundle();
-                resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-                resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
-                Message resultMessage = mResponseHandler.obtainMessage();
-                resultMessage.setData(resultBundle);
-                mResponseHandler.sendMessage(resultMessage);
-            }
+            localExecute(mCommandText);
+        } else if (InteractiveCommands.isInteractiveCommand(mCommandText)) {
+            interactiveExecute(mCommandText);
         } else {
-            try {
-                nativeExecute(mCommandText);
-            } catch (IOException e) {
-                mTerminalOutView.setText("System can't execute command");
-            }
+            nativeExecute(mCommandText);
         }
         mCommandText = null;
     }
 
-    private void nativeExecute(String command) throws IOException {
+    /**
+     * Execute command using async executor
+     * @param commandText The command from iput string
+     */
+    private void interactiveExecute(String commandText) {
+        String[] resultArray = new String[]{"NOTHING!!!"};
+        Bundle resultBundle = new Bundle();
+        resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
+        Message resultMessage = mResponseHandler.obtainMessage();
+        resultMessage.setData(resultBundle);
+        mResponseHandler.sendMessage(resultMessage);
+    }
+
+    /**
+     * Execute command using custom logic
+     * @param commandText The command from input string
+     */
+    private void localExecute(String commandText) {
+        String responseMessage = EMPTY;
+        LocalCommands filteredCommand = LocalCommands.parseCommandTypeFromString(mCommandText);
+        String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
+        if (isExecutableCallback.isEmpty()) { // executable
+            responseMessage += filteredCommand.getCommand().onExecute(this);
+        } else { // not executable
+            responseMessage += isExecutableCallback;
+        }
+        if (!responseMessage.isEmpty()) {
+            String[] resultArray = new String[]{responseMessage};
+            Bundle resultBundle = new Bundle();
+            resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
+            resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
+            Message resultMessage = mResponseHandler.obtainMessage();
+            resultMessage.setData(resultBundle);
+            mResponseHandler.sendMessage(resultMessage);
+        }
+    }
+
+    /**
+     * Execute command using native Unix logic
+     * @param commandText The command from input string
+     * @throws IOException
+     */
+    private void nativeExecute(String commandText) {
         OutputStream stdIn = mExecutionProcess.getOutputStream();
         InputStream stdOut = mExecutionProcess.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stdOut));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdIn));
         List<String> resultList = new LinkedList<String>();
-        if (command.trim().equals("exit")) {
-            writer.write("exit" + LINE_SEPARATOR);
-        } else {
-            // write command to comm
-            writer.write("((" + command + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
+        // execution
+        try {
+            if (commandText.trim().equals("exit")) {
+                writer.write("exit" + LINE_SEPARATOR);
+            } else {
+                // write command to comm
+                writer.write("((" + commandText + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
+            }
+            writer.flush();
+            // read result of command from comm
+            String out = reader.readLine();
+            while (out != null && !out.trim().equals("--EOF--")) {
+                // write output to listview
+                resultList.add(out);
+                out = reader.readLine();
+            }
+        } catch (IOException ex) {
+            resultList.add(ex.getMessage());
         }
-        writer.flush();
-        // read result of command from comm
-        String out = reader.readLine();
-        while (out != null && !out.trim().equals("--EOF--")) {
-            // write output to listview
-            resultList.add(out);
-            out = reader.readLine();
-        }
+        // parsing responses
         String[] resultArray = new String[resultList.size()];
         int i = 0;
         for (String s : resultList) {
@@ -141,7 +173,7 @@ public class TerminalCommander {
         }
         Bundle resultBundle = new Bundle();
         resultBundle.putStringArray(CommandResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, command);
+        resultBundle.putString(CommandResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
         Message resultMessage = mResponseHandler.obtainMessage();
         resultMessage.setData(resultBundle);
         mResponseHandler.sendMessage(resultMessage);

@@ -27,8 +27,8 @@ import com.softsandr.terminal.R;
 public enum FilteredCommands {
     LS("ls -l") {
         @Override
-        public String alignResponse(TextView outTextView, int screenWidth,
-                                    Resources resources, String[] commandResponse) {
+        public String processResponse(TextView outTextView, int screenWidth,
+                                      Resources resources, String[] commandResponse) {
             LsRowsList rowRecords = new LsRowsList();
             for (String oneRowResponse : commandResponse) {
                 String[] oneRowTokens = oneRowResponse.split("\\s+");
@@ -117,5 +117,5 @@ public enum FilteredCommands {
         return text;
     }
 
-    public abstract String alignResponse(TextView outTextView, int screenWidth, Resources resources, String[] commandResponse);
+    public abstract String processResponse(TextView outTextView, int screenWidth, Resources resources, String[] commandResponse);
 }

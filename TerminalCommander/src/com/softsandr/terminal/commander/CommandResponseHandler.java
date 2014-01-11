@@ -56,7 +56,7 @@ public class CommandResponseHandler extends Handler {
                     FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
                     if (filteredCommand != null) {
                         mTerminalOutView.setText(oldText + LINE_SEPARATOR
-                                + filteredCommand.alignResponse(mTerminalOutView, mScreenWidth, mResources, results));
+                                + filteredCommand.processResponse(mTerminalOutView, mScreenWidth, mResources, results));
                     }
                 } else {
                     // write result to console

@@ -27,7 +27,7 @@ import com.softsandr.terminal.model.listview.ListViewItem;
 import java.io.File;
 
 /**
- * This class used for computation size of specific directory in async thread
+ * This class used for computation size of specific directory in interactive thread
  */
 public class SizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
     private static final String LOG_TAG = SizeComputationTask.class.getSimpleName();

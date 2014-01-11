@@ -128,9 +128,9 @@ com.softsandr.terminal.commander.command.filtered.FilteredCommands -> com.softsa
     com.softsandr.terminal.commander.command.filtered.FilteredCommands valueOf(java.lang.String) -> valueOf
     boolean isFilteredCommand(java.lang.String) -> a
     com.softsandr.terminal.commander.command.filtered.FilteredCommands parseCommandTypeFromString(java.lang.String) -> b
-    java.lang.String alignResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
+    java.lang.String processResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
 com.softsandr.terminal.commander.command.filtered.FilteredCommands$1 -> com.softsandr.terminal.a.a.a.b:
-    java.lang.String alignResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
+    java.lang.String processResponse(android.widget.TextView,int,android.content.res.Resources,java.lang.String[]) -> a
 com.softsandr.terminal.commander.command.filtered.LsRowRecord -> com.softsandr.terminal.a.a.a.c:
     java.lang.String permissionsToken -> a
     java.lang.String ownerToken -> b
