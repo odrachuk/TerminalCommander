@@ -24,15 +24,20 @@ import static com.softsandr.utils.string.StringUtil.EMPTY;
 /**
  * The custom logic for execution clear command from console
  */
-public class ClearCommand implements LocalCommand {
+public class ClearCommand extends LocalCommand {
+
+    protected ClearCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+        super(commanderProcess, commandText, userLocation);
+    }
+
     @Override
-    public String isExecutable(CommanderProcess terminalProcess) {
+    public String isExecutable() {
         return EMPTY;
     }
 
     @Override
-    public String onExecute(CommanderProcess terminalProcess) {
-        terminalProcess.onClear();
+    public String onExecute() {
+        commanderProcess.onClear();
         return EMPTY;
     }
 }

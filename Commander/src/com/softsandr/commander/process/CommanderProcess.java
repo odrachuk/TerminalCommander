@@ -17,24 +17,19 @@
  ******************************************************************************/
 package com.softsandr.commander.process;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import com.softsandr.commander.Commander;
-import com.softsandr.commander.PromptCompoundString;
 import com.softsandr.commander.commands.interactive.InteractiveCommands;
 import com.softsandr.commander.commands.local.LocalCommands;
+import com.softsandr.commander.process.execution.InteractiveCommandExecution;
+import com.softsandr.commander.process.execution.LocalCommandExecution;
+import com.softsandr.commander.process.execution.NativeCommandExecution;
 
-import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.softsandr.utils.string.StringUtil.EMPTY;
-import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The main class of console commander.
@@ -43,24 +38,25 @@ public class CommanderProcess {
     private static final String LOG_TAG = CommanderProcess.class.getSimpleName();
     private static final String SYSTEM_EXECUTOR = "/system/bin/sh";
     private final CommandsResponseHandler mResponseHandler;
-    private final PromptCompoundString mTerminalPrompt;
-    private final Commander mUiController;
-    private final TextView mTerminalOutView;
-    private Process mExecutionProcess;
-    private String mCommandText;
+    private final Commander commander;
+
+    public Process getProcess() {
+        return process;
+    }
+
+    private Process process;
 
     /**
      * Create new input runtime comm
      */
-    public CommanderProcess(Commander uiController) {
-        mUiController = uiController;
-        mTerminalOutView = uiController.getOutTextView();
-        mTerminalPrompt = uiController.getPrompt();
+    public CommanderProcess(Commander commander) {
+        this.commander = commander;
         DisplayMetrics dm = new DisplayMetrics();
-        mUiController.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        this.commander.getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         mResponseHandler = new CommandsResponseHandler(
                 dm.widthPixels,
-                uiController.getActivity().getResources(), mTerminalOutView);
+                commander.getActivity().getResources(),
+                commander.getOutTextView());
     }
 
     public void startExecutionProcess(String path) throws IOException {
@@ -71,120 +67,29 @@ public class CommanderProcess {
             builder.redirectErrorStream(true);
             builder.directory(pathDirectory);
             try {
-                mExecutionProcess = builder.start();
+                process = builder.start();
             } catch (IOException ex) {
                 Log.e(LOG_TAG, "Exception when start execution process: " + ex.getMessage());
                 throw ex;
             }
         } else {
             Log.d(LOG_TAG, "Wrong initial process directory");
-            mTerminalOutView.setText("The initial process directory wrong");
+            commander.getOutTextView().setText("The initial process directory wrong");
         }
-        mTerminalPrompt.setUserLocation(path);
+        commander.getPrompt().setUserLocation(path);
     }
 
     public void execCommand(String commandText) {
-        mCommandText = commandText;
-        if (LocalCommands.isLocalCommand(mCommandText)) {
-            localExecute(mCommandText);
-        } else if (InteractiveCommands.isInteractiveCommand(mCommandText)) {
-            interactiveExecute(mCommandText);
+        if (LocalCommands.isLocalCommand(commandText)) {
+            new LocalCommandExecution(mResponseHandler, commandText,
+                    commander.getPrompt().getUserLocation(), this).execute();
+        } else if (InteractiveCommands.isInteractiveCommand(commandText)) {
+            new InteractiveCommandExecution(mResponseHandler, commandText,
+                    commander.getPrompt().getUserLocation(), this).execute();
         } else {
-            nativeExecute(mCommandText);
+            new NativeCommandExecution(mResponseHandler, commandText,
+                    commander.getPrompt().getUserLocation(), this).execute();
         }
-        mCommandText = null;
-    }
-
-    /**
-     * Execute command using async executor
-     * @param commandText The command from iput string
-     */
-    private void interactiveExecute(String commandText) {
-        String[] resultArray = new String[]{"NOTHING!!!"};
-        Bundle resultBundle = new Bundle();
-        resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-        resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
-        Message resultMessage = mResponseHandler.obtainMessage();
-        resultMessage.setData(resultBundle);
-        mResponseHandler.sendMessage(resultMessage);
-    }
-
-    /**
-     * Execute command using custom logic
-     * @param commandText The command from input string
-     */
-    private void localExecute(String commandText) {
-        String responseMessage = EMPTY;
-        LocalCommands filteredCommand = LocalCommands.parseCommandTypeFromString(mCommandText);
-        String isExecutableCallback = filteredCommand.getCommand().isExecutable(this);
-        if (isExecutableCallback.isEmpty()) { // executable
-            responseMessage += filteredCommand.getCommand().onExecute(this);
-        } else { // not executable
-            responseMessage += isExecutableCallback;
-        }
-        if (!responseMessage.isEmpty()) {
-            String[] resultArray = new String[]{responseMessage};
-            Bundle resultBundle = new Bundle();
-            resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-            resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
-            Message resultMessage = mResponseHandler.obtainMessage();
-            resultMessage.setData(resultBundle);
-            mResponseHandler.sendMessage(resultMessage);
-        }
-    }
-
-    /**
-     * Execute command using native Unix logic
-     * @param commandText The command from input string
-     * @throws IOException
-     */
-    private void nativeExecute(String commandText) {
-        OutputStream stdIn = mExecutionProcess.getOutputStream();
-        InputStream stdOut = mExecutionProcess.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stdOut));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdIn));
-        List<String> resultList = new LinkedList<String>();
-        // execution
-        try {
-            if (commandText.trim().equals("exit")) {
-                writer.write("exit" + LINE_SEPARATOR);
-            } else {
-                // write command to comm
-                writer.write("((" + commandText + ") && echo --EOF--) || echo --EOF--" + LINE_SEPARATOR);
-            }
-            writer.flush();
-            // read result of command from comm
-            String out = reader.readLine();
-            while (out != null && !out.trim().equals("--EOF--")) {
-                // write output to listview
-                resultList.add(out);
-                out = reader.readLine();
-            }
-        } catch (IOException ex) {
-            resultList.add(ex.getMessage());
-        }
-        // parsing responses
-        String[] resultArray = new String[resultList.size()];
-        int i = 0;
-        for (String s : resultList) {
-            resultArray[i] = eraseAbsent(s);
-            i++;
-        }
-        Bundle resultBundle = new Bundle();
-        resultBundle.putStringArray(CommandsResponseHandler.COMMAND_EXECUTION_RESPONSE_KEY, resultArray);
-        resultBundle.putString(CommandsResponseHandler.COMMAND_EXECUTION_STRING_KEY, commandText);
-        Message resultMessage = mResponseHandler.obtainMessage();
-        resultMessage.setData(resultBundle);
-        mResponseHandler.sendMessage(resultMessage);
-    }
-
-    private String eraseAbsent(String message) {
-        String result = message;
-        if (message.contains("<stdin>[")) {
-            result = message.substring(0, message.indexOf("<s") - 2)
-                    + message.substring(message.indexOf("]:") + 1, message.length());
-        }
-        return result;
     }
 
     public void onChangeDirectory(String targetPath) throws Exception {
@@ -192,37 +97,24 @@ public class CommanderProcess {
         startExecutionProcess(targetPath);
     }
 
-    public void onExit() {
-        stopExecutionProcess();
-        mUiController.getActivity().finish();
-    }
-
     public void onClear() {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                mTerminalOutView.setText("");
-                mTerminalOutView.setVisibility(View.GONE);
+                commander.getOutTextView().setText("");
+                commander.getOutTextView().setVisibility(View.GONE);
             }
         });
     }
 
     public void stopExecutionProcess() {
         Log.d(LOG_TAG, "stopExecutionProcess");
-        if (mExecutionProcess != null) {
-            mExecutionProcess.destroy();
+        if (process != null) {
+            process.destroy();
         }
     }
 
-    public Commander getUiController() {
-        return mUiController;
-    }
-
-    public String getCommandText() {
-        return mCommandText;
-    }
-
-    public String getProcessPath() {
-        return mTerminalPrompt.getUserLocation();
+    public Commander getCommander() {
+        return commander;
     }
 }

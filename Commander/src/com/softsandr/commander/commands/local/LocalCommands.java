@@ -17,28 +17,30 @@
  ******************************************************************************/
 package com.softsandr.commander.commands.local;
 
+import com.softsandr.commander.process.CommanderProcess;
+
 /**
  * The container of constants that are all supported local command in App
  */
 public enum LocalCommands {
     CD("cd") {
         @Override
-        public LocalCommand getCommand() {
-            return new CdCommand();
+        public LocalCommand newCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+            return new CdCommand(commanderProcess, commandText, userLocation);
         }
     },
 
     CLEAR("clear") {
         @Override
-        public LocalCommand getCommand() {
-            return new ClearCommand();
+        public LocalCommand newCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+            return new ClearCommand(commanderProcess, commandText, userLocation);
         }
     },
 
     EXIT("exit") {
         @Override
-        public LocalCommand getCommand() {
-            return new ExitCommand();
+        public LocalCommand newCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+            return new ExitCommand(commanderProcess, commandText, userLocation);
         }
     };
 
@@ -52,7 +54,8 @@ public enum LocalCommands {
         return text;
     }
 
-    public abstract LocalCommand getCommand();
+    public abstract LocalCommand newCommand(CommanderProcess commanderProcess,
+                                            String commandText, String userLocation);
 
     public static boolean isLocalCommand(String command) {
         boolean isFiltered = false;

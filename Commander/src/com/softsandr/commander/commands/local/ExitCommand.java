@@ -25,16 +25,21 @@ import static com.softsandr.utils.string.StringUtil.EMPTY;
 /**
  * The custom logic of execution exit command from console
  */
-public class ExitCommand implements LocalCommand {
+public class ExitCommand extends LocalCommand {
+
+    protected ExitCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+        super(commanderProcess, commandText, userLocation);
+    }
+
     @Override
-    public String isExecutable(CommanderProcess terminalCommander) {
+    public String isExecutable() {
         return EMPTY;
     }
 
     @Override
-    public String onExecute(CommanderProcess terminalCommander) {
-        if (terminalCommander.getUiController().getActivity() instanceof CommanderActivity) {
-            ((CommanderActivity) terminalCommander.getUiController().getActivity()).exitActivity();
+    public String onExecute() {
+        if (commanderProcess.getCommander().getActivity() instanceof CommanderActivity) {
+            ((CommanderActivity) commanderProcess.getCommander().getActivity()).exitActivity();
         }
         return EMPTY;
     }

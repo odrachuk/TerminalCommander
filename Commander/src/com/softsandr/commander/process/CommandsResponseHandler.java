@@ -33,14 +33,14 @@ public class CommandsResponseHandler extends Handler {
     private static final String LOG_TAG = CommandsResponseHandler.class.getSimpleName();
     public static final String COMMAND_EXECUTION_RESPONSE_KEY = LOG_TAG + ".COMMAND_EXECUTION_RESPONSE";
     public static final String COMMAND_EXECUTION_STRING_KEY = LOG_TAG + ".COMMAND_EXECUTION_STRING";
-    private final TextView mTerminalOutView;
-    private final Resources mResources;
-    private final int mScreenWidth;
+    private final TextView outTextView;
+    private final Resources resources;
+    private final int screenWidth;
 
-    public CommandsResponseHandler(int screenWidth, Resources resources, TextView terminalOutView) {
-        mTerminalOutView = terminalOutView;
-        mScreenWidth = screenWidth;
-        mResources = resources;
+    public CommandsResponseHandler(int screenWidth, Resources resources, TextView outTextView) {
+        this.screenWidth = screenWidth;
+        this.outTextView = outTextView;
+        this.resources = resources;
     }
 
     @Override
@@ -50,13 +50,13 @@ public class CommandsResponseHandler extends Handler {
             String[] results = inputBundle.getStringArray(COMMAND_EXECUTION_RESPONSE_KEY);
             String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
             if (results != null && results.length != 0) {
-                StringBuilder oldText = new StringBuilder(mTerminalOutView.getText());
+                StringBuilder oldText = new StringBuilder(outTextView.getText());
                 boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
                 if (isFilteredCommand) {
                     FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);
                     if (filteredCommand != null) {
-                        mTerminalOutView.setText(oldText + LINE_SEPARATOR
-                                + filteredCommand.processResponse(mTerminalOutView, mScreenWidth, mResources, results));
+                        outTextView.setText(oldText + LINE_SEPARATOR
+                                + filteredCommand.processResponse(outTextView, screenWidth, resources, results));
                     }
                 } else {
                     // write result to console
@@ -64,7 +64,7 @@ public class CommandsResponseHandler extends Handler {
                         oldText.append(LINE_SEPARATOR);
                         oldText.append(s);
                     }
-                    mTerminalOutView.setText(oldText.toString());
+                    outTextView.setText(oldText.toString());
                 }
             }
         }

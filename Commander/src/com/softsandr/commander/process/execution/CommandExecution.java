@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Created by o.drachuk on 10/01/2014.
+ * Created by o.drachuk on 11/01/2014. 
  *
  * Copyright Oleksandr Drachuk.
  *
@@ -15,32 +15,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.commander.commands.local;
+package com.softsandr.commander.process.execution;
 
 import com.softsandr.commander.process.CommanderProcess;
+import com.softsandr.commander.process.CommandsResponseHandler;
 
 /**
- * The instantiation of the interface represent command logic of that will be customized
+ * This class describe command execution skeleton
  */
-public abstract class LocalCommand {
-    protected final String commandText, userLocation;
+public abstract class CommandExecution {
+    protected final CommandsResponseHandler responseHandler;
     protected final CommanderProcess commanderProcess;
+    protected final String commandText, userLocation;
 
-    protected LocalCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+    protected CommandExecution(CommandsResponseHandler responseHandler,
+                               String commandText, String userLocation,
+                               CommanderProcess commanderProcess) {
         this.commanderProcess = commanderProcess;
+        this.responseHandler = responseHandler;
         this.commandText = commandText;
         this.userLocation = userLocation;
     }
 
-    /**
-     * Check execution possibility
-     * @return true if execution specific command is possible and false in other case
-     */
-    public abstract String isExecutable();
+    public final void execute() {
+        prepareExecution();
+        makeExecution();
+        postExecution();
+    }
 
     /**
-     * Make execute of specific command
-     * @return String result of execution command
+     * Prepare logic before execute an command
      */
-    public abstract String onExecute();
+    public abstract void prepareExecution();
+
+    /**
+     * Make execution an command logic
+     */
+    public abstract void makeExecution();
+
+    /**
+     * Parsing response execution an command and sending response
+     */
+    public abstract void postExecution();
 }

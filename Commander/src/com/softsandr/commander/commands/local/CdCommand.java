@@ -27,15 +27,20 @@ import static com.softsandr.utils.string.StringUtil.PATH_SEPARATOR;
 /**
  * The custom logic for execution cd command
  */
-public class CdCommand implements LocalCommand {
+public class CdCommand extends LocalCommand {
+
+    protected CdCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
+        super(commanderProcess, commandText, userLocation);
+    }
+
     @Override
-    public String isExecutable(CommanderProcess terminalProcess) {
+    public String isExecutable() {
         String callbackString = EMPTY;
-        String allCommand = terminalProcess.getCommandText().trim();
+        String allCommand = commandText.trim();
         if (allCommand.indexOf(' ') > 0) {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-            if (FileUtil.isDirectoryExist(terminalProcess.getProcessPath(), targetDirectory)) {
-                if (!FileUtil.canChangeDirectory(terminalProcess.getProcessPath(), targetDirectory)) {
+            if (FileUtil.isDirectoryExist(userLocation, targetDirectory)) {
+                if (!FileUtil.canChangeDirectory(userLocation, targetDirectory)) {
                     callbackString += "Cannot read filesystem";
                 }
             } else {
@@ -48,22 +53,21 @@ public class CdCommand implements LocalCommand {
     }
 
     @Override
-    public String onExecute(CommanderProcess terminalProcess) {
+    public String onExecute() {
         String callbackString = EMPTY;
         try {
-            String allCommand = terminalProcess.getCommandText().trim();
+            String allCommand = commandText.trim();
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
                 targetDirectory = FileUtil.trimLastSlash(targetDirectory);
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).
-                            getTransformedPath(terminalProcess.getProcessPath(), targetDirectory));
+                            getTransformedPath(userLocation, targetDirectory));
                 } else {
-                    targetFullPath.append(FileUtil.buildDirectoryPath(terminalProcess.getProcessPath(),
-                            targetDirectory));
+                    targetFullPath.append(FileUtil.buildDirectoryPath(userLocation, targetDirectory));
                 }
-                terminalProcess.onChangeDirectory(targetFullPath.toString());
+                commanderProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
             callbackString += "Execution exception";
