@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * This class contain logic that used when make directory operation executing
  */
-public class MakeDirectoryCommand implements FileCommand {
+public class MakeDirectoryCommand implements FileManipulationCommand {
     private static final String LOG_TAG = MakeDirectoryCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final String directoryName;

@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * This class contain logic of copy operation
  */
-public class CopyFileCommand implements FileCommand {
+public class CopyFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = CopyFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;

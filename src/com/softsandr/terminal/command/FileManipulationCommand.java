@@ -20,6 +20,6 @@ package com.softsandr.terminal.command;
 /**
  * Some commands that can executed
  */
-public interface FileCommand {
+public interface FileManipulationCommand {
     void onExecute();
 }

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * This class contain logic of delete file operation
  */
-public class DeleteFileCommand implements FileCommand {
+public class DeleteFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = DeleteFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;

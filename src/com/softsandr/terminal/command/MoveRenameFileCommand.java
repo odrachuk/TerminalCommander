@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * This class contain logic that used when executing move or rename operations
  */
-public class MoveRenameFileCommand implements FileCommand {
+public class MoveRenameFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = MoveRenameFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
