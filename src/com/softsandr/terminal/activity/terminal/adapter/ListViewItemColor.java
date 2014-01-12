@@ -20,6 +20,7 @@ package com.softsandr.terminal.activity.terminal.adapter;
 import android.content.res.Resources;
 import android.webkit.MimeTypeMap;
 import com.softsandr.terminal.R;
+import com.softsandr.utils.file.FileExtensions;
 
 /**
  * This class used for...
@@ -35,14 +36,28 @@ public enum ListViewItemColor {
     FILE(R.color.COLOR_B2B2B2) {
         @Override
         public int getColor(Resources resources, String itemText) {
-            MimeTypeMap map = MimeTypeMap.getSingleton();
             String ext = MimeTypeMap.getFileExtensionFromUrl(itemText);
-            // todo different colors for different file extensions
-            return resources.getColor(this.colorId);
+            if (FileExtensions.WEB.categoryExtensions().keySet().contains(ext)
+                    || FileExtensions.OFFICE_DOCUMENT.categoryExtensions().keySet().contains(ext)
+                    || FileExtensions.COMPUTER_PROGRAMS.categoryExtensions().keySet().contains(ext)
+                    || FileExtensions.BOOK_DOCUNET.categoryExtensions().keySet().contains(ext)) {
+                return resources.getColor(R.color.COLOR_b26818);
+            } else if (FileExtensions.ARCHIVE_OR_COMPRESSED.categoryExtensions().keySet().contains(ext)) {
+                return resources.getColor(R.color.COLOR_ff50ec);
+            } else if (FileExtensions.SHELL_PROGRAMS.categoryExtensions().keySet().contains(ext)) {
+                return resources.getColor(R.color.COLOR_189fb2);
+            } else if (FileExtensions.IMAGES.categoryExtensions().keySet().contains(ext)) {
+                return resources.getColor(R.color.COLOR_46f1ff);
+            } else if (FileExtensions.VIDEO.categoryExtensions().keySet().contains(ext)
+                    || FileExtensions.MUSIC.categoryExtensions().keySet().contains(ext)) {
+                return resources.getColor(R.color.COLOR_18a818);
+            } else {
+                return resources.getColor(this.colorId);
+            }
         }
     };
 
-    private final int colorId;
+    final int colorId;
 
     ListViewItemColor(int colorId) {
         this.colorId = colorId;

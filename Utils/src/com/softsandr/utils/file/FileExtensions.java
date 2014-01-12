@@ -94,6 +94,14 @@ public enum FileExtensions {
             return map;
         }
     },
+    SHELL_PROGRAMS("Shell programs") {
+        @Override
+        public Map<String, String> categoryExtensions() {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("sh", "Shell programs");
+            return map;
+        }
+    },
     COMPUTER_PROGRAMS("Computer programs") {
         @Override
         public Map<String, String> categoryExtensions() {
@@ -166,7 +174,7 @@ public enum FileExtensions {
             map.put("gif", "CompuServe's Graphics Interchange Format");
             map.put("ico", "a file format used for icons in Microsoft Windows. Contains small bitmap images at multiple resolutions and sizes.");
             map.put("jpeg", "Joint Photographic Experts Group – a lossy image format widely used to display photographic images.");
-            map.put("jpj", "Joint Photographic Experts Group – a lossy image format widely used to display photographic images.");
+            map.put("jpg", "Joint Photographic Experts Group – a lossy image format widely used to display photographic images.");
             map.put("mng", "Multiple Network Graphics, the animated version of PNG");
             map.put("png", "Portable Network Graphic (lossless, recommended for display and edition of graphic images)");
             map.put("psd", "Adobe Photoshop Drawing");

@@ -119,17 +119,24 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             viewHolder.fileModifyTimeView.setText(info.getFileModifyTime());
             // determine files types and their text colors
             if (info.isDirectory()) {
-                viewHolder.fileNameView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
-                viewHolder.fileSizeView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
-                viewHolder.fileModifyTimeView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
+                viewHolder.fileNameView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileSizeView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileModifyTimeView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
                 // determine directory that we can't read
                 if (!info.isParentDots() && !info.canRead()) {
-                    viewHolder.fileNameView.setTextColor(ListViewItemColor.ROOT_DIRECTORY.getColor(terminalActivity.getResources()));
+                    viewHolder.fileNameView.setTextColor(
+                            ListViewItemColor.ROOT_DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
                 }
             } else {
-                viewHolder.fileNameView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
-                viewHolder.fileSizeView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
-                viewHolder.fileModifyTimeView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
+                viewHolder.fileNameView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileSizeView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileModifyTimeView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
             }
             checkSelection(viewHolder, info, position);
         }
@@ -144,19 +151,28 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
      */
     private void checkSelection(ViewHolder viewHolder, ListViewItem info, int position) {
         if (selectionMonitor.getSelectedItems().contains(position)) {
-            viewHolder.fileNameView.setTextColor(ListViewItemColor.SELECTED.getColor(terminalActivity.getResources()));
-            viewHolder.fileSizeView.setTextColor(ListViewItemColor.SELECTED.getColor(terminalActivity.getResources()));
-            viewHolder.fileModifyTimeView.setTextColor(ListViewItemColor.SELECTED.getColor(terminalActivity.getResources()));
+            viewHolder.fileNameView.setTextColor(
+                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
+            viewHolder.fileSizeView.setTextColor(
+                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
+            viewHolder.fileModifyTimeView.setTextColor(
+                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
         }
         if (selectionMonitor.getUnselectedItems().contains(position)) {
             if (info.isDirectory()) {
-                viewHolder.fileNameView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
-                viewHolder.fileSizeView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
-                viewHolder.fileModifyTimeView.setTextColor(ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources()));
+                viewHolder.fileNameView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileSizeView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileModifyTimeView.setTextColor(
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
             } else {
-                viewHolder.fileNameView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
-                viewHolder.fileSizeView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
-                viewHolder.fileModifyTimeView.setTextColor(ListViewItemColor.FILE.getColor(terminalActivity.getResources()));
+                viewHolder.fileNameView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileSizeView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                viewHolder.fileModifyTimeView.setTextColor(
+                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
             }
         }
     }
