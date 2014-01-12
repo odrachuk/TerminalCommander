@@ -97,4 +97,13 @@ public class Commander {
     public CommanderProcess getProcess() {
         return process;
     }
+
+    /**
+     * Used when needs interrupt current interactive command execution
+     */
+    public void cancelInteractiveCommand() {
+        if (process.getInteractiveExecution() != null) {
+            process.getInteractiveExecution().cancel();
+        }
+    }
 }

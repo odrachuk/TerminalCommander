@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true">
+    <RelativeLayout
+            android:id="@+id/action_bar_cancel_btn_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <Button android:id="@+id/action_bar_cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_cancel"
+                android:textSize="@dimen/terminal_action_bar_btn_text_size"
+                android:textColor="@color/COLOR_717171"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:background="@drawable/orange_cursor_bg"/>
+    </RelativeLayout>
     <Button android:id="@+id/action_bar_tab_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -11,6 +24,6 @@
             android:textSize="@dimen/terminal_action_bar_btn_text_size"
             android:textColor="@color/COLOR_717171"
             android:textStyle="bold"
-            android:visibility="gone"
-            android:background="@drawable/orange_cursor_bg"/>
+            android:background="@drawable/orange_cursor_bg"
+            android:layout_toRightOf="@id/action_bar_cancel_btn_container"/>
 </RelativeLayout>

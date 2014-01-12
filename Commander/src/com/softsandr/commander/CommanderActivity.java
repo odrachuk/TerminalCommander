@@ -25,4 +25,19 @@ public interface CommanderActivity {
      * Used for declaration common exit operation
      */
     void exitActivity();
+
+    /**
+     * Used when show cancel button on action bar for interactive command termination
+     */
+    void showCancelBtn();
+
+    /**
+     * Used when needs hide/close keyboard
+     */
+    void hideSoftKeyboard();
+
+    /**
+     * Used when needs show/open keyboard
+     */
+    void showSoftKeyboard();
 }

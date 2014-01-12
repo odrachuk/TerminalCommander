@@ -18,7 +18,6 @@
 package com.softsandr.commander.process;
 
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import com.softsandr.commander.Commander;
@@ -39,6 +38,8 @@ public class CommanderProcess {
     public static final String SYSTEM_EXECUTOR = "/system/bin/sh";
     private final CommandsResponseHandler mResponseHandler;
     private final Commander commander;
+
+    private InteractiveCommandExecution interactiveExecution;
     private Process process;
 
     /**
@@ -74,8 +75,9 @@ public class CommanderProcess {
             new LocalCommandExecution(mResponseHandler, commandText,
                     commander.getPrompt().getUserLocation(), this).execute();
         } else if (InteractiveCommands.isInteractiveCommand(commandText)) {
-            new InteractiveCommandExecution(mResponseHandler, commandText,
-                    commander.getPrompt().getUserLocation(), this).execute();
+            interactiveExecution = new InteractiveCommandExecution(mResponseHandler, commandText,
+                    commander.getPrompt().getUserLocation(), this);
+            interactiveExecution.execute();
         } else {
             new NativeCommandExecution(mResponseHandler, commandText,
                     commander.getPrompt().getUserLocation(), this).execute();
@@ -110,5 +112,14 @@ public class CommanderProcess {
 
     public Process getProcess() {
         return process;
+    }
+
+    /**
+     * Can be null.
+     *
+     * @return Local instance {@link InteractiveCommandExecution}
+     */
+    public InteractiveCommandExecution getInteractiveExecution() {
+        return interactiveExecution;
     }
 }

@@ -20,6 +20,7 @@ package com.softsandr.commander.process.execution;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 import com.softsandr.commander.commands.interactive.InteractiveCommands;
 import com.softsandr.commander.process.CommanderProcess;
 import com.softsandr.commander.process.CommandsResponseHandler;
@@ -76,7 +77,9 @@ public class InteractiveCommandExecution extends CommandExecution {
                         String out = reader.readLine();
                         while (out != null && !out.trim().equals("--EOF--")) {
                             // save one row result to list
-                            resultList.add(out);
+                            if (!out.isEmpty()) {
+                                resultList.add(out);
+                            }
                             out = reader.readLine();
                         }
                         process.destroy();
@@ -134,5 +137,15 @@ public class InteractiveCommandExecution extends CommandExecution {
             Log.d(LOG_TAG, "Wrong initial process directory");
         }
         return process;
+    }
+
+    public void cancel() {
+        timer.cancel();
+        try {
+            commanderProcess.startExecutionProcess(commanderProcess.getCommander().getPrompt().getUserLocation());
+        } catch (IOException e) {
+            Toast.makeText(commanderProcess.getCommander().getActivity(),
+                    "Can't start main execution process.", Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -23,6 +23,7 @@ import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.View;
 import com.softsandr.commander.Commander;
+import com.softsandr.commander.CommanderActivity;
 import com.softsandr.commander.commands.filtered.FilteredCommands;
 
 import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
@@ -54,13 +55,19 @@ public class CommandsResponseHandler extends Handler {
             String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
             if (inputBundle.containsKey(COMMAND_EXECUTION_HIDE_KEY)) {
                 // situation when we hide input elements and display cancel button
-                // todo
+                ((CommanderActivity) commander.getActivity()).showCancelBtn();
+                ((CommanderActivity) commander.getActivity()).hideSoftKeyboard();
+                commander.getInputEditText().setVisibility(View.GONE);
+                commander.getPromptTextView().setVisibility(View.GONE);
             } else {
+                // check visibility of result component
+                commander.getOutTextView().setVisibility(View.VISIBLE);
+                // check if needs clear before display new portion of data
                 if (inputBundle.containsKey(COMMAND_EXECUTION_CLEAR_KEY)) {
                     commander.getOutTextView().setText("");
                 }
-                if (results != null && results.length != 0) {
-                    StringBuilder oldText = new StringBuilder(commander.getOutTextView().getText());
+                // an portion data
+                if (results != null && results.length != 0) {StringBuilder oldText = new StringBuilder(commander.getOutTextView().getText());
                     boolean isFilteredCommand = FilteredCommands.isFilteredCommand(commandText);
                     if (isFilteredCommand) {
                         FilteredCommands filteredCommand = FilteredCommands.parseCommandTypeFromString(commandText);

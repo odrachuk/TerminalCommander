@@ -52,6 +52,12 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             if (v.equals(mTabMenuBtn)) {
                 // todo
                 Toast.makeText(CommanderActivityImpl.this, "Tabulate", Toast.LENGTH_SHORT).show();
+            } else if (v.equals(mCancelMenuBtn)) {
+                mTerminalPromptView.setVisibility(View.VISIBLE);
+                mTerminalInView.setVisibility(View.VISIBLE);
+                mCancelMenuBtn.setVisibility(View.GONE);
+                commander.cancelInteractiveCommand();
+                showSoftKeyboard();
             }
         }
     };
@@ -80,6 +86,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     private TextView mTerminalPromptView;
     private EditText mTerminalInView;
     private Button mTabMenuBtn;
+    private Button mCancelMenuBtn;
     private String mInitialPath;
     private String mOtherPath;
     private boolean mInitialPageLeft;
@@ -138,6 +145,11 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    @Override
+    public void showCancelBtn() {
+        mCancelMenuBtn.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -212,15 +224,24 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             if (customView != null) {
                 mTabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
                 mTabMenuBtn.setOnClickListener(mOnClickListener);
+                mCancelMenuBtn = (Button) customView.findViewById(R.id.action_bar_cancel_btn);
+                mCancelMenuBtn.setOnClickListener(mOnClickListener);
                 actionBar.setCustomView(customView, lp);
             }
         }
     }
 
+    @Override
     public void showSoftKeyboard() {
         if (mTerminalInView.requestFocus()) {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.showSoftInput(mTerminalInView, InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    @Override
+    public void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mTerminalInView.getWindowToken(), 0);
     }
 }
