@@ -135,56 +135,10 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     }
 
     @Override
-    public void exitActivity() {
-        // Stop processes
-        commander.getProcess().stopExecutionProcess();
-        // Prepare data intent
-        Intent data = new Intent();
-        data.putExtra(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
-        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
-        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
-        setResult(RESULT_OK, data);
-        finish();
-    }
-
-    @Override
-    public void showCancelBtn() {
-        mCancelMenuBtn.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(mFinishBroadcastReceiver, new IntentFilter(TerminalActivityImpl.COMMON_EXIT_INTENT));
         init();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(mFinishBroadcastReceiver);
-        super.onDestroy();
-        commander.getProcess().stopExecutionProcess();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
-        outState.putString(OTHER_PATH_EXTRA, mOtherPath);
-        outState.putBoolean(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mInitialPath = savedInstanceState.getString(WORK_PATH_EXTRA);
-        mOtherPath = savedInstanceState.getString(OTHER_PATH_EXTRA);
-        mInitialPageLeft = savedInstanceState.getBoolean(ACTIVE_PAGE_EXTRA);
     }
 
     private void init() {
@@ -232,6 +186,34 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mFinishBroadcastReceiver);
+        super.onDestroy();
+        commander.getProcess().stopExecutionProcess();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
+        outState.putString(OTHER_PATH_EXTRA, mOtherPath);
+        outState.putBoolean(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mInitialPath = savedInstanceState.getString(WORK_PATH_EXTRA);
+        mOtherPath = savedInstanceState.getString(OTHER_PATH_EXTRA);
+        mInitialPageLeft = savedInstanceState.getBoolean(ACTIVE_PAGE_EXTRA);
+    }
+
+    @Override
     public void showSoftKeyboard() {
         if (mTerminalInView.requestFocus()) {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -243,5 +225,23 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     public void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mTerminalInView.getWindowToken(), 0);
+    }
+
+    @Override
+    public void showCancelBtn() {
+        mCancelMenuBtn.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void exitActivity() {
+        // Stop processes
+        commander.getProcess().stopExecutionProcess();
+        // Prepare data intent
+        Intent data = new Intent();
+        data.putExtra(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
+        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
+        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }
