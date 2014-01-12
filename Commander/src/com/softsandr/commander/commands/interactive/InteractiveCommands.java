@@ -24,7 +24,13 @@ public enum InteractiveCommands {
     TOP("top") {
         @Override
         public String getSpecificText() {
-            return "top -n 1 -d 1";
+            return "top -n 1 -d 1"; // todo parsing real address and execution options
+        }
+    },
+    PING("ping") {
+        @Override
+        public String getSpecificText() {
+            return "ping localhost"; // todo parsing real address and execution options
         }
     };
 
