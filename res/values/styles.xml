@@ -3,7 +3,6 @@
     <style name="Terminal_Theme" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/Terminal_Theme.ActionBar</item>
         <item name="android:actionBarSize">@dimen/action_bar_height</item>
-        <item name="android:actionBarItemBackground">@drawable/orange_cursor_bg</item>
     </style>
     <style name="Terminal_Theme.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid">
         <item name="android:displayOptions">showCustom|showTitle|disableHome|showHome|useLogo</item>
