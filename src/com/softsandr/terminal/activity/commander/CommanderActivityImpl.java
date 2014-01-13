@@ -19,9 +19,11 @@ package com.softsandr.terminal.activity.commander;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -32,7 +34,6 @@ import android.widget.Toast;
 import com.softsandr.commander.Commander;
 import com.softsandr.commander.CommanderActivity;
 import com.softsandr.commander.KeyboardController;
-import com.softsandr.commander.process.execution.service.InteractiveExecutionService;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
@@ -52,10 +53,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
                 // todo
                 Toast.makeText(CommanderActivityImpl.this, "Tabulate", Toast.LENGTH_SHORT).show();
             } else if (v.equals(cancelMenuBtn)) {
-                promptView.setVisibility(View.VISIBLE);
-                inView.setVisibility(View.VISIBLE);
-                cancelMenuBtn.setVisibility(View.GONE);
-                commander.cancelInteractiveCommand();
+                cancelInteractiveCommand();
                 showSoftKeyboard();
             }
         }
@@ -89,8 +87,6 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     private String initialPath;
     private String otherPath;
     private boolean initialPageLeft;
-    private InteractiveExecutionService interactiveService;
-    private boolean boundInteractiveService = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,14 +138,6 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         init();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Bind to InteractiveExecutionService
-        Intent intent = new Intent(this, InteractiveExecutionService.class);
-        bindService(intent, interactiveServiceConnection, Context.BIND_AUTO_CREATE);
-    }
-
     private void init() {
         Intent startIntent = getIntent();
         if (initialPath == null) {
@@ -196,16 +184,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Unbind from the service
-        if (boundInteractiveService) {
-            unbindService(interactiveServiceConnection);
-            boundInteractiveService = false;
-        }
+        cancelInteractiveCommand();
     }
 
     @Override
@@ -263,23 +242,10 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         finish();
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection interactiveServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to InteractiveExecutionService,
-            // cast the IBinder and get InteractiveExecutionService instance
-            InteractiveExecutionService.InteractiveExecutionBinder binder =
-                    (InteractiveExecutionService.InteractiveExecutionBinder) service;
-            interactiveService = binder.getService();
-            boundInteractiveService = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            boundInteractiveService = false;
-        }
-    };
+    private void cancelInteractiveCommand() {
+        promptView.setVisibility(View.VISIBLE);
+        inView.setVisibility(View.VISIBLE);
+        cancelMenuBtn.setVisibility(View.GONE);
+        commander.cancelInteractiveCommand();
+    }
 }

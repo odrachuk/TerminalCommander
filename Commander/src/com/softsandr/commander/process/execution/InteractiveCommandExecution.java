@@ -151,12 +151,4 @@ public class InteractiveCommandExecution extends CommandExecution {
                     "Can't start main execution process.", Toast.LENGTH_LONG).show();
         }
     }
-
-    /**
-     * Return associated with it execution instance of {@link InteractiveCommands}
-     * @return
-     */
-    public InteractiveCommands getCommand() {
-        return command;
-    }
 }
