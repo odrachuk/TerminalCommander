@@ -95,10 +95,11 @@ public class TerminalDeleteDialog extends DialogFragment {
         // Set relative notification text
         TextView deleteDescribe = (TextView) v.findViewById(R.id.terminal_delete_dialog_describe_delete_text);
         if (mFileAbsPathList.size() == 1) {
-            deleteDescribe.setText("Delete file \"" + truncateFileName() + "\"?");
+            deleteDescribe.setText(getString(R.string.dlg_delete_file) + "\"" + truncateFileName() + "\"?");
         } else {
             // add attention about recursive deleting all included objects
-            deleteDescribe.setText("Delete " + mFileAbsPathList.size() + " files?");
+            deleteDescribe.setText(getString(R.string.dlg_delete)
+                    + mFileAbsPathList.size() + getString(R.string.dlg_files) + "?");
         }
         // Setup button's listener
         v.findViewById(R.id.terminal_delete_dialog_btn_ok).setOnClickListener(mOnClickListener);

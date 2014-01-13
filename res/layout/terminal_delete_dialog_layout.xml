@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/COLOR_FF4747">
+                android:background="@color/COLOR_E71A43">
     <RelativeLayout android:layout_width="@dimen/terminal_delete_dialog_width"
                     android:layout_height="@dimen/terminal_delete_dialog_height"
                     android:paddingBottom="@dimen/terminal_dialog_padding_bottom"
@@ -20,7 +20,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@android:color/white"
-                      android:text="@string/delete_string"
+                      android:text="@string/delete_title"
                       android:textSize="@dimen/terminal_dialog_title_text_size"
                       android:layout_centerInParent="true"
                       android:paddingLeft="@dimen/terminal_dialog_title_text_padding_left"
@@ -89,12 +89,12 @@
                       android:layout_height="wrap_content"
                       android:layout_centerInParent="true"/>
                 <Button android:id="@+id/terminal_delete_dialog_btn_ok"
-                        android:text="@string/ok"
+                        android:text="@string/ok_btn"
                         android:layout_toLeftOf="@id/terminal_delete_dialog_btn_divider"
                         android:layout_alignParentBottom="true"
                         style="@style/Terminal_Dialog_Button_Style"/>
                 <Button android:id="@+id/terminal_delete_dialog_btn_cancel"
-                        android:text="@string/cancel"
+                        android:text="@string/cancel_btn"
                         android:layout_toRightOf="@id/terminal_delete_dialog_btn_divider"
                         android:layout_alignParentBottom="true"
                         style="@style/Terminal_Dialog_Button_Style"/>

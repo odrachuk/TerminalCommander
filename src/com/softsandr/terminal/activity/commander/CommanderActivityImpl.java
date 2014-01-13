@@ -51,7 +51,6 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         public void onClick(View v) {
             if (v.equals(tabMenuBtn)) {
                 // todo
-                Toast.makeText(CommanderActivityImpl.this, "Tabulate", Toast.LENGTH_SHORT).show();
             } else if (v.equals(cancelMenuBtn)) {
                 cancelInteractiveCommand();
                 showSoftKeyboard();

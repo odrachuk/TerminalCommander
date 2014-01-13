@@ -147,17 +147,21 @@ public class TerminalCpMvDialog extends DialogFragment {
             switch (mOperationType) {
                 case COPY_OPERATION:
                     if (mFileAbsPathList.size() == 1) {
-                        describeText.setText("Copy file \"" + truncateFileName() + "\" to:");
+                        describeText.setText(getString(R.string.dlg_copy_file)
+                                + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
                     } else {
-                        describeText.setText("Copy " + mFileAbsPathList.size() + " files to:");
+                        describeText.setText(getString(R.string.dlg_copy)
+                                + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
                     }
                     break;
                 case MOVE_OPERATION:
-                    title.setText(getResources().getString(R.string.move_string));
+                    title.setText(getResources().getString(R.string.move_title));
                     if (mFileAbsPathList.size() == 1) {
-                        describeText.setText("Move file \"" + truncateFileName() + "\" to:");
+                        describeText.setText(getString(R.string.dlg_move_file)
+                                + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
                     } else {
-                        describeText.setText("Move " + mFileAbsPathList.size() + " files to:");
+                        describeText.setText(getString(R.string.dlg_move)
+                                + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
                     }
                     break;
             }

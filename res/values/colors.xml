@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="COLOR_TRANSLUCENT_WHITE">#CCFFFFFF</color>
     <color name="COLOR_002EB8">#FF002EB8</color>
     <color name="COLOR_002AA5">#FF002AA5</color>
     <color name="COLOR_001B6C">#FF001B6C</color>
@@ -14,11 +15,10 @@
     <color name="COLOR_525252">#FF525252</color>
     <color name="COLOR_7AAFFF">#FF7AAFFF</color>
     <color name="COLOR_3D8BFF">#FF3D8BFF</color>
-    <color name="COLOR_FF4747">#ff8d4a01</color>
+    <color name="COLOR_E71A43">#FFE71A43</color>
     <color name="COLOR_3D3D3D">#FF3D3D3D</color>
     <color name="COLOR_FFFFCC">#FFFFFFCC</color>
     <color name="COLOR_E6CCFF">#FFE6CCFF</color>
-    <color name="COLOR_TRANSLUCENT_WHITE">#CCFFFFFF</color>
     <color name="COLOR_b26818">#FFb26818</color>
     <color name="COLOR_46f1ff">#FF46f1ff</color>
     <color name="COLOR_4cf554">#FF4cf554</color>

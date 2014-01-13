@@ -19,6 +19,7 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
@@ -64,7 +65,8 @@ public class MoveRenameFileCommand implements FileManipulationCommand {
                     destinationPath = FileUtil.getDirectoryNameFromPath(destinationPath);
                 }
                 if (renamingString != null && items.size() > 1) {
-                    Toast.makeText(terminalActivity, "You cannot rename multiple objects.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_cannot_rename_multiple_objects),
+                            Toast.LENGTH_SHORT).show();
                     makeClearSelection();
                 } else {
                     File dstDirectory = new File(destinationPath);
@@ -89,7 +91,8 @@ public class MoveRenameFileCommand implements FileManipulationCommand {
                 makeClearSelection();
             }
         } else {
-            Toast.makeText(terminalActivity, "No object selected.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_no_objects_selected),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.async.SizeComputationTask;
@@ -42,8 +43,8 @@ public class ListViewItemLongClickListener implements AdapterView.OnItemLongClic
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         ListViewItem item = adapter.getItem(position);
         if (item.isParentDots()) {
-            Toast.makeText(context, "Directory path: " +
-                    item.getAbsPath() + ".",
+            Toast.makeText(context, context.getString(R.string.toast_all_directory_path) +
+                    item.getAbsPath(),
                     Toast.LENGTH_LONG).show();
         } else if (item.isDirectory()) {
             new SizeComputationTask(context).execute(item);

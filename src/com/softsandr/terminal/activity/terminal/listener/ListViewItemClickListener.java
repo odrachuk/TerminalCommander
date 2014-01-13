@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.utils.file.FileOpeningUtil;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
@@ -74,8 +75,8 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
                         }
                         listView.smoothScrollToPosition(0);
                     } else {
-                        Toast.makeText(activity, "Can't read directory " +
-                                adapter.getItem(position).getFileName() + ".",
+                        Toast.makeText(activity, activity.getString(R.string.toast_cannot_read_directory_exception) +
+                                adapter.getItem(position).getFileName(),
                                 Toast.LENGTH_SHORT).show();
                     }
                 } else {

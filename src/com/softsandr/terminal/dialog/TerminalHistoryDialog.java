@@ -83,7 +83,7 @@ public class TerminalHistoryDialog extends DialogFragment {
         View v = inflater.inflate(R.layout.terminal_history_dialog_layout, container, false);
         TextView title = (TextView) v.findViewById(R.id.terminal_history_dialog_title);
         title.setText(mActivePage.equals(ActivePage.LEFT)?
-            "Left panel history" : "Right panel history");
+            getString(R.string.dlg_left_panel_history) : getString(R.string.dlg_right_panel_history));
         ListView list = (ListView) v.findViewById(R.id.history_dialog_list);
         ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), R.layout.terminal_history_list_row_layout,
                 mHistoryLocations);

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
 
@@ -44,14 +45,14 @@ public class SizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
         try {
             size = FileUtil.getDirectorySize(new File(item.getAbsPath()));
         } catch (Exception e) {
-            Log.e(LOG_TAG, "compute directory size:", e);
+            Log.e(LOG_TAG, "Computing directory size exception:", e);
         }
         return size;
     }
 
     @Override
     protected void onPostExecute(Long size) {
-        Toast.makeText(context, "Directory size = " + ListViewItem.readableFileSize(size),
+        Toast.makeText(context, context.getString(R.string.toast_dir_size) + ListViewItem.readableFileSize(size),
                 Toast.LENGTH_SHORT).show();
     }
 }

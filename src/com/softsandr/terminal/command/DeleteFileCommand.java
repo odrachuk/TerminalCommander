@@ -19,6 +19,7 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
@@ -54,7 +55,7 @@ public class DeleteFileCommand implements FileManipulationCommand {
                     if (file.canRead()) {
                         FileUtil.deleteQuietly(file);
                     } else {
-                        Toast.makeText(terminalActivity, "No enough permission to delete source file " + file.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(terminalActivity, "" + file.getName(), Toast.LENGTH_SHORT).show();
                     }
                     // clear selected and refresh directory after deleting
                     makeClearSelection();
@@ -65,7 +66,8 @@ public class DeleteFileCommand implements FileManipulationCommand {
                 makeClearSelection();
             }
         } else {
-            Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_no_enough_permissions_for_delete),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

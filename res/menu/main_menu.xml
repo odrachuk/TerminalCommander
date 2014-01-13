@@ -9,22 +9,22 @@
           android:title="@string/action_settings"
           android:showAsAction="never"/>-->
     <item android:id="@+id/action_sorting"
-          android:title="@string/sorting"
+          android:title="@string/menu_item_sorting"
           android:showAsAction="never">
         <menu>
             <group android:checkableBehavior="single">
                 <item android:id="@+id/sorting_by_name"
-                      android:title="@string/sorting_by_file_name"
+                      android:title="@string/submenu_sorting_by_file_name"
                       android:checkable="true"
                       android:checked="false"
                       android:showAsAction="never"/>
                 <item android:id="@+id/sorting_by_size"
-                      android:title="@string/sorting_by_size"
+                      android:title="@string/submenu_sorting_by_size"
                       android:checkable="true"
                       android:checked="false"
                       android:showAsAction="never"/>
                 <item android:id="@+id/sorting_by_modify"
-                      android:title="@string/sorting_by_modify_time"
+                      android:title="@string/submenu_sorting_by_modify_time"
                       android:checkable="true"
                       android:checked="false"
                       android:showAsAction="never"/>
@@ -32,6 +32,6 @@
         </menu>
     </item>
     <item android:id="@+id/action_quit"
-          android:title="@string/action_quit"
+          android:title="@string/menu_item_quit"
           android:showAsAction="never"/>
 </menu>

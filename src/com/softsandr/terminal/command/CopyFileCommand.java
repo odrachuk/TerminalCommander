@@ -19,6 +19,7 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
+import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
@@ -67,7 +68,8 @@ public class CopyFileCommand implements FileManipulationCommand {
                 makeClearSelection();
             }
         } else {
-            Toast.makeText(terminalActivity, "No object selected for copy operation", Toast.LENGTH_SHORT).show();
+            Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_no_items_selected_for_copy),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

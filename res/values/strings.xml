@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Common -->
 	<string name="app_name">Terminal Commander</string>
-    <string name="title_file_name">Name</string>
-    <string name="title_file_size">Size</string>
-    <string name="title_file_modify_time">Modify time</string>
-    <string name="action_shift"><![CDATA[ SHIFT ]]></string>
-    <string name="action_ctrl"><![CDATA[ CTRL ]]></string>
-    <string name="action_tab"><![CDATA[ TAB ]]></string>
-    <string name="action_commander"><![CDATA[[ >_ ]]]></string>
-    <string name="action_cancel"><![CDATA[CANCEL]]></string>
-    <string name="action_settings">Settings</string>
-    <string name="action_quit">Quit</string>
-    <string name="shift_on">SHIFT ON</string>
-    <string name="shift_off">SHIFT OFF</string>
-    <string name="ctrl_on">CTRL ON</string>
-    <string name="ctrl_off">CTRL OFF</string>
-    <string name="copy_string">Copy</string>
-    <string name="rename_or_move_string">Rename/Move</string>
-    <string name="make_dir_string">Make directory</string>
-    <string name="delete_string">Delete</string>
     <string name="commander">Commander</string>
     <string name="terminal">Terminal</string>
     <string name="history_up">[ ^ ]</string>
     <string name="slash">/</string>
-    <string name="ok">[ OK ]</string>
-    <string name="cancel">[ Cancel ]</string>
-    <string name="move_string">Move</string>
-    <string name="create_new_directory">Create a new Directory</string>
+    <string name="ok_btn">[ OK ]</string>
+    <string name="cancel_btn">[ Cancel ]</string>
     <string name="select_app">Select application</string>
-    <string name="not_app_for_openning_file">Your device doesn\'t have any application that can open this file.</string>
-    <string name="description">Component Description</string>
-    <string name="set_default">def.</string>
-    <string name="sorting">Default sorting</string>
-    <string name="sorting_by_file_name">Sorting by name</string>
-    <string name="sorting_by_size">Sorting by size</string>
-    <string name="sorting_by_modify_time">Sorting by modify</string>
     <string name="refresh">refresh</string>
+    <!-- Panel column titles -->
+    <string name="title_file_name">Name</string>
+    <string name="title_file_size">Size</string>
+    <string name="title_file_modify_time">Modify time</string>
+    <!-- Action bar buttons -->
+    <string name="action_bar_btn_shift">" Shift "</string>
+    <string name="action_bar_btn_ctrl">" Ctrl "</string>
+    <string name="action_bar_btn_tab">" Tab "</string>
+    <string name="action_bar_btn_commander">"[ >_ ]"</string>
+    <string name="action_bar_btn_cancel">"Cancel"</string>
+    <!-- Main menu items -->
+    <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_quit">Quit</string>
+    <string name="menu_item_sorting">Default sorting</string>
+    <string name="submenu_sorting_by_file_name">Sorting by name</string>
+    <string name="submenu_sorting_by_size">Sorting by size</string>
+    <string name="submenu_sorting_by_modify_time">Sorting by modify</string>
+    <!-- Dialog titles -->
+    <string name="copy_title">Copy</string>
+    <string name="rename_or_move_title">Rename/Move</string>
+    <string name="make_dir_title">Make directory</string>
+    <string name="delete_title">Delete</string>
+    <string name="move_title">Move</string>
+    <string name="create_new_directory_title">Create a new directory</string>
+    <!-- Toast content text -->
+    <string name="toast_dir_size">"Directory size: "</string>
+    <string name="toast_all_directory_path">"Directory location: "</string>
+    <string name="toast_cannot_read_directory_exception">"Cannot read directory "</string>
+    <string name="toast_no_items_selected_for_copy">No items selected for copy operation</string>
+    <string name="toast_no_enough_permissions_for_delete">"No enough permissions to delete source file "</string>
+    <string name="toast_cannot_rename_multiple_objects">Cannot rename multiple objects</string>
+    <string name="toast_no_objects_selected">No objects selected</string>
+    <!-- Dialog content text-->
+    <string name="dlg_copy_file">"Copy file(s) "</string>
+    <string name="dlg_to">to:</string>
+    <string name="dlg_copy">"Copy "</string>
+    <string name="dlg_files_to">" files to:"</string>
+    <string name="dlg_move_file">"Move file(s) "</string>
+    <string name="dlg_move">"Move "></string>
+    <string name="dlg_delete_file">"Delete file(s) "</string>
+    <string name="dlg_delete">"Delete "</string>
+    <string name="dlg_files">" files"</string>
+    <string name="dlg_left_panel_history">History of left panel</string>
+    <string name="dlg_right_panel_history">History of right panel</string>
 </resources>
