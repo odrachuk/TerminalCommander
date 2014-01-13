@@ -261,12 +261,14 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                         if (mLeftAdapter != null) {
                             mLeftAdapter.changeDirectory(mLeftAdapter.getLocationLabel().getPath());
                             mLeftAdapter.getSelectionMonitor().clear();
+                            mLeftList.smoothScrollToPosition(0);
                         }
                         break;
                     case RIGHT:
                         if (mRightAdapter != null) {
                             mRightAdapter.changeDirectory(mRightAdapter.getLocationLabel().getPath());
                             mRightAdapter.getSelectionMonitor().clear();
+                            mRightList.smoothScrollToPosition(0);
                         }
                         break;
                 }
