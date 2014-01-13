@@ -17,6 +17,9 @@
  ******************************************************************************/
 package com.softsandr.commander.commands.interactive;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The console commands that use console before not canceled
  */
@@ -32,7 +35,21 @@ public enum InteractiveCommands {
         public String getSpecificText() {
             return "ping localhost"; // todo parsing real address and execution options
         }
+    },
+    CAT("cat") {
+        @Override
+        public String getSpecificText() {
+            return "cat"; // todo parsing real address and execution options
+        }
     };
+
+    private static final Map<String, InteractiveCommands> MAP_BY_VALUE = new HashMap<String, InteractiveCommands>();
+
+    static {
+        for (InteractiveCommands ic : values()) {
+            MAP_BY_VALUE.put(ic.text, ic);
+        }
+    }
 
     private final String text;
 
@@ -75,4 +92,21 @@ public enum InteractiveCommands {
     }
 
     public abstract String getSpecificText();
+
+    /**
+     * Get constant by value
+     * @param value
+     * @return
+     */
+    public InteractiveCommands fromValue(String value) {
+        return MAP_BY_VALUE.get(value);
+    }
+
+    /**
+     * Get constant value
+     * @return
+     */
+    public String getText() {
+        return text;
+    }
 }

@@ -19,11 +19,9 @@ package com.softsandr.terminal.activity.commander;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -34,6 +32,7 @@ import android.widget.Toast;
 import com.softsandr.commander.Commander;
 import com.softsandr.commander.CommanderActivity;
 import com.softsandr.commander.KeyboardController;
+import com.softsandr.commander.process.execution.service.InteractiveExecutionService;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
@@ -49,13 +48,13 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.equals(mTabMenuBtn)) {
+            if (v.equals(tabMenuBtn)) {
                 // todo
                 Toast.makeText(CommanderActivityImpl.this, "Tabulate", Toast.LENGTH_SHORT).show();
-            } else if (v.equals(mCancelMenuBtn)) {
-                mTerminalPromptView.setVisibility(View.VISIBLE);
-                mTerminalInView.setVisibility(View.VISIBLE);
-                mCancelMenuBtn.setVisibility(View.GONE);
+            } else if (v.equals(cancelMenuBtn)) {
+                promptView.setVisibility(View.VISIBLE);
+                inView.setVisibility(View.VISIBLE);
+                cancelMenuBtn.setVisibility(View.GONE);
                 commander.cancelInteractiveCommand();
                 showSoftKeyboard();
             }
@@ -82,24 +81,26 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         }
     };
     private Commander commander;
-    private TextView mTerminalOutView;
-    private TextView mTerminalPromptView;
-    private EditText mTerminalInView;
-    private Button mTabMenuBtn;
-    private Button mCancelMenuBtn;
-    private String mInitialPath;
-    private String mOtherPath;
-    private boolean mInitialPageLeft;
+    private TextView outView;
+    private TextView promptView;
+    private EditText inView;
+    private Button tabMenuBtn;
+    private Button cancelMenuBtn;
+    private String initialPath;
+    private String otherPath;
+    private boolean initialPageLeft;
+    private InteractiveExecutionService interactiveService;
+    private boolean boundInteractiveService = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commander_activity_layout);
         findViewById(R.id.commander_main_container).setOnTouchListener(mOnTouchListener);
-        mTerminalOutView = (TextView) findViewById(R.id.terminal_out_text_view);
-        mTerminalPromptView = (TextView) findViewById(R.id.terminal_prompt_text_view);
-        mTerminalInView = (EditText) findViewById(R.id.terminal_input_edit_text);
-        mTerminalInView.requestFocus();
+        outView = (TextView) findViewById(R.id.terminal_out_text_view);
+        promptView = (TextView) findViewById(R.id.terminal_prompt_text_view);
+        inView = (EditText) findViewById(R.id.terminal_input_edit_text);
+        inView.requestFocus();
         showSoftKeyboard();
         initActionBar();
     }
@@ -141,27 +142,34 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         init();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to InteractiveExecutionService
+        Intent intent = new Intent(this, InteractiveExecutionService.class);
+        bindService(intent, interactiveServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     private void init() {
         Intent startIntent = getIntent();
-        if (mInitialPath == null) {
-            mInitialPath = StringUtil.PATH_SEPARATOR;
+        if (initialPath == null) {
+            initialPath = StringUtil.PATH_SEPARATOR;
             if (startIntent != null) {
-                mInitialPath = startIntent.getStringExtra(WORK_PATH_EXTRA);
-                mOtherPath = startIntent.getStringExtra(OTHER_PATH_EXTRA);
-                mInitialPageLeft = startIntent.getBooleanExtra(ACTIVE_PAGE_EXTRA, true);
+                initialPath = startIntent.getStringExtra(WORK_PATH_EXTRA);
+                otherPath = startIntent.getStringExtra(OTHER_PATH_EXTRA);
+                initialPageLeft = startIntent.getBooleanExtra(ACTIVE_PAGE_EXTRA, true);
             }
         }
         // create controllers
-        commander = new Commander(this, mTerminalInView,
-                mTerminalOutView, mTerminalPromptView, mInitialPath);
+        commander = new Commander(this, inView, outView, promptView, initialPath);
         // config ui components
-        mTerminalPromptView.setText(commander.getPrompt().getCompoundString());
-        mTerminalInView.setImeOptions(EditorInfo.IME_MASK_ACTION);
-        mTerminalInView.setGravity(Gravity.TOP | Gravity.LEFT);
-        mTerminalInView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        mTerminalInView.setSingleLine();
-        mTerminalInView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        mTerminalInView.setOnEditorActionListener(new KeyboardController(commander));
+        promptView.setText(commander.getPrompt().getCompoundString());
+        inView.setImeOptions(EditorInfo.IME_MASK_ACTION);
+        inView.setGravity(Gravity.TOP | Gravity.LEFT);
+        inView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        inView.setSingleLine();
+        inView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        inView.setOnEditorActionListener(new KeyboardController(commander));
     }
 
     private void initActionBar() {
@@ -176,10 +184,10 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             LayoutInflater li = getLayoutInflater();
             View customView = li.inflate(R.layout.commander_action_bar_custom_view, null);
             if (customView != null) {
-                mTabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
-                mTabMenuBtn.setOnClickListener(mOnClickListener);
-                mCancelMenuBtn = (Button) customView.findViewById(R.id.action_bar_cancel_btn);
-                mCancelMenuBtn.setOnClickListener(mOnClickListener);
+                tabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
+                tabMenuBtn.setOnClickListener(mOnClickListener);
+                cancelMenuBtn = (Button) customView.findViewById(R.id.action_bar_cancel_btn);
+                cancelMenuBtn.setOnClickListener(mOnClickListener);
                 actionBar.setCustomView(customView, lp);
             }
         }
@@ -188,6 +196,16 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (boundInteractiveService) {
+            unbindService(interactiveServiceConnection);
+            boundInteractiveService = false;
+        }
     }
 
     @Override
@@ -200,36 +218,36 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
-        outState.putString(OTHER_PATH_EXTRA, mOtherPath);
-        outState.putBoolean(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        outState.putString(OTHER_PATH_EXTRA, otherPath);
+        outState.putBoolean(ACTIVE_PAGE_EXTRA, initialPageLeft);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mInitialPath = savedInstanceState.getString(WORK_PATH_EXTRA);
-        mOtherPath = savedInstanceState.getString(OTHER_PATH_EXTRA);
-        mInitialPageLeft = savedInstanceState.getBoolean(ACTIVE_PAGE_EXTRA);
+        initialPath = savedInstanceState.getString(WORK_PATH_EXTRA);
+        otherPath = savedInstanceState.getString(OTHER_PATH_EXTRA);
+        initialPageLeft = savedInstanceState.getBoolean(ACTIVE_PAGE_EXTRA);
     }
 
     @Override
     public void showSoftKeyboard() {
-        if (mTerminalInView.requestFocus()) {
+        if (inView.requestFocus()) {
             InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mTerminalInView, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(inView, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
     @Override
     public void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mTerminalInView.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(inView.getWindowToken(), 0);
     }
 
     @Override
     public void showCancelBtn() {
-        mCancelMenuBtn.setVisibility(View.VISIBLE);
+        cancelMenuBtn.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -239,9 +257,29 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         // Prepare data intent
         Intent data = new Intent();
         data.putExtra(WORK_PATH_EXTRA, commander.getPrompt().getUserLocation());
-        data.putExtra(OTHER_PATH_EXTRA, mOtherPath);
-        data.putExtra(ACTIVE_PAGE_EXTRA, mInitialPageLeft);
+        data.putExtra(OTHER_PATH_EXTRA, otherPath);
+        data.putExtra(ACTIVE_PAGE_EXTRA, initialPageLeft);
         setResult(RESULT_OK, data);
         finish();
     }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection interactiveServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to InteractiveExecutionService,
+            // cast the IBinder and get InteractiveExecutionService instance
+            InteractiveExecutionService.InteractiveExecutionBinder binder =
+                    (InteractiveExecutionService.InteractiveExecutionBinder) service;
+            interactiveService = binder.getService();
+            boundInteractiveService = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            boundInteractiveService = false;
+        }
+    };
 }

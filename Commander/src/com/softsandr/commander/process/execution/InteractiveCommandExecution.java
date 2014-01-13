@@ -139,6 +139,9 @@ public class InteractiveCommandExecution extends CommandExecution {
         return process;
     }
 
+    /**
+     * Canceled timer and recreate main Process
+     */
     public void cancel() {
         timer.cancel();
         try {
@@ -147,5 +150,13 @@ public class InteractiveCommandExecution extends CommandExecution {
             Toast.makeText(commanderProcess.getCommander().getActivity(),
                     "Can't start main execution process.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Return associated with it execution instance of {@link InteractiveCommands}
+     * @return
+     */
+    public InteractiveCommands getCommand() {
+        return command;
     }
 }

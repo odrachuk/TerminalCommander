@@ -71,6 +71,7 @@ public class CommanderProcess {
     }
 
     public void execCommand(String commandText) {
+        Log.d(LOG_TAG, "execCommand(" + commandText + ")");
         if (LocalCommands.isLocalCommand(commandText)) {
             new LocalCommandExecution(mResponseHandler, commandText,
                     commander.getPrompt().getUserLocation(), this).execute();
