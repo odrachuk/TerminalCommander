@@ -22,6 +22,7 @@ package com.softsandr.utils.string;
  */
 public class StringUtil {
     public final static String EMPTY = "";
+    public final static String WHITESPACE = " ";
     public final static String LINE_SEPARATOR = System.getProperty("line.separator");
     public final static String PATH_SEPARATOR = "/"; // System.getProperty("path.separator");
     public final static char PATH_SEPARATE_CHAR = '/';

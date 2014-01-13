@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import com.softsandr.utils.string.StringUtil;
 
 import static com.softsandr.utils.string.StringUtil.EMPTY;
 import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
@@ -30,11 +31,13 @@ import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
  * used for console input.
  */
 public class KeyboardController implements TextView.OnEditorActionListener {
+    private final View tabulateButton;
     private boolean inFirst = true;
     private Commander commander;
 
-    public KeyboardController(Commander uiController) {
-        commander = uiController;
+    public KeyboardController(Commander commander, View tabulateButton) {
+        this.commander = commander;
+        this.tabulateButton = tabulateButton;
     }
 
     @Override
@@ -43,34 +46,39 @@ public class KeyboardController implements TextView.OnEditorActionListener {
         if (event != null) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                 commander.getOutTextView().setVisibility(View.VISIBLE);
-                String fullCommandText = commander.getInputEditText().getText().toString();
-                StringBuilder resultText = new StringBuilder(commander.getOutTextView().getText().toString());
-                if (inFirst) {
-                    if (!fullCommandText.isEmpty()) {
-                        resultText.append(commander.getPrompt().getCompoundString());
-                        resultText.append(fullCommandText);
-                        commander.getProcess().execCommand(fullCommandText);
-                    } else {
-                        resultText.append(commander.getPrompt().getCompoundString());
-                    }
-                    inFirst = false;
-                } else {
-                    if (!fullCommandText.isEmpty()) {
-                        if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
-                            resultText.append(LINE_SEPARATOR);
+                if (v.getText() != null) {
+                    String fullCommandText = v.getText().toString();
+                    StringBuilder resultText = new StringBuilder(
+                            commander.getOutTextView().getText() != null?
+                                    commander.getOutTextView().getText().toString() : StringUtil.EMPTY);
+                    if (inFirst) {
+                        if (!fullCommandText.isEmpty()) {
+                            resultText.append(commander.getPrompt().getCompoundString());
+                            resultText.append(fullCommandText);
+                            commander.getProcess().execCommand(fullCommandText);
+                        } else {
+                            resultText.append(commander.getPrompt().getCompoundString());
                         }
-                        resultText.append(commander.getPrompt().getCompoundString());
-                        resultText.append(fullCommandText);
-                        commander.getProcess().execCommand(fullCommandText);
+                        inFirst = false;
                     } else {
-                        if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
-                            resultText.append(LINE_SEPARATOR);
+                        if (!fullCommandText.isEmpty()) {
+                            if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
+                                resultText.append(LINE_SEPARATOR);
+                            }
+                            resultText.append(commander.getPrompt().getCompoundString());
+                            resultText.append(fullCommandText);
+                            commander.getProcess().execCommand(fullCommandText);
+                        } else {
+                            if (!TextUtils.isEmpty(commander.getOutTextView().getText())) {
+                                resultText.append(LINE_SEPARATOR);
+                            }
+                            resultText.append(commander.getPrompt().getCompoundString());
                         }
-                        resultText.append(commander.getPrompt().getCompoundString());
                     }
+                    commander.getOutTextView().setText(resultText);
+                    commander.getInputEditText().setText(EMPTY);
                 }
-                commander.getOutTextView().setText(resultText);
-                commander.getInputEditText().setText(EMPTY);
+                tabulateButton.setVisibility(View.GONE);
             }
             handled = true;
         }

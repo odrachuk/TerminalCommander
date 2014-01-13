@@ -24,6 +24,7 @@
             android:textSize="@dimen/terminal_action_bar_btn_text_size"
             android:textColor="@color/COLOR_717171"
             android:textStyle="bold"
+            android:visibility="gone"
             android:background="@drawable/orange_cursor_bg"
             android:layout_toRightOf="@id/action_bar_cancel_btn_container"/>
 </RelativeLayout>

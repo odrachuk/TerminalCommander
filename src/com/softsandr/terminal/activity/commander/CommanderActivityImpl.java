@@ -49,9 +49,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.equals(tabMenuBtn)) {
-                // todo
-            } else if (v.equals(cancelMenuBtn)) {
+            if (v.equals(cancelMenuBtn)) {
                 cancelInteractiveCommand();
                 showSoftKeyboard();
             }
@@ -156,7 +154,9 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         inView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         inView.setSingleLine();
         inView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        inView.setOnEditorActionListener(new KeyboardController(commander));
+        inView.setOnEditorActionListener(new KeyboardController(commander, tabMenuBtn));
+        inView.addTextChangedListener(new InputTextWatcher(tabMenuBtn));
+        tabMenuBtn.setOnClickListener(new TabClickListener(commander, inView));
     }
 
     private void initActionBar() {
@@ -172,7 +172,6 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
             View customView = li.inflate(R.layout.commander_action_bar_custom_view, null);
             if (customView != null) {
                 tabMenuBtn = (Button) customView.findViewById(R.id.action_bar_tab_btn);
-                tabMenuBtn.setOnClickListener(mOnClickListener);
                 cancelMenuBtn = (Button) customView.findViewById(R.id.action_bar_cancel_btn);
                 cancelMenuBtn.setOnClickListener(mOnClickListener);
                 actionBar.setCustomView(customView, lp);
