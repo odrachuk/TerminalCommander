@@ -156,7 +156,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         inView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         inView.setOnEditorActionListener(new KeyboardController(commander, tabMenuBtn));
         inView.addTextChangedListener(new InputTextWatcher(tabMenuBtn));
-        tabMenuBtn.setOnClickListener(new TabClickListener(commander, inView));
+        tabMenuBtn.setOnClickListener(new TabClickListener(commander, inView, outView));
     }
 
     private void initActionBar() {

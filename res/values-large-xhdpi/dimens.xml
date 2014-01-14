@@ -2,7 +2,6 @@
 <!-- This is dimensions for Nexus 7 2013 -->
 <resources>
     <!-- Common -->
-    <dimen name="action_bar_height">40dp</dimen>
     <dimen name="terminal_btn_height">33dp</dimen>
     <dimen name="terminal_history_btn_width">40dp</dimen>
     <dimen name="terminal_action_bar_btn_text_size">20sp</dimen>

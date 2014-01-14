@@ -45,8 +45,11 @@ public final class InputTextWatcher implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         String text = s.toString();
-        if (!text.startsWith(StringUtil.WHITESPACE)
-                && text.endsWith(StringUtil.WHITESPACE)) {
+        if (text.isEmpty()) {
+            tabulateButton.setVisibility(View.GONE);
+        } else if (!text.startsWith(StringUtil.WHITESPACE)
+                && !text.endsWith(StringUtil.WHITESPACE)
+                && text.contains(StringUtil.WHITESPACE)) {
             tabulateButton.setVisibility(View.VISIBLE);
         } else {
             tabulateButton.setVisibility(View.GONE);

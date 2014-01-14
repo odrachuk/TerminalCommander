@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
     <RelativeLayout
             android:id="@+id/action_bar_cancel_btn_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
         <Button android:id="@+id/action_bar_cancel_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/action_bar_btn_cancel"
                 android:textSize="@dimen/terminal_action_bar_btn_text_size"
                 android:textColor="@color/COLOR_717171"
@@ -19,7 +20,7 @@
     </RelativeLayout>
     <Button android:id="@+id/action_bar_tab_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/action_bar_btn_tab"
             android:textSize="@dimen/terminal_action_bar_btn_text_size"
             android:textColor="@color/COLOR_717171"

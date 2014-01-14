@@ -20,6 +20,7 @@ package com.softsandr.terminal.activity.commander;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.softsandr.commander.Commander;
 import com.softsandr.terminal.model.filesystem.ProcessDirectory;
@@ -37,11 +38,13 @@ import java.util.List;
  */
 public final class TabClickListener implements View.OnClickListener {
     private final Commander commander;
-    private final TextView inputView;
+    private final EditText inputView;
+    private final TextView outView;
 
-    public TabClickListener(Commander commander, TextView inputView) {
+    public TabClickListener(Commander commander, EditText inputView, TextView outView) {
         this.commander = commander;
         this.inputView = inputView;
+        this.outView = outView;
     }
 
     @Override
@@ -50,19 +53,35 @@ public final class TabClickListener implements View.OnClickListener {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    String searchText = inputView.getText().toString();
-                    searchText = searchText.substring(searchText.indexOf(StringUtil.WHITESPACE), searchText.length());
+                    String searchText = inputView.getText().toString().trim();
+                    int indexOfWhitespace = searchText.lastIndexOf(StringUtil.WHITESPACE) + 1;
+                    searchText = searchText.substring(indexOfWhitespace, searchText.length());
                     String currentLocation = commander.getPrompt().getUserLocation();
                     List<String> list = new ArrayList<String>();
                     readUserLocation(list, currentLocation);
                     LinkedList<String> resultList = new LinkedList<String>();
                     for (String s : list) {
-                        if (s.contains(searchText)) {
+                        if (s.startsWith(searchText) || s.equals(searchText)) {
                             resultList.addLast(s);
                         }
                     }
                     if (!resultList.isEmpty()) {
-                        Log.d("TAB_SELECTION: ", resultList.toString());
+                        if (resultList.size() == 1) {
+                            String inputText = inputView.getText().toString();
+                            int lastWhitespaceIndex = inputText.indexOf(StringUtil.WHITESPACE);
+                            inputText = inputText.substring(0, lastWhitespaceIndex)
+                                    + StringUtil.WHITESPACE + resultList.get(0);
+                            inputView.setText(inputText);
+                            inputView.setSelection(inputText.length());
+                        } else {
+                            String outText = outView.getText() != null ?
+                                    outView.getText().toString() + StringUtil.LINE_SEPARATOR : StringUtil.EMPTY;
+                            for (String s : resultList) {
+                                outText += s + StringUtil.WHITESPACE;
+                            }
+                            outView.setVisibility(View.VISIBLE);
+                            outView.setText(outText);
+                        }
                     }
                 }
             });
