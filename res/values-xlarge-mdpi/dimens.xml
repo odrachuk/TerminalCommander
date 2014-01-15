@@ -3,7 +3,7 @@
     <!-- Common -->
     <dimen name="terminal_action_bar_btn_text_size">20sp</dimen>
     <dimen name="terminal_btn_height">40dp</dimen>
-    <dimen name="terminal_history_btn_width">33dp</dimen>
+    <dimen name="terminal_history_btn_width">40dp</dimen>
     <dimen name="commander_out_text_size">18sp</dimen>
     <dimen name="commander_text_padding_left">2dp</dimen>
     <dimen name="commander_text_padding_right">2dp</dimen>
@@ -45,7 +45,7 @@
     <dimen name="terminal_dialog_describe_max_width">200dp</dimen>
     <dimen name="terminal_mk_dir_dialog_width">400dp</dimen>
     <dimen name="terminal_mk_dir_dialog_height">150dp</dimen>
-    <dimen name="terminal_history_dialog_width">425dp</dimen>
+    <dimen name="terminal_history_dialog_width">550dp</dimen>
     <dimen name="terminal_history_dialog_height">500dp</dimen>
     <dimen name="terminal_history_dialog_list_row_text_size">20sp</dimen>
     <dimen name="terminal_history_dialog_list_row_padding_left">2dp</dimen>
