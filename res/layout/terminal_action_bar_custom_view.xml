@@ -31,5 +31,5 @@
             android:layout_height="match_parent"
             android:text="@string/action_bar_btn_commander"
             android:layout_toRightOf="@id/action_bar_ctrl_btn_container"
-            style="@style/ActionBar_Toggle_Btn_Style"/>
+            style="@style/ActionBar_Btn_Style"/>
 </RelativeLayout>

@@ -71,8 +71,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/orange_cursor_bg</item>
     </style>
-    <style name="ActionBar_Btn_Style.">
-        <item name="android:background">@android:drawable/ ab_solid_light_holo</item>
-        <item name="android:divider">?android:attr/dividerVertical</item>
+    <style name="ActionBar_Btn_Style">
+        <item name="android:textSize">@dimen/terminal_action_bar_btn_text_size</item>
+        <item name="android:textColor">@color/action_bar_text_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
     </style>
 </resources>
