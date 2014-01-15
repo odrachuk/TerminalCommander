@@ -13,7 +13,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/action_bar_btn_cancel"
                 android:enabled="false"
-                style="@style/ActionBar_Btn_Style"/>
+                style="@style/ActionBar_Toggle_Btn_Style"/>
     </RelativeLayout>
     <Button android:id="@+id/action_bar_tab_btn"
             android:layout_width="wrap_content"
@@ -21,5 +21,5 @@
             android:text="@string/action_bar_btn_tab"
             android:enabled="false"
             android:layout_toRightOf="@id/action_bar_cancel_btn_container"
-            style="@style/ActionBar_Btn_Style"/>
+            style="@style/ActionBar_Toggle_Btn_Style"/>
 </RelativeLayout>
