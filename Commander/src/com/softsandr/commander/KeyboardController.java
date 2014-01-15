@@ -31,13 +31,11 @@ import static com.softsandr.utils.string.StringUtil.LINE_SEPARATOR;
  * used for console input.
  */
 public class KeyboardController implements TextView.OnEditorActionListener {
-    private final View tabulateButton;
     private boolean inFirst = true;
     private Commander commander;
 
-    public KeyboardController(Commander commander, View tabulateButton) {
+    public KeyboardController(Commander commander) {
         this.commander = commander;
-        this.tabulateButton = tabulateButton;
     }
 
     @Override
@@ -78,7 +76,6 @@ public class KeyboardController implements TextView.OnEditorActionListener {
                     commander.getOutTextView().setText(resultText);
                     commander.getInputEditText().setText(EMPTY);
                 }
-                tabulateButton.setVisibility(View.GONE);
             }
             handled = true;
         }

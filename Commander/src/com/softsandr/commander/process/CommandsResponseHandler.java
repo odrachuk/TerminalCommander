@@ -55,7 +55,7 @@ public class CommandsResponseHandler extends Handler {
             String commandText = inputBundle.getString(COMMAND_EXECUTION_STRING_KEY);
             if (inputBundle.containsKey(COMMAND_EXECUTION_HIDE_KEY)) {
                 // situation when we hide input elements and display cancel button
-                ((CommanderActivity) commander.getActivity()).showCancelBtn();
+                ((CommanderActivity) commander.getActivity()).setCancelBtnEnabled();
                 ((CommanderActivity) commander.getActivity()).hideSoftKeyboard();
                 commander.getInputEditText().setVisibility(View.GONE);
                 commander.getPromptTextView().setVisibility(View.GONE);

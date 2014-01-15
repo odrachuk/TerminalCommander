@@ -30,7 +30,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.softsandr.commander.Commander;
 import com.softsandr.commander.CommanderActivity;
 import com.softsandr.commander.KeyboardController;
@@ -154,7 +153,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
         inView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         inView.setSingleLine();
         inView.setInputType(EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        inView.setOnEditorActionListener(new KeyboardController(commander, tabMenuBtn));
+        inView.setOnEditorActionListener(new KeyboardController(commander));
         inView.addTextChangedListener(new InputTextWatcher(tabMenuBtn));
         tabMenuBtn.setOnClickListener(new TabClickListener(commander, inView, outView));
     }
@@ -223,8 +222,8 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     }
 
     @Override
-    public void showCancelBtn() {
-        cancelMenuBtn.setVisibility(View.VISIBLE);
+    public void setCancelBtnEnabled() {
+        cancelMenuBtn.setEnabled(true);
     }
 
     @Override
@@ -243,7 +242,7 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     private void cancelInteractiveCommand() {
         promptView.setVisibility(View.VISIBLE);
         inView.setVisibility(View.VISIBLE);
-        cancelMenuBtn.setVisibility(View.GONE);
+        cancelMenuBtn.setEnabled(false);
         commander.cancelInteractiveCommand();
     }
 }

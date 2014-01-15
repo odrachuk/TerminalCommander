@@ -12,20 +12,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/action_bar_btn_cancel"
-                android:textSize="@dimen/terminal_action_bar_btn_text_size"
-                android:textColor="@color/COLOR_717171"
-                android:textStyle="bold"
-                android:visibility="gone"
-                android:background="@drawable/orange_cursor_bg"/>
+                android:enabled="false"
+                style="@style/ActionBar_Btn_Style"/>
     </RelativeLayout>
     <Button android:id="@+id/action_bar_tab_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/action_bar_btn_tab"
-            android:textSize="@dimen/terminal_action_bar_btn_text_size"
-            android:textColor="@color/COLOR_717171"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:background="@drawable/orange_cursor_bg"
-            android:layout_toRightOf="@id/action_bar_cancel_btn_container"/>
+            android:enabled="false"
+            android:layout_toRightOf="@id/action_bar_cancel_btn_container"
+            style="@style/ActionBar_Btn_Style"/>
 </RelativeLayout>

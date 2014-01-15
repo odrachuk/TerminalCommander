@@ -29,7 +29,7 @@ public interface CommanderActivity {
     /**
      * Used when show cancel button on action bar for interactive command termination
      */
-    void showCancelBtn();
+    void setCancelBtnEnabled();
 
     /**
      * Used when needs hide/close keyboard

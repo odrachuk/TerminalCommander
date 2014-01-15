@@ -13,10 +13,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/action_bar_btn_shift"
-                android:textSize="@dimen/terminal_action_bar_btn_text_size"
-                android:textColor="@color/COLOR_717171"
-                android:textStyle="bold"
-                android:background="@drawable/orange_cursor_bg"/>
+                style="@style/ActionBar_Btn_Style"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/action_bar_ctrl_btn_container"
@@ -27,18 +24,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/action_bar_btn_ctrl"
-                android:textSize="@dimen/terminal_action_bar_btn_text_size"
-                android:textColor="@color/COLOR_717171"
-                android:textStyle="bold"
-                android:background="@drawable/orange_cursor_bg"/>
+                style="@style/ActionBar_Btn_Style"/>
     </RelativeLayout>
     <Button android:id="@+id/action_bar_comm_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/action_bar_btn_commander"
-            android:textSize="@dimen/terminal_action_bar_btn_text_size"
-            android:textColor="@color/COLOR_717171"
-            android:textStyle="bold"
-            android:background="@drawable/orange_cursor_bg"
-            android:layout_toRightOf="@id/action_bar_ctrl_btn_container"/>
+            android:layout_toRightOf="@id/action_bar_ctrl_btn_container"
+            style="@style/ActionBar_Btn_Style"/>
 </RelativeLayout>
