@@ -22,7 +22,9 @@ import com.softsandr.utils.string.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class represent processing directories strategy
@@ -67,5 +69,31 @@ public class ProcessDirectory {
         while (filesIterator.hasNext()) {
             strategy.processFile(filesIterator.next().getCanonicalFile());
         }
+    }
+
+    /**
+     * Read all file objects in specific location
+     * @param filesList The prepared list
+     * @param path      The location path
+     */
+    public static void readUserLocation(final List<String> filesList, final String path) {
+        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
+
+            @Override
+            public void initParentPath(String parentPath) {
+                // ignored
+            }
+
+            @Override
+            public void processDirectory(File file) {
+                filesList.add(file.getName());
+            }
+
+            @Override
+            public void processFile(File file) {
+                filesList.add(file.getName());
+            }
+        }, "").start(path);
+        Collections.sort(filesList);
     }
 }

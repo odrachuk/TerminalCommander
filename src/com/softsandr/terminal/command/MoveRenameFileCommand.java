@@ -21,12 +21,14 @@ import android.util.Log;
 import android.widget.Toast;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.model.filesystem.ProcessDirectory;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,25 +62,44 @@ public class MoveRenameFileCommand implements FileManipulationCommand {
         if (items != null && !items.isEmpty()) {
             try {
                 String renamingString = null;
-                if (destinationPath.contains(".")) { // determining rename situation for simple file - not directory
+                // determining rename situation for simple file - not directory
+                if (destinationPath.contains(".")) {
                     renamingString = FileUtil.getFileNameFromPath(destinationPath);
                     destinationPath = FileUtil.getDirectoryNameFromPath(destinationPath);
                 }
+                // rename operation support only one item processing
                 if (renamingString != null && items.size() > 1) {
-                    Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_cannot_rename_multiple_objects),
-                            Toast.LENGTH_SHORT).show();
+                    showRenameMultipleNotPossible();
                     makeClearSelection();
                 } else {
-                    File dstDirectory = new File(destinationPath);
                     for (ListViewItem item : items) {
                         File srcFile = new File(item.getAbsPath());
                         if (renamingString != null) {
-                            // rename simple file - not directory
+                            // renaming regular file
                             File destinationFile = new File(destinationPath + StringUtil.PATH_SEPARATOR + renamingString);
                             FileUtil.renameFile(srcFile, destinationFile);
                         } else {
-                            // rename or move directory
-                            FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                            File dstDirectory = new File(destinationPath);
+                            if (srcFile.isDirectory()) {
+                                List<String> dstDirectoryFiles = new ArrayList<String>();
+                                ProcessDirectory.readUserLocation(dstDirectoryFiles, destinationPath);
+                                if (dstDirectoryFiles.contains(item.getAbsPath())) {
+                                    // renaming for multiple directories not possible
+                                    if (items.size() > 1) {
+                                        showRenameMultipleNotPossible();
+                                        makeClearSelection();
+                                    } else {
+                                        // renaming directory
+                                        FileUtil.renameFile(srcFile, dstDirectory);
+                                    }
+                                } else {
+                                    // moving directories
+                                    FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                                }
+                            } else {
+                                // moving regular files
+                                FileUtil.moveToDirectory(srcFile, dstDirectory, true);
+                            }
                         }
                     }
                     // clear selected
@@ -94,6 +115,12 @@ public class MoveRenameFileCommand implements FileManipulationCommand {
             Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_no_objects_selected),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showRenameMultipleNotPossible() {
+        Toast.makeText(terminalActivity,
+                terminalActivity.getString(R.string.toast_cannot_rename_multiple_objects),
+                Toast.LENGTH_SHORT).show();
     }
 
     private void makeClearSelection() {

@@ -58,7 +58,7 @@ public final class TabClickListener implements View.OnClickListener {
                     searchText = searchText.substring(indexOfWhitespace, searchText.length());
                     String currentLocation = commander.getPrompt().getUserLocation();
                     List<String> list = new ArrayList<String>();
-                    readUserLocation(list, currentLocation);
+                    ProcessDirectory.readUserLocation(list, currentLocation);
                     LinkedList<String> resultList = new LinkedList<String>();
                     for (String s : list) {
                         if (s.startsWith(searchText) || s.equals(searchText)) {
@@ -86,31 +86,5 @@ public final class TabClickListener implements View.OnClickListener {
                 }
             });
         }
-    }
-
-    /**
-     * Read all file objects in specific location
-     * @param filesList The prepared list
-     * @param path      The location path
-     */
-    private void readUserLocation(final List<String> filesList, final String path) {
-        new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
-
-            @Override
-            public void initParentPath(String parentPath) {
-                // ignored
-            }
-
-            @Override
-            public void processDirectory(File file) {
-                filesList.add(file.getName());
-            }
-
-            @Override
-            public void processFile(File file) {
-                filesList.add(file.getName());
-            }
-        }, "").start(path);
-        Collections.sort(filesList);
     }
 }

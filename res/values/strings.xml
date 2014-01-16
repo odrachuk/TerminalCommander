@@ -48,7 +48,7 @@
     <string name="dlg_copy">"Copy "</string>
     <string name="dlg_files_to">" files to:"</string>
     <string name="dlg_move_file">"Move file(s) "</string>
-    <string name="dlg_move">"Move "></string>
+    <string name="dlg_move">"Move "</string>
     <string name="dlg_delete_file">"Delete file(s) "</string>
     <string name="dlg_delete">"Delete "</string>
     <string name="dlg_files">" files"</string>
