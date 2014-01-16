@@ -98,7 +98,7 @@ public class FileUtil {
         if (destDir == null) {
             throw new NullPointerException("Destination must not be null");
         }
-        if (destDir.exists() && destDir.isDirectory() == false) {
+        if (destDir.exists() && !destDir.isDirectory()) {
             throw new IllegalArgumentException("Destination '" + destDir + "' is not a directory");
         }
         File destFile = new File(destDir, srcFile.getName());
@@ -160,7 +160,7 @@ public class FileUtil {
         if (destFile == null) {
             throw new NullPointerException("Destination must not be null");
         }
-        if (srcFile.exists() == false) {
+        if (!srcFile.exists()) {
             throw new FileNotFoundException("Source '" + srcFile + "' does not exist");
         }
         if (srcFile.isDirectory()) {
@@ -175,7 +175,7 @@ public class FileUtil {
                 throw new IOException("Destination '" + parentFile + "' directory cannot be created");
             }
         }
-        if (destFile.exists() && destFile.canWrite() == false) {
+        if (destFile.exists() && !destFile.canWrite()) {
             throw new IOException("Destination '" + destFile + "' exists but is read-only");
         }
         doCopyFile(srcFile, destFile, preserveFileDate);
@@ -254,13 +254,13 @@ public class FileUtil {
         if (srcDir == null) {
             throw new NullPointerException("Source must not be null");
         }
-        if (srcDir.exists() && srcDir.isDirectory() == false) {
+        if (srcDir.exists() && !srcDir.isDirectory()) {
             throw new IllegalArgumentException("Source '" + destDir + "' is not a directory");
         }
         if (destDir == null) {
             throw new NullPointerException("Destination must not be null");
         }
-        if (destDir.exists() && destDir.isDirectory() == false) {
+        if (destDir.exists() && !destDir.isDirectory()) {
             throw new IllegalArgumentException("Destination '" + destDir + "' is not a directory");
         }
         copyDirectory(srcDir, new File(destDir, srcDir.getName()), true);
@@ -424,10 +424,10 @@ public class FileUtil {
         if (destDir == null) {
             throw new NullPointerException("Destination must not be null");
         }
-        if (srcDir.exists() == false) {
+        if (!srcDir.exists()) {
             throw new FileNotFoundException("Source '" + srcDir + "' does not exist");
         }
-        if (srcDir.isDirectory() == false) {
+        if (!srcDir.isDirectory()) {
             throw new IOException("Source '" + srcDir + "' exists but is not a directory");
         }
         if (srcDir.getCanonicalPath().equals(destDir.getCanonicalPath())) {
@@ -468,7 +468,7 @@ public class FileUtil {
             throw new IOException("Failed to list contents of " + srcDir);
         }
         if (destDir.exists()) {
-            if (destDir.isDirectory() == false) {
+            if (!destDir.isDirectory()) {
                 throw new IOException("Destination '" + destDir + "' exists but is not a directory");
             }
         } else {
@@ -476,7 +476,7 @@ public class FileUtil {
                 throw new IOException("Destination '" + destDir + "' directory cannot be created");
             }
         }
-        if (destDir.canWrite() == false) {
+        if (!destDir.canWrite()) {
             throw new IOException("Destination '" + destDir + "' cannot be written to");
         }
         for (File srcFile : srcFiles) {
@@ -844,8 +844,8 @@ public class FileUtil {
     /**
      * Rename a file.
      *
-     * @param oldFile   the file to be renamed
-     * @param newFile   the file after rename
+     * @param oldFile the file to be renamed
+     * @param newFile the file after rename
      * @throws NullPointerException if source or destination is {@code null}
      * @throws FileExistsException  if the destination directory exists
      * @throws java.io.IOException  if source or destination is invalid
@@ -864,7 +864,7 @@ public class FileUtil {
         }
         boolean rename = oldFile.renameTo(newFile);
         if (!rename) {
-            throw new IOException("Failed to rename original file '" + oldFile +"'.");
+            throw new IOException("Failed to rename original file '" + oldFile + "'.");
         }
     }
 
@@ -986,14 +986,15 @@ public class FileUtil {
         return null;
     }
 
-    public static String getDirectoryNameFromPath(String path) {
-        if (path != null && !path.isEmpty()) {
-            int lastSlashIndex = path.lastIndexOf(StringUtil.PATH_SEPARATOR);
-            if (lastSlashIndex != path.length()) {
-                return path.substring(0, lastSlashIndex);
-            }
+    public static String getParentDirectoryNameFromPath(String path) throws FileNotFoundException {
+        if (path == null) {
+            throw new NullPointerException("Path must not be null");
         }
-        return null;
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Source '" + path + "' does not exist");
+        }
+        return file.getParent();
     }
 
     public static long getDirectorySize(File directory) {

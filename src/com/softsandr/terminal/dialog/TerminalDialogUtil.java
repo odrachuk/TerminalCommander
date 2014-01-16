@@ -30,10 +30,12 @@ import java.util.ArrayList;
  * Utility class used for managing showing App dialogs
  */
 public final class TerminalDialogUtil {
-    public static final String COPY_DIALOG_TAG = TerminalCpMvDialog.class.getCanonicalName() +
-            TerminalCpMvDialog.TransferOperationType.COPY_OPERATION;
-    public static final String MOVE_RENAME_DIALOG_TAG = TerminalCpMvDialog.class.getCanonicalName() +
-            TerminalCpMvDialog.TransferOperationType.MOVE_OPERATION;
+    public static final String COPY_DIALOG_TAG = TerminalCopyDialog.class.getCanonicalName() +
+            ".COPY_DIALOG_TAG";
+    public static final String MOVE_DIALOG_TAG = TerminalCopyDialog.class.getCanonicalName() +
+            ".MOVE_DIALOG_TAG";
+    public static final String RENAME_DIALOG_TAG = TerminalCopyDialog.class.getCanonicalName() +
+            ".RENAME_DIALOG_TAG";
     public static final String MK_DIR_DIALOG_TAG = TerminalMkDirDialog.class.getCanonicalName();
     public static final String DELETE_DIALOG_TAG = TerminalDeleteDialog.class.getCanonicalName();
     public static final String HISTORY_DIALOG_TAG = TerminalHistoryDialog.class.getCanonicalName();
@@ -41,8 +43,7 @@ public final class TerminalDialogUtil {
     private TerminalDialogUtil() {
     }
 
-    public static void showCopyDialog(Activity activity, ArrayList<ListViewItem> filePaths,
-                                      String directoryPath, String currentPath) {
+    public static void showCopyDialog(Activity activity, ArrayList<ListViewItem> filePaths, String directoryPath) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -54,29 +55,44 @@ public final class TerminalDialogUtil {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = TerminalCpMvDialog.newInstance(filePaths,
-                directoryPath, currentPath,
-                TerminalCpMvDialog.TransferOperationType.COPY_OPERATION);
+        DialogFragment newFragment = TerminalCopyDialog.newInstance(filePaths, directoryPath);
         newFragment.show(ft, COPY_DIALOG_TAG);
     }
 
-    public static void showMoveRenameDialog(Activity activity, ArrayList<ListViewItem> filePaths,
+    public static void showMoveDialog(Activity activity, ArrayList<ListViewItem> filePaths,
                                             String directoryPath, String currentPath) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
         FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
-        Fragment prev = activity.getFragmentManager().findFragmentByTag(MOVE_RENAME_DIALOG_TAG);
+        Fragment prev = activity.getFragmentManager().findFragmentByTag(MOVE_DIALOG_TAG);
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = TerminalCpMvDialog.newInstance(filePaths,
-                directoryPath, currentPath,
-                TerminalCpMvDialog.TransferOperationType.MOVE_OPERATION);
-        newFragment.show(ft, MOVE_RENAME_DIALOG_TAG);
+        DialogFragment newFragment = TerminalMoveDialog.newInstance(filePaths,
+                directoryPath, currentPath);
+        newFragment.show(ft, MOVE_DIALOG_TAG);
+    }
+
+    public static void showRenameDialog(Activity activity, ListViewItem filePath,
+                                      String directoryPath, String currentPath) {
+        // DialogFragment.show() will take care of adding the fragment
+        // in a transaction.  We also want to remove any currently showing
+        // dialog, so make our own transaction and take care of that here.
+        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+        Fragment prev = activity.getFragmentManager().findFragmentByTag(RENAME_DIALOG_TAG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = TerminalRenameDialog.newInstance(filePath,
+                directoryPath, currentPath);
+        newFragment.show(ft, RENAME_DIALOG_TAG);
     }
 
     public static void showMkDirDialog(Activity activity, String currentPath, String destinationPath) {

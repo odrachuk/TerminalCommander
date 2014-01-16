@@ -20,6 +20,7 @@ package com.softsandr.terminal.activity.terminal.listener;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
 import com.softsandr.terminal.activity.terminal.ActivePage;
@@ -64,15 +65,29 @@ public class TerminalClickListener implements View.OnClickListener {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showCopyDialog((Activity) terminal,
                         terminal.getOperationItems(),
-                        destinationLocation,
-                        currentLocation);
+                        destinationLocation);
+            } else {
+                showNoObjectSelected();
             }
-        } else if (viewId == R.id.rename_btn) {
+        } else if (viewId == R.id.move_btn) {
             if (!terminal.getOperationItems().isEmpty()) {
-                TerminalDialogUtil.showMoveRenameDialog((Activity) terminal,
+                TerminalDialogUtil.showMoveDialog((Activity) terminal,
                         terminal.getOperationItems(),
                         destinationLocation,
                         currentLocation);
+            } else {
+                showNoObjectSelected();
+            }
+        } else if (viewId == R.id.rename_btn) {
+            if (terminal.getOperationItems().isEmpty()) {
+                showNoObjectSelected();
+            } else if (terminal.getOperationItems().size() == 1) {
+                TerminalDialogUtil.showRenameDialog((Activity) terminal,
+                        terminal.getOperationItems().get(0),
+                        destinationLocation,
+                        currentLocation);
+            } else {
+                showMultipleObjects();
             }
         } else if (viewId == R.id.mkdir_btn) {
             TerminalDialogUtil.showMkDirDialog((Activity) terminal, currentLocation, destinationLocation);
@@ -81,6 +96,8 @@ public class TerminalClickListener implements View.OnClickListener {
                 TerminalDialogUtil.showDeleteDialog((Activity) terminal,
                         terminal.getOperationItems(),
                         currentLocation, destinationLocation);
+            } else {
+                showNoObjectSelected();
             }
         }
             /* History buttons */
@@ -90,6 +107,8 @@ public class TerminalClickListener implements View.OnClickListener {
                 TerminalDialogUtil.showHistoryDialog((Activity) terminal,
                         locations,
                         ActivePage.LEFT);
+            } else {
+                showHistoryIsEmpty();
             }
         } else if (viewId == R.id.history_btn_in_right) {
             String[] locations = terminal.getRightHistoryLocationManager().getActualHistoryLocations();
@@ -97,7 +116,24 @@ public class TerminalClickListener implements View.OnClickListener {
                 TerminalDialogUtil.showHistoryDialog((Activity) terminal,
                         locations,
                         ActivePage.RIGHT);
+            } else {
+                showHistoryIsEmpty();
             }
         }
+    }
+
+    private void showNoObjectSelected() {
+        Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_no_objects_selected),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void showHistoryIsEmpty() {
+        Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_history_is_empty),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    private void showMultipleObjects() {
+        Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_cannot_rename_multiple_objects),
+                Toast.LENGTH_SHORT).show();
     }
 }

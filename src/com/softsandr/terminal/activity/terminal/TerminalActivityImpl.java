@@ -307,6 +307,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
 
     private void initView() {
         findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.move_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
         findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);

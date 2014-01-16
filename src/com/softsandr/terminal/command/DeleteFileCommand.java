@@ -19,10 +19,9 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
-import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.utils.file.FileUtil;
 import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.utils.file.FileUtil;
 
 import java.io.File;
 import java.util.List;
@@ -48,26 +47,21 @@ public class DeleteFileCommand implements FileManipulationCommand {
 
     @Override
     public void onExecute() {
-        if (items != null && !items.isEmpty()) {
-            try {
-                for (ListViewItem item : items) {
-                    File file = new File(item.getAbsPath());
-                    if (file.canRead()) {
-                        FileUtil.deleteQuietly(file);
-                    } else {
-                        Toast.makeText(terminalActivity, "" + file.getName(), Toast.LENGTH_SHORT).show();
-                    }
-                    // clear selected and refresh directory after deleting
-                    makeClearSelection();
+        try {
+            for (ListViewItem item : items) {
+                File file = new File(item.getAbsPath());
+                if (file.canRead()) {
+                    FileUtil.deleteQuietly(file);
+                } else {
+                    Toast.makeText(terminalActivity, "" + file.getName(), Toast.LENGTH_SHORT).show();
                 }
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "copyFile", e);
-                Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+                // clear selected and refresh directory after deleting
                 makeClearSelection();
             }
-        } else {
-            Toast.makeText(terminalActivity, terminalActivity.getString(R.string.toast_no_enough_permissions_for_delete),
-                    Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "onExecute", e);
+            Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+            makeClearSelection();
         }
     }
 

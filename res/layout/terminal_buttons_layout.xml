@@ -1,62 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-    <!--Central divider-->
-    <View android:id="@+id/fakeView2"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_centerInParent="true"/>
-    <RelativeLayout
-            android:id="@+id/controll_btns_left_sub_container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_alignParentBottom="true">
+    <Button android:id="@+id/copy_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/fakeView2">
-        <!--central divider-->
-        <View android:id="@+id/fakeView3"
-              android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:layout_centerInParent="true"/>
-        <Button android:id="@+id/copy_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/terminal_btn_height"
-                android:textSize="@dimen/terminal_control_buttons_text_size"
-                android:text="@string/copy_title"
-                style="@android:style/Widget.Button.Small"
-                android:layout_toLeftOf="@id/fakeView3"/>
-        <Button android:id="@+id/rename_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/terminal_btn_height"
-                android:textSize="@dimen/terminal_control_buttons_text_size"
-                android:text="@string/rename_or_move_title"
-                style="@android:style/Widget.Button.Small"
-                android:layout_toRightOf="@id/fakeView3"/>
-    </RelativeLayout>
-    <RelativeLayout
-            android:id="@+id/controll_btns_right_sub_container"
+            android:layout_height="@dimen/terminal_btn_height"
+            android:textSize="@dimen/terminal_control_buttons_text_size"
+            android:text="@string/copy_title"
+            android:layout_weight="1"
+            style="@android:style/Widget.Button.Small"/>
+    <Button android:id="@+id/move_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/fakeView2">
-        <!--central divider-->
-        <View android:id="@+id/fakeView4"
-              android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:layout_centerInParent="true"/>
-        <Button android:id="@+id/mkdir_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/terminal_btn_height"
-                android:textSize="@dimen/terminal_control_buttons_text_size"
-                android:text="@string/make_dir_title"
-                style="@android:style/Widget.Button.Small"
-                android:layout_toLeftOf="@id/fakeView4"/>
-        <Button android:id="@+id/delete_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/terminal_btn_height"
-                android:textSize="@dimen/terminal_control_buttons_text_size"
-                android:text="@string/delete_title"
-                style="@android:style/Widget.Button.Small"
-                android:layout_toRightOf="@id/fakeView4"/>
-    </RelativeLayout>
-</RelativeLayout>
+            android:layout_height="@dimen/terminal_btn_height"
+            android:textSize="@dimen/terminal_control_buttons_text_size"
+            android:text="@string/move_title"
+            android:layout_weight="1"
+            style="@android:style/Widget.Button.Small"/>
+    <Button android:id="@+id/rename_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/terminal_btn_height"
+            android:textSize="@dimen/terminal_control_buttons_text_size"
+            android:text="@string/rename_title"
+            android:layout_weight="1"
+            style="@android:style/Widget.Button.Small"/>
+    <Button android:id="@+id/mkdir_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/terminal_btn_height"
+            android:textSize="@dimen/terminal_control_buttons_text_size"
+            android:text="@string/make_dir_title"
+            android:layout_weight="1"
+            style="@android:style/Widget.Button.Small"/>
+    <Button android:id="@+id/delete_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/terminal_btn_height"
+            android:textSize="@dimen/terminal_control_buttons_text_size"
+            android:text="@string/delete_title"
+            android:layout_weight="1"
+            style="@android:style/Widget.Button.Small"/>
+</LinearLayout>

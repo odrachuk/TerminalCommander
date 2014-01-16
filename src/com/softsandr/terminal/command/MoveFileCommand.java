@@ -28,22 +28,28 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This class contain logic of copy operation
+ * This class contain logic that used when executing move operations
  */
-public class CopyFileCommand implements FileManipulationCommand {
-    private static final String LOG_TAG = CopyFileCommand.class.getSimpleName();
+public class MoveFileCommand implements FileManipulationCommand {
+    private static final String LOG_TAG = MoveFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
-    private final String destinationPath;
+    private final String destinationOldPath;
+    private final String currentPath;
     private final boolean pathChanged;
+    private String destinationPath;
 
-    public CopyFileCommand(TerminalActivityImpl terminalActivity,
+    public MoveFileCommand(TerminalActivityImpl terminalActivity,
                            List<ListViewItem> items,
                            String destinationPath,
+                           String destinationOldPath,
+                           String currentPath,
                            boolean pathChanged) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
+        this.destinationOldPath = destinationOldPath;
+        this.currentPath = currentPath;
         this.pathChanged = pathChanged;
     }
 
@@ -51,20 +57,19 @@ public class CopyFileCommand implements FileManipulationCommand {
     public void onExecute() {
         try {
             for (ListViewItem item : items) {
-                if (item.isDirectory()) {
-                    FileUtil.copyDirectoryToDirectory(new File(item.getAbsPath()), new File(destinationPath));
-                } else {
-                    FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
-                }
+                FileUtil.moveToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
             }
-            // clear selected
-            makeClearSelection();
-            makeRefreshDirectory();
+            refresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            makeClearSelection();
+            refresh();
         }
+    }
+
+    private void refresh() {
+        makeClearSelection();
+        makeRefreshDirectory();
     }
 
     private void makeClearSelection() {
@@ -79,15 +84,23 @@ public class CopyFileCommand implements FileManipulationCommand {
     }
 
     private void makeRefreshDirectory() {
-        if (!pathChanged) {
-            switch (terminalActivity.getActivePage()) {
-                case LEFT:
+        switch (terminalActivity.getActivePage()) {
+            case LEFT:
+                if (destinationOldPath.equals(currentPath)) {
+                    terminalActivity.getRightListAdapter().changeDirectory(destinationOldPath);
+                } else if (!pathChanged) {
                     terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                    break;
-                case RIGHT:
+                }
+                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                break;
+            case RIGHT:
+                if (destinationOldPath.equals(currentPath)) {
+                    terminalActivity.getLeftListAdapter().changeDirectory(destinationOldPath);
+                } else if (!pathChanged) {
                     terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                    break;
-            }
+                }
+                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                break;
         }
     }
 }

@@ -29,10 +29,10 @@
     <string name="submenu_sorting_by_modify_time">Sorting by modify</string>
     <!-- Dialog titles -->
     <string name="copy_title">Copy</string>
-    <string name="rename_or_move_title">Rename/Move</string>
-    <string name="make_dir_title">Make directory</string>
-    <string name="delete_title">Delete</string>
+    <string name="rename_title">Rename</string>
     <string name="move_title">Move</string>
+    <string name="make_dir_title">New directory</string>
+    <string name="delete_title">Delete</string>
     <string name="create_new_directory_title">Create a new directory</string>
     <!-- Toast content text -->
     <string name="toast_dir_size">"Directory size: "</string>
@@ -42,12 +42,14 @@
     <string name="toast_no_enough_permissions_for_delete">"No enough permissions to delete source file "</string>
     <string name="toast_cannot_rename_multiple_objects">Cannot rename multiple objects</string>
     <string name="toast_no_objects_selected">No objects selected</string>
+    <string name="toast_history_is_empty">Panel history is empty</string>
     <!-- Dialog content text-->
     <string name="dlg_copy_file">"Copy file(s) "</string>
     <string name="dlg_to">to:</string>
     <string name="dlg_copy">"Copy "</string>
     <string name="dlg_files_to">" files to:"</string>
     <string name="dlg_move_file">"Move file(s) "</string>
+    <string name="dlg_rename_file">"Rename "</string>
     <string name="dlg_move">"Move "</string>
     <string name="dlg_delete_file">"Delete file(s) "</string>
     <string name="dlg_delete">"Delete "</string>

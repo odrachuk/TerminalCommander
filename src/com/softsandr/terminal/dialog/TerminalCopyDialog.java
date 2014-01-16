@@ -24,27 +24,22 @@ import android.text.Editable;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.command.CopyFileCommand;
-import com.softsandr.terminal.command.MoveRenameFileCommand;
+import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
 
 /**
  * This class construct copy dialog
  */
-public class TerminalCpMvDialog extends DialogFragment {
-    private static final String LOG_TAG = TerminalCpMvDialog.class.getSimpleName();
+public class TerminalCopyDialog extends DialogFragment {
+    private static final String LOG_TAG = TerminalCopyDialog.class.getSimpleName();
     private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
     private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
-    private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
-    private static final String OPERATION_TYPE = LOG_TAG + ".OPERATION_TYPE";
     private ArrayList<ListViewItem> mFileAbsPathList;
-    private TransferOperationType mOperationType;
-    private String mCurrentAbsPath;
     private String mDstDirAbsPath;
     private EditText mInput;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -68,26 +63,17 @@ public class TerminalCpMvDialog extends DialogFragment {
                         operationDestinationPath = realTextFromInput;
                         pathChanged = true;
                     }
-                    if (mOperationType.equals(TransferOperationType.COPY_OPERATION)) {
-                        new CopyFileCommand((TerminalActivityImpl) getActivity(),
-                                mFileAbsPathList,
-                                operationDestinationPath,
-                                pathChanged).onExecute();
-                    } else if (mOperationType.equals(TransferOperationType.MOVE_OPERATION)) {
-                        new MoveRenameFileCommand((TerminalActivityImpl) getActivity(),
-                                mFileAbsPathList,
-                                operationDestinationPath,
-                                mDstDirAbsPath,
-                                mCurrentAbsPath,
-                                pathChanged).onExecute();
-                    }
-                    dialog = TerminalCpMvDialog.this.getDialog();
+                    new CopyFileCommand((TerminalActivityImpl) getActivity(),
+                            mFileAbsPathList,
+                            operationDestinationPath,
+                            pathChanged).onExecute();
+                    dialog = TerminalCopyDialog.this.getDialog();
                     if (dialog != null) {
                         dialog.cancel();
                     }
                     break;
                 case R.id.terminal_cp_mv_dialog_btn_cancel:
-                    dialog = TerminalCpMvDialog.this.getDialog();
+                    dialog = TerminalCopyDialog.this.getDialog();
                     if (dialog != null) {
                         dialog.cancel();
                     }
@@ -100,16 +86,12 @@ public class TerminalCpMvDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalCpMvDialog newInstance(ArrayList<ListViewItem> fileAbsPaths,
-                                          String dstDirAbsPath, String currentAbsPath,
-                                          TransferOperationType operationType) {
-        TerminalCpMvDialog f = new TerminalCpMvDialog();
+    static TerminalCopyDialog newInstance(ArrayList<ListViewItem> fileAbsPaths, String dstDirAbsPath) {
+        TerminalCopyDialog f = new TerminalCopyDialog();
         // Supply arguments
         Bundle args = new Bundle();
         args.putParcelableArrayList(FILE_PATH_LIST, fileAbsPaths);
         args.putString(DST_DIRECTORY_PATH, dstDirAbsPath);
-        args.putString(CUR_DIRECTORY_PATH, currentAbsPath);
-        args.putSerializable(OPERATION_TYPE, operationType);
         f.setArguments(args);
         return f;
     }
@@ -121,8 +103,6 @@ public class TerminalCpMvDialog extends DialogFragment {
         if (bundle != null) {
             mFileAbsPathList = bundle.getParcelableArrayList(FILE_PATH_LIST);
             mDstDirAbsPath = bundle.getString(DST_DIRECTORY_PATH);
-            mCurrentAbsPath = bundle.getString(CUR_DIRECTORY_PATH);
-            mOperationType = (TransferOperationType) bundle.getSerializable(OPERATION_TYPE);
         }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
@@ -136,34 +116,18 @@ public class TerminalCpMvDialog extends DialogFragment {
             window = dialog.getWindow();
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        View v = inflater.inflate(R.layout.terminal_cp_mv_dialog_layout, container, false);
+        View v = inflater.inflate(R.layout.terminal_cp_mv_rn_dialog_layout, container, false);
         // Input
         if (v != null) {
             mInput = (EditText) v.findViewById(R.id.terminal_cp_mv_dialog_input_element);
-            // Dialog relative title
-            TextView title = (TextView) v.findViewById(R.id.terminal_cp_mv_dialog_title);
             // Dialog attention text
             TextView describeText = (TextView) v.findViewById(R.id.terminal_cp_mv_dialog_describe_copy_text);
-            switch (mOperationType) {
-                case COPY_OPERATION:
-                    if (mFileAbsPathList.size() == 1) {
-                        describeText.setText(getString(R.string.dlg_copy_file)
-                                + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
-                    } else {
-                        describeText.setText(getString(R.string.dlg_copy)
-                                + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
-                    }
-                    break;
-                case MOVE_OPERATION:
-                    title.setText(getResources().getString(R.string.move_title));
-                    if (mFileAbsPathList.size() == 1) {
-                        describeText.setText(getString(R.string.dlg_move_file)
-                                + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
-                    } else {
-                        describeText.setText(getString(R.string.dlg_move)
-                                + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
-                    }
-                    break;
+            if (mFileAbsPathList.size() == 1) {
+                describeText.setText(getString(R.string.dlg_copy_file)
+                        + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
+            } else {
+                describeText.setText(getString(R.string.dlg_copy)
+                        + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
             }
             String textForInput = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
                     mDstDirAbsPath + "/" : mDstDirAbsPath;
@@ -193,10 +157,5 @@ public class TerminalCpMvDialog extends DialogFragment {
             }
         }
         return fileName;
-    }
-
-    public enum TransferOperationType {
-        COPY_OPERATION,
-        MOVE_OPERATION
     }
 }

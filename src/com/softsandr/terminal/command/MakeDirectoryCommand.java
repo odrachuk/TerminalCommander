@@ -52,7 +52,7 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
             // clear selected and refresh directory after deleting
             makeClearSelection();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "makeDirectory", e);
+            Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
