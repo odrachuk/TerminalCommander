@@ -49,4 +49,8 @@ public class StringUtil {
             return false;
         }
     }
+
+    public static boolean isCorrectPath(String path) {
+        return !path.contains("//") && path.startsWith(PATH_SEPARATOR);
+    }
 }

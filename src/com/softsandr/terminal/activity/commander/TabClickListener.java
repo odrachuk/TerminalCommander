@@ -77,7 +77,7 @@ public final class TabClickListener implements View.OnClickListener {
                             String outText = outView.getText() != null ?
                                     outView.getText().toString() + StringUtil.LINE_SEPARATOR : StringUtil.EMPTY;
                             for (String s : resultList) {
-                                outText += s + StringUtil.WHITESPACE;
+                                outText += "\'" + s + "\'" + StringUtil.WHITESPACE;
                             }
                             outView.setVisibility(View.VISIBLE);
                             outView.setText(outText);

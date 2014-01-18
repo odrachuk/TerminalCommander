@@ -24,6 +24,7 @@ import android.text.Editable;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.command.MoveFileCommand;
@@ -47,37 +48,38 @@ public class TerminalMoveDialog extends DialogFragment {
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Editable editable = mInput.getText();
-            String realTextFromInput = null;
-            if (editable != null) {
-                realTextFromInput = editable.toString();
-                if (realTextFromInput.endsWith(StringUtil.PATH_SEPARATOR)) {
-                    realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
-                }
-            }
             int viewId = v.getId();
-            Dialog dialog;
+            Dialog dialog = TerminalMoveDialog.this.getDialog();
             switch (viewId) {
                 case R.id.terminal_cp_mv_dialog_btn_ok:
-                    String operationDestinationPath = mDstDirAbsPath;
-                    boolean pathChanged = false;
-                    if (!mDstDirAbsPath.equals(realTextFromInput)) {
-                        operationDestinationPath = realTextFromInput;
-                        pathChanged = true;
+                    Editable editable = mInput.getText();
+                    if (editable != null) {
+                        String realTextFromInput = editable.toString();
+                        if (realTextFromInput.endsWith(StringUtil.PATH_SEPARATOR)) {
+                            realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
+                        }
+                        if (StringUtil.isCorrectPath(realTextFromInput)) {
+                            String operationDestinationPath = mDstDirAbsPath;
+                            boolean pathChanged = false;
+                            if (!mDstDirAbsPath.equals(realTextFromInput)) {
+                                operationDestinationPath = realTextFromInput;
+                                pathChanged = true;
+                            }
+                            new MoveFileCommand((TerminalActivityImpl) getActivity(),
+                                    mFileAbsPathList,
+                                    operationDestinationPath,
+                                    mDstDirAbsPath,
+                                    mCurrentAbsPath,
+                                    pathChanged).onExecute();
+                        } else {
+                            showNotCorrectPathToast();
+                        }
                     }
-                    new MoveFileCommand((TerminalActivityImpl) getActivity(),
-                            mFileAbsPathList,
-                            operationDestinationPath,
-                            mDstDirAbsPath,
-                            mCurrentAbsPath,
-                            pathChanged).onExecute();
-                    dialog = TerminalMoveDialog.this.getDialog();
                     if (dialog != null) {
                         dialog.cancel();
                     }
                     break;
                 case R.id.terminal_cp_mv_dialog_btn_cancel:
-                    dialog = TerminalMoveDialog.this.getDialog();
                     if (dialog != null) {
                         dialog.cancel();
                     }
@@ -167,5 +169,10 @@ public class TerminalMoveDialog extends DialogFragment {
             }
         }
         return fileName;
+    }
+
+    private void showNotCorrectPathToast() {
+        Toast.makeText(getActivity(), getString(R.string.toast_not_correct_path),
+                Toast.LENGTH_SHORT).show();
     }
 }

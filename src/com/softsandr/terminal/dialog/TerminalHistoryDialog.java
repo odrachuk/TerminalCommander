@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.softsandr.terminal.dialog;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.ActivePage;
@@ -45,13 +47,22 @@ public class TerminalHistoryDialog extends DialogFragment {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String[] splitPath = mHistoryLocations[position].substring(1).split(StringUtil.PATH_SEPARATOR);
             if (mActivePage.equals(ActivePage.LEFT)) {
-                ((TerminalActivityImpl) getActivity()).getLeftListAdapter().clearLocationHistory(splitPath);
-                ((TerminalActivityImpl) getActivity()).getLeftListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
+                if (getActivity() != null) {
+                    ListViewAdapter adapter = ((TerminalActivityImpl) getActivity()).getLeftListAdapter();
+                    adapter.clearLocationHistory(splitPath);
+                    adapter.changeDirectory(splitPath[splitPath.length - 1]);
+                }
             } else {
-                ((TerminalActivityImpl) getActivity()).getRightListAdapter().clearLocationHistory(splitPath);
-                ((TerminalActivityImpl) getActivity()).getRightListAdapter().changeDirectory(splitPath[splitPath.length - 1]);
+                if (getActivity() != null) {
+                    ListViewAdapter adapter = ((TerminalActivityImpl) getActivity()).getRightListAdapter();
+                    adapter.clearLocationHistory(splitPath);
+                    adapter.changeDirectory(splitPath[splitPath.length - 1]);
+                }
             }
-            getDialog().cancel();
+            Dialog dialog = TerminalHistoryDialog.this.getDialog();
+            if (dialog != null) {
+                dialog.cancel();
+            }
         }
     };
 
@@ -72,8 +83,11 @@ public class TerminalHistoryDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivePage = (ActivePage) getArguments().getSerializable(ACTIVE_PAGE);
-        mHistoryLocations = getArguments().getStringArray(HISTORY_LOCATIONS);
+        Bundle args = getArguments();
+        if (args != null) {
+            mActivePage = (ActivePage) args.getSerializable(ACTIVE_PAGE);
+            mHistoryLocations = args.getStringArray(HISTORY_LOCATIONS);
+        }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 
@@ -81,14 +95,16 @@ public class TerminalHistoryDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_history_dialog_layout, container, false);
-        TextView title = (TextView) v.findViewById(R.id.terminal_history_dialog_title);
-        title.setText(mActivePage.equals(ActivePage.LEFT)?
-            getString(R.string.dlg_left_panel_history) : getString(R.string.dlg_right_panel_history));
-        ListView list = (ListView) v.findViewById(R.id.history_dialog_list);
-        ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), R.layout.terminal_history_list_row_layout,
-                mHistoryLocations);
-        list.setAdapter(listAdapter);
-        list.setOnItemClickListener(mItemClickListener);
+        if (v != null) {
+            TextView title = (TextView) v.findViewById(R.id.terminal_history_dialog_title);
+            title.setText(mActivePage.equals(ActivePage.LEFT) ?
+                    getString(R.string.dlg_left_panel_history) : getString(R.string.dlg_right_panel_history));
+            ListView list = (ListView) v.findViewById(R.id.history_dialog_list);
+            ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), R.layout.terminal_history_list_row_layout,
+                    mHistoryLocations);
+            list.setAdapter(listAdapter);
+            list.setOnItemClickListener(mItemClickListener);
+        }
         return v;
     }
 }

@@ -43,6 +43,7 @@
     <string name="toast_cannot_rename_multiple_objects">Cannot rename multiple objects</string>
     <string name="toast_no_objects_selected">No objects selected</string>
     <string name="toast_history_is_empty">Panel history is empty</string>
+    <string name="toast_not_correct_path">Location is not correct</string>
     <!-- Dialog content text-->
     <string name="dlg_copy_file">"Copy file(s) "</string>
     <string name="dlg_to">to:</string>

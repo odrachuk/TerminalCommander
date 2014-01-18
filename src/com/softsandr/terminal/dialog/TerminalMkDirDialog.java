@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.softsandr.terminal.dialog;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,10 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.utils.string.StringUtil;
+import android.widget.Toast;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.command.MakeDirectoryCommand;
+import com.softsandr.utils.string.StringUtil;
 
 /**
  * This class contain logic that build correct make directory dialog
@@ -43,17 +45,28 @@ public class TerminalMkDirDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
+            Dialog dialog = TerminalMkDirDialog.this.getDialog();
             switch (viewId) {
                 case R.id.terminal_mk_dir_dialog_btn_ok:
                     Editable newFileName = mInput.getText();
+                    if (newFileName != null
+                            && !newFileName.toString().isEmpty()
+                            && StringUtil.isCorrectPath(newFileName.toString())) {
                     new MakeDirectoryCommand((TerminalActivityImpl) getActivity(),
                             newFileName.toString(),
                             mCurrentAbsPath,
                             mDestinationPath).onExecute();
-                    TerminalMkDirDialog.this.getDialog().cancel();
+                    } else {
+                        showNotCorrectPathToast();
+                    }
+                    if (dialog != null) {
+                        dialog.cancel();
+                    }
                     break;
                 case R.id.terminal_mk_dir_dialog_btn_cancel:
-                    TerminalMkDirDialog.this.getDialog().cancel();
+                    if (dialog != null) {
+                        dialog.cancel();
+                    }
                     break;
             }
         }
@@ -76,8 +89,11 @@ public class TerminalMkDirDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCurrentAbsPath = getArguments().getString(CUR_DIRECTORY_PATH);
-        mDestinationPath = getArguments().getString(DST_DIRECTORY_PATH);
+        Bundle args = getArguments();
+        if (args != null) {
+        mCurrentAbsPath = args.getString(CUR_DIRECTORY_PATH);
+        mDestinationPath = args.getString(DST_DIRECTORY_PATH);
+        }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 
@@ -85,6 +101,7 @@ public class TerminalMkDirDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.terminal_mk_dir_dialog_layout, container, false);
+        if (v != null) {
         // Input
         String inputText = !mCurrentAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
                 mCurrentAbsPath + "/" : mCurrentAbsPath;
@@ -94,6 +111,12 @@ public class TerminalMkDirDialog extends DialogFragment {
         // Setup button's listener
         v.findViewById(R.id.terminal_mk_dir_dialog_btn_ok).setOnClickListener(mOnClickListener);
         v.findViewById(R.id.terminal_mk_dir_dialog_btn_cancel).setOnClickListener(mOnClickListener);
+        }
         return v;
+    }
+
+    private void showNotCorrectPathToast() {
+        Toast.makeText(getActivity(), getString(R.string.toast_not_correct_path),
+                Toast.LENGTH_SHORT).show();
     }
 }

@@ -60,14 +60,14 @@ public class TerminalClickListener implements View.OnClickListener {
         } else if (v.getId() == R.id.action_bar_ctrl_btn) {
             terminal.getActionBarToggleMonitor().onClickCtrl();
         }
-            /* Control buttons */
+        /* Control buttons */
         else if (viewId == R.id.copy_btn) {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showCopyDialog((Activity) terminal,
                         terminal.getOperationItems(),
                         destinationLocation);
             } else {
-                showNoObjectSelected();
+                showNoObjectSelectedToast();
             }
         } else if (viewId == R.id.move_btn) {
             if (!terminal.getOperationItems().isEmpty()) {
@@ -76,18 +76,18 @@ public class TerminalClickListener implements View.OnClickListener {
                         destinationLocation,
                         currentLocation);
             } else {
-                showNoObjectSelected();
+                showNoObjectSelectedToast();
             }
         } else if (viewId == R.id.rename_btn) {
             if (terminal.getOperationItems().isEmpty()) {
-                showNoObjectSelected();
+                showNoObjectSelectedToast();
             } else if (terminal.getOperationItems().size() == 1) {
                 TerminalDialogUtil.showRenameDialog((Activity) terminal,
                         terminal.getOperationItems().get(0),
                         destinationLocation,
                         currentLocation);
             } else {
-                showMultipleObjects();
+                showMultipleObjectsToast();
             }
         } else if (viewId == R.id.mkdir_btn) {
             TerminalDialogUtil.showMkDirDialog((Activity) terminal, currentLocation, destinationLocation);
@@ -97,10 +97,10 @@ public class TerminalClickListener implements View.OnClickListener {
                         terminal.getOperationItems(),
                         currentLocation, destinationLocation);
             } else {
-                showNoObjectSelected();
+                showNoObjectSelectedToast();
             }
         }
-            /* History buttons */
+        /* History buttons */
         else if (viewId == R.id.history_btn_in_left) {
             String[] locations = terminal.getLeftHistoryLocationManager().getActualHistoryLocations();
             if (locations.length > 0) {
@@ -108,7 +108,7 @@ public class TerminalClickListener implements View.OnClickListener {
                         locations,
                         ActivePage.LEFT);
             } else {
-                showHistoryIsEmpty();
+                showHistoryIsEmptyToast();
             }
         } else if (viewId == R.id.history_btn_in_right) {
             String[] locations = terminal.getRightHistoryLocationManager().getActualHistoryLocations();
@@ -117,22 +117,22 @@ public class TerminalClickListener implements View.OnClickListener {
                         locations,
                         ActivePage.RIGHT);
             } else {
-                showHistoryIsEmpty();
+                showHistoryIsEmptyToast();
             }
         }
     }
 
-    private void showNoObjectSelected() {
+    private void showNoObjectSelectedToast() {
         Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_no_objects_selected),
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void showHistoryIsEmpty() {
+    private void showHistoryIsEmptyToast() {
         Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_history_is_empty),
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void showMultipleObjects() {
+    private void showMultipleObjectsToast() {
         Toast.makeText((Activity) terminal, ((Activity) terminal).getString(R.string.toast_cannot_rename_multiple_objects),
                 Toast.LENGTH_SHORT).show();
     }

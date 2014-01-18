@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.softsandr.terminal.dialog;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,16 +48,21 @@ public class TerminalDeleteDialog extends DialogFragment {
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
+            Dialog dialog = TerminalDeleteDialog.this.getDialog();
             switch (viewId) {
                 case R.id.terminal_delete_dialog_btn_ok:
                     new DeleteFileCommand((TerminalActivityImpl) getActivity(),
                             mFileAbsPathList,
                             mCurrentAbsPath,
                             mDestinationPath).onExecute();
-                    TerminalDeleteDialog.this.getDialog().cancel();
+                    if (dialog != null) {
+                        dialog.cancel();
+                    }
                     break;
                 case R.id.terminal_delete_dialog_btn_cancel:
-                    TerminalDeleteDialog.this.getDialog().cancel();
+                    if (dialog != null) {
+                        dialog.cancel();
+                    }
                     break;
             }
         }
