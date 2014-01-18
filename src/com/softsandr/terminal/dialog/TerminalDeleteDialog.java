@@ -38,12 +38,12 @@ import java.util.ArrayList;
  */
 public class TerminalDeleteDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalDeleteDialog.class.getSimpleName();
-    private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
-    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
-    private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
-    private ArrayList<ListViewItem> mFileAbsPathList;
-    private String mCurrentAbsPath;
-    private String mDestinationPath;
+    private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
+    private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
+    private static final String ITEMS_LIST = LOG_TAG + ".ITEMS_LIST";
+    private ArrayList<ListViewItem> itemsList;
+    private String curPath;
+    private String dstPath;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -52,9 +52,9 @@ public class TerminalDeleteDialog extends DialogFragment {
             switch (viewId) {
                 case R.id.terminal_delete_dialog_btn_ok:
                     new DeleteFileCommand((TerminalActivityImpl) getActivity(),
-                            mFileAbsPathList,
-                            mCurrentAbsPath,
-                            mDestinationPath).onExecute();
+                            itemsList,
+                            curPath,
+                            dstPath).onExecute();
                     if (dialog != null) {
                         dialog.cancel();
                     }
@@ -73,13 +73,13 @@ public class TerminalDeleteDialog extends DialogFragment {
      * as an argument.
      */
     static TerminalDeleteDialog newInstance(ArrayList<ListViewItem> fileAbsPathList,
-                                            String currentPath, String destinationPath) {
+                                            String curPath, String dstPath) {
         TerminalDeleteDialog f = new TerminalDeleteDialog();
         // Supply arguments
         Bundle args = new Bundle();
-        args.putParcelableArrayList(FILE_PATH_LIST, fileAbsPathList);
-        args.putString(CUR_DIRECTORY_PATH, currentPath);
-        args.putString(DST_DIRECTORY_PATH, destinationPath);
+        args.putParcelableArrayList(ITEMS_LIST, fileAbsPathList);
+        args.putString(CUR_DIR_PATH, curPath);
+        args.putString(DST_DIR_PATH, dstPath);
         f.setArguments(args);
         return f;
     }
@@ -87,34 +87,42 @@ public class TerminalDeleteDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFileAbsPathList = getArguments().getParcelableArrayList(FILE_PATH_LIST);
-        mCurrentAbsPath = getArguments().getString(CUR_DIRECTORY_PATH);
-        mDestinationPath = getArguments().getString(DST_DIRECTORY_PATH);
+        Bundle args = getArguments();
+        if (args != null) {
+            itemsList = getArguments().getParcelableArrayList(ITEMS_LIST);
+            curPath = getArguments().getString(CUR_DIR_PATH);
+            dstPath = getArguments().getString(DST_DIR_PATH);
+        }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        View v = inflater.inflate(R.layout.terminal_delete_dialog_layout, container, false);
-        // Set relative notification text
-        TextView deleteDescribe = (TextView) v.findViewById(R.id.terminal_delete_dialog_describe_delete_text);
-        if (mFileAbsPathList.size() == 1) {
-            deleteDescribe.setText(getString(R.string.dlg_delete_file) + "\"" + truncateFileName() + "\"?");
-        } else {
-            // add attention about recursive deleting all included objects
-            deleteDescribe.setText(getString(R.string.dlg_delete)
-                    + mFileAbsPathList.size() + getString(R.string.dlg_files) + "?");
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        // Setup button's listener
-        v.findViewById(R.id.terminal_delete_dialog_btn_ok).setOnClickListener(mOnClickListener);
-        v.findViewById(R.id.terminal_delete_dialog_btn_cancel).setOnClickListener(mOnClickListener);
+        View v = inflater.inflate(R.layout.terminal_delete_dialog_layout, container, false);
+        if (v != null) {
+            // Set relative notification text
+            TextView deleteDescribe = (TextView) v.findViewById(R.id.terminal_delete_dialog_describe_delete_text);
+            if (itemsList.size() == 1) {
+                deleteDescribe.setText(getString(R.string.dlg_delete_file) + "\"" + truncateFileName() + "\"?");
+            } else {
+                // add attention about recursive deleting all included objects
+                deleteDescribe.setText(getString(R.string.dlg_delete)
+                        + itemsList.size() + getString(R.string.dlg_files) + "?");
+            }
+            // Setup button's listener
+            v.findViewById(R.id.terminal_delete_dialog_btn_ok).setOnClickListener(mOnClickListener);
+            v.findViewById(R.id.terminal_delete_dialog_btn_cancel).setOnClickListener(mOnClickListener);
+        }
         return v;
     }
 
     private String truncateFileName() {
-        String fileName = mFileAbsPathList.get(0).getAbsPath();
+        String fileName = itemsList.get(0).getAbsPath();
         int fileNameLength = fileName.length();
         if (fileNameLength > 26) {
             String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));

@@ -36,10 +36,10 @@ import com.softsandr.utils.string.StringUtil;
  */
 public class TerminalMkDirDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalMkDirDialog.class.getSimpleName();
-    private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
-    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
-    private String mCurrentAbsPath;
-    private String mDestinationPath;
+    private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
+    private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
+    private String curPath;
+    private String dstPath;
     private EditText mInput;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -54,8 +54,8 @@ public class TerminalMkDirDialog extends DialogFragment {
                             && StringUtil.isCorrectPath(newFileName.toString())) {
                     new MakeDirectoryCommand((TerminalActivityImpl) getActivity(),
                             newFileName.toString(),
-                            mCurrentAbsPath,
-                            mDestinationPath).onExecute();
+                            curPath,
+                            dstPath).onExecute();
                     } else {
                         showNotCorrectPathToast();
                     }
@@ -76,12 +76,12 @@ public class TerminalMkDirDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalMkDirDialog newInstance(String currentAbsPath, String destinationPath) {
+    static TerminalMkDirDialog newInstance(String curPath, String dstPath) {
         TerminalMkDirDialog f = new TerminalMkDirDialog();
         // Supply arguments
         Bundle args = new Bundle();
-        args.putString(CUR_DIRECTORY_PATH, currentAbsPath);
-        args.putString(DST_DIRECTORY_PATH, destinationPath);
+        args.putString(CUR_DIR_PATH, curPath);
+        args.putString(DST_DIR_PATH, dstPath);
         f.setArguments(args);
         return f;
     }
@@ -91,8 +91,8 @@ public class TerminalMkDirDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-        mCurrentAbsPath = args.getString(CUR_DIRECTORY_PATH);
-        mDestinationPath = args.getString(DST_DIRECTORY_PATH);
+        curPath = args.getString(CUR_DIR_PATH);
+        dstPath = args.getString(DST_DIR_PATH);
         }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
@@ -103,8 +103,8 @@ public class TerminalMkDirDialog extends DialogFragment {
         View v = inflater.inflate(R.layout.terminal_mk_dir_dialog_layout, container, false);
         if (v != null) {
         // Input
-        String inputText = !mCurrentAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
-                mCurrentAbsPath + "/" : mCurrentAbsPath;
+        String inputText = !curPath.equals(StringUtil.PATH_SEPARATOR) ?
+                curPath + "/" : curPath;
         mInput = (EditText) v.findViewById(R.id.terminal_mk_dir_dialog_input_element);
         mInput.setText(inputText);
         mInput.setSelection(inputText.length());

@@ -65,6 +65,7 @@ public class TerminalClickListener implements View.OnClickListener {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showCopyDialog((Activity) terminal,
                         terminal.getOperationItems(),
+                        currentLocation,
                         destinationLocation);
             } else {
                 showNoObjectSelectedToast();
@@ -73,8 +74,8 @@ public class TerminalClickListener implements View.OnClickListener {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showMoveDialog((Activity) terminal,
                         terminal.getOperationItems(),
-                        destinationLocation,
-                        currentLocation);
+                        currentLocation,
+                        destinationLocation);
             } else {
                 showNoObjectSelectedToast();
             }
@@ -84,8 +85,8 @@ public class TerminalClickListener implements View.OnClickListener {
             } else if (terminal.getOperationItems().size() == 1) {
                 TerminalDialogUtil.showRenameDialog((Activity) terminal,
                         terminal.getOperationItems().get(0),
-                        destinationLocation,
-                        currentLocation);
+                        currentLocation,
+                        destinationLocation);
             } else {
                 showMultipleObjectsToast();
             }
@@ -95,7 +96,8 @@ public class TerminalClickListener implements View.OnClickListener {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showDeleteDialog((Activity) terminal,
                         terminal.getOperationItems(),
-                        currentLocation, destinationLocation);
+                        currentLocation,
+                        destinationLocation);
             } else {
                 showNoObjectSelectedToast();
             }

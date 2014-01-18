@@ -38,10 +38,12 @@ import java.util.ArrayList;
  */
 public class TerminalCopyDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalCopyDialog.class.getSimpleName();
-    private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
-    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
-    private ArrayList<ListViewItem> mFileAbsPathList;
-    private String mDstDirAbsPath;
+    private static final String ITEMS_LIST = LOG_TAG + ".ITEMS_LIST";
+    private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
+    private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
+    private ArrayList<ListViewItem> itemsList;
+    private String curPath;
+    private String dstPath;
     private EditText mInput;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -57,16 +59,14 @@ public class TerminalCopyDialog extends DialogFragment {
                             realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
                         }
                         if (StringUtil.isCorrectPath(realTextFromInput)) {
-                            String operationDestinationPath = mDstDirAbsPath;
-                            boolean pathChanged = false;
-                            if (!mDstDirAbsPath.equals(realTextFromInput)) {
+                            String operationDestinationPath = dstPath;
+                            if (!dstPath.equals(realTextFromInput)) {
                                 operationDestinationPath = realTextFromInput;
-                                pathChanged = true;
                             }
                             new CopyFileCommand((TerminalActivityImpl) getActivity(),
-                                    mFileAbsPathList,
-                                    operationDestinationPath,
-                                    pathChanged).onExecute();
+                                    itemsList,
+                                    curPath,
+                                    operationDestinationPath).onExecute();
                         } else {
                             showNotCorrectPathToast();
                         }
@@ -88,12 +88,14 @@ public class TerminalCopyDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalCopyDialog newInstance(ArrayList<ListViewItem> fileAbsPaths, String dstDirAbsPath) {
+    static TerminalCopyDialog newInstance(ArrayList<ListViewItem> fileAbsPaths, String curPath,
+                                          String dstPath) {
         TerminalCopyDialog f = new TerminalCopyDialog();
         // Supply arguments
         Bundle args = new Bundle();
-        args.putParcelableArrayList(FILE_PATH_LIST, fileAbsPaths);
-        args.putString(DST_DIRECTORY_PATH, dstDirAbsPath);
+        args.putParcelableArrayList(ITEMS_LIST, fileAbsPaths);
+        args.putString(CUR_DIR_PATH, curPath);
+        args.putString(DST_DIR_PATH, dstPath);
         f.setArguments(args);
         return f;
     }
@@ -103,8 +105,9 @@ public class TerminalCopyDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mFileAbsPathList = bundle.getParcelableArrayList(FILE_PATH_LIST);
-            mDstDirAbsPath = bundle.getString(DST_DIRECTORY_PATH);
+            itemsList = bundle.getParcelableArrayList(ITEMS_LIST);
+            curPath = bundle.getString(CUR_DIR_PATH);
+            dstPath = bundle.getString(DST_DIR_PATH);
         }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
@@ -124,15 +127,15 @@ public class TerminalCopyDialog extends DialogFragment {
             mInput = (EditText) v.findViewById(R.id.terminal_cp_mv_dialog_input_element);
             // Dialog attention text
             TextView describeText = (TextView) v.findViewById(R.id.terminal_cp_mv_dialog_describe_copy_text);
-            if (mFileAbsPathList.size() == 1) {
+            if (itemsList.size() == 1) {
                 describeText.setText(getString(R.string.dlg_copy_file)
                         + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
             } else {
                 describeText.setText(getString(R.string.dlg_copy)
-                        + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
+                        + itemsList.size() + getString(R.string.dlg_files_to));
             }
-            String textForInput = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
-                    mDstDirAbsPath + "/" : mDstDirAbsPath;
+            String textForInput = !dstPath.equals(StringUtil.PATH_SEPARATOR) ?
+                    dstPath + "/" : dstPath;
             mInput.setText(textForInput);
             mInput.setSelection(textForInput.length());
             // Setup button's listener
@@ -143,7 +146,7 @@ public class TerminalCopyDialog extends DialogFragment {
     }
 
     private String truncateFileName() {
-        String fileName = mFileAbsPathList.get(0).getAbsPath();
+        String fileName = itemsList.get(0).getAbsPath();
         int fileNameLength = fileName.length();
         if (fileNameLength > 26) {
             String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));

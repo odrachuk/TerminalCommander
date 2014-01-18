@@ -55,17 +55,16 @@ public class DeleteFileCommand implements FileManipulationCommand {
                 } else {
                     Toast.makeText(terminalActivity, "" + file.getName(), Toast.LENGTH_SHORT).show();
                 }
-                // clear selected and refresh directory after deleting
-                makeClearSelection();
+                makeRefresh();
             }
         } catch (Exception e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            makeClearSelection();
+            makeRefresh();
         }
     }
 
-    private void makeClearSelection() {
+    private void makeRefresh() {
         if (currentPath.equals(destinationPath)) {
             terminalActivity.getLeftListAdapter().clearSelection();
             terminalActivity.getRightListAdapter().clearSelection();

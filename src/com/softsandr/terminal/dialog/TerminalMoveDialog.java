@@ -38,12 +38,12 @@ import java.util.ArrayList;
  */
 public class TerminalMoveDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalMoveDialog.class.getSimpleName();
-    private static final String FILE_PATH_LIST = LOG_TAG + ".FILE_PATH_LIST";
-    private static final String DST_DIRECTORY_PATH = LOG_TAG + ".DST_DIRECTORY_PATH";
-    private static final String CUR_DIRECTORY_PATH = LOG_TAG + ".CUR_DIRECTORY_PATH";
-    private ArrayList<ListViewItem> mFileAbsPathList;
-    private String mCurrentAbsPath;
-    private String mDstDirAbsPath;
+    private static final String ITEMS_LIST = LOG_TAG + ".ITEMS_LIST";
+    private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
+    private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
+    private ArrayList<ListViewItem> itemsList;
+    private String curPath;
+    private String dstPath;
     private EditText mInput;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -59,17 +59,17 @@ public class TerminalMoveDialog extends DialogFragment {
                             realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
                         }
                         if (StringUtil.isCorrectPath(realTextFromInput)) {
-                            String operationDestinationPath = mDstDirAbsPath;
+                            String operationDestinationPath = dstPath;
                             boolean pathChanged = false;
-                            if (!mDstDirAbsPath.equals(realTextFromInput)) {
+                            if (!dstPath.equals(realTextFromInput)) {
                                 operationDestinationPath = realTextFromInput;
                                 pathChanged = true;
                             }
                             new MoveFileCommand((TerminalActivityImpl) getActivity(),
-                                    mFileAbsPathList,
+                                    itemsList,
                                     operationDestinationPath,
-                                    mDstDirAbsPath,
-                                    mCurrentAbsPath,
+                                    dstPath,
+                                    curPath,
                                     pathChanged).onExecute();
                         } else {
                             showNotCorrectPathToast();
@@ -92,14 +92,14 @@ public class TerminalMoveDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalMoveDialog newInstance(ArrayList<ListViewItem> fileAbsPaths,
-                                          String dstDirAbsPath, String currentAbsPath) {
+    static TerminalMoveDialog newInstance(ArrayList<ListViewItem> itemsList,
+                                          String dstPath, String curPath) {
         TerminalMoveDialog f = new TerminalMoveDialog();
         // Supply arguments
         Bundle args = new Bundle();
-        args.putParcelableArrayList(FILE_PATH_LIST, fileAbsPaths);
-        args.putString(DST_DIRECTORY_PATH, dstDirAbsPath);
-        args.putString(CUR_DIRECTORY_PATH, currentAbsPath);
+        args.putParcelableArrayList(ITEMS_LIST, itemsList);
+        args.putString(DST_DIR_PATH, dstPath);
+        args.putString(CUR_DIR_PATH, curPath);
         f.setArguments(args);
         return f;
     }
@@ -109,9 +109,9 @@ public class TerminalMoveDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mFileAbsPathList = bundle.getParcelableArrayList(FILE_PATH_LIST);
-            mDstDirAbsPath = bundle.getString(DST_DIRECTORY_PATH);
-            mCurrentAbsPath = bundle.getString(CUR_DIRECTORY_PATH);
+            itemsList = bundle.getParcelableArrayList(ITEMS_LIST);
+            dstPath = bundle.getString(DST_DIR_PATH);
+            curPath = bundle.getString(CUR_DIR_PATH);
         }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
     }
@@ -134,15 +134,15 @@ public class TerminalMoveDialog extends DialogFragment {
             // Dialog attention text
             TextView describeText = (TextView) v.findViewById(R.id.terminal_cp_mv_dialog_describe_copy_text);
             title.setText(getResources().getString(R.string.move_title));
-            if (mFileAbsPathList.size() == 1) {
+            if (itemsList.size() == 1) {
                 describeText.setText(getString(R.string.dlg_move_file)
                         + "\"" + truncateFileName() + "\" " + getString(R.string.dlg_to));
             } else {
                 describeText.setText(getString(R.string.dlg_move)
-                        + mFileAbsPathList.size() + getString(R.string.dlg_files_to));
+                        + itemsList.size() + getString(R.string.dlg_files_to));
             }
-            String textForInput = !mDstDirAbsPath.equals(StringUtil.PATH_SEPARATOR) ?
-                    mDstDirAbsPath + "/" : mDstDirAbsPath;
+            String textForInput = !dstPath.equals(StringUtil.PATH_SEPARATOR) ?
+                    dstPath + "/" : dstPath;
             mInput.setText(textForInput);
             mInput.setSelection(textForInput.length());
             // Setup button's listener
@@ -153,7 +153,7 @@ public class TerminalMoveDialog extends DialogFragment {
     }
 
     private String truncateFileName() {
-        String fileName = mFileAbsPathList.get(0).getAbsPath();
+        String fileName = itemsList.get(0).getAbsPath();
         int fileNameLength = fileName.length();
         if (fileNameLength > 26) {
             String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));

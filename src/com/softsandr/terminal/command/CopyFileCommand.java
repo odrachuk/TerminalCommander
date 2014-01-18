@@ -34,17 +34,17 @@ public class CopyFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = CopyFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
+    private final String currentPath;
     private final String destinationPath;
-    private final boolean pathChanged;
 
     public CopyFileCommand(TerminalActivityImpl terminalActivity,
                            List<ListViewItem> items,
-                           String destinationPath,
-                           boolean pathChanged) {
+                           String currentPath,
+                           String destinationPath) {
         this.terminalActivity = terminalActivity;
         this.items = items;
+        this.currentPath = currentPath;
         this.destinationPath = destinationPath;
-        this.pathChanged = pathChanged;
     }
 
     @Override
@@ -57,37 +57,26 @@ public class CopyFileCommand implements FileManipulationCommand {
                     FileUtil.copyFileToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
                 }
             }
-            // clear selected
-            makeClearSelection();
-            makeRefreshDirectory();
+            makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            makeClearSelection();
+            makeRefresh();
         }
     }
 
-    private void makeClearSelection() {
+    private void makeRefresh() {
+        terminalActivity.getLeftListAdapter().clearSelection();
+        terminalActivity.getRightListAdapter().clearSelection();
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                terminalActivity.getLeftListAdapter().clearSelection();
+                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                 break;
             case RIGHT:
-                terminalActivity.getRightListAdapter().clearSelection();
+                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
+                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
                 break;
-        }
-    }
-
-    private void makeRefreshDirectory() {
-        if (!pathChanged) {
-            switch (terminalActivity.getActivePage()) {
-                case LEFT:
-                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                    break;
-                case RIGHT:
-                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                    break;
-            }
         }
     }
 }
