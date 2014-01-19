@@ -65,27 +65,23 @@ public class DeleteFileCommand implements FileManipulationCommand {
     }
 
     private void makeRefresh() {
+        terminalActivity.getLeftListAdapter().clearSelection();
+        terminalActivity.getRightListAdapter().clearSelection();
         if (currentPath.equals(destinationPath)) {
-            terminalActivity.getLeftListAdapter().clearSelection();
-            terminalActivity.getRightListAdapter().clearSelection();
             terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
             terminalActivity.getRightListAdapter().changeDirectory(currentPath);
         } else {
             switch (terminalActivity.getActivePage()) {
                 case LEFT:
-                    terminalActivity.getLeftListAdapter().clearSelection();
                     terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                     if (destinationPath.contains(currentPath)) {
-                        terminalActivity.getRightListAdapter().clearSelection();
                         terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                         terminalActivity.getRightListAdapter().makeBackHistory(currentPath);
                     }
                     break;
                 case RIGHT:
-                    terminalActivity.getRightListAdapter().clearSelection();
                     terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                     if (destinationPath.contains(currentPath)) {
-                        terminalActivity.getLeftListAdapter().clearSelection();
                         terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                         terminalActivity.getLeftListAdapter().makeBackHistory(currentPath);
                     }

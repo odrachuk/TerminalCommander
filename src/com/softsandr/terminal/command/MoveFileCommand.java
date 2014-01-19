@@ -67,14 +67,8 @@ public class MoveFileCommand implements FileManipulationCommand {
         }
     }
     private void makeRefresh() {
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                terminalActivity.getLeftListAdapter().clearSelection();
-                break;
-            case RIGHT:
-                terminalActivity.getRightListAdapter().clearSelection();
-                break;
-        }
+        terminalActivity.getLeftListAdapter().clearSelection();
+        terminalActivity.getRightListAdapter().clearSelection();
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 if (destinationOldPath.equals(currentPath)) {

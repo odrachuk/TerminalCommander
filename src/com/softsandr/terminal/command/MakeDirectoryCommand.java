@@ -58,9 +58,9 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
     }
 
     private void makeRefresh() {
+        terminalActivity.getLeftListAdapter().clearSelection();
+        terminalActivity.getRightListAdapter().clearSelection();
         if (currentPath.equals(destinationPath)) {
-            terminalActivity.getLeftListAdapter().clearSelection();
-            terminalActivity.getRightListAdapter().clearSelection();
             terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
             terminalActivity.getRightListAdapter().changeDirectory(currentPath);
         } else {
@@ -73,7 +73,6 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
                     if (correctDirectoryName.equals(destinationPath)) {
                         terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
                     } else {
-                        terminalActivity.getLeftListAdapter().clearSelection();
                         terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
                     }
                     break;
@@ -81,7 +80,6 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
                     if (correctDirectoryName.equals(destinationPath)) {
                         terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
                     } else {
-                        terminalActivity.getRightListAdapter().clearSelection();
                         terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                     }
                     break;
