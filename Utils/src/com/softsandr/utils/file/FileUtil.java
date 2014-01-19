@@ -986,6 +986,12 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * Return parent path of directory. Some alternative for file.getParent() with exceptions monitoring logic
+     * @param path  The path from where we should find parent path
+     * @return  The string with parent directory path
+     * @throws FileNotFoundException
+     */
     public static String getParentDirectoryNameFromPath(String path) throws FileNotFoundException {
         if (path == null) {
             throw new NullPointerException("Path must not be null");
@@ -997,6 +1003,27 @@ public class FileUtil {
         return file.getParent();
     }
 
+    /**
+     * Check if specific name of file is correct
+     * @param location  The directory in where file will be created
+     * @param fileName  The name for checking
+     * @return  true if name is correct and file can be created in specific directory
+     */
+    public static boolean isFilenameValid(String location, String fileName) {
+        File f = new File(location + "/" + fileName);
+        try {
+            f.getCanonicalPath();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Compute directory size as sum of all entry element's size
+     * @param directory The directory {@link java.io.File}
+     * @return  long value of directory size
+     */
     public static long getDirectorySize(File directory) {
         File[] files = directory.listFiles();
         if (files != null) {

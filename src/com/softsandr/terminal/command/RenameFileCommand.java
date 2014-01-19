@@ -19,7 +19,6 @@ package com.softsandr.terminal.command;
 
 import android.util.Log;
 import android.widget.Toast;
-import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.utils.file.FileUtil;
@@ -35,49 +34,28 @@ public class RenameFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = RenameFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final ListViewItem item;
-    private final String destinationOldPath;
-    private final String currentPath;
-    private final boolean pathChanged;
-    private String destinationPath;
+    private final String fileName;
+    private final String dstPath;
+    private final String curPath;
 
     public RenameFileCommand(TerminalActivityImpl terminalActivity,
                              ListViewItem item,
-                             String destinationPath,
-                             String destinationOldPath,
-                             String currentPath,
-                             boolean pathChanged) {
+                             String fileName,
+                             String curPath,
+                             String dstPath) {
         this.terminalActivity = terminalActivity;
         this.item = item;
-        this.destinationPath = destinationPath;
-        this.destinationOldPath = destinationOldPath;
-        this.currentPath = currentPath;
-        this.pathChanged = pathChanged;
+        this.fileName = fileName;
+        this.curPath = curPath;
+        this.dstPath = dstPath;
     }
 
     @Override
     public void onExecute() {
         try {
-            String renamingString = null;
-            // determining rename situation for simple file - not directory
-            if (destinationPath.contains(".")) {
-                renamingString = FileUtil.getFileNameFromPath(destinationPath);
-            } else {
-                if (destinationPath.lastIndexOf(StringUtil.PATH_SEPARATOR) == destinationPath.length()) {
-                    String correctPath = destinationPath.substring(0, destinationPath.length() - 1);
-                    int lastPathSeparator = correctPath.lastIndexOf(StringUtil.PATH_SEPARATOR);
-                    renamingString = correctPath.substring(lastPathSeparator, correctPath.length());
-                } else {
-                    int lastPathSeparator = destinationPath.lastIndexOf(StringUtil.PATH_SEPARATOR);
-                    renamingString = destinationPath.substring(lastPathSeparator, destinationPath.length());
-                }
-            }
-            // get parent directory name
-            destinationPath = FileUtil.getParentDirectoryNameFromPath(destinationPath);
             File srcFile = new File(item.getAbsPath());
-            if (renamingString != null) {
-                File destinationFile = new File(destinationPath + StringUtil.PATH_SEPARATOR + renamingString);
-                FileUtil.renameFile(srcFile, destinationFile);
-            }
+            File destinationFile = new File(curPath + StringUtil.PATH_SEPARATOR + fileName);
+            FileUtil.renameFile(srcFile, destinationFile);
             makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
@@ -87,30 +65,20 @@ public class RenameFileCommand implements FileManipulationCommand {
     }
 
     private void makeRefresh() {
+        terminalActivity.getLeftListAdapter().clearSelection();
+        terminalActivity.getRightListAdapter().clearSelection();
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                terminalActivity.getLeftListAdapter().clearSelection();
+                terminalActivity.getLeftListAdapter().changeDirectory(curPath);
+                if (dstPath.equals(curPath)) {
+                    terminalActivity.getRightListAdapter().changeDirectory(dstPath);
+                }
                 break;
             case RIGHT:
-                terminalActivity.getRightListAdapter().clearSelection();
-                break;
-        }
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                if (destinationOldPath.equals(currentPath)) {
-                    terminalActivity.getRightListAdapter().changeDirectory(destinationOldPath);
-                } else if (!pathChanged) {
-                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                terminalActivity.getRightListAdapter().changeDirectory(curPath);
+                if (dstPath.equals(curPath)) {
+                    terminalActivity.getLeftListAdapter().changeDirectory(dstPath);
                 }
-                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                break;
-            case RIGHT:
-                if (destinationOldPath.equals(currentPath)) {
-                    terminalActivity.getLeftListAdapter().changeDirectory(destinationOldPath);
-                } else if (!pathChanged) {
-                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                }
-                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
                 break;
         }
     }

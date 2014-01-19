@@ -29,6 +29,7 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.command.RenameFileCommand;
 import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 
 /**
@@ -36,10 +37,10 @@ import com.softsandr.utils.string.StringUtil;
  */
 public class TerminalRenameDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalRenameDialog.class.getSimpleName();
-    private static final String ITEMS_LIST = LOG_TAG + ".ITEMS_LIST";
+    private static final String ITEM = LOG_TAG + ".ITEM";
     private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
     private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
-    private ListViewItem itemsList;
+    private ListViewItem item;
     private String curPath;
     private String dstPath;
     private EditText mInput;
@@ -56,21 +57,14 @@ public class TerminalRenameDialog extends DialogFragment {
                         if (realTextFromInput.endsWith(StringUtil.PATH_SEPARATOR)) {
                             realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
                         }
-                        if (StringUtil.isCorrectPath(realTextFromInput)) {
-                            String operationDestinationPath = dstPath;
-                            boolean pathChanged = false;
-                            if (!dstPath.equals(realTextFromInput)) {
-                                operationDestinationPath = realTextFromInput;
-                                pathChanged = true;
-                            }
+                        if (FileUtil.isFilenameValid(curPath, realTextFromInput)) {
                             new RenameFileCommand((TerminalActivityImpl) getActivity(),
-                                    itemsList,
-                                    operationDestinationPath,
+                                    item,
+                                    realTextFromInput,
                                     dstPath,
-                                    curPath,
-                                    pathChanged).onExecute();
+                                    curPath).onExecute();
                         } else {
-                            showNotCorrectPathToast();
+                            showNotCorrectFileName();
                         }
                     }
                     if (dialog != null) {
@@ -95,7 +89,7 @@ public class TerminalRenameDialog extends DialogFragment {
         TerminalRenameDialog f = new TerminalRenameDialog();
         // Supply arguments
         Bundle args = new Bundle();
-        args.putParcelable(ITEMS_LIST, fileAbsPath);
+        args.putParcelable(ITEM, fileAbsPath);
         args.putString(DST_DIR_PATH, dstDirAbsPath);
         args.putString(CUR_DIR_PATH, currentAbsPath);
         f.setArguments(args);
@@ -107,7 +101,7 @@ public class TerminalRenameDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            itemsList = bundle.getParcelable(ITEMS_LIST);
+            item = bundle.getParcelable(ITEM);
             dstPath = bundle.getString(DST_DIR_PATH);
             curPath = bundle.getString(CUR_DIR_PATH);
         }
@@ -134,10 +128,6 @@ public class TerminalRenameDialog extends DialogFragment {
             title.setText(getResources().getString(R.string.rename_title));
             describeText.setText(getString(R.string.dlg_rename_file)
                     + "\"" + truncateFileName() + "\"");
-            String textForInput = !dstPath.equals(StringUtil.PATH_SEPARATOR) ?
-                    dstPath + "/" : dstPath;
-            mInput.setText(textForInput);
-            mInput.setSelection(textForInput.length());
             // Setup button's listener
             v.findViewById(R.id.terminal_cp_mv_dialog_btn_ok).setOnClickListener(mOnClickListener);
             v.findViewById(R.id.terminal_cp_mv_dialog_btn_cancel).setOnClickListener(mOnClickListener);
@@ -146,7 +136,7 @@ public class TerminalRenameDialog extends DialogFragment {
     }
 
     private String truncateFileName() {
-        String fileName = itemsList.getAbsPath();
+        String fileName = item.getAbsPath();
         int fileNameLength = fileName.length();
         if (fileNameLength > 26) {
             String lastCorrectPath = fileName.substring(fileName.lastIndexOf(StringUtil.PATH_SEPARATOR));
@@ -164,8 +154,8 @@ public class TerminalRenameDialog extends DialogFragment {
         return fileName;
     }
 
-    private void showNotCorrectPathToast() {
-        Toast.makeText(getActivity(), getString(R.string.toast_not_correct_path),
+    private void showNotCorrectFileName() {
+        Toast.makeText(getActivity(), getString(R.string.toast_not_correct_file_name),
                 Toast.LENGTH_SHORT).show();
     }
 }
