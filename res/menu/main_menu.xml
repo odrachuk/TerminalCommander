@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:id="@+id/action_refresh"
-          android:icon="@drawable/navigation_refresh"
-          android:title="@string/refresh"
+          android:icon="@drawable/navigation_action_refresh"
+          android:title="@string/menu_item_refresh"
           android:showAsAction="ifRoom"/>
-<!--    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:showAsAction="never"/>-->
+
     <item android:id="@+id/action_sorting"
+          android:icon="@drawable/navigation_action_sort"
           android:title="@string/menu_item_sorting"
-          android:showAsAction="never">
+          android:showAsAction="ifRoom">
         <menu>
             <group android:checkableBehavior="single">
                 <item android:id="@+id/sorting_by_name"
@@ -31,6 +31,12 @@
             </group>
         </menu>
     </item>
+
+    <item android:id="@+id/action_settings"
+          android:icon="@drawable/navigation_action_settings"
+          android:title="@string/menu_item_settings"
+          android:showAsAction="never"/>
+
     <item android:id="@+id/action_quit"
           android:title="@string/menu_item_quit"
           android:showAsAction="never"/>
