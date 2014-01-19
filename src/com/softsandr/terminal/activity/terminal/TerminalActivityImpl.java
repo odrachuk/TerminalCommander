@@ -31,13 +31,9 @@ import android.view.*;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
-import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
-import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
-import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
-import com.softsandr.terminal.model.preferences.TerminalPreferences;
+import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
+import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.async.LoadLeftListTask;
 import com.softsandr.terminal.activity.terminal.async.LoadRightListTask;
@@ -48,6 +44,11 @@ import com.softsandr.terminal.activity.terminal.listener.TerminalClickListener;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
 import com.softsandr.terminal.activity.terminal.monitor.SortingMenuItemsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
+import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
+import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
+import com.softsandr.terminal.model.preferences.TerminalPreferences;
+import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
 
@@ -275,6 +276,9 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                 return true;
             case R.id.action_quit:
                 sendBroadcast(new Intent(COMMON_EXIT_INTENT));
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, TerminalPreferenceActivity.class));
                 return true;
             case R.id.sorting_by_name:
                 mSortingMenuItemsMonitor.onMenuSelected(item);

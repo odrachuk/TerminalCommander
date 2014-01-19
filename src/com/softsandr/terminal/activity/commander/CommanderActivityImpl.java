@@ -34,6 +34,7 @@ import com.softsandr.commander.Commander;
 import com.softsandr.commander.CommanderActivity;
 import com.softsandr.commander.KeyboardController;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 
@@ -119,6 +120,9 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
                 return true;
             case R.id.action_quit:
                 sendBroadcast(new Intent(TerminalActivityImpl.COMMON_EXIT_INTENT));
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, TerminalPreferenceActivity.class));
                 return true;
             case android.R.id.home:
                 exitActivity();
