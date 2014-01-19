@@ -65,7 +65,6 @@ public class TerminalClickListener implements View.OnClickListener {
             if (!terminal.getOperationItems().isEmpty()) {
                 TerminalDialogUtil.showCopyDialog((Activity) terminal,
                         terminal.getOperationItems(),
-                        currentLocation,
                         destinationLocation);
             } else {
                 showNoObjectSelectedToast();

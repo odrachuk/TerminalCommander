@@ -78,17 +78,15 @@ public class RenameFileCommand implements FileManipulationCommand {
                 File destinationFile = new File(destinationPath + StringUtil.PATH_SEPARATOR + renamingString);
                 FileUtil.renameFile(srcFile, destinationFile);
             }
-            // clear selected
-            makeClearSelection();
-            makeRefreshDirectory();
+            makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            makeClearSelection();
+            makeRefresh();
         }
     }
 
-    private void makeClearSelection() {
+    private void makeRefresh() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 terminalActivity.getLeftListAdapter().clearSelection();
@@ -97,9 +95,6 @@ public class RenameFileCommand implements FileManipulationCommand {
                 terminalActivity.getRightListAdapter().clearSelection();
                 break;
         }
-    }
-
-    private void makeRefreshDirectory() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 if (destinationOldPath.equals(currentPath)) {

@@ -39,10 +39,8 @@ import java.util.ArrayList;
 public class TerminalCopyDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalCopyDialog.class.getSimpleName();
     private static final String ITEMS_LIST = LOG_TAG + ".ITEMS_LIST";
-    private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
     private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
     private ArrayList<ListViewItem> itemsList;
-    private String curPath;
     private String dstPath;
     private EditText mInput;
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -59,14 +57,16 @@ public class TerminalCopyDialog extends DialogFragment {
                             realTextFromInput = realTextFromInput.substring(0, realTextFromInput.length() - 1);
                         }
                         if (StringUtil.isCorrectPath(realTextFromInput)) {
+                            boolean pathChanged = false;
                             String operationDestinationPath = dstPath;
                             if (!dstPath.equals(realTextFromInput)) {
                                 operationDestinationPath = realTextFromInput;
+                                pathChanged = true;
                             }
                             new CopyFileCommand((TerminalActivityImpl) getActivity(),
                                     itemsList,
-                                    curPath,
-                                    operationDestinationPath).onExecute();
+                                    operationDestinationPath,
+                                    pathChanged).onExecute();
                         } else {
                             showNotCorrectPathToast();
                         }
@@ -88,13 +88,11 @@ public class TerminalCopyDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "num"
      * as an argument.
      */
-    static TerminalCopyDialog newInstance(ArrayList<ListViewItem> fileAbsPaths, String curPath,
-                                          String dstPath) {
+    static TerminalCopyDialog newInstance(ArrayList<ListViewItem> fileAbsPaths, String dstPath) {
         TerminalCopyDialog f = new TerminalCopyDialog();
         // Supply arguments
         Bundle args = new Bundle();
         args.putParcelableArrayList(ITEMS_LIST, fileAbsPaths);
-        args.putString(CUR_DIR_PATH, curPath);
         args.putString(DST_DIR_PATH, dstPath);
         f.setArguments(args);
         return f;
@@ -106,7 +104,6 @@ public class TerminalCopyDialog extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             itemsList = bundle.getParcelableArrayList(ITEMS_LIST);
-            curPath = bundle.getString(CUR_DIR_PATH);
             dstPath = bundle.getString(DST_DIR_PATH);
         }
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);

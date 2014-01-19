@@ -43,8 +43,7 @@ public final class TerminalDialogUtil {
     private TerminalDialogUtil() {
     }
 
-    public static void showCopyDialog(Activity activity, ArrayList<ListViewItem> filePaths,
-                                      String curPath, String dstPath) {
+    public static void showCopyDialog(Activity activity, ArrayList<ListViewItem> filePaths, String dstPath) {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -56,7 +55,7 @@ public final class TerminalDialogUtil {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = TerminalCopyDialog.newInstance(filePaths, curPath, dstPath);
+        DialogFragment newFragment = TerminalCopyDialog.newInstance(filePaths, dstPath);
         newFragment.show(ft, COPY_DIALOG_TAG);
     }
 

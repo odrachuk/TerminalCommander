@@ -34,17 +34,17 @@ public class CopyFileCommand implements FileManipulationCommand {
     private static final String LOG_TAG = CopyFileCommand.class.getSimpleName();
     private final TerminalActivityImpl terminalActivity;
     private final List<ListViewItem> items;
-    private final String currentPath;
     private final String destinationPath;
+    private final boolean pathChanged;
 
     public CopyFileCommand(TerminalActivityImpl terminalActivity,
                            List<ListViewItem> items,
-                           String currentPath,
-                           String destinationPath) {
+                           String destinationPath,
+                           boolean pathChanged) {
         this.terminalActivity = terminalActivity;
         this.items = items;
-        this.currentPath = currentPath;
         this.destinationPath = destinationPath;
+        this.pathChanged = pathChanged;
     }
 
     @Override
@@ -68,15 +68,15 @@ public class CopyFileCommand implements FileManipulationCommand {
     private void makeRefresh() {
         terminalActivity.getLeftListAdapter().clearSelection();
         terminalActivity.getRightListAdapter().clearSelection();
-        switch (terminalActivity.getActivePage()) {
-            case LEFT:
-                terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
-                terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                break;
-            case RIGHT:
-                terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                break;
+        if (!pathChanged) {
+            switch (terminalActivity.getActivePage()) {
+                case LEFT:
+                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
+                    break;
+                case RIGHT:
+                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
+                    break;
+            }
         }
     }
 }

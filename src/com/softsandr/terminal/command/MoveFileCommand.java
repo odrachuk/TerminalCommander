@@ -59,20 +59,14 @@ public class MoveFileCommand implements FileManipulationCommand {
             for (ListViewItem item : items) {
                 FileUtil.moveToDirectory(new File(item.getAbsPath()), new File(destinationPath), true);
             }
-            refresh();
+            makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            refresh();
+            makeRefresh();
         }
     }
-
-    private void refresh() {
-        makeClearSelection();
-        makeRefreshDirectory();
-    }
-
-    private void makeClearSelection() {
+    private void makeRefresh() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 terminalActivity.getLeftListAdapter().clearSelection();
@@ -81,9 +75,6 @@ public class MoveFileCommand implements FileManipulationCommand {
                 terminalActivity.getRightListAdapter().clearSelection();
                 break;
         }
-    }
-
-    private void makeRefreshDirectory() {
         switch (terminalActivity.getActivePage()) {
             case LEFT:
                 if (destinationOldPath.equals(currentPath)) {

@@ -50,14 +50,14 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
         try {
             FileUtil.forceMakeDir(new File(directoryName));
             // clear selected and refresh directory after deleting
-            makeClearSelection();
+            makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);
             Toast.makeText(terminalActivity, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    private void makeClearSelection() {
+    private void makeRefresh() {
         if (currentPath.equals(destinationPath)) {
             terminalActivity.getLeftListAdapter().clearSelection();
             terminalActivity.getRightListAdapter().clearSelection();
