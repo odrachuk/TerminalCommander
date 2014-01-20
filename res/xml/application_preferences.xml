@@ -4,50 +4,46 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="Application">
+            android:title="@string/pref_application_title">
+
+        <EditTextPreference
+                android:icon="@drawable/nav_action_refresh"
+                android:key="@string/pref_shell_executor_key"
+                android:title="@string/pref_shell_executor_title"
+                android:summary="@string/pref_shell_executor_summary"
+                android:dialogTitle="@string/pref_shell_executor_dlg_title"
+                android:defaultValue="@string/pref_shell_executor_def"/>
 
         <Preference
-                android:icon="@drawable/navigation_action_refresh"
-                android:key="app_first_item_preference"
-                android:title="First settings"
-                android:summary="Setup first item"/>
+                android:icon="@drawable/nav_action_content_discard"
+                android:key="@string/pref_clear_locations_key"
+                android:title="@string/pref_clear_location_title"
+                android:summary="@string/pref_clear_location_summary"/>
 
         <Preference
-                android:icon="@drawable/navigation_action_refresh"
-                android:key="app_second_item_preference"
-                android:title="Second settings"
-                android:summary="Setup second item"/>
-
-        <Preference
-                android:icon="@drawable/navigation_action_refresh"
-                android:key="app_third_item_preference"
-                android:title="Third settings"
-                android:summary="Setup third item"/>
-
-        <CheckBoxPreference
-                android:icon="@drawable/navigation_action_refresh"
-                android:key="app_checkbox_item_preference"
-                android:title="First checkbox settings"
-                android:summary="Setup checkbox settings"/>
-
+                android:icon="@drawable/nav_action_about"
+                android:key="@string/pref_about_key"
+                android:title="@string/pref_about_title"
+                android:summary="@string/pref_about_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="Information">
+            android:title="@string/pref_interface_title">
 
-        <Preference
-                android:icon="@drawable/navigation_action_refresh"
-                android:key="info_first_item_preference"
-                android:title="About"
-                android:summary="Open about screen"/>
+        <com.softsandr.terminal.activity.preference.custom.FontPickerPreference
+                android:icon="@drawable/nav_action_refresh"
+                android:key="@string/pref_font_picker_key"
+                android:title="@string/pref_font_picker_title"
+                android:summary="@string/pref_font_picker_summary"
+                android:dialogTitle="@string/pref_font_picker_dlg_title"
+                android:defaultValue="4"/>
 
         <EditTextPreference
-                android:icon="@drawable/navigation_action_refresh"
+                android:icon="@drawable/nav_action_refresh"
                 android:key="app_text_preference"
                 android:title="Dialog settings"
                 android:summary="Open dialog"
                 android:dialogTitle="Setup dialog"/>
-
     </PreferenceCategory>
 
 </PreferenceScreen>

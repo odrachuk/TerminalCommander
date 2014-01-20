@@ -3,12 +3,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/action_refresh"
-          android:icon="@drawable/navigation_action_refresh"
+          android:icon="@drawable/nav_action_refresh"
           android:title="@string/menu_item_refresh"
           android:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_sorting"
-          android:icon="@drawable/navigation_action_sort"
+          android:icon="@drawable/nav_action_sort"
           android:title="@string/menu_item_sorting"
           android:showAsAction="ifRoom">
         <menu>
@@ -33,7 +33,7 @@
     </item>
 
     <item android:id="@+id/action_settings"
-          android:icon="@drawable/navigation_action_settings"
+          android:icon="@drawable/nav_action_settings"
           android:title="@string/menu_item_settings"
           android:showAsAction="never"/>
 

@@ -124,7 +124,7 @@ public class InteractiveCommandExecution extends CommandExecution {
         Process process = null;
         File pathDirectory = new File(commanderProcess.getCommander().getPrompt().getUserLocation());
         if (pathDirectory.isDirectory()) {
-            ProcessBuilder builder = new ProcessBuilder(CommanderProcess.SYSTEM_EXECUTOR);
+            ProcessBuilder builder = new ProcessBuilder(commanderProcess.getCommander().getShellExecutor());
             builder.redirectErrorStream(true);
             builder.directory(pathDirectory);
             try {

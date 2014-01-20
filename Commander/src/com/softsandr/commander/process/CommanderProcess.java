@@ -35,7 +35,6 @@ import java.io.IOException;
  */
 public class CommanderProcess {
     private static final String LOG_TAG = CommanderProcess.class.getSimpleName();
-    public static final String SYSTEM_EXECUTOR = "/system/bin/sh";
     private final CommandsResponseHandler mResponseHandler;
     private final Commander commander;
 
@@ -54,7 +53,7 @@ public class CommanderProcess {
         Log.d(LOG_TAG, "newExecutionProcess");
         File pathDirectory = new File(path);
         if (pathDirectory.isDirectory()) {
-            ProcessBuilder builder = new ProcessBuilder(SYSTEM_EXECUTOR);
+            ProcessBuilder builder = new ProcessBuilder(commander.getShellExecutor());
             builder.redirectErrorStream(true);
             builder.directory(pathDirectory);
             try {

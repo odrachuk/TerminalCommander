@@ -24,6 +24,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -112,9 +114,6 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*case R.id.action_settings:
-                //todo
-                return true;*/
             case R.id.action_refresh:
                 commander.getProcess().onClear();
                 return true;
@@ -148,8 +147,11 @@ public class CommanderActivityImpl extends Activity implements CommanderActivity
                 initialPageLeft = startIntent.getBooleanExtra(ACTIVE_PAGE_EXTRA, true);
             }
         }
+        // shell path
+        String shellExecutor = PreferenceManager.getDefaultSharedPreferences(this).
+                getString(getString(R.string.pref_shell_executor_key), getString(R.string.pref_shell_executor_def));
         // create controllers
-        commander = new Commander(this, inView, outView, promptView, initialPath);
+        commander = new Commander(this, inView, outView, promptView, initialPath, shellExecutor);
         // config ui components
         promptView.setText(commander.getPrompt().getCompoundString());
         inView.setImeOptions(EditorInfo.IME_MASK_ACTION);

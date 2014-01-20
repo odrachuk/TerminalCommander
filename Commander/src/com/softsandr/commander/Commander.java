@@ -36,6 +36,7 @@ public class Commander {
     private final EditText inputEditText;
     private final TextView outTextView;
     private final TextView promptTextView;
+    private final String shellExecutor;
 
     private CommanderProcess process;
     private PromptCompoundString promptString;
@@ -51,11 +52,13 @@ public class Commander {
                      EditText inputEditText,
                      TextView outTextView,
                      TextView promptTextView,
-                     String initialLocation) {
+                     String initialLocation,
+                     String shellExecutor) {
         this.commanderActivity = commanderActivity;
         this.inputEditText = inputEditText;
         this.outTextView = outTextView;
         this.promptTextView = promptTextView;
+        this.shellExecutor = shellExecutor;
         promptString = new PromptCompoundString(this);
         createProcess(initialLocation);
     }
@@ -78,6 +81,14 @@ public class Commander {
 
     public TextView getOutTextView() {
         return outTextView;
+    }
+
+    /**
+     * Get path to shell executor
+     * @return
+     */
+    public String getShellExecutor() {
+        return shellExecutor;
     }
 
     /**
