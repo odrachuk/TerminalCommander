@@ -4,23 +4,50 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="inline_preferences">
+            android:title="Application">
+
+        <Preference
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="app_first_item_preference"
+                android:title="First settings"
+                android:summary="Setup first item"/>
+
+        <Preference
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="app_second_item_preference"
+                android:title="Second settings"
+                android:summary="Setup second item"/>
+
+        <Preference
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="app_third_item_preference"
+                android:title="Third settings"
+                android:summary="Setup third item"/>
 
         <CheckBoxPreference
-                android:key="checkbox_preference"
-                android:title="title_toggle_preference"
-                android:summary="summary_toggle_preference"/>
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="app_checkbox_item_preference"
+                android:title="First checkbox settings"
+                android:summary="Setup checkbox settings"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-            android:title="dialog_based_preferences">
+            android:title="Information">
+
+        <Preference
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="info_first_item_preference"
+                android:title="About"
+                android:summary="Open about screen"/>
 
         <EditTextPreference
-                android:key="edittext_preference"
-                android:title="title_edittext_preference"
-                android:summary="summary_edittext_preference"
-                android:dialogTitle="dialog_title_edittext_preference"/>
+                android:icon="@drawable/navigation_action_refresh"
+                android:key="app_text_preference"
+                android:title="Dialog settings"
+                android:summary="Open dialog"
+                android:dialogTitle="Setup dialog"/>
+
     </PreferenceCategory>
-    
+
 </PreferenceScreen>

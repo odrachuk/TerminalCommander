@@ -60,17 +60,14 @@ public class TerminalMoveDialog extends DialogFragment {
                         }
                         if (StringUtil.isCorrectPath(realTextFromInput)) {
                             String operationDestinationPath = dstPath;
-                            boolean pathChanged = false;
                             if (!dstPath.equals(realTextFromInput)) {
                                 operationDestinationPath = realTextFromInput;
-                                pathChanged = true;
                             }
                             new MoveFileCommand((TerminalActivityImpl) getActivity(),
                                     itemsList,
                                     operationDestinationPath,
                                     dstPath,
-                                    curPath,
-                                    pathChanged).onExecute();
+                                    curPath).onExecute();
                         } else {
                             showNotCorrectPathToast();
                         }
@@ -93,13 +90,13 @@ public class TerminalMoveDialog extends DialogFragment {
      * as an argument.
      */
     static TerminalMoveDialog newInstance(ArrayList<ListViewItem> itemsList,
-                                          String dstPath, String curPath) {
+                                          String curPath, String dstPath) {
         TerminalMoveDialog f = new TerminalMoveDialog();
         // Supply arguments
         Bundle args = new Bundle();
         args.putParcelableArrayList(ITEMS_LIST, itemsList);
-        args.putString(DST_DIR_PATH, dstPath);
         args.putString(CUR_DIR_PATH, curPath);
+        args.putString(DST_DIR_PATH, dstPath);
         f.setArguments(args);
         return f;
     }

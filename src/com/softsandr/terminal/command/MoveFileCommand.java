@@ -36,21 +36,18 @@ public class MoveFileCommand implements FileManipulationCommand {
     private final List<ListViewItem> items;
     private final String destinationOldPath;
     private final String currentPath;
-    private final boolean pathChanged;
     private String destinationPath;
 
     public MoveFileCommand(TerminalActivityImpl terminalActivity,
                            List<ListViewItem> items,
                            String destinationPath,
                            String destinationOldPath,
-                           String currentPath,
-                           boolean pathChanged) {
+                           String currentPath) {
         this.terminalActivity = terminalActivity;
         this.items = items;
         this.destinationPath = destinationPath;
         this.destinationOldPath = destinationOldPath;
         this.currentPath = currentPath;
-        this.pathChanged = pathChanged;
     }
 
     @Override
@@ -71,21 +68,12 @@ public class MoveFileCommand implements FileManipulationCommand {
         terminalActivity.getRightListAdapter().clearSelection();
         switch (terminalActivity.getActivePage()) {
             case LEFT:
-                if (destinationOldPath.equals(currentPath)) {
-                    terminalActivity.getRightListAdapter().changeDirectory(destinationOldPath);
-                } else if (!pathChanged) {
-                    terminalActivity.getRightListAdapter().changeDirectory(destinationPath);
-                }
                 terminalActivity.getLeftListAdapter().changeDirectory(currentPath);
+                terminalActivity.getRightListAdapter().changeDirectory(destinationOldPath);
                 break;
             case RIGHT:
-                if (destinationOldPath.equals(currentPath)) {
-                    terminalActivity.getLeftListAdapter().changeDirectory(destinationOldPath);
-                } else if (!pathChanged) {
-                    terminalActivity.getLeftListAdapter().changeDirectory(destinationPath);
-                }
                 terminalActivity.getRightListAdapter().changeDirectory(currentPath);
-                break;
+                terminalActivity.getLeftListAdapter().changeDirectory(destinationOldPath);
         }
     }
 }
