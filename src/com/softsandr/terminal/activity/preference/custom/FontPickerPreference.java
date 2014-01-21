@@ -29,7 +29,8 @@ import android.widget.TextView;
 import com.softsandr.terminal.R;
 
 /**
- * This class used for...
+ * This class customize {@link android.preference.DialogPreference} and display
+ * {@link android.widget.SeekBar} for setup preference int value
  */
 public class FontPickerPreference extends DialogPreference {
     private SeekBar seekBar;
@@ -48,6 +49,7 @@ public class FontPickerPreference extends DialogPreference {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
+        mCurrentValue = getPersistedInt(DEFAULT_VALUE);
         textView = (TextView) view.findViewById(R.id.font_size_text_view);
         seekBar = (SeekBar) view.findViewById(R.id.font_seek_bar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
