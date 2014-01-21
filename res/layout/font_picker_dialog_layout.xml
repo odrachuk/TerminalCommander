@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <LinearLayout android:id="@+id/font_text_container"
+    <LinearLayout android:id="@+id/font_picker_text_container"
                   android:orientation="horizontal"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
                   android:layout_weight="1"
                   android:gravity="left"
                   android:text="10"/>
-        <TextView android:id="@+id/font_size_text_view"
+        <TextView android:id="@+id/font_picker_size_view"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"
@@ -28,7 +28,7 @@
                   android:text="30"/>
     </LinearLayout>
     <SeekBar
-            android:id="@+id/font_seek_bar"
+            android:id="@+id/font_picker_seek_bar"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

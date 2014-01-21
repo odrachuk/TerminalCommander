@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <!-- Test color view -->
+    <View android:id="@+id/color_picker_test_view"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/color_picker_test_view_height"
+          android:background="@color/COLOR_46f1ff"
+          android:layout_margin="@dimen/color_picker_test_view_margin"/>
+    <!-- Red color -->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/red"
+              android:layout_marginLeft="@dimen/color_picker_label_left_margin"/>
+    <RelativeLayout android:id="@+id/color_picker_red_color_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <TextView android:id="@+id/color_picker_red_edit_text"
+                  android:layout_width="@dimen/color_picker_edit_field_with"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:gravity="center"
+                  android:lines="1"/>
+        <SeekBar
+                android:id="@+id/color_picker_red_seek_bar"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="255"
+                android:layout_toLeftOf="@id/color_picker_red_edit_text"/>
+    </RelativeLayout>
+    <!-- Green color -->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/green"
+              android:layout_marginLeft="@dimen/color_picker_label_left_margin"/>
+    <RelativeLayout android:id="@+id/color_picker_green_color_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <TextView android:id="@+id/color_picker_green_edit_text"
+                  android:layout_width="@dimen/color_picker_edit_field_with"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:gravity="center"
+                  android:lines="1"/>
+        <SeekBar
+                android:id="@+id/color_picker_green_seek_bar"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="255"
+                android:layout_toLeftOf="@id/color_picker_green_edit_text"/>
+    </RelativeLayout>
+    <!-- Blue color -->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/blue"
+              android:layout_marginLeft="@dimen/color_picker_label_left_margin"/>
+    <RelativeLayout android:id="@+id/color_picker_blue_color_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <TextView android:id="@+id/color_picker_blue_edit_text"
+                  android:layout_width="@dimen/color_picker_edit_field_with"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:gravity="center"
+                  android:lines="1"/>
+        <SeekBar
+                android:id="@+id/color_picker_blue_seek_bar"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="255"
+                android:layout_toLeftOf="@id/color_picker_blue_edit_text"/>
+    </RelativeLayout>
+    <!-- Alpha -->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/alpha"
+              android:layout_marginLeft="@dimen/color_picker_label_left_margin"/>
+    <RelativeLayout android:id="@+id/color_picker_alpha_color_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+        <TextView android:id="@+id/color_picker_alpha_edit_text"
+                  android:layout_width="@dimen/color_picker_edit_field_with"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:gravity="center"
+                  android:lines="1"/>
+        <SeekBar
+                android:id="@+id/color_picker_alpha_seek_bar"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="255"
+                android:layout_toLeftOf="@id/color_picker_alpha_edit_text"/>
+    </RelativeLayout>
+</LinearLayout>

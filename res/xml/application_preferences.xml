@@ -7,7 +7,6 @@
             android:title="@string/pref_application_title">
 
         <EditTextPreference
-                android:icon="@drawable/nav_action_refresh"
                 android:key="@string/pref_shell_executor_key"
                 android:title="@string/pref_shell_executor_title"
                 android:summary="@string/pref_shell_executor_summary"
@@ -15,35 +14,74 @@
                 android:defaultValue="@string/pref_shell_executor_def"/>
 
         <Preference
-                android:icon="@drawable/nav_action_content_discard"
                 android:key="@string/pref_clear_locations_key"
                 android:title="@string/pref_clear_location_title"
                 android:summary="@string/pref_clear_location_summary"/>
 
-        <Preference
-                android:icon="@drawable/nav_action_about"
-                android:key="@string/pref_about_key"
-                android:title="@string/pref_about_title"
-                android:summary="@string/pref_about_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory
             android:title="@string/pref_interface_title">
 
         <com.softsandr.terminal.activity.preference.custom.FontPickerPreference
-                android:icon="@drawable/nav_action_refresh"
                 android:key="@string/pref_font_picker_key"
                 android:title="@string/pref_font_picker_title"
                 android:summary="@string/pref_font_picker_summary"
                 android:dialogTitle="@string/pref_font_picker_dlg_title"
                 android:defaultValue="4"/>
+        <Preference
+                android:key="@string/pref_theme_key"
+                android:title="@string/pref_theme_title"
+                android:summary="@string/pref_theme_summary"/>
 
-        <EditTextPreference
-                android:icon="@drawable/nav_action_refresh"
-                android:key="app_text_preference"
-                android:title="Dialog settings"
-                android:summary="Open dialog"
-                android:dialogTitle="Setup dialog"/>
+        <PreferenceScreen
+                android:key="@string/pref_colorize_key"
+                android:title="@string/pref_colorize_title"
+                android:summary="@string/pref_colorize_summary"
+                android:persistent="false">
+
+            <com.softsandr.terminal.activity.preference.custom.ArchiveColorPickerPreference
+                    android:key="@string/pref_archive_item_color_key"
+                    android:title="@string/pref_archive_item_color_title"
+                    android:summary="@string/pref_archive_item_color_summary"
+                    android:dialogTitle="@string/pref_archive_item_color_dlg_title"/>
+
+            <com.softsandr.terminal.activity.preference.custom.ShellColorPickerPreference
+                    android:key="@string/pref_shell_item_color_key"
+                    android:title="@string/pref_shell_item_color_title"
+                    android:summary="@string/pref_shell_item_color_summary"
+                    android:dialogTitle="@string/pref_shell_item_color_dlg_title"/>
+
+            <com.softsandr.terminal.activity.preference.custom.ImagesColorPickerPreference
+                    android:key="@string/pref_images_item_color_key"
+                    android:title="@string/pref_images_item_color_title"
+                    android:summary="@string/pref_images_item_color_summary"
+                    android:dialogTitle="@string/pref_images_item_color_dlg_title"/>
+
+            <com.softsandr.terminal.activity.preference.custom.MediaColorPickerPreference
+                    android:key="@string/pref_media_item_color_key"
+                    android:title="@string/pref_media_item_color_title"
+                    android:summary="@string/pref_media_item_color_summary"
+                    android:dialogTitle="@string/pref_media_item_color_dlg_title"/>
+
+            <com.softsandr.terminal.activity.preference.custom.DocumentsColorPickerPreference
+                    android:key="@string/pref_doc_item_color_key"
+                    android:title="@string/pref_doc_item_color_title"
+                    android:summary="@string/pref_doc_item_color_summary"
+                    android:dialogTitle="@string/pref_doc_item_color_dlg_title"/>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/pref_info_title">
+
+        <Preference
+                android:key="@string/pref_about_key"
+                android:title="@string/pref_about_title"
+                android:summary="@string/pref_about_summary"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

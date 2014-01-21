@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
@@ -24,6 +25,7 @@ import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
+import com.softsandr.terminal.model.preferences.TerminalPreferences;
 
 import java.util.ArrayList;
 
@@ -129,4 +131,10 @@ public interface TerminalActivity {
      * from terminal activity.
      */
     ActionBarToggleMonitor getActionBarToggleMonitor();
+
+    /**
+     * Return instance of {@link TerminalPreferences}
+     * @return {@link android.content.SharedPreferences} as default from application
+     */
+    TerminalPreferences getPreference();
 }

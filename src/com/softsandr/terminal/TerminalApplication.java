@@ -17,15 +17,18 @@
 package com.softsandr.terminal;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 /**
  * This is an example of a {@link android.app.Application} class. Ordinarily you would use
  * a class like this as a central repository for information that might be shared between multiple
  * activities.
- * 
+ * <p/>
  * In this case, we have not defined any specific work for this Application.
- * 
+ * <p/>
  * See samples/ApiDemos/tests/src/com.example.android.apis/ApiDemosApplicationTests for an example
  * of how to perform unit tests on an Application object.
  */
@@ -33,9 +36,13 @@ public class TerminalApplication extends Application {
 
     @Override
     public void onCreate() {
-        /*
-         * This populates the default values from the preferences XML file.
-         */
+        initDefaultPreference();
+    }
+
+    /**
+     * This populates the default values from the preferences XML file.
+     */
+    private void initDefaultPreference() {
         PreferenceManager.setDefaultValues(this, R.xml.application_preferences, false);
     }
 

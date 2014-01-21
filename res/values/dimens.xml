@@ -48,8 +48,6 @@
     <dimen name="commander_out_text_size">16sp</dimen>
     <dimen name="terminal_control_buttons_text_size">14sp</dimen>
 
-
-
     <dimen name="terminal_content_page_layout_margin">3dp</dimen>
     <dimen name="terminal_content_page_top_border_edge_image_width">5dp</dimen>
     <dimen name="terminal_content_page_simple_border_height_width">1dp</dimen>
@@ -67,4 +65,9 @@
     <dimen name="terminal_list_item_text_size">16sp</dimen>
     <dimen name="action_bar_menu_ite_text_size">9sp</dimen>
     <dimen name="terminal_action_bar_btn_text_size">20sp</dimen>
+
+    <dimen name="color_picker_test_view_height">50dp</dimen>
+    <dimen name="color_picker_edit_field_with">60dp</dimen>
+    <dimen name="color_picker_test_view_margin">6dp</dimen>
+    <dimen name="color_picker_label_left_margin">15dp</dimen>
 </resources>

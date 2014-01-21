@@ -9,6 +9,10 @@
     <string name="ok_btn">[ OK ]</string>
     <string name="cancel_btn">[ Cancel ]</string>
     <string name="select_app">Select application</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="alpha">Alpha</string>
     <!-- Panel column titles -->
     <string name="title_file_name">Name</string>
     <string name="title_file_size">Size</string>
@@ -76,4 +80,31 @@
     <string name="pref_font_picker_summary">Set font size of list items</string>
     <string name="pref_font_picker_dlg_title">Setup font size</string>
     <string name="pref_shell_executor_def">/system/bin/sh</string>
+    <string name="pref_colorize_key">pref_colorize_key</string>
+    <string name="pref_colorize_title">Colorize</string>
+    <string name="pref_theme_key">pref_theme_key</string>
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_theme_summary">Setup interface theme</string>
+    <string name="pref_info_title">Information</string>
+    <string name="pref_colorize_summary">Colorize list items by file type</string>
+    <string name="pref_archive_item_color_key">pref_archive_color_key</string>
+    <string name="pref_archive_item_color_title">Archive files color</string>
+    <string name="pref_archive_item_color_summary">Setup color for archive list items</string>
+    <string name="pref_archive_item_color_dlg_title">Setup archive color</string>
+    <string name="pref_shell_item_color_key">pref_shell_color_key</string>
+    <string name="pref_shell_item_color_title">Shell-script files color</string>
+    <string name="pref_shell_item_color_summary">Setup color for shell-scripts list items</string>
+    <string name="pref_shell_item_color_dlg_title">Setup shell color</string>
+    <string name="pref_doc_item_color_key">pref_doc_color_key</string>
+    <string name="pref_doc_item_color_title">Document files color</string>
+    <string name="pref_doc_item_color_summary">Setup color for textual list items</string>
+    <string name="pref_doc_item_color_dlg_title">Setup document color</string>
+    <string name="pref_images_item_color_key">pref_images_color_key</string>
+    <string name="pref_images_item_color_title">Image files color</string>
+    <string name="pref_images_item_color_summary">Setup color for image list items</string>
+    <string name="pref_images_item_color_dlg_title">Setup image color</string>
+    <string name="pref_media_item_color_key">pref_media_color_key</string>
+    <string name="pref_media_item_color_title">Media files color</string>
+    <string name="pref_media_item_color_summary">Setup color for media list items</string>
+    <string name="pref_media_item_color_dlg_title">Setup media color</string>
 </resources>

@@ -20,6 +20,8 @@ package com.softsandr.terminal.model.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.preference.custom.*;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 
@@ -41,7 +43,32 @@ public class TerminalPreferences {
     private final SharedPreferences mPreferences;
 
     public TerminalPreferences(Context context) {
-        this.mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        initDefault(context);
+    }
+
+    public SharedPreferences getPreferences() {
+        return mPreferences;
+    }
+
+    private void initDefault(Context context) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        if (!mPreferences.contains(context.getString(R.string.pref_archive_item_color_key))) {
+            editor.putString(context.getString(R.string.pref_archive_item_color_key), ArchiveColorPickerPreference.DEFAULT_VALUE);
+        }
+        if (!mPreferences.contains(context.getString(R.string.pref_doc_item_color_key))) {
+            editor.putString(context.getString(R.string.pref_doc_item_color_key), DocumentsColorPickerPreference.DEFAULT_VALUE);
+        }
+        if (!mPreferences.contains(context.getString(R.string.pref_images_item_color_key))) {
+            editor.putString(context.getString(R.string.pref_images_item_color_key), ImagesColorPickerPreference.DEFAULT_VALUE);
+        }
+        if (!mPreferences.contains(context.getString(R.string.pref_media_item_color_key))) {
+            editor.putString(context.getString(R.string.pref_media_item_color_key), MediaColorPickerPreference.DEFAULT_VALUE);
+        }
+        if (!mPreferences.contains(context.getString(R.string.pref_shell_item_color_key))) {
+            editor.putString(context.getString(R.string.pref_shell_item_color_key), ShellColorPickerPreference.DEFAULT_VALUE);
+        }
+        editor.commit();
     }
 
     public String loadLastLeftLocations() {

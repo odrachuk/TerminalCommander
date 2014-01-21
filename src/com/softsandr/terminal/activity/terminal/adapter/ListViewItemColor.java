@@ -17,10 +17,16 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.adapter;
 
-import android.content.res.Resources;
+import android.graphics.Color;
+import android.util.JsonReader;
 import android.webkit.MimeTypeMap;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.preference.custom.*;
+import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.utils.file.FileExtensions;
+
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * This class used for...
@@ -35,24 +41,59 @@ public enum ListViewItemColor {
     // for all files
     FILE(R.color.COLOR_B2B2B2) {
         @Override
-        public int getColor(Resources resources, String itemText) {
+        public int getColor(TerminalActivity terminalActivity, String itemText) {
             String ext = MimeTypeMap.getFileExtensionFromUrl(itemText);
             if (FileExtensions.WEB.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.OFFICE_DOCUMENT.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.COMPUTER_PROGRAMS.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.BOOK_DOCUNET.categoryExtensions().keySet().contains(ext)) {
-                return resources.getColor(R.color.COLOR_b26818);
+                String colorString = terminalActivity.getPreference().getPreferences().
+                        getString(terminalActivity.getContextResources().
+                                getString(R.string.pref_doc_item_color_key),
+                                DocumentsColorPickerPreference.DEFAULT_VALUE);
+                Reader reader = new StringReader(colorString);
+                JsonReader jsonReader = new JsonReader(reader);
+                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
             } else if (FileExtensions.ARCHIVE_OR_COMPRESSED.categoryExtensions().keySet().contains(ext)) {
-                return resources.getColor(R.color.COLOR_ff50ec);
+                String colorString = terminalActivity.getPreference().getPreferences().
+                        getString(terminalActivity.getContextResources().
+                                getString(R.string.pref_archive_item_color_key),
+                                ArchiveColorPickerPreference.DEFAULT_VALUE);
+                Reader reader = new StringReader(colorString);
+                JsonReader jsonReader = new JsonReader(reader);
+                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
             } else if (FileExtensions.SHELL_PROGRAMS.categoryExtensions().keySet().contains(ext)) {
-                return resources.getColor(R.color.COLOR_189fb2);
+                String colorString = terminalActivity.getPreference().getPreferences().
+                        getString(terminalActivity.getContextResources().
+                                getString(R.string.pref_shell_item_color_key),
+                                ShellColorPickerPreference.DEFAULT_VALUE);
+                Reader reader = new StringReader(colorString);
+                JsonReader jsonReader = new JsonReader(reader);
+                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
             } else if (FileExtensions.IMAGES.categoryExtensions().keySet().contains(ext)) {
-                return resources.getColor(R.color.COLOR_46f1ff);
+                String colorString = terminalActivity.getPreference().getPreferences().
+                        getString(terminalActivity.getContextResources().
+                                getString(R.string.pref_images_item_color_key),
+                                ImagesColorPickerPreference.DEFAULT_VALUE);
+                Reader reader = new StringReader(colorString);
+                JsonReader jsonReader = new JsonReader(reader);
+                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
             } else if (FileExtensions.VIDEO.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.MUSIC.categoryExtensions().keySet().contains(ext)) {
-                return resources.getColor(R.color.COLOR_18a818);
+                String colorString = terminalActivity.getPreference().getPreferences().
+                        getString(terminalActivity.getContextResources().
+                                getString(R.string.pref_media_item_color_key),
+                                MediaColorPickerPreference.DEFAULT_VALUE);
+                Reader reader = new StringReader(colorString);
+                JsonReader jsonReader = new JsonReader(reader);
+                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
             } else {
-                return resources.getColor(this.colorId);
+                return terminalActivity.getContextResources().getColor(this.colorId);
             }
         }
     };
@@ -63,7 +104,7 @@ public enum ListViewItemColor {
         this.colorId = colorId;
     }
 
-    public int getColor(Resources resources, String itemText) {
-        return resources.getColor(this.colorId);
+    public int getColor(TerminalActivity terminalActivity, String itemText) {
+        return terminalActivity.getContextResources().getColor(this.colorId);
     }
 }

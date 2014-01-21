@@ -19,9 +19,18 @@ package com.softsandr.terminal.activity.preference;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
 
 /**
@@ -57,6 +66,9 @@ public class TerminalPreferenceActivity extends Activity {
         }
     }
 
+    /**
+     * The extends of {@link android.preference.PreferenceFragment} used as maine Settings screen
+     */
     public static class PrefsFragment extends PreferenceFragment {
 
         @Override
@@ -64,6 +76,56 @@ public class TerminalPreferenceActivity extends Activity {
             super.onCreate(savedInstanceState);
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.application_preferences);
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+            super.onPreferenceTreeClick(preferenceScreen, preference);
+            // If the user has clicked on a preference screen, set up the action bar
+            if (preference instanceof PreferenceScreen) {
+                initializeActionBar((PreferenceScreen) preference);
+            }
+            return false;
+        }
+
+        /**
+         * Sets up the action bar for an {@link PreferenceScreen}
+         */
+        public void initializeActionBar(PreferenceScreen preferenceScreen) {
+            final Dialog dialog = preferenceScreen.getDialog();
+
+            if (dialog != null) {
+                // Init the action bar
+                dialog.getActionBar().setDisplayHomeAsUpEnabled(true);
+                // Apply custom home button area click listener to close the PreferenceScreen because PreferenceScreens are dialogs which swallow
+                // events instead of passing to the activity
+                // Related Issue: https://code.google.com/p/android/issues/detail?id=4611
+                View homeBtn = dialog.findViewById(android.R.id.home);
+                if (homeBtn != null) {
+                    View.OnClickListener dismissDialogClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    };
+                    // Prepare yourselves for some programming hack
+                    ViewParent homeBtnContainer = homeBtn.getParent();
+                    // The home button is an ImageView inside a FrameLayout
+                    if (homeBtnContainer instanceof FrameLayout) {
+                        ViewGroup containerParent = (ViewGroup) homeBtnContainer.getParent();
+                        if (containerParent instanceof LinearLayout) {
+                            // This view also contains the title text, set the whole view as clickable
+                            ((LinearLayout) containerParent).setOnClickListener(dismissDialogClickListener);
+                        } else {
+                            // Just set it on the home button
+                            ((FrameLayout) homeBtnContainer).setOnClickListener(dismissDialogClickListener);
+                        }
+                    } else {
+                        // The 'If all else fails' default case
+                        homeBtn.setOnClickListener(dismissDialogClickListener);
+                    }
+                }
+            }
         }
     }
 }

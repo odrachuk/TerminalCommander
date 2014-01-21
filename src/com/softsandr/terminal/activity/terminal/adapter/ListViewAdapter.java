@@ -17,20 +17,19 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.adapter;
 
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.terminal.LocationLabel;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
-import com.softsandr.terminal.activity.terminal.LocationLabel;
-import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
+import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -120,23 +119,23 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             // determine files types and their text colors
             if (info.isDirectory()) {
                 viewHolder.fileNameView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileSizeView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileModifyTimeView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 // determine directory that we can't read
                 if (!info.isParentDots() && !info.canRead()) {
                     viewHolder.fileNameView.setTextColor(
-                            ListViewItemColor.ROOT_DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                            ListViewItemColor.ROOT_DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 }
             } else {
                 viewHolder.fileNameView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileSizeView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileModifyTimeView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
             }
             checkSelection(viewHolder, info, position);
         }
@@ -152,27 +151,27 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     private void checkSelection(ViewHolder viewHolder, ListViewItem info, int position) {
         if (selectionMonitor.getSelectedItems().contains(position)) {
             viewHolder.fileNameView.setTextColor(
-                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
+                    ListViewItemColor.SELECTED.getColor(terminalActivity, info.getFileName()));
             viewHolder.fileSizeView.setTextColor(
-                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
+                    ListViewItemColor.SELECTED.getColor(terminalActivity, info.getFileName()));
             viewHolder.fileModifyTimeView.setTextColor(
-                    ListViewItemColor.SELECTED.getColor(terminalActivity.getResources(), info.getFileName()));
+                    ListViewItemColor.SELECTED.getColor(terminalActivity, info.getFileName()));
         }
         if (selectionMonitor.getUnselectedItems().contains(position)) {
             if (info.isDirectory()) {
                 viewHolder.fileNameView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileSizeView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileModifyTimeView.setTextColor(
-                        ListViewItemColor.DIRECTORY.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.DIRECTORY.getColor(terminalActivity, info.getFileName()));
             } else {
                 viewHolder.fileNameView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileSizeView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
                 viewHolder.fileModifyTimeView.setTextColor(
-                        ListViewItemColor.FILE.getColor(terminalActivity.getResources(), info.getFileName()));
+                        ListViewItemColor.FILE.getColor(terminalActivity, info.getFileName()));
             }
         }
     }
