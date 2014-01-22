@@ -71,9 +71,9 @@
     <string name="pref_clear_locations_key">pref_clear_location_key</string>
     <string name="pref_clear_location_title">Clear location history</string>
     <string name="pref_clear_location_summary">Remove all directory locations from history</string>
-    <string name="pref_about_key">pref_about_key</string>
-    <string name="pref_about_title">About</string>
-    <string name="pref_about_summary">Display about information</string>
+    <string name="pref_open_source_license_key">pref_about_key</string>
+    <string name="pref_open_source_license_title">Open-source license</string>
+    <string name="pref_open_source_license_summary">Display license notice</string>
     <string name="pref_interface_title">Interface</string>
     <string name="pref_font_picker_key">pref_font_picker_key</string>
     <string name="pref_font_picker_title">Font size</string>
@@ -82,9 +82,6 @@
     <string name="pref_shell_executor_def">/system/bin/sh</string>
     <string name="pref_colorize_key">pref_colorize_key</string>
     <string name="pref_colorize_title">Colorize</string>
-    <string name="pref_theme_key">pref_theme_key</string>
-    <string name="pref_theme_title">Theme</string>
-    <string name="pref_theme_summary">Setup interface theme</string>
     <string name="pref_info_title">Information</string>
     <string name="pref_colorize_summary">Colorize list items by file type</string>
     <string name="pref_archive_item_color_key">pref_archive_color_key</string>
@@ -108,4 +105,13 @@
     <string name="pref_media_item_color_summary">Setup color for media list items</string>
     <string name="pref_media_item_color_dlg_title">Setup media color</string>
     <string name="color_picker_template_text">Template text</string>
+    <string name="pref_term_bg_color_key">pref_term_bg_color_key</string>
+    <string name="pref_term_bg_color_title">Terminal background color</string>
+    <string name="pref_term_bg_color_summary">Setup background color for terminal screen</string>
+    <string name="pref_term_bg_color_dlg_title">Setup terminal background</string>
+    <string name="pref_app_version_key">pref_app_version</string>
+    <string name="pref_app_version_title">App version</string>
+    <string name="pref_back_def_colorize_key">pref_back_def_colorize_key</string>
+    <string name="pref_back_def_colorize_title">Default colorize</string>
+    <string name="pref_back_def_colorize_summary">Restore default colorize</string>
 </resources>

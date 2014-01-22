@@ -29,16 +29,18 @@
                 android:summary="@string/pref_font_picker_summary"
                 android:dialogTitle="@string/pref_font_picker_dlg_title"
                 android:defaultValue="4"/>
-        <Preference
-                android:key="@string/pref_theme_key"
-                android:title="@string/pref_theme_title"
-                android:summary="@string/pref_theme_summary"/>
 
         <PreferenceScreen
                 android:key="@string/pref_colorize_key"
                 android:title="@string/pref_colorize_title"
                 android:summary="@string/pref_colorize_summary"
                 android:persistent="false">
+
+            <com.softsandr.terminal.activity.preference.custom.TerminalBgColorPickerPreference
+                    android:key="@string/pref_term_bg_color_key"
+                    android:title="@string/pref_term_bg_color_title"
+                    android:summary="@string/pref_term_bg_color_summary"
+                    android:dialogTitle="@string/pref_term_bg_color_dlg_title"/>
 
             <com.softsandr.terminal.activity.preference.custom.ArchiveColorPickerPreference
                     android:key="@string/pref_archive_item_color_key"
@@ -72,15 +74,24 @@
 
         </PreferenceScreen>
 
+        <Preference
+                android:key="@string/pref_back_def_colorize_key"
+                android:title="@string/pref_back_def_colorize_title"
+                android:summary="@string/pref_back_def_colorize_summary"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
             android:title="@string/pref_info_title">
 
         <Preference
-                android:key="@string/pref_about_key"
-                android:title="@string/pref_about_title"
-                android:summary="@string/pref_about_summary"/>
+                android:key="@string/pref_open_source_license_key"
+                android:title="@string/pref_open_source_license_title"
+                android:summary="@string/pref_open_source_license_summary"/>
+
+        <Preference
+                android:key="@string/pref_app_version_key"
+                android:title="@string/pref_app_version_title"/>
 
     </PreferenceCategory>
 
