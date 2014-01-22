@@ -70,4 +70,5 @@
     <dimen name="color_picker_edit_field_with">60dp</dimen>
     <dimen name="color_picker_test_view_margin">6dp</dimen>
     <dimen name="color_picker_label_left_margin">15dp</dimen>
+    <dimen name="color_picker_template_text_size">20sp</dimen>
 </resources>

@@ -107,4 +107,5 @@
     <string name="pref_media_item_color_title">Media files color</string>
     <string name="pref_media_item_color_summary">Setup color for media list items</string>
     <string name="pref_media_item_color_dlg_title">Setup media color</string>
+    <string name="color_picker_template_text">Template text</string>
 </resources>

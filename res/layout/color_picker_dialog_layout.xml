@@ -5,11 +5,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <!-- Test color view -->
-    <View android:id="@+id/color_picker_test_view"
+    <TextView android:id="@+id/color_picker_test_view"
           android:layout_width="match_parent"
           android:layout_height="@dimen/color_picker_test_view_height"
-          android:background="@color/COLOR_46f1ff"
-          android:layout_margin="@dimen/color_picker_test_view_margin"/>
+          android:layout_margin="@dimen/color_picker_test_view_margin"
+          android:gravity="center"
+          android:text="@string/color_picker_template_text"
+          android:textSize="@dimen/color_picker_template_text_size"/>
     <!-- Red color -->
     <TextView android:layout_width="match_parent"
               android:layout_height="wrap_content"

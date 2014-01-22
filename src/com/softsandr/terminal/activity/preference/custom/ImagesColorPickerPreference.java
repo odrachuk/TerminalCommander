@@ -44,7 +44,7 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
     private static final String LOG_TAG = ArchiveColorPickerPreference.class.getSimpleName();
     private SeekBar redSeekBar, greenSeekBar, blueSeekBar, alphaSeekBar;
     private TextView redEditText, greenEditText, blueEditText, alphaEditText;
-    private View colorView;
+    private TextView colorView;
     public static final String DEFAULT_VALUE = "{\"red\":70,\"green\":241,\"blue\":255,\"alpha\":255}";
     private Integer redCurValue, greenCurValue, blueCurValue, alphaCurValue;
     private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2, ALPHA_ID = 3;
@@ -69,7 +69,7 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
         blueCurValue = defArray[BLUE_ID];
         alphaCurValue = defArray[ALPHA_ID];
         // setup color test view
-        colorView = view.findViewById(R.id.color_picker_test_view);
+        colorView = (TextView) view.findViewById(R.id.color_picker_test_view);
         // red
         redEditText = (TextView) view.findViewById(R.id.color_picker_red_edit_text);
         redSeekBar = (SeekBar) view.findViewById(R.id.color_picker_red_seek_bar);
@@ -215,7 +215,7 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
     }
 
     private void refreshColor() {
-        colorView.setBackgroundColor(Color.argb(alphaCurValue, redCurValue, greenCurValue, blueCurValue));
+        colorView.setTextColor(Color.argb(alphaCurValue, redCurValue, greenCurValue, blueCurValue));
     }
 
     private static class SavedState extends BaseSavedState {
