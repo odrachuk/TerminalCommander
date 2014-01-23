@@ -21,6 +21,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -35,8 +37,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.TerminalApplication;
-import com.softsandr.terminal.model.preferences.SettingsConfiguration;
 import com.softsandr.terminal.model.preferences.PreferenceController;
+import com.softsandr.terminal.model.preferences.SettingsConfiguration;
 
 /**
  * This class used for display application setting screen
@@ -44,6 +46,7 @@ import com.softsandr.terminal.model.preferences.PreferenceController;
 
 public class TerminalPreferenceActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String LOG_TAG = TerminalPreferenceActivity.class.getSimpleName();
+    private String appVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,17 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
         getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
         // Display home button on action bar
         initActionBar();
+        // read app version
+        PackageInfo pInfo = null;
+        try {
+            PackageManager packageManager = getPackageManager();
+            if (packageManager != null) {
+                pInfo = packageManager.getPackageInfo(getPackageName(), 0);
+                appVersion = pInfo.versionName;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            // ignored
+        }
     }
 
     private void initActionBar() {
@@ -116,7 +130,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
     /**
      * The extends of {@link android.preference.PreferenceFragment} used as maine Settings screen
      */
-    public static class PrefsFragment extends PreferenceFragment {
+    public class PrefsFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -126,11 +140,25 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
         }
 
         @Override
+        public void onResume() {
+            super.onResume();
+            Preference versionPref = findPreference(getString(R.string.pref_app_version_key));
+            if (versionPref != null) {
+                versionPref.setSummary(appVersion);
+            }
+        }
+
+        @Override
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
             super.onPreferenceTreeClick(preferenceScreen, preference);
             // If the user has clicked on a preference screen, set up the action bar
             if (preference instanceof PreferenceScreen) {
                 initializeActionBar((PreferenceScreen) preference);
+            } else {
+                if (preference.getKey().equals(getString(R.string.pref_clear_locations_key))) {
+                    PreferenceController.saveLeftHistoryLocations(PreferenceManager.getDefaultSharedPreferences(getActivity()), new String[0]);
+                    PreferenceController.saveRightHistoryLocations(PreferenceManager.getDefaultSharedPreferences(getActivity()), new String[0]);
+                }
             }
             return false;
         }
