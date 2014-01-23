@@ -39,12 +39,12 @@ import org.json.JSONObject;
  */
 public class TerminalBgColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String LOG_TAG = TerminalBgColorPickerPreference.class.getSimpleName();
-    private SeekBar redSeekBar, greenSeekBar, blueSeekBar, alphaSeekBar;
-    private TextView redEditText, greenEditText, blueEditText, alphaEditText;
+    private SeekBar redSeekBar, greenSeekBar, blueSeekBar;
+    private TextView redEditText, greenEditText, blueEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":0,\"green\":46,\"blue\":184,\"alpha\":255}";
-    private Integer redCurValue, greenCurValue, blueCurValue, alphaCurValue;
-    private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2, ALPHA_ID = 3;
+    public static final String DEFAULT_VALUE = "{\"red\":0,\"green\":46,\"blue\":184}";
+    private Integer redCurValue, greenCurValue, blueCurValue;
+    private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2;
 
     public TerminalBgColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -62,7 +62,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
         redCurValue = defArray[RED_ID];
         greenCurValue = defArray[GREEN_ID];
         blueCurValue = defArray[BLUE_ID];
-        alphaCurValue = defArray[ALPHA_ID];
         // setup color test view
         colorView = (TextView) view.findViewById(R.id.color_picker_test_view);
         colorView.setText("");
@@ -81,11 +80,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
         blueSeekBar = (SeekBar) view.findViewById(R.id.color_picker_blue_seek_bar);
         blueSeekBar.setOnSeekBarChangeListener(this);
         blueSeekBar.setProgress(blueCurValue);
-        // alpha
-        alphaEditText = (TextView) view.findViewById(R.id.color_picker_alpha_edit_text);
-        alphaSeekBar = (SeekBar) view.findViewById(R.id.color_picker_alpha_seek_bar);
-        alphaSeekBar.setOnSeekBarChangeListener(this);
-        alphaSeekBar.setProgress(alphaCurValue);
     }
 
     private String prepareSaveJson() {
@@ -94,7 +88,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
             resultJson.put("red", redCurValue);
             resultJson.put("green", greenCurValue);
             resultJson.put("blue", blueCurValue);
-            resultJson.put("alpha", alphaCurValue);
         } catch (JSONException ex) {
             Log.d(LOG_TAG, "prepareSaveJson: " + ex.getMessage());
         }
@@ -117,14 +110,12 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
-            redCurValue = defArray[ALPHA_ID];
         } else {
             // Set default state from the XML attribute
             int[] defArray = PreferenceController.parseColorComponentsFromJson((String) defaultValue);
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
-            redCurValue = defArray[ALPHA_ID];
             persistString(prepareSaveJson());
         }
     }
@@ -168,7 +159,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
         redSeekBar.setProgress(defArray[RED_ID]);
         greenSeekBar.setProgress(defArray[GREEN_ID]);
         blueSeekBar.setProgress(defArray[BLUE_ID]);
-        alphaSeekBar.setProgress(defArray[ALPHA_ID]);
     }
 
     @Override
@@ -186,9 +176,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
                 blueCurValue = progress;
                 blueEditText.setText(String.valueOf(blueCurValue));
                 break;
-            case R.id.color_picker_alpha_seek_bar:
-                alphaCurValue = progress;
-                alphaEditText.setText(String.valueOf(alphaCurValue));
         }
         refreshColor();
     }
@@ -204,7 +191,7 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
     }
 
     private void refreshColor() {
-        colorView.setBackgroundColor(Color.argb(alphaCurValue, redCurValue, greenCurValue, blueCurValue));
+        colorView.setBackgroundColor(Color.rgb(redCurValue, greenCurValue, blueCurValue));
     }
 
     private static class SavedState extends BaseSavedState {

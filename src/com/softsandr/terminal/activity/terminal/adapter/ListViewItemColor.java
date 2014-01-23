@@ -41,16 +41,20 @@ public enum ListViewItemColor {
                     || FileExtensions.OFFICE_DOCUMENT.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.COMPUTER_PROGRAMS.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.BOOK_DOCUNET.categoryExtensions().keySet().contains(ext)) {
-
+                // Documents
                 return terminalActivity.getSettingsConfiguration().getDocItemColor();
             } else if (FileExtensions.ARCHIVE_OR_COMPRESSED.categoryExtensions().keySet().contains(ext)) {
+                // Archives
                 return terminalActivity.getSettingsConfiguration().getArchiveItemColor();
             } else if (FileExtensions.SHELL_PROGRAMS.categoryExtensions().keySet().contains(ext)) {
+                // Shell-scripts
                 return terminalActivity.getSettingsConfiguration().getShellItemColor();
             } else if (FileExtensions.IMAGES.categoryExtensions().keySet().contains(ext)) {
+                // Images
                 return terminalActivity.getSettingsConfiguration().getImageItemColor();
             } else if (FileExtensions.VIDEO.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.MUSIC.categoryExtensions().keySet().contains(ext)) {
+                // Media
                 return terminalActivity.getSettingsConfiguration().getMediaItemColor();
             } else {
                 return terminalActivity.getContextResources().getColor(this.colorId);

@@ -63,35 +63,62 @@ public final class PreferenceController {
         if (!preferences.contains(context.getString(R.string.pref_archive_item_color_key))) {
             editor.putString(context.getString(R.string.pref_archive_item_color_key), ArchiveColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setArchiveItemColor(parseColorFromJson(ArchiveColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setArchiveItemColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_archive_item_color_key),
+                                    ArchiveColorPickerPreference.DEFAULT_VALUE)));
         }
         // document item color
         if (!preferences.contains(context.getString(R.string.pref_doc_item_color_key))) {
             editor.putString(context.getString(R.string.pref_doc_item_color_key), DocumentsColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setDocItemColor(parseColorFromJson(DocumentsColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setDocItemColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_doc_item_color_key),
+                            DocumentsColorPickerPreference.DEFAULT_VALUE)));
         }
         // image item color
         if (!preferences.contains(context.getString(R.string.pref_images_item_color_key))) {
             editor.putString(context.getString(R.string.pref_images_item_color_key), ImagesColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setImageItemColor(parseColorFromJson(ImagesColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setImageItemColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_images_item_color_key),
+                            ImagesColorPickerPreference.DEFAULT_VALUE)));
         }
         // media item color
         if (!preferences.contains(context.getString(R.string.pref_media_item_color_key))) {
             editor.putString(context.getString(R.string.pref_media_item_color_key), MediaColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setMediaItemColor(parseColorFromJson(MediaColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setMediaItemColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_media_item_color_key),
+                            MediaColorPickerPreference.DEFAULT_VALUE)));
         }
         // shell-script item color
         if (!preferences.contains(context.getString(R.string.pref_shell_item_color_key))) {
             editor.putString(context.getString(R.string.pref_shell_item_color_key), ShellColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setShellItemColor(parseColorFromJson(ShellColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setShellItemColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_shell_item_color_key),
+                            ShellColorPickerPreference.DEFAULT_VALUE)));
         }
         // terminal screen background color
         if (!preferences.contains(context.getString(R.string.pref_term_bg_color_key))) {
-            editor.putString(context.getString(R.string.pref_shell_item_color_key), TerminalBgColorPickerPreference.DEFAULT_VALUE);
+            editor.putString(context.getString(R.string.pref_term_bg_color_key), TerminalBgColorPickerPreference.DEFAULT_VALUE);
             confPrefs.setTerminalBgColor(parseColorFromJson(TerminalBgColorPickerPreference.DEFAULT_VALUE));
+        } else {
+            confPrefs.setTerminalBgColor(parseColorFromJson(
+                    preferences.getString(context.getString(R.string.pref_term_bg_color_key),
+                            TerminalBgColorPickerPreference.DEFAULT_VALUE)));
         }
         if (!preferences.contains(context.getString(R.string.pref_font_picker_key))) {
             editor.putInt(context.getString(R.string.pref_font_picker_key), (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
             confPrefs.setListFontSize((int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
+        } else {
+            confPrefs.setListFontSize(preferences.getInt(context.getString(R.string.pref_font_picker_key),
+                    (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size)));
         }
         editor.commit();
     }
@@ -207,7 +234,7 @@ public final class PreferenceController {
     public static int[] parseColorComponentsFromJson(String jsonValue) {
         Reader reader = new StringReader(jsonValue);
         JsonReader jsonReader = new JsonReader(reader);
-        int[] colors = new int[]{0, 0, 0, 255};
+        int[] colors = new int[]{0, 0, 0};
         try {
             jsonReader.beginObject();
             while (jsonReader.hasNext()) {
@@ -219,8 +246,6 @@ public final class PreferenceController {
                         colors[1] = jsonReader.nextInt();
                     } else if (name.equals("blue")) {
                         colors[2] = jsonReader.nextInt();
-                    } else if (name.equals("alpha")) {
-                        colors[3] = jsonReader.nextInt();
                     } else {
                         jsonReader.skipValue();
                     }
@@ -240,6 +265,6 @@ public final class PreferenceController {
      */
     public static int parseColorFromJson(String json) {
         int[] colorArray = parseColorComponentsFromJson(json);
-        return Color.argb(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+        return Color.rgb(colorArray[0], colorArray[1], colorArray[2]);
     }
 }

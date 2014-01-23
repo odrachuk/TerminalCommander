@@ -39,12 +39,12 @@ import org.json.JSONObject;
  */
 public class ImagesColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
     private static final String LOG_TAG = ArchiveColorPickerPreference.class.getSimpleName();
-    private SeekBar redSeekBar, greenSeekBar, blueSeekBar, alphaSeekBar;
-    private TextView redEditText, greenEditText, blueEditText, alphaEditText;
+    private SeekBar redSeekBar, greenSeekBar, blueSeekBar;
+    private TextView redEditText, greenEditText, blueEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":70,\"green\":241,\"blue\":255,\"alpha\":255}";
-    private Integer redCurValue, greenCurValue, blueCurValue, alphaCurValue;
-    private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2, ALPHA_ID = 3;
+    public static final String DEFAULT_VALUE = "{\"red\":70,\"green\":241,\"blue\":255}";
+    private Integer redCurValue, greenCurValue, blueCurValue;
+    private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2;
 
     public ImagesColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -62,9 +62,9 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
         redCurValue = defArray[RED_ID];
         greenCurValue = defArray[GREEN_ID];
         blueCurValue = defArray[BLUE_ID];
-        alphaCurValue = defArray[ALPHA_ID];
         // setup color test view
         colorView = (TextView) view.findViewById(R.id.color_picker_test_view);
+        colorView.setBackgroundColor(PreferenceController.parseColorFromJson(getSharedPreferences().getString(getContext().getResources().getString(R.string.pref_term_bg_color_key), "")));
         // red
         redEditText = (TextView) view.findViewById(R.id.color_picker_red_edit_text);
         redSeekBar = (SeekBar) view.findViewById(R.id.color_picker_red_seek_bar);
@@ -80,11 +80,6 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
         blueSeekBar = (SeekBar) view.findViewById(R.id.color_picker_blue_seek_bar);
         blueSeekBar.setOnSeekBarChangeListener(this);
         blueSeekBar.setProgress(blueCurValue);
-        // alpha
-        alphaEditText = (TextView) view.findViewById(R.id.color_picker_alpha_edit_text);
-        alphaSeekBar = (SeekBar) view.findViewById(R.id.color_picker_alpha_seek_bar);
-        alphaSeekBar.setOnSeekBarChangeListener(this);
-        alphaSeekBar.setProgress(alphaCurValue);
     }
 
 
@@ -94,7 +89,6 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
             resultJson.put("red", redCurValue);
             resultJson.put("green", greenCurValue);
             resultJson.put("blue", blueCurValue);
-            resultJson.put("alpha", alphaCurValue);
         } catch (JSONException ex) {
             Log.d(LOG_TAG, "prepareSaveJson: " + ex.getMessage());
         }
@@ -117,14 +111,12 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
-            redCurValue = defArray[ALPHA_ID];
         } else {
             // Set default state from the XML attribute
             int[] defArray = PreferenceController.parseColorComponentsFromJson((String) defaultValue);
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
-            redCurValue = defArray[ALPHA_ID];
             persistString(prepareSaveJson());
         }
     }
@@ -168,7 +160,6 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
         redSeekBar.setProgress(defArray[RED_ID]);
         greenSeekBar.setProgress(defArray[GREEN_ID]);
         blueSeekBar.setProgress(defArray[BLUE_ID]);
-        alphaSeekBar.setProgress(defArray[ALPHA_ID]);
     }
 
     @Override
@@ -186,9 +177,6 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
                 blueCurValue = progress;
                 blueEditText.setText(String.valueOf(blueCurValue));
                 break;
-            case R.id.color_picker_alpha_seek_bar:
-                alphaCurValue = progress;
-                alphaEditText.setText(String.valueOf(alphaCurValue));
         }
         refreshColor();
     }
@@ -204,7 +192,7 @@ public class ImagesColorPickerPreference extends DialogPreference implements See
     }
 
     private void refreshColor() {
-        colorView.setTextColor(Color.argb(alphaCurValue, redCurValue, greenCurValue, blueCurValue));
+        colorView.setTextColor(Color.rgb(redCurValue, greenCurValue, blueCurValue));
     }
 
     private static class SavedState extends BaseSavedState {

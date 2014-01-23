@@ -81,27 +81,4 @@
                 android:max="255"
                 android:layout_toLeftOf="@id/color_picker_blue_edit_text"/>
     </RelativeLayout>
-    <!-- Alpha -->
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="left"
-              android:text="@string/alpha"
-              android:layout_marginLeft="@dimen/color_picker_label_left_margin"/>
-    <RelativeLayout android:id="@+id/color_picker_alpha_color_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-        <TextView android:id="@+id/color_picker_alpha_edit_text"
-                  android:layout_width="@dimen/color_picker_edit_field_with"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentRight="true"
-                  android:gravity="center"
-                  android:lines="1"/>
-        <SeekBar
-                android:id="@+id/color_picker_alpha_seek_bar"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="255"
-                android:layout_toLeftOf="@id/color_picker_alpha_edit_text"/>
-    </RelativeLayout>
 </LinearLayout>

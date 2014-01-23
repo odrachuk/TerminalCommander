@@ -26,6 +26,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import com.softsandr.terminal.model.preferences.PreferenceController;
  */
 
 public class TerminalPreferenceActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private static final String LOG_TAG = TerminalPreferenceActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.d(LOG_TAG, "onSharedPreferenceChanged: Key " + key);
         SettingsConfiguration settingsConfigure = ((TerminalApplication) getApplication()).getSettingsConfiguration();
         if (settingsConfigure != null) {
             if (key.equals(getString(R.string.pref_archive_item_color_key))) {
