@@ -20,7 +20,7 @@ package com.softsandr.terminal.command;
 import android.util.Log;
 import android.widget.Toast;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 

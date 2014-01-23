@@ -18,17 +18,14 @@
 package com.softsandr.terminal.activity.commander;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.softsandr.commander.Commander;
-import com.softsandr.terminal.model.filesystem.ProcessDirectory;
+import com.softsandr.terminal.data.filesystem.ProcessDirectory;
 import com.softsandr.utils.string.StringUtil;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

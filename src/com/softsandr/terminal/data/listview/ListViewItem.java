@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.listview;
+package com.softsandr.terminal.data.listview;
 
 import android.os.Parcel;
 import android.os.Parcelable;

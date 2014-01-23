@@ -18,7 +18,7 @@
 package com.softsandr.terminal.activity.terminal.monitor;
 
 import android.view.MenuItem;
-import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
+import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.activity.terminal.TerminalActivity;
 
 /**

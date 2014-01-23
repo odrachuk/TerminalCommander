@@ -29,7 +29,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.model.preferences.PreferenceController;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 import org.json.JSONException;
 import org.json.JSONObject;
 

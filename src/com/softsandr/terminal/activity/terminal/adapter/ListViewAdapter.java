@@ -26,8 +26,8 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.LocationLabel;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
-import com.softsandr.terminal.model.listview.ListViewFiller;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.data.listview.ListViewFiller;
+import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.utils.string.StringUtil;
 
@@ -145,7 +145,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     /**
      * Processing selection and make selected items in yellow and unselected in default color
      * @param viewHolder    The row view holder
-     * @param info          The row instance of {@link com.softsandr.terminal.model.listview.ListViewItem}
+     * @param info          The row instance of {@link com.softsandr.terminal.data.listview.ListViewItem}
      * @param position      the row number (index of position) in ListView
      */
     private void checkSelection(ViewHolder viewHolder, ListViewItem info, int position) {

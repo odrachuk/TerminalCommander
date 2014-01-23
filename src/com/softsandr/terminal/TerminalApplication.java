@@ -18,8 +18,8 @@ package com.softsandr.terminal;
 
 import android.app.Application;
 import android.preference.PreferenceManager;
-import com.softsandr.terminal.model.preferences.SettingsConfiguration;
-import com.softsandr.terminal.model.preferences.PreferenceController;
+import com.softsandr.terminal.data.preferences.SettingsConfiguration;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
  * This is an example of a {@link android.app.Application} class. Ordinarily you would use
@@ -56,9 +56,9 @@ public class TerminalApplication extends Application {
     }
 
     /**
-     * Get application instance of {@link com.softsandr.terminal.model.preferences.SettingsConfiguration}.
+     * Get application instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}.
      * Only one instance of this returned object should be used in Application
-     * @return  application instance of {@link com.softsandr.terminal.model.preferences.SettingsConfiguration}
+     * @return  application instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}
      */
     public SettingsConfiguration getSettingsConfiguration() {
         return settingsConfiguration;

@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.softsandr.terminal.R;
 import com.softsandr.utils.file.FileOpeningUtil;
 import com.softsandr.utils.string.StringUtil;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 

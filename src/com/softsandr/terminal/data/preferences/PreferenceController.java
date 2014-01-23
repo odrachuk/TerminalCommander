@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.preferences;
+package com.softsandr.terminal.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +24,7 @@ import android.util.JsonReader;
 import android.util.Log;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.preference.custom.*;
-import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
+import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.utils.string.StringUtil;
 
 import java.io.IOException;
@@ -207,7 +207,7 @@ public final class PreferenceController {
     /**
      * Used for saving in {@link android.content.SharedPreferences} new values of sorting mode
      * @param preferences       the default {@link android.content.SharedPreferences}
-     * @param sortingStrategy   the constant from {@link com.softsandr.terminal.model.listview.ListViewSortingStrategy}
+     * @param sortingStrategy   the constant from {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
      */
     public static void saveSortingStrategy(SharedPreferences preferences, ListViewSortingStrategy sortingStrategy) {
         SharedPreferences.Editor editor = preferences.edit();
@@ -216,9 +216,9 @@ public final class PreferenceController {
     }
 
     /**
-     * Get saved in {@link android.content.SharedPreferences} constant of {@link com.softsandr.terminal.model.listview.ListViewSortingStrategy}
+     * Get saved in {@link android.content.SharedPreferences} constant of {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
      * @param preferences default application {@link android.content.SharedPreferences}
-     * @return {@link com.softsandr.terminal.model.listview.ListViewSortingStrategy}
+     * @return {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
      */
     public static ListViewSortingStrategy loadSortingStrategy(SharedPreferences preferences) {
         String sortingStrategy = preferences.getString(SORTING_STRATEGY,

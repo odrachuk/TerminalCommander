@@ -15,13 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.listview;
+package com.softsandr.terminal.data.filesystem;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * The supported in App sorting strategy
+ * This class represent directory content
  */
-public enum ListViewSortingStrategy {
-    SORT_BY_NAME,
-    SORT_BY_SIZE,
-    SORT_BY_DATE
+public class DirectoryContent {
+    public List<File> files = new ArrayList<File>();
+    public List<File> dirs = new ArrayList<File>();
+
+    public Iterator<File> getFilesIterator() {
+        return files.iterator();
+    }
+
+    public Iterator<File> getDirsIterator() {
+        return dirs.iterator();
+    }
+
+    void addAll(DirectoryContent other) {
+        files.addAll(other.files);
+        dirs.addAll(other.dirs);
+    }
+
+    public String toString() {
+        return "dirs: " + dirs + "\n\nfiles:" + files;
+    }
 }

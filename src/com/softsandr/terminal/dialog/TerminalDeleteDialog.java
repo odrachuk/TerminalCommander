@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.utils.string.StringUtil;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.command.DeleteFileCommand;
 
 import java.util.ArrayList;

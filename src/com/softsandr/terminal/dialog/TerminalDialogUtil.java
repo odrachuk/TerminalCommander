@@ -21,7 +21,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.ActivePage;
 
 import java.util.ArrayList;

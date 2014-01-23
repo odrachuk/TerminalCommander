@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.filesystem;
+package com.softsandr.terminal.data.filesystem;
 
 import android.util.Log;
 import com.softsandr.utils.string.StringUtil;

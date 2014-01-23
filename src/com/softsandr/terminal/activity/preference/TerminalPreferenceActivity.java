@@ -37,8 +37,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.TerminalApplication;
-import com.softsandr.terminal.model.preferences.PreferenceController;
-import com.softsandr.terminal.model.preferences.SettingsConfiguration;
+import com.softsandr.terminal.data.preferences.PreferenceController;
+import com.softsandr.terminal.data.preferences.SettingsConfiguration;
 
 /**
  * This class used for display application setting screen

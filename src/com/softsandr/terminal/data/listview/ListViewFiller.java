@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.listview;
+package com.softsandr.terminal.data.listview;
 
 import android.util.Log;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
-import com.softsandr.terminal.model.filesystem.ProcessDirectory;
+import com.softsandr.terminal.data.filesystem.ProcessDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class ListViewFiller {
 
     /**
      * Processing target path and collect all found elements to list.
-     * Used predefined sorting strategy from {@link com.softsandr.terminal.model.listview.ListViewSortingStrategy}.
+     * Used predefined sorting strategy from {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}.
      * After processing data is not sorting in resulting list.
      * @param sortingStrategy   the enum type that determine variant of sorting field
      * @param filesList         the result list of data
