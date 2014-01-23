@@ -28,7 +28,7 @@ import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 import com.softsandr.terminal.model.listview.ListViewFiller;
 import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
+import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.NoSuchElementException;
  * The {@link android.widget.ArrayAdapter} for main lists
  */
 public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
-    private final HistoryLocationsManager historyLocationsManager;
+    private final HistoryLocationsMonitor historyLocationsManager;
     private final LinkedList<String> locationHistoryStack;
     private final SelectionMonitor selectionMonitor;
     private final TerminalActivityImpl terminalActivity;
@@ -49,7 +49,7 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     public ListViewAdapter(TerminalActivityImpl activity,
                            List<ListViewItem> filesInfo,
                            LocationLabel pathLabel,
-                           HistoryLocationsManager historyLocationsManager) {
+                           HistoryLocationsMonitor historyLocationsManager) {
         super(activity, R.layout.terminal_list_row_layout, filesInfo);
         this.terminalActivity = activity;
         this.locationLabel = pathLabel;

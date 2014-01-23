@@ -17,16 +17,10 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.adapter;
 
-import android.graphics.Color;
-import android.util.JsonReader;
 import android.webkit.MimeTypeMap;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.preference.custom.*;
 import com.softsandr.terminal.activity.terminal.TerminalActivity;
 import com.softsandr.utils.file.FileExtensions;
-
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * This class used for...
@@ -47,51 +41,17 @@ public enum ListViewItemColor {
                     || FileExtensions.OFFICE_DOCUMENT.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.COMPUTER_PROGRAMS.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.BOOK_DOCUNET.categoryExtensions().keySet().contains(ext)) {
-                String colorString = terminalActivity.getPreference().getPreferences().
-                        getString(terminalActivity.getContextResources().
-                                getString(R.string.pref_doc_item_color_key),
-                                DocumentsColorPickerPreference.DEFAULT_VALUE);
-                Reader reader = new StringReader(colorString);
-                JsonReader jsonReader = new JsonReader(reader);
-                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
-                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
+
+                return terminalActivity.getSettingsConfiguration().getDocItemColor();
             } else if (FileExtensions.ARCHIVE_OR_COMPRESSED.categoryExtensions().keySet().contains(ext)) {
-                String colorString = terminalActivity.getPreference().getPreferences().
-                        getString(terminalActivity.getContextResources().
-                                getString(R.string.pref_archive_item_color_key),
-                                ArchiveColorPickerPreference.DEFAULT_VALUE);
-                Reader reader = new StringReader(colorString);
-                JsonReader jsonReader = new JsonReader(reader);
-                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
-                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
+                return terminalActivity.getSettingsConfiguration().getArchiveItemColor();
             } else if (FileExtensions.SHELL_PROGRAMS.categoryExtensions().keySet().contains(ext)) {
-                String colorString = terminalActivity.getPreference().getPreferences().
-                        getString(terminalActivity.getContextResources().
-                                getString(R.string.pref_shell_item_color_key),
-                                ShellColorPickerPreference.DEFAULT_VALUE);
-                Reader reader = new StringReader(colorString);
-                JsonReader jsonReader = new JsonReader(reader);
-                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
-                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
+                return terminalActivity.getSettingsConfiguration().getShellItemColor();
             } else if (FileExtensions.IMAGES.categoryExtensions().keySet().contains(ext)) {
-                String colorString = terminalActivity.getPreference().getPreferences().
-                        getString(terminalActivity.getContextResources().
-                                getString(R.string.pref_images_item_color_key),
-                                ImagesColorPickerPreference.DEFAULT_VALUE);
-                Reader reader = new StringReader(colorString);
-                JsonReader jsonReader = new JsonReader(reader);
-                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
-                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
+                return terminalActivity.getSettingsConfiguration().getImageItemColor();
             } else if (FileExtensions.VIDEO.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.MUSIC.categoryExtensions().keySet().contains(ext)) {
-                String colorString = terminalActivity.getPreference().getPreferences().
-                        getString(terminalActivity.getContextResources().
-                                getString(R.string.pref_media_item_color_key),
-                                MediaColorPickerPreference.DEFAULT_VALUE);
-                Reader reader = new StringReader(colorString);
-                JsonReader jsonReader = new JsonReader(reader);
-                int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
-                return Color.argb(defArray[3], defArray[0], defArray[1], defArray[2]);
+                return terminalActivity.getSettingsConfiguration().getMediaItemColor();
             } else {
                 return terminalActivity.getContextResources().getColor(this.colorId);
             }

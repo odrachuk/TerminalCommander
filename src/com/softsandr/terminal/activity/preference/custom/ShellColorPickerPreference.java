@@ -24,17 +24,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.model.preferences.PreferenceController;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * This class customize {@link android.preference.DialogPreference} and display
@@ -61,9 +58,7 @@ public class ShellColorPickerPreference extends DialogPreference implements Seek
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         // read preferences
-        Reader reader = new StringReader(getPersistedString(DEFAULT_VALUE));
-        JsonReader jsonReader = new JsonReader(reader);
-        int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+        int[] defArray = PreferenceController.parseColorComponentsFromJson(getPersistedString(DEFAULT_VALUE));
         redCurValue = defArray[RED_ID];
         greenCurValue = defArray[GREEN_ID];
         blueCurValue = defArray[BLUE_ID];
@@ -117,18 +112,14 @@ public class ShellColorPickerPreference extends DialogPreference implements Seek
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
             // Restore existing state
-            Reader reader = new StringReader(this.getPersistedString(DEFAULT_VALUE));
-            JsonReader jsonReader = new JsonReader(reader);
-            int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+            int[] defArray = PreferenceController.parseColorComponentsFromJson(this.getPersistedString(DEFAULT_VALUE));
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
             redCurValue = defArray[ALPHA_ID];
         } else {
             // Set default state from the XML attribute
-            Reader reader = new StringReader((String) defaultValue);
-            JsonReader jsonReader = new JsonReader(reader);
-            int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+            int[] defArray = PreferenceController.parseColorComponentsFromJson((String) defaultValue);
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
@@ -172,9 +163,7 @@ public class ShellColorPickerPreference extends DialogPreference implements Seek
         super.onRestoreInstanceState(myState.getSuperState());
 
         // Set this Preference's widget to reflect the restored state
-        Reader reader = new StringReader(myState.value);
-        JsonReader jsonReader = new JsonReader(reader);
-        int[] defArray = ArchiveColorPickerPreference.readColorJson(jsonReader);
+        int[] defArray = PreferenceController.parseColorComponentsFromJson(myState.value);
         redSeekBar.setProgress(defArray[RED_ID]);
         greenSeekBar.setProgress(defArray[GREEN_ID]);
         blueSeekBar.setProgress(defArray[BLUE_ID]);

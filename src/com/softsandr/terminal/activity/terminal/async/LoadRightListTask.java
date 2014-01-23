@@ -57,7 +57,7 @@ public class LoadRightListTask extends AsyncTask<Void, Void, List<ListViewItem>>
         TextView rightPathLabel = (TextView) ((Activity) terminal).findViewById(R.id.path_location_in_right);
         ListViewAdapter rightAdapter = new ListViewAdapter((TerminalActivityImpl) terminal, list,
                 new LocationLabel(rightPathLabel),
-                terminal.getRightHistoryLocationManager());
+                terminal.getRightHistoryLocationMonitor());
         terminal.setRightListAdapter(rightAdapter);
     }
 }

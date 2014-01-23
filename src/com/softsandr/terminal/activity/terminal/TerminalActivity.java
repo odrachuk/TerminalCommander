@@ -17,15 +17,14 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import com.softsandr.terminal.model.listview.ListViewItem;
-import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
-import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
+import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
-import com.softsandr.terminal.model.preferences.TerminalPreferences;
+import com.softsandr.terminal.model.listview.ListViewItem;
+import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
+import com.softsandr.terminal.model.preferences.SettingsConfiguration;
 
 import java.util.ArrayList;
 
@@ -76,16 +75,16 @@ public interface TerminalActivity {
     Resources getContextResources();
 
     /**
-     * Return left instance of {@link HistoryLocationsManager}
-     * @return {@link HistoryLocationsManager} for left panel
+     * Return left instance of {@link com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor}
+     * @return {@link com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor} for left panel
      */
-    HistoryLocationsManager getLeftHistoryLocationManager();
+    HistoryLocationsMonitor getLeftHistoryLocationMonitor();
 
     /**
-     * Return right instance of {@link HistoryLocationsManager}
-     * @return {@link HistoryLocationsManager} for right panel
+     * Return right instance of {@link com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor}
+     * @return {@link com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor} for right panel
      */
-    HistoryLocationsManager getRightHistoryLocationManager();
+    HistoryLocationsMonitor getRightHistoryLocationMonitor();
 
     /**
      * Return String location for right panel
@@ -133,8 +132,8 @@ public interface TerminalActivity {
     ActionBarToggleMonitor getActionBarToggleMonitor();
 
     /**
-     * Return instance of {@link TerminalPreferences}
-     * @return {@link android.content.SharedPreferences} as default from application
+     * Return instance of {@link com.softsandr.terminal.model.preferences.SettingsConfiguration}
+     * @return application instance of {@link com.softsandr.terminal.model.preferences.SettingsConfiguration}
      */
-    TerminalPreferences getPreference();
+    SettingsConfiguration getSettingsConfiguration();
 }

@@ -15,29 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.model.preferences;
-
-import com.softsandr.terminal.activity.terminal.ActivePage;
+package com.softsandr.terminal.activity.terminal.monitor;
 
 import java.util.LinkedList;
 
 /**
  * This class manage writing and reading from {@link java.util.prefs.Preferences} history of locations by user
  */
-public class HistoryLocationsManager {
+public class HistoryLocationsMonitor {
     private static final int MAX_HISTORY_SIZE = 20;
     private final LinkedList<String> historyLocationsQueue;
 
-    public HistoryLocationsManager(TerminalPreferences terminalPreferences, ActivePage activePage) {
+    public HistoryLocationsMonitor(String[] historyLocations) {
         this.historyLocationsQueue = new LinkedList<String>();
-        String[] prefLocations;
-        if (activePage.equals(ActivePage.LEFT)) {
-            prefLocations = terminalPreferences.loadLeftHistoryLocation();
-        } else {
-            prefLocations = terminalPreferences.loadRightHistoryLocation();
-        }
-        if (prefLocations!= null && prefLocations.length > 0) {
-            for (String s : prefLocations) {
+        if (historyLocations != null && historyLocations.length > 0) {
+            for (String s : historyLocations) {
                 addLocation(s);
             }
         }

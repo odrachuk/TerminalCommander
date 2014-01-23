@@ -103,7 +103,7 @@ public class TerminalClickListener implements View.OnClickListener {
         }
         /* History buttons */
         else if (viewId == R.id.history_btn_in_left) {
-            String[] locations = terminal.getLeftHistoryLocationManager().getActualHistoryLocations();
+            String[] locations = terminal.getLeftHistoryLocationMonitor().getActualHistoryLocations();
             if (locations.length > 0) {
                 TerminalDialogUtil.showHistoryDialog((Activity) terminal,
                         locations,
@@ -112,7 +112,7 @@ public class TerminalClickListener implements View.OnClickListener {
                 showHistoryIsEmptyToast();
             }
         } else if (viewId == R.id.history_btn_in_right) {
-            String[] locations = terminal.getRightHistoryLocationManager().getActualHistoryLocations();
+            String[] locations = terminal.getRightHistoryLocationMonitor().getActualHistoryLocations();
             if (locations.length > 0) {
                 TerminalDialogUtil.showHistoryDialog((Activity) terminal,
                         locations,

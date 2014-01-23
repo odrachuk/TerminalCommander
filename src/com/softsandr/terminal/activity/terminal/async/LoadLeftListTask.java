@@ -57,7 +57,7 @@ public class LoadLeftListTask extends AsyncTask<Void, Void, List<ListViewItem>> 
         TextView leftPathLabel = (TextView) ((Activity) terminal).findViewById(R.id.path_location_in_left);
         ListViewAdapter leftAdapter = new ListViewAdapter((TerminalActivityImpl) terminal, list,
                 new LocationLabel(leftPathLabel),
-                terminal.getLeftHistoryLocationManager());
+                terminal.getLeftHistoryLocationMonitor());
         terminal.setLeftListAdapter(leftAdapter);
     }
 }

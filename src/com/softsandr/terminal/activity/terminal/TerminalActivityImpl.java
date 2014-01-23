@@ -23,12 +23,15 @@ import android.content.*;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.TerminalApplication;
 import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
 import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
@@ -39,12 +42,13 @@ import com.softsandr.terminal.activity.terminal.listener.ListViewItemLongClickLi
 import com.softsandr.terminal.activity.terminal.listener.ListViewTouchListener;
 import com.softsandr.terminal.activity.terminal.listener.TerminalClickListener;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
+import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.activity.terminal.monitor.SortingMenuItemsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
 import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
-import com.softsandr.terminal.model.preferences.HistoryLocationsManager;
-import com.softsandr.terminal.model.preferences.TerminalPreferences;
+import com.softsandr.terminal.model.preferences.PreferenceController;
+import com.softsandr.terminal.model.preferences.SettingsConfiguration;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
@@ -66,12 +70,11 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     private ListViewAdapter mLeftAdapter, mRightAdapter;
     private SelectionUiComponents mSelectionVisualItems;
     private ActivePage activePage = ActivePage.LEFT;
-    private ActionBarToggleMonitor mActionBarToggleMonitor;
     private ListView mLeftList, mRightList;
     private String mRightListSavedLocation, mLeftListSavedLocation;
-    private TerminalPreferences mPreferences;
-    private HistoryLocationsManager mLeftHistoryLocationManager;
-    private HistoryLocationsManager mRightHistoryLocationManager;
+    private ActionBarToggleMonitor mActionBarToggleMonitor;
+    private HistoryLocationsMonitor mLeftHistoryLocationMonitor;
+    private HistoryLocationsMonitor mRightHistoryLocationMonitor;
     private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
     private boolean isPaused;
 
@@ -125,14 +128,14 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     }
 
     private void readPreferences() {
-        mPreferences = new TerminalPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         // read last locations
-        mLeftListSavedLocation = mPreferences.loadLastLeftLocations();
-        mRightListSavedLocation = mPreferences.loadLastRightLocations();
-        mSortingStrategy = mPreferences.loadSortingStrategy();
+        mLeftListSavedLocation = PreferenceController.loadLastLeftLocation(sharedPreferences);
+        mRightListSavedLocation = PreferenceController.loadLastRightLocation(sharedPreferences);
+        mSortingStrategy = PreferenceController.loadSortingStrategy(sharedPreferences);
         // read locations history
-        mLeftHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.LEFT);
-        mRightHistoryLocationManager = new HistoryLocationsManager(mPreferences, ActivePage.RIGHT);
+        mLeftHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadLeftHistoryLocations(sharedPreferences));
+        mRightHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadRightHistoryLocations(sharedPreferences));
     }
 
     @Override
@@ -140,11 +143,22 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         Log.d(LOG_TAG, "onResume");
         super.onResume();
         registerReceiver(mFinishBroadcastReceiver, new IntentFilter(COMMON_EXIT_INTENT));
+        checkSettingsChanges();
         if (!isPaused) {
             new LoadLeftListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new LoadRightListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         isPaused = false;
+    }
+
+    /**
+     * Used for change ui parameters if settings setup changes for that
+     */
+    private void checkSettingsChanges() {
+//        RelativeLayout mainContainer = (RelativeLayout) findViewById(R.id.commander_main_container);
+//        if (mainContainer != null) {
+//            mainContainer.setBackgroundColor(terminalPreferencesListener.getTerminalBgColor());
+//        }
     }
 
     @Override
@@ -299,11 +313,18 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     }
 
     private void saveDataBeforeDestroy() {
-        mPreferences.saveLastLocations(mLeftAdapter.getLocationLabel().getPath(),
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceController.saveLastLocations(
+                sharedPreferences,
+                mLeftAdapter.getLocationLabel().getPath(),
                 mRightAdapter.getLocationLabel().getPath());
-        mPreferences.saveLeftHistoryLocations(mLeftHistoryLocationManager.getActualHistoryLocations());
-        mPreferences.saveRightHistoryLocations(mRightHistoryLocationManager.getActualHistoryLocations());
-        mPreferences.saveSortingStrategy(mSortingStrategy);
+        PreferenceController.saveLeftHistoryLocations(
+                sharedPreferences,
+                mLeftHistoryLocationMonitor.getActualHistoryLocations());
+        PreferenceController.saveRightHistoryLocations(
+                sharedPreferences,
+                mRightHistoryLocationMonitor.getActualHistoryLocations());
+        PreferenceController.saveSortingStrategy(sharedPreferences, mSortingStrategy);
     }
 
     private void initView() {
@@ -364,13 +385,13 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     }
 
     @Override
-    public HistoryLocationsManager getLeftHistoryLocationManager() {
-        return mLeftHistoryLocationManager;
+    public HistoryLocationsMonitor getLeftHistoryLocationMonitor() {
+        return mLeftHistoryLocationMonitor;
     }
 
     @Override
-    public HistoryLocationsManager getRightHistoryLocationManager() {
-        return mRightHistoryLocationManager;
+    public HistoryLocationsMonitor getRightHistoryLocationMonitor() {
+        return mRightHistoryLocationMonitor;
     }
 
     @Override
@@ -404,8 +425,8 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     }
 
     @Override
-    public TerminalPreferences getPreference() {
-        return mPreferences;
+    public SettingsConfiguration getSettingsConfiguration() {
+        return ((TerminalApplication) getApplication()).getSettingsConfiguration();
     }
 
     @Override

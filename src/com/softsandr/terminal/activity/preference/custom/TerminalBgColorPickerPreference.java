@@ -24,18 +24,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.model.preferences.PreferenceController;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 
 /**
  * This class customize {@link android.preference.DialogPreference} and display
@@ -46,7 +42,7 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
     private SeekBar redSeekBar, greenSeekBar, blueSeekBar, alphaSeekBar;
     private TextView redEditText, greenEditText, blueEditText, alphaEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":80,\"blue\":236,\"alpha\":255}";
+    public static final String DEFAULT_VALUE = "{\"red\":0,\"green\":46,\"blue\":184,\"alpha\":255}";
     private Integer redCurValue, greenCurValue, blueCurValue, alphaCurValue;
     private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2, ALPHA_ID = 3;
 
@@ -62,9 +58,7 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         // read preferences
-        Reader reader = new StringReader(getPersistedString(DEFAULT_VALUE));
-        JsonReader jsonReader = new JsonReader(reader);
-        int[] defArray = readColorJson(jsonReader);
+        int[] defArray = PreferenceController.parseColorComponentsFromJson(getPersistedString(DEFAULT_VALUE));
         redCurValue = defArray[RED_ID];
         greenCurValue = defArray[GREEN_ID];
         blueCurValue = defArray[BLUE_ID];
@@ -94,33 +88,6 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
         alphaSeekBar.setProgress(alphaCurValue);
     }
 
-    public static int[] readColorJson(JsonReader reader) {
-        int[] colors = new int[]{0, 0, 0, 255};
-        try {
-            reader.beginObject();
-            while (reader.hasNext()) {
-                String name = reader.nextName();
-                if (name != null) {
-                    if (name.equals("red")) {
-                        colors[RED_ID] = reader.nextInt();
-                    } else if (name.equals("green")) {
-                        colors[GREEN_ID] = reader.nextInt();
-                    } else if (name.equals("blue")) {
-                        colors[BLUE_ID] = reader.nextInt();
-                    } else if (name.equals("alpha")) {
-                        colors[ALPHA_ID] = reader.nextInt();
-                    } else {
-                        reader.skipValue();
-                    }
-                }
-            }
-            reader.endObject();
-        } catch (IOException ex) {
-            Log.d(LOG_TAG, "readColorJson: " + ex.getMessage());
-        }
-        return colors;
-    }
-
     private String prepareSaveJson() {
         JSONObject resultJson = new JSONObject();
         try {
@@ -146,18 +113,14 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
             // Restore existing state
-            Reader reader = new StringReader(this.getPersistedString(DEFAULT_VALUE));
-            JsonReader jsonReader = new JsonReader(reader);
-            int[] defArray = readColorJson(jsonReader);
+            int[] defArray = PreferenceController.parseColorComponentsFromJson(this.getPersistedString(DEFAULT_VALUE));
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
             redCurValue = defArray[ALPHA_ID];
         } else {
             // Set default state from the XML attribute
-            Reader reader = new StringReader((String) defaultValue);
-            JsonReader jsonReader = new JsonReader(reader);
-            int[] defArray = readColorJson(jsonReader);
+            int[] defArray = PreferenceController.parseColorComponentsFromJson((String) defaultValue);
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];
@@ -201,9 +164,7 @@ public class TerminalBgColorPickerPreference extends DialogPreference implements
         super.onRestoreInstanceState(myState.getSuperState());
 
         // Set this Preference's widget to reflect the restored state
-        Reader reader = new StringReader(myState.value);
-        JsonReader jsonReader = new JsonReader(reader);
-        int[] defArray = readColorJson(jsonReader);
+        int[] defArray = PreferenceController.parseColorComponentsFromJson(myState.value);
         redSeekBar.setProgress(defArray[RED_ID]);
         greenSeekBar.setProgress(defArray[GREEN_ID]);
         blueSeekBar.setProgress(defArray[BLUE_ID]);
