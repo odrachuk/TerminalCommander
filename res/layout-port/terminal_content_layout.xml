@@ -6,10 +6,10 @@
                 android:layout_height="match_parent"
                 android:layout_above="@id/controll_btns_container">
     <!-- Left Side -->
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout android:id="@+id/port_left_panel_container"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingRight="@dimen/terminal_left_content_page_padding_right"
-                    android:background="@color/COLOR_002EB8">
+                    android:paddingRight="@dimen/terminal_left_content_page_padding_right">
         <include layout="@layout/terminal_content_left_layout"/>
     </RelativeLayout>
     <!-- Right Side -->

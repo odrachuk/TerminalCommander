@@ -20,6 +20,7 @@ package com.softsandr.terminal.activity.terminal;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.*;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import com.softsandr.terminal.model.listview.ListViewItem;
 import com.softsandr.terminal.model.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.model.preferences.PreferenceController;
 import com.softsandr.terminal.model.preferences.SettingsConfiguration;
+import com.softsandr.utils.orient.DetermineOrientationUtil;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
@@ -76,6 +78,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     private HistoryLocationsMonitor mLeftHistoryLocationMonitor;
     private HistoryLocationsMonitor mRightHistoryLocationMonitor;
     private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
+    private View rootContainer;
     private boolean isPaused;
 
     private final BroadcastReceiver mFinishBroadcastReceiver = new BroadcastReceiver() {
@@ -100,6 +103,30 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         readPreferences();
         initView();
         initActionBar();
+    }
+
+    private void readPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // read last locations
+        mLeftListSavedLocation = PreferenceController.loadLastLeftLocation(sharedPreferences);
+        mRightListSavedLocation = PreferenceController.loadLastRightLocation(sharedPreferences);
+        mSortingStrategy = PreferenceController.loadSortingStrategy(sharedPreferences);
+        // read locations history
+        mLeftHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadLeftHistoryLocations(sharedPreferences));
+        mRightHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadRightHistoryLocations(sharedPreferences));
+    }
+
+    private void initView() {
+        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.move_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
+        findViewById(R.id.history_btn_in_left).setOnClickListener(mOnClickListener);
+        findViewById(R.id.history_btn_in_right).setOnClickListener(mOnClickListener);
+        mLeftList = (ListView) findViewById(R.id.left_directory_list);
+        mRightList = (ListView) findViewById(R.id.right_directory_list);
+        rootContainer = findViewById(R.id.terminal_main_container);
     }
 
     private void initActionBar() {
@@ -127,17 +154,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         }
     }
 
-    private void readPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // read last locations
-        mLeftListSavedLocation = PreferenceController.loadLastLeftLocation(sharedPreferences);
-        mRightListSavedLocation = PreferenceController.loadLastRightLocation(sharedPreferences);
-        mSortingStrategy = PreferenceController.loadSortingStrategy(sharedPreferences);
-        // read locations history
-        mLeftHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadLeftHistoryLocations(sharedPreferences));
-        mRightHistoryLocationMonitor = new HistoryLocationsMonitor(PreferenceController.loadRightHistoryLocations(sharedPreferences));
-    }
-
     @Override
     protected void onResume() {
         Log.d(LOG_TAG, "onResume");
@@ -155,10 +171,11 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
      * Used for change ui parameters if settings setup changes for that
      */
     private void checkSettingsChanges() {
-//        RelativeLayout mainContainer = (RelativeLayout) findViewById(R.id.commander_main_container);
-//        if (mainContainer != null) {
-//            mainContainer.setBackgroundColor(terminalPreferencesListener.getTerminalBgColor());
-//        }
+        SettingsConfiguration settConf = ((TerminalApplication) getApplication()).getSettingsConfiguration();
+        rootContainer.setBackgroundColor(settConf.getTerminalBgColor());
+        if (!DetermineOrientationUtil.isLandscapeOrientation(getResources())) {
+            findViewById(R.id.contentLayout).setBackgroundColor(settConf.getTerminalBgColor());
+        }
     }
 
     @Override
@@ -325,18 +342,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                 sharedPreferences,
                 mRightHistoryLocationMonitor.getActualHistoryLocations());
         PreferenceController.saveSortingStrategy(sharedPreferences, mSortingStrategy);
-    }
-
-    private void initView() {
-        findViewById(R.id.copy_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.move_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.rename_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.mkdir_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.delete_btn).setOnClickListener(mOnClickListener);
-        findViewById(R.id.history_btn_in_left).setOnClickListener(mOnClickListener);
-        findViewById(R.id.history_btn_in_right).setOnClickListener(mOnClickListener);
-        mLeftList = (ListView) findViewById(R.id.left_directory_list);
-        mRightList = (ListView) findViewById(R.id.right_directory_list);
     }
 
     @Override
