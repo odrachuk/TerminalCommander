@@ -17,6 +17,7 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.adapter;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 import com.softsandr.terminal.data.listview.ListViewFiller;
 import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
@@ -110,6 +112,8 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             // just use the viewHolder
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        // set actual text size
+        checkListFontSize(viewHolder);
         ListViewItem info = getItem(position);
         // assign values if the object is not null
         if(info != null && viewHolder != null) {
@@ -140,6 +144,17 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
             checkSelection(viewHolder, info, position);
         }
         return convertView;
+    }
+
+    private void checkListFontSize(ViewHolder viewHolder) {
+        int textSize = PreferenceController.loadListFontSize(
+                getContext(),
+                PreferenceManager.getDefaultSharedPreferences(getContext()));
+        if (viewHolder.textSize != textSize) {
+            viewHolder.fileNameView.setTextSize(textSize);
+            viewHolder.fileSizeView.setTextSize(textSize);
+            viewHolder.fileModifyTimeView.setTextSize(textSize);
+        }
     }
 
     /**
@@ -274,5 +289,6 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
         TextView fileNameView;
         TextView fileSizeView;
         TextView fileModifyTimeView;
+        int textSize;
     }
 }

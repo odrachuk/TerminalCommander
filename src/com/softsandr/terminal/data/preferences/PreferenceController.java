@@ -53,81 +53,84 @@ public final class PreferenceController {
 
     /**
      * Init application preferences when start application or when needs restore to default settings
-     * @param context       foreground {@link Context}
-     * @param preferences   the application default {@link android.content.SharedPreferences}
-     * @param confPrefs     the application instance of {@link SettingsConfiguration}
+     *
+     * @param context     foreground {@link Context}
+     * @param preferences the application default {@link android.content.SharedPreferences}
      */
-    public static void initDefault(Context context, SharedPreferences preferences, SettingsConfiguration confPrefs) {
+    public static void initDefault(Context context, SharedPreferences preferences) {
         SharedPreferences.Editor editor = preferences.edit();
         // archive item color
         if (!preferences.contains(context.getString(R.string.pref_archive_item_color_key))) {
-            editor.putString(context.getString(R.string.pref_archive_item_color_key), ArchiveColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setArchiveItemColor(parseColorFromJson(ArchiveColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setArchiveItemColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_archive_item_color_key),
-                                    ArchiveColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultArchiveMediaItemColor(context, editor);
         }
         // document item color
         if (!preferences.contains(context.getString(R.string.pref_doc_item_color_key))) {
-            editor.putString(context.getString(R.string.pref_doc_item_color_key), DocumentsColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setDocItemColor(parseColorFromJson(DocumentsColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setDocItemColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_doc_item_color_key),
-                            DocumentsColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultDocumentMediaItemColor(context, editor);
         }
         // image item color
         if (!preferences.contains(context.getString(R.string.pref_images_item_color_key))) {
-            editor.putString(context.getString(R.string.pref_images_item_color_key), ImagesColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setImageItemColor(parseColorFromJson(ImagesColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setImageItemColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_images_item_color_key),
-                            ImagesColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultImageMediaItemColor(context, editor);
         }
         // media item color
         if (!preferences.contains(context.getString(R.string.pref_media_item_color_key))) {
-            editor.putString(context.getString(R.string.pref_media_item_color_key), MediaColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setMediaItemColor(parseColorFromJson(MediaColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setMediaItemColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_media_item_color_key),
-                            MediaColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultMediaItemColor(context, editor);
         }
         // shell-script item color
         if (!preferences.contains(context.getString(R.string.pref_shell_item_color_key))) {
-            editor.putString(context.getString(R.string.pref_shell_item_color_key), ShellColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setShellItemColor(parseColorFromJson(ShellColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setShellItemColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_shell_item_color_key),
-                            ShellColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultShellItemColor(context, editor);
         }
         // terminal screen background color
         if (!preferences.contains(context.getString(R.string.pref_term_bg_color_key))) {
-            editor.putString(context.getString(R.string.pref_term_bg_color_key), TerminalBgColorPickerPreference.DEFAULT_VALUE);
-            confPrefs.setTerminalBgColor(parseColorFromJson(TerminalBgColorPickerPreference.DEFAULT_VALUE));
-        } else {
-            confPrefs.setTerminalBgColor(parseColorFromJson(
-                    preferences.getString(context.getString(R.string.pref_term_bg_color_key),
-                            TerminalBgColorPickerPreference.DEFAULT_VALUE)));
+            setDefaultTerminalBgColor(context, editor);
         }
+        // panel's list views font size
         if (!preferences.contains(context.getString(R.string.pref_font_picker_key))) {
-            editor.putInt(context.getString(R.string.pref_font_picker_key), (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
-            confPrefs.setListFontSize((int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
-        } else {
-            confPrefs.setListFontSize(preferences.getInt(context.getString(R.string.pref_font_picker_key),
-                    (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size)));
+            setDefaultListFontSize(context, editor);
         }
         editor.commit();
     }
 
+    private static void setDefaultArchiveMediaItemColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_archive_item_color_key),
+                ArchiveColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultDocumentMediaItemColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_doc_item_color_key),
+                DocumentsColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultImageMediaItemColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_images_item_color_key),
+                ImagesColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultMediaItemColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_media_item_color_key),
+                MediaColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultShellItemColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_shell_item_color_key),
+                ShellColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultTerminalBgColor(Context context, SharedPreferences.Editor editor) {
+        editor.putString(context.getString(R.string.pref_term_bg_color_key),
+                TerminalBgColorPickerPreference.DEFAULT_VALUE);
+    }
+
+    private static void setDefaultListFontSize(Context context, SharedPreferences.Editor editor) {
+        editor.putInt(context.getString(R.string.pref_font_picker_key),
+                (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
+    }
+
     /**
      * Used for saving in {@link android.content.SharedPreferences} new value of left and right locations
-     * @param preferences       the default {@link android.content.SharedPreferences}
-     * @param leftLocation      the left location
-     * @param rightLocation     the right location
+     *
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @param leftLocation  the left location
+     * @param rightLocation the right location
      */
     public static void saveLastLocations(SharedPreferences preferences, String leftLocation, String rightLocation) {
         SharedPreferences.Editor editor = preferences.edit();
@@ -138,8 +141,9 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} last right location
-     * @param preferences   a {@link android.content.SharedPreferences}
-     * @return  string path location
+     *
+     * @param preferences a {@link android.content.SharedPreferences}
+     * @return string path location
      */
     public static String loadLastRightLocation(SharedPreferences preferences) {
         return preferences.getString(RIGHT_PANEL_LAST_LOCATION_PREF, StringUtil.PATH_SEPARATOR);
@@ -147,7 +151,8 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} last left location
-     * @param preferences   a {@link android.content.SharedPreferences}
+     *
+     * @param preferences a {@link android.content.SharedPreferences}
      * @return string path location
      */
     public static String loadLastLeftLocation(SharedPreferences preferences) {
@@ -156,8 +161,9 @@ public final class PreferenceController {
 
     /**
      * Used for saving in {@link android.content.SharedPreferences} new values of history from left panel
-     * @param preferences       the default {@link android.content.SharedPreferences}
-     * @param actualHistoryLocations    array of locations
+     *
+     * @param preferences            the default {@link android.content.SharedPreferences}
+     * @param actualHistoryLocations array of locations
      */
     public static void saveLeftHistoryLocations(SharedPreferences preferences, String[] actualHistoryLocations) {
         if (actualHistoryLocations != null) {
@@ -171,6 +177,7 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} array of locations from left panel
+     *
      * @param preferences default {@link android.content.SharedPreferences}
      * @return array of strings
      */
@@ -181,8 +188,9 @@ public final class PreferenceController {
 
     /**
      * Used for saving in {@link android.content.SharedPreferences} new values of history locations from right panel
-     * @param preferences       the default {@link android.content.SharedPreferences}
-     * @param actualHistoryLocations    array of locations
+     *
+     * @param preferences            the default {@link android.content.SharedPreferences}
+     * @param actualHistoryLocations array of locations
      */
     public static void saveRightHistoryLocations(SharedPreferences preferences, String[] actualHistoryLocations) {
         if (actualHistoryLocations != null) {
@@ -196,6 +204,7 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} array of locations from right panel
+     *
      * @param preferences default {@link android.content.SharedPreferences}
      * @return array of strings
      */
@@ -206,8 +215,9 @@ public final class PreferenceController {
 
     /**
      * Used for saving in {@link android.content.SharedPreferences} new values of sorting mode
-     * @param preferences       the default {@link android.content.SharedPreferences}
-     * @param sortingStrategy   the constant from {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
+     *
+     * @param preferences     the default {@link android.content.SharedPreferences}
+     * @param sortingStrategy the constant from {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
      */
     public static void saveSortingStrategy(SharedPreferences preferences, ListViewSortingStrategy sortingStrategy) {
         SharedPreferences.Editor editor = preferences.edit();
@@ -217,6 +227,7 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} constant of {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
+     *
      * @param preferences default application {@link android.content.SharedPreferences}
      * @return {@link com.softsandr.terminal.data.listview.ListViewSortingStrategy}
      */
@@ -227,9 +238,93 @@ public final class PreferenceController {
     }
 
     /**
+     * Get saved in {@link android.content.SharedPreferences} value of background color for terminal
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default context {@link android.content.SharedPreferences}
+     * @return  integer as value of Color
+     */
+    public static int loadTerminalBgColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_term_bg_color_key),
+                TerminalBgColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadArchiveItemColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_archive_item_color_key),
+                ArchiveColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadDocumentItemColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_doc_item_color_key),
+                DocumentsColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadImageItemColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_images_item_color_key),
+                ImagesColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadMediaItemColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_media_item_color_key),
+                MediaColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadShellItemColor(Context context, SharedPreferences preferences) {
+        String colorJson = preferences.getString(context.getString(R.string.pref_shell_item_color_key),
+                ShellColorPickerPreference.DEFAULT_VALUE);
+        return parseColorFromJson(colorJson);
+    }
+
+    /**
+     * Get saved in {@link android.content.SharedPreferences} value of color for archives
+     * @param context       the foreground {@link android.content.Context}
+     * @param preferences   the default {@link android.content.SharedPreferences}
+     * @return  integer as color
+     */
+    public static int loadListFontSize(Context context, SharedPreferences preferences) {
+        return preferences.getInt(context.getString(R.string.pref_font_picker_key),
+                (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
+    }
+
+    /**
      * Used when needs parse color values {red, green, blue, alpha} from json string
-     * @param jsonValue     a json string
-     * @return  array of color components
+     *
+     * @param jsonValue a json string
+     * @return array of color components
      */
     public static int[] parseColorComponentsFromJson(String jsonValue) {
         Reader reader = new StringReader(jsonValue);
@@ -260,7 +355,8 @@ public final class PreferenceController {
 
     /**
      * Use for parsing Color from json string
-     * @param json  a json string
+     *
+     * @param json a json string
      * @return {@link android.graphics.Color} as integer
      */
     public static int parseColorFromJson(String json) {

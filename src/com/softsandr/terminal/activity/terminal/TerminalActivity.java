@@ -24,7 +24,6 @@ import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
 import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
-import com.softsandr.terminal.data.preferences.SettingsConfiguration;
 
 import java.util.ArrayList;
 
@@ -130,10 +129,4 @@ public interface TerminalActivity {
      * from terminal activity.
      */
     ActionBarToggleMonitor getActionBarToggleMonitor();
-
-    /**
-     * Return instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}
-     * @return application instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}
-     */
-    SettingsConfiguration getSettingsConfiguration();
 }

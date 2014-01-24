@@ -30,7 +30,6 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.TerminalApplication;
 import com.softsandr.terminal.activity.commander.CommanderActivityImpl;
 import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
@@ -47,7 +46,6 @@ import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
 import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.data.preferences.PreferenceController;
-import com.softsandr.terminal.data.preferences.SettingsConfiguration;
 import com.softsandr.utils.orient.DetermineOrientationUtil;
 import com.softsandr.utils.string.StringUtil;
 
@@ -169,10 +167,10 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
      * Used for change ui parameters if settings setup changes for that
      */
     private void checkSettingsChanges() {
-        SettingsConfiguration settConf = ((TerminalApplication) getApplication()).getSettingsConfiguration();
-        rootContainer.setBackgroundColor(settConf.getTerminalBgColor());
+        final int color = PreferenceController.loadTerminalBgColor(this, PreferenceManager.getDefaultSharedPreferences(this));
+        rootContainer.setBackgroundColor(color);
         if (!DetermineOrientationUtil.isLandscapeOrientation(getResources())) {
-            findViewById(R.id.contentLayout).setBackgroundColor(settConf.getTerminalBgColor());
+            findViewById(R.id.contentLayout).setBackgroundColor(color);
         }
     }
 
@@ -425,11 +423,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     @Override
     public ActionBarToggleMonitor getActionBarToggleMonitor() {
         return mActionBarToggleMonitor;
-    }
-
-    @Override
-    public SettingsConfiguration getSettingsConfiguration() {
-        return ((TerminalApplication) getApplication()).getSettingsConfiguration();
     }
 
     @Override

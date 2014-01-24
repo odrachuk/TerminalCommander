@@ -17,9 +17,14 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.adapter;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.webkit.MimeTypeMap;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 import com.softsandr.utils.file.FileExtensions;
 
 /**
@@ -37,25 +42,28 @@ public enum ListViewItemColor {
         @Override
         public int getColor(TerminalActivity terminalActivity, String itemText) {
             String ext = MimeTypeMap.getFileExtensionFromUrl(itemText);
+            Activity activity = (TerminalActivityImpl) terminalActivity;
+            SharedPreferences preferences = PreferenceManager.
+                    getDefaultSharedPreferences((TerminalActivityImpl) terminalActivity);
             if (FileExtensions.WEB.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.OFFICE_DOCUMENT.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.COMPUTER_PROGRAMS.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.BOOK_DOCUNET.categoryExtensions().keySet().contains(ext)) {
                 // Documents
-                return terminalActivity.getSettingsConfiguration().getDocItemColor();
+                return PreferenceController.loadDocumentItemColor(activity, preferences);
             } else if (FileExtensions.ARCHIVE_OR_COMPRESSED.categoryExtensions().keySet().contains(ext)) {
                 // Archives
-                return terminalActivity.getSettingsConfiguration().getArchiveItemColor();
+                return PreferenceController.loadArchiveItemColor(activity, preferences);
             } else if (FileExtensions.SHELL_PROGRAMS.categoryExtensions().keySet().contains(ext)) {
                 // Shell-scripts
-                return terminalActivity.getSettingsConfiguration().getShellItemColor();
+                return PreferenceController.loadShellItemColor(activity, preferences);
             } else if (FileExtensions.IMAGES.categoryExtensions().keySet().contains(ext)) {
                 // Images
-                return terminalActivity.getSettingsConfiguration().getImageItemColor();
+                return PreferenceController.loadImageItemColor(activity, preferences);
             } else if (FileExtensions.VIDEO.categoryExtensions().keySet().contains(ext)
                     || FileExtensions.MUSIC.categoryExtensions().keySet().contains(ext)) {
                 // Media
-                return terminalActivity.getSettingsConfiguration().getMediaItemColor();
+                return PreferenceController.loadMediaItemColor(activity, preferences);
             } else {
                 return terminalActivity.getContextResources().getColor(this.colorId);
             }

@@ -18,7 +18,6 @@ package com.softsandr.terminal;
 
 import android.app.Application;
 import android.preference.PreferenceManager;
-import com.softsandr.terminal.data.preferences.SettingsConfiguration;
 import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
@@ -32,10 +31,6 @@ import com.softsandr.terminal.data.preferences.PreferenceController;
  * of how to perform unit tests on an Application object.
  */
 public class TerminalApplication extends Application {
-    /**
-     * Container for all possible configuration features
-     */
-    private SettingsConfiguration settingsConfiguration;
 
     @Override
     public void onCreate() {
@@ -46,21 +41,11 @@ public class TerminalApplication extends Application {
      * This populates the default values from the preferences XML file and set custom predefined values
      */
     private void initDefaultPreference() {
-        settingsConfiguration = new SettingsConfiguration();
         PreferenceManager.setDefaultValues(this, R.xml.application_preferences, false);
-        PreferenceController.initDefault(this, PreferenceManager.getDefaultSharedPreferences(this), settingsConfiguration);
+        PreferenceController.initDefault(this, PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     @Override
     public void onTerminate() {
-    }
-
-    /**
-     * Get application instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}.
-     * Only one instance of this returned object should be used in Application
-     * @return  application instance of {@link com.softsandr.terminal.data.preferences.SettingsConfiguration}
-     */
-    public SettingsConfiguration getSettingsConfiguration() {
-        return settingsConfiguration;
     }
 }

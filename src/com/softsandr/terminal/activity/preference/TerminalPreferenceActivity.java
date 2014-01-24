@@ -36,9 +36,7 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.TerminalApplication;
 import com.softsandr.terminal.data.preferences.PreferenceController;
-import com.softsandr.terminal.data.preferences.SettingsConfiguration;
 
 /**
  * This class used for display application setting screen
@@ -101,30 +99,6 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(LOG_TAG, "onSharedPreferenceChanged: Key " + key);
-        SettingsConfiguration settingsConfigure = ((TerminalApplication) getApplication()).getSettingsConfiguration();
-        if (settingsConfigure != null) {
-            if (key.equals(getString(R.string.pref_archive_item_color_key))) {
-                settingsConfigure.setArchiveItemColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_shell_executor_key))) {
-                settingsConfigure.setShellItemColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_images_item_color_key))) {
-                settingsConfigure.setImageItemColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_media_item_color_key))) {
-                settingsConfigure.setMediaItemColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_doc_item_color_key))) {
-                settingsConfigure.setDocItemColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_term_bg_color_key))) {
-                settingsConfigure.setTerminalBgColor(
-                        PreferenceController.parseColorFromJson(sharedPreferences.getString(key, "")));
-            } else if (key.equals(getString(R.string.pref_font_picker_key))) {
-                settingsConfigure.setListFontSize(sharedPreferences.getInt(key, 0));
-            }
-        }
     }
 
     /**
