@@ -58,6 +58,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     public static final int REQUEST_CODE = 0;
     public static final String COMMON_EXIT_INTENT = TerminalActivityImpl.class.getSimpleName() + ".COMMON_EXIT_INTENT";
     public static final String CLEAR_HISTORY_INTENT = TerminalActivityImpl.class.getSimpleName() + ".CLEAR_HISTORY_INTENT";
+    public static final String SETTING_CHANGED_INTENT = TerminalActivityImpl.class.getSimpleName() + ".SETTING_CHANGED_INTENT";
 
     private static final String LOG_TAG = TerminalActivityImpl.class.getSimpleName();
     private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
@@ -77,6 +78,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
     private View rootContainer;
     private boolean isPaused;
+    private boolean isSettingsChanged;
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -88,6 +90,8 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                 } else if (action.equals(CLEAR_HISTORY_INTENT)) {
                     mLeftHistoryLocationMonitor.clearHistory();
                     mRightHistoryLocationMonitor.clearHistory();
+                } else if (action.equals(SETTING_CHANGED_INTENT)) {
+                    isSettingsChanged = true;
                 }
             }
         }
@@ -161,13 +165,16 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(COMMON_EXIT_INTENT);
         intentFilter.addAction(CLEAR_HISTORY_INTENT);
+        intentFilter.addAction(SETTING_CHANGED_INTENT);
         registerReceiver(mBroadcastReceiver, intentFilter);
         checkSettingsChanges();
-        if (!isPaused) {
+        // refresh panel if show activity in first or some settings ui components was changed
+        if (!isPaused || isSettingsChanged) {
             new LoadLeftListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new LoadRightListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         isPaused = false;
+        isSettingsChanged = false;
     }
 
     /**

@@ -89,6 +89,14 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(LOG_TAG, "onSharedPreferenceChanged: Key " + key);
+        if (key.equals(getString(R.string.pref_archive_item_color_key))
+                || key.equals(getString(R.string.pref_doc_item_color_key))
+                || key.equals(getString(R.string.pref_media_item_color_key))
+                || key.equals(getString(R.string.pref_shell_item_color_key))
+                || key.equals(getString(R.string.pref_images_item_color_key))
+                || key.equals(getString(R.string.pref_font_picker_key))) {
+            sendBroadcast(new Intent(TerminalActivityImpl.SETTING_CHANGED_INTENT));
+        }
     }
 
     /**
@@ -137,6 +145,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                 } else if (preference.getKey().equals(getString(R.string.pref_back_def_colorize_key))) {
                     // reset to default settings
                     PreferenceController.resetToDefault(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));
+                    getActivity().sendBroadcast(new Intent(TerminalActivityImpl.SETTING_CHANGED_INTENT));
                 }
             }
             return false;
