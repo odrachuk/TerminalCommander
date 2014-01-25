@@ -121,8 +121,7 @@ public final class PreferenceController {
     }
 
     private static void setDefaultListFontSize(Context context, SharedPreferences.Editor editor) {
-        editor.putInt(context.getString(R.string.pref_font_picker_key),
-                (int) context.getResources().getDimension(R.dimen.terminal_list_item_text_size));
+        editor.putInt(context.getString(R.string.pref_font_picker_key), 10);
     }
 
     /**

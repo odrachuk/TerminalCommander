@@ -18,19 +18,19 @@
 package com.softsandr.terminal.activity.terminal.adapter;
 
 import android.preference.PreferenceManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.preference.custom.FontPickerPreference;
 import com.softsandr.terminal.activity.terminal.LocationLabel;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionMonitor;
 import com.softsandr.terminal.data.listview.ListViewFiller;
 import com.softsandr.terminal.data.listview.ListViewItem;
-import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.data.preferences.PreferenceController;
 import com.softsandr.utils.string.StringUtil;
 
@@ -148,13 +148,13 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
     }
 
     private void checkListFontSize(ViewHolder viewHolder) {
-        int textSize = PreferenceController.loadListFontSize(
-                getContext(),
-                PreferenceManager.getDefaultSharedPreferences(getContext()));
+        int textSize = PreferenceController.loadListFontSize(getContext(),
+                PreferenceManager.getDefaultSharedPreferences(getContext())) + FontPickerPreference.STEP;
         if (viewHolder.textSize != textSize) {
-            viewHolder.fileNameView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-            viewHolder.fileSizeView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-            viewHolder.fileModifyTimeView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            viewHolder.fileNameView.setTextSize(textSize);
+            viewHolder.fileSizeView.setTextSize(textSize);
+            viewHolder.fileModifyTimeView.setTextSize(textSize);
+            viewHolder.textSize = textSize;
         }
     }
 

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.softsandr.commander.commands.interactive.InteractiveCommands;
 import com.softsandr.commander.process.CommanderProcess;
 import com.softsandr.commander.process.CommandsResponseHandler;
+import com.softsandr.terminal.R;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -147,8 +148,7 @@ public class InteractiveCommandExecution extends CommandExecution {
         try {
             commanderProcess.startExecutionProcess(commanderProcess.getCommander().getPrompt().getUserLocation());
         } catch (IOException e) {
-            Toast.makeText(commanderProcess.getCommander().getActivity(),
-                    "Can't start main execution process.", Toast.LENGTH_LONG).show();
+            commanderProcess.getCommander().showToast(R.string.cannot_start_main_process);
         }
     }
 }

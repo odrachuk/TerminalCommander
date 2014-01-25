@@ -38,7 +38,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
-import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
  * This class used for display application setting screen
@@ -46,7 +45,6 @@ import com.softsandr.terminal.data.preferences.PreferenceController;
 
 public class TerminalPreferenceActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String LOG_TAG = TerminalPreferenceActivity.class.getSimpleName();
-    private String appVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +53,6 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
         getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
         // Display home button on action bar
         initActionBar();
-        // read app version
-        PackageInfo pInfo = null;
-        try {
-            PackageManager packageManager = getPackageManager();
-            if (packageManager != null) {
-                pInfo = packageManager.getPackageInfo(getPackageName(), 0);
-                appVersion = pInfo.versionName;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            // ignored
-        }
     }
 
     private void initActionBar() {
@@ -106,7 +93,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
     /**
      * The extends of {@link android.preference.PreferenceFragment} used as maine Settings screen
      */
-    public class PrefsFragment extends PreferenceFragment {
+    public static class PrefsFragment extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -120,6 +107,18 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
             super.onResume();
             Preference versionPref = findPreference(getString(R.string.pref_app_version_key));
             if (versionPref != null) {
+                String appVersion = "";
+                // read app version
+                PackageInfo pInfo;
+                try {
+                    PackageManager packageManager = getActivity().getPackageManager();
+                    if (packageManager != null) {
+                        pInfo = packageManager.getPackageInfo(getActivity().getPackageName(), 0);
+                        appVersion = pInfo.versionName;
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    // ignored
+                }
                 versionPref.setSummary(appVersion);
             }
         }
@@ -132,7 +131,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                 initializeActionBar((PreferenceScreen) preference);
             } else {
                 if (preference.getKey().equals(getString(R.string.pref_clear_locations_key))) {
-                    sendBroadcast(new Intent(TerminalActivityImpl.CLEAR_HISTORY_INTENT));
+                    getActivity().sendBroadcast(new Intent(TerminalActivityImpl.CLEAR_HISTORY_INTENT));
                 }
             }
             return false;

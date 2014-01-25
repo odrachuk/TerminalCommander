@@ -28,7 +28,7 @@
                 android:title="@string/pref_font_picker_title"
                 android:summary="@string/pref_font_picker_summary"
                 android:dialogTitle="@string/pref_font_picker_dlg_title"
-                android:defaultValue="4"/>
+                android:defaultValue="6"/>
 
         <PreferenceScreen
                 android:key="@string/pref_colorize_key"

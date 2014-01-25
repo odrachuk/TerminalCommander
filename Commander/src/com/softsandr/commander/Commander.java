@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.softsandr.commander.process.CommanderProcess;
+import com.softsandr.terminal.R;
 
 import java.io.IOException;
 
@@ -101,7 +102,7 @@ public class Commander {
         try {
             process.startExecutionProcess(path);
         } catch (IOException e) {
-            Toast.makeText(commanderActivity, "Can't start main execution process", Toast.LENGTH_LONG).show();
+            showToast(R.string.cannot_start_main_process);
         }
     }
 
@@ -116,5 +117,13 @@ public class Commander {
         if (process.getInteractiveExecution() != null) {
             process.getInteractiveExecution().cancel();
         }
+    }
+
+    /**
+     * Used for show toast with text
+     * @param stringId  the string resource id located in module
+     */
+    public void showToast(int stringId) {
+        Toast.makeText(commanderActivity, commanderActivity.getString(stringId), Toast.LENGTH_LONG).show();
     }
 }

@@ -18,6 +18,7 @@
 package com.softsandr.commander.commands.local;
 
 import com.softsandr.commander.process.CommanderProcess;
+import com.softsandr.terminal.R;
 import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 
@@ -41,13 +42,13 @@ public class CdCommand extends LocalCommand {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
             if (FileUtil.isDirectoryExist(userLocation, targetDirectory)) {
                 if (!FileUtil.canChangeDirectory(userLocation, targetDirectory)) {
-                    callbackString += "Cannot read filesystem";
+                    callbackString += commanderProcess.getCommander().getActivity().getString(R.string.not_enough_permission_for_filesystem_reading);
                 }
             } else {
-                callbackString += "Target is not filesystem";
+                callbackString += commanderProcess.getCommander().getActivity().getString(R.string.target_is_not_directory);
             }
         } else {
-            callbackString += "No arguments";
+            callbackString += commanderProcess.getCommander().getActivity().getString(R.string.not_arguments);
         }
         return callbackString;
     }
@@ -70,7 +71,7 @@ public class CdCommand extends LocalCommand {
                 commanderProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString = "Can't start main execution process";
+            callbackString = commanderProcess.getCommander().getActivity().getString(R.string.cannot_start_main_process);
         }
         return callbackString;
     }

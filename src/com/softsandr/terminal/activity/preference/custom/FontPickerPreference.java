@@ -27,15 +27,17 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
  * This class customize {@link android.preference.DialogPreference} and display
  * {@link android.widget.SeekBar} for setup preference int value
  */
 public class FontPickerPreference extends DialogPreference {
+    public static final int STEP = 10;
     private SeekBar seekBar;
     private TextView textView;
-    private static final int DEFAULT_VALUE = 4;
+    private final int DEFAULT_VALUE = 6;
     private int mCurrentValue;
 
     public FontPickerPreference(Context context, AttributeSet attrs) {
@@ -63,7 +65,7 @@ public class FontPickerPreference extends DialogPreference {
                                           boolean fromUser) {
                 // prevent seeking on app creation
                 mCurrentValue = progress;
-                textView.setText(String.valueOf(mCurrentValue + 10));
+                textView.setText(String.valueOf(mCurrentValue + STEP));
             }
         });
         textView.setText(String.valueOf(mCurrentValue));
