@@ -25,6 +25,7 @@ import android.util.AttributeSet;
  * {@link android.widget.SeekBar} for setup preference int value color of shel-scripts
  */
 public class ShellColorPickerPreference extends ColorPickerPreference {
+    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":104,\"blue\":67}";
 
     public ShellColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +33,6 @@ public class ShellColorPickerPreference extends ColorPickerPreference {
 
     @Override
     protected void setDefaultJson() {
-        defaultValue = "{\"red\":215,\"green\":168,\"blue\":67}";
+        defaultValue = DEFAULT_VALUE;
     }
 }

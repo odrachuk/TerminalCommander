@@ -25,6 +25,7 @@ import android.util.AttributeSet;
  * {@link android.widget.SeekBar} for setup preference int value color of textual items
  */
 public class DocumentsColorPickerPreference extends ColorPickerPreference {
+    public static final String DEFAULT_VALUE = "{\"red\":208,\"green\":152,\"blue\":88}";
 
     public DocumentsColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +33,6 @@ public class DocumentsColorPickerPreference extends ColorPickerPreference {
 
     @Override
     protected void setDefaultJson() {
-        defaultValue = "{\"red\":208,\"green\":152,\"blue\":88}";
+        defaultValue = DEFAULT_VALUE;
     }
 }

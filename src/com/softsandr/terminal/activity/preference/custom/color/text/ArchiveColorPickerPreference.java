@@ -25,6 +25,7 @@ import android.util.AttributeSet;
  * {@link android.widget.SeekBar} for setup preference int value color of archive items
  */
 public class ArchiveColorPickerPreference extends ColorPickerPreference {
+    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":80,\"blue\":255}";
 
     public ArchiveColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +33,6 @@ public class ArchiveColorPickerPreference extends ColorPickerPreference {
 
     @Override
     protected void setDefaultJson() {
-        defaultValue = "{\"red\":255,\"green\":80,\"blue\":255}";
+        defaultValue = DEFAULT_VALUE;
     }
 }

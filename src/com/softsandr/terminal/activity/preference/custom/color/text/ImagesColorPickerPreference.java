@@ -25,6 +25,7 @@ import android.util.AttributeSet;
  * {@link android.widget.SeekBar} for setup preference int value color of image items
  */
 public class ImagesColorPickerPreference extends ColorPickerPreference {
+    public static final String DEFAULT_VALUE = "{\"red\":85,\"green\":235,\"blue\":255}";
 
     public ImagesColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +33,6 @@ public class ImagesColorPickerPreference extends ColorPickerPreference {
 
     @Override
     protected void setDefaultJson() {
-        defaultValue = "{\"red\":85,\"green\":235,\"blue\":255}";
+        defaultValue = DEFAULT_VALUE;
     }
 }

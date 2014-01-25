@@ -25,6 +25,7 @@ import android.util.AttributeSet;
  * {@link android.widget.SeekBar} for setup preference int value color of media items
  */
 public class MediaColorPickerPreference extends ColorPickerPreference {
+    public static final String DEFAULT_VALUE = "{\"red\":112,\"green\":235,\"blue\":96}";
 
     public MediaColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +33,6 @@ public class MediaColorPickerPreference extends ColorPickerPreference {
 
     @Override
     protected void setDefaultJson() {
-        defaultValue = "{\"red\":112,\"green\":235,\"blue\":96}";
+        defaultValue = DEFAULT_VALUE;
     }
 }
