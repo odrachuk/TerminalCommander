@@ -90,6 +90,33 @@ public final class PreferenceController {
         editor.commit();
     }
 
+    /**
+     * Reset to default specific parameters
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     */
+    public static void resetToDefault(Context context, SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // archive item color
+        setDefaultArchiveMediaItemColor(context, editor);
+        // document item color
+        setDefaultDocumentMediaItemColor(context, editor);
+        // image item color
+        setDefaultImageMediaItemColor(context, editor);
+        // media item color
+        setDefaultMediaItemColor(context, editor);
+        // shell-script item color
+        setDefaultShellItemColor(context, editor);
+        // terminal screen background color
+        setDefaultTerminalBgColor(context, editor);
+        // panel's list views font size
+        setDefaultListFontSize(context, editor);
+
+        editor.commit();
+    }
+
     private static void setDefaultArchiveMediaItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_archive_item_color_key),
                 ArchiveColorPickerPreference.DEFAULT_VALUE);
@@ -121,7 +148,7 @@ public final class PreferenceController {
     }
 
     private static void setDefaultListFontSize(Context context, SharedPreferences.Editor editor) {
-        editor.putInt(context.getString(R.string.pref_font_picker_key), 10);
+        editor.putInt(context.getString(R.string.pref_font_picker_key), FontPickerPreference.DEFAULT_VALUE);
     }
 
     /**
@@ -238,9 +265,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of background color for terminal
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default context {@link android.content.SharedPreferences}
-     * @return  integer as value of Color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default context {@link android.content.SharedPreferences}
+     * @return integer as value of Color
      */
     public static int loadTerminalBgColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_term_bg_color_key),
@@ -250,9 +278,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadArchiveItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_archive_item_color_key),
@@ -262,9 +291,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadDocumentItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_doc_item_color_key),
@@ -274,9 +304,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadImageItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_images_item_color_key),
@@ -286,9 +317,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadMediaItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_media_item_color_key),
@@ -298,9 +330,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadShellItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_shell_item_color_key),
@@ -310,9 +343,10 @@ public final class PreferenceController {
 
     /**
      * Get saved in {@link android.content.SharedPreferences} value of color for archives
-     * @param context       the foreground {@link android.content.Context}
-     * @param preferences   the default {@link android.content.SharedPreferences}
-     * @return  integer as color
+     *
+     * @param context     the foreground {@link android.content.Context}
+     * @param preferences the default {@link android.content.SharedPreferences}
+     * @return integer as color
      */
     public static int loadListFontSize(Context context, SharedPreferences preferences) {
         return preferences.getInt(context.getString(R.string.pref_font_picker_key),

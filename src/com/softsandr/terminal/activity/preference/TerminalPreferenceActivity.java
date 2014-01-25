@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
  * This class used for display application setting screen
@@ -131,7 +132,11 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                 initializeActionBar((PreferenceScreen) preference);
             } else {
                 if (preference.getKey().equals(getString(R.string.pref_clear_locations_key))) {
+                    // send clear history broadcast
                     getActivity().sendBroadcast(new Intent(TerminalActivityImpl.CLEAR_HISTORY_INTENT));
+                } else if (preference.getKey().equals(getString(R.string.pref_back_def_colorize_key))) {
+                    // reset to default settings
+                    PreferenceController.resetToDefault(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));
                 }
             }
             return false;

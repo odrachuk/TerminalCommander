@@ -84,10 +84,12 @@
     <PreferenceCategory
             android:title="@string/pref_info_title">
 
+<!--
         <Preference
                 android:key="@string/pref_open_source_license_key"
                 android:title="@string/pref_open_source_license_title"
                 android:summary="@string/pref_open_source_license_summary"/>
+-->
 
         <Preference
                 android:key="@string/pref_app_version_key"

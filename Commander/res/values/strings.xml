@@ -3,7 +3,7 @@
     <string name="tabulate">\u0009</string>
     <string name="whitespace">\u00A0</string>
     <string name="dash">\u2014</string>
-    <string name="cannot_start_main_process">App cannot start main execution process.\n Please check default executor path
+    <string name="cannot_start_main_process">App cannot start main execution process.\nPlease check default executor path
         in settings.
     </string>
     <string name="bad_initial_directory">The initial process\' directory wrong</string>

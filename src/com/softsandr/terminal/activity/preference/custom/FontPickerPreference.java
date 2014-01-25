@@ -35,9 +35,9 @@ import com.softsandr.terminal.data.preferences.PreferenceController;
  */
 public class FontPickerPreference extends DialogPreference {
     public static final int STEP = 10;
+    public static final int DEFAULT_VALUE = 6;
     private SeekBar seekBar;
     private TextView textView;
-    private final int DEFAULT_VALUE = 6;
     private int mCurrentValue;
 
     public FontPickerPreference(Context context, AttributeSet attrs) {

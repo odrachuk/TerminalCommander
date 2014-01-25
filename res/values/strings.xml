@@ -112,6 +112,6 @@
     <string name="pref_app_version_key">pref_app_version</string>
     <string name="pref_app_version_title">App version</string>
     <string name="pref_back_def_colorize_key">pref_back_def_colorize_key</string>
-    <string name="pref_back_def_colorize_title">Default colorize</string>
-    <string name="pref_back_def_colorize_summary">Restore default colorize</string>
+    <string name="pref_back_def_colorize_title">Reset colorize</string>
+    <string name="pref_back_def_colorize_summary">Reset to default customized colors</string>
 </resources>
