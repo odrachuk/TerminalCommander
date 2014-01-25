@@ -20,6 +20,7 @@ package com.softsandr.terminal.activity.preference;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.softsandr.terminal.R;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
@@ -130,8 +132,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                 initializeActionBar((PreferenceScreen) preference);
             } else {
                 if (preference.getKey().equals(getString(R.string.pref_clear_locations_key))) {
-                    PreferenceController.saveLeftHistoryLocations(PreferenceManager.getDefaultSharedPreferences(getActivity()), new String[0]);
-                    PreferenceController.saveRightHistoryLocations(PreferenceManager.getDefaultSharedPreferences(getActivity()), new String[0]);
+                    sendBroadcast(new Intent(TerminalActivityImpl.CLEAR_HISTORY_INTENT));
                 }
             }
             return false;

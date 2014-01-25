@@ -57,6 +57,7 @@ import java.util.ArrayList;
 public class TerminalActivityImpl extends Activity implements TerminalActivity {
     public static final int REQUEST_CODE = 0;
     public static final String COMMON_EXIT_INTENT = TerminalActivityImpl.class.getSimpleName() + ".COMMON_EXIT_INTENT";
+    public static final String CLEAR_HISTORY_INTENT = TerminalActivityImpl.class.getSimpleName() + ".CLEAR_HISTORY_INTENT";
 
     private static final String LOG_TAG = TerminalActivityImpl.class.getSimpleName();
     private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
@@ -77,13 +78,16 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     private View rootContainer;
     private boolean isPaused;
 
-    private final BroadcastReceiver mFinishBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action != null) {
                 if (action.equals(COMMON_EXIT_INTENT)) {
                     finish();
+                } else if (action.equals(CLEAR_HISTORY_INTENT)) {
+                    mLeftHistoryLocationMonitor.clearHistory();
+                    mRightHistoryLocationMonitor.clearHistory();
                 }
             }
         }
@@ -154,7 +158,10 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     protected void onResume() {
         Log.d(LOG_TAG, "onResume");
         super.onResume();
-        registerReceiver(mFinishBroadcastReceiver, new IntentFilter(COMMON_EXIT_INTENT));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(COMMON_EXIT_INTENT);
+        intentFilter.addAction(CLEAR_HISTORY_INTENT);
+        registerReceiver(mBroadcastReceiver, intentFilter);
         checkSettingsChanges();
         if (!isPaused) {
             new LoadLeftListTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -320,7 +327,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mFinishBroadcastReceiver);
+        unregisterReceiver(mBroadcastReceiver);
         saveDataBeforeDestroy();
         super.onDestroy();
     }

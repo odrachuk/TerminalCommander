@@ -18,6 +18,7 @@
 package com.softsandr.terminal.activity.terminal.adapter;
 
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,9 +152,9 @@ public class ListViewAdapter extends ArrayAdapter<ListViewItem> {
                 getContext(),
                 PreferenceManager.getDefaultSharedPreferences(getContext()));
         if (viewHolder.textSize != textSize) {
-            viewHolder.fileNameView.setTextSize(textSize);
-            viewHolder.fileSizeView.setTextSize(textSize);
-            viewHolder.fileModifyTimeView.setTextSize(textSize);
+            viewHolder.fileNameView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            viewHolder.fileSizeView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            viewHolder.fileModifyTimeView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         }
     }
 

@@ -50,4 +50,11 @@ public class HistoryLocationsMonitor {
     public String[] getActualHistoryLocations() {
         return historyLocationsQueue.toArray(new String[historyLocationsQueue.size()]);
     }
+
+    /**
+     * Used for erasing all data history
+     */
+    public void clearHistory() {
+        historyLocationsQueue.clear();
+    }
 }
