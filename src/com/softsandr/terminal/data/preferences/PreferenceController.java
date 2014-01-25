@@ -23,7 +23,9 @@ import android.graphics.Color;
 import android.util.JsonReader;
 import android.util.Log;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.preference.custom.*;
+import com.softsandr.terminal.activity.preference.custom.color.bg.TerminalBgColorPickerPreference;
+import com.softsandr.terminal.activity.preference.custom.color.text.*;
+import com.softsandr.terminal.activity.preference.custom.font.FontPickerPreference;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.utils.string.StringUtil;
 

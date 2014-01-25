@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.activity.preference.custom;
+package com.softsandr.terminal.activity.preference.custom.color.bg;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -37,16 +37,16 @@ import org.json.JSONObject;
  * This class customize {@link android.preference.DialogPreference} and display
  * {@link android.widget.SeekBar} for setup preference int value
  */
-public class ArchiveColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
-    private static final String LOG_TAG = ArchiveColorPickerPreference.class.getSimpleName();
+public class TerminalBgColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+    private static final String LOG_TAG = TerminalBgColorPickerPreference.class.getSimpleName();
     private SeekBar redSeekBar, greenSeekBar, blueSeekBar;
     private TextView redEditText, greenEditText, blueEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":80,\"blue\":236}";
+    public static final String DEFAULT_VALUE = "{\"red\":0,\"green\":46,\"blue\":184}";
     private Integer redCurValue, greenCurValue, blueCurValue;
     private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2;
 
-    public ArchiveColorPickerPreference(Context context, AttributeSet attrs) {
+    public TerminalBgColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setDialogLayoutResource(R.layout.color_picker_dialog_layout);
         setPositiveButtonText(android.R.string.ok);
@@ -64,7 +64,7 @@ public class ArchiveColorPickerPreference extends DialogPreference implements Se
         blueCurValue = defArray[BLUE_ID];
         // setup color test view
         colorView = (TextView) view.findViewById(R.id.color_picker_test_view);
-        colorView.setBackgroundColor(PreferenceController.parseColorFromJson(getSharedPreferences().getString(getContext().getResources().getString(R.string.pref_term_bg_color_key), "")));
+        colorView.setText("");
         // red
         redEditText = (TextView) view.findViewById(R.id.color_picker_red_edit_text);
         redSeekBar = (SeekBar) view.findViewById(R.id.color_picker_red_seek_bar);
@@ -191,7 +191,7 @@ public class ArchiveColorPickerPreference extends DialogPreference implements Se
     }
 
     private void refreshColor() {
-        colorView.setTextColor(Color.rgb(redCurValue, greenCurValue, blueCurValue));
+        colorView.setBackgroundColor(Color.rgb(redCurValue, greenCurValue, blueCurValue));
     }
 
     private static class SavedState extends BaseSavedState {

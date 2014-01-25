@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.activity.preference.custom;
+package com.softsandr.terminal.activity.preference.custom.color.text;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -37,17 +37,18 @@ import org.json.JSONObject;
  * This class customize {@link android.preference.DialogPreference} and display
  * {@link android.widget.SeekBar} for setup preference int value
  */
-public class ShellColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
-    private static final String LOG_TAG = ArchiveColorPickerPreference.class.getSimpleName();
+public abstract class ColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+    protected final String logTag;
     private SeekBar redSeekBar, greenSeekBar, blueSeekBar;
     private TextView redEditText, greenEditText, blueEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":24,\"green\":159,\"blue\":178}";
+    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":80,\"blue\":236}";
     private Integer redCurValue, greenCurValue, blueCurValue;
     private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2;
 
-    public ShellColorPickerPreference(Context context, AttributeSet attrs) {
+    public ColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        logTag = getClass().getSimpleName();
         setDialogLayoutResource(R.layout.color_picker_dialog_layout);
         setPositiveButtonText(android.R.string.ok);
         setNegativeButtonText(android.R.string.cancel);
@@ -89,7 +90,7 @@ public class ShellColorPickerPreference extends DialogPreference implements Seek
             resultJson.put("green", greenCurValue);
             resultJson.put("blue", blueCurValue);
         } catch (JSONException ex) {
-            Log.d(LOG_TAG, "prepareSaveJson: " + ex.getMessage());
+            Log.d(logTag, "prepareSaveJson: " + ex.getMessage());
         }
         return resultJson.toString();
     }

@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.activity.preference.custom.FontPickerPreference;
+import com.softsandr.terminal.activity.preference.custom.font.FontPickerPreference;
 import com.softsandr.terminal.activity.terminal.LocationLabel;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.activity.preference.custom;
+package com.softsandr.terminal.activity.preference.custom.font;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.softsandr.terminal.R;
-import com.softsandr.terminal.data.preferences.PreferenceController;
 
 /**
  * This class customize {@link android.preference.DialogPreference} and display

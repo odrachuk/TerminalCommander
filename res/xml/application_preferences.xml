@@ -23,7 +23,7 @@
     <PreferenceCategory
             android:title="@string/pref_interface_title">
 
-        <com.softsandr.terminal.activity.preference.custom.FontPickerPreference
+        <com.softsandr.terminal.activity.preference.custom.font.FontPickerPreference
                 android:key="@string/pref_font_picker_key"
                 android:title="@string/pref_font_picker_title"
                 android:summary="@string/pref_font_picker_summary"
@@ -36,37 +36,37 @@
                 android:summary="@string/pref_colorize_summary"
                 android:persistent="false">
 
-            <com.softsandr.terminal.activity.preference.custom.TerminalBgColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.bg.TerminalBgColorPickerPreference
                     android:key="@string/pref_term_bg_color_key"
                     android:title="@string/pref_term_bg_color_title"
                     android:summary="@string/pref_term_bg_color_summary"
                     android:dialogTitle="@string/pref_term_bg_color_dlg_title"/>
 
-            <com.softsandr.terminal.activity.preference.custom.ArchiveColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.text.ArchiveColorPickerPreference
                     android:key="@string/pref_archive_item_color_key"
                     android:title="@string/pref_archive_item_color_title"
                     android:summary="@string/pref_archive_item_color_summary"
                     android:dialogTitle="@string/pref_archive_item_color_dlg_title"/>
 
-            <com.softsandr.terminal.activity.preference.custom.ShellColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.text.ShellColorPickerPreference
                     android:key="@string/pref_shell_item_color_key"
                     android:title="@string/pref_shell_item_color_title"
                     android:summary="@string/pref_shell_item_color_summary"
                     android:dialogTitle="@string/pref_shell_item_color_dlg_title"/>
 
-            <com.softsandr.terminal.activity.preference.custom.ImagesColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.text.ImagesColorPickerPreference
                     android:key="@string/pref_images_item_color_key"
                     android:title="@string/pref_images_item_color_title"
                     android:summary="@string/pref_images_item_color_summary"
                     android:dialogTitle="@string/pref_images_item_color_dlg_title"/>
 
-            <com.softsandr.terminal.activity.preference.custom.MediaColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.text.MediaColorPickerPreference
                     android:key="@string/pref_media_item_color_key"
                     android:title="@string/pref_media_item_color_title"
                     android:summary="@string/pref_media_item_color_summary"
                     android:dialogTitle="@string/pref_media_item_color_dlg_title"/>
 
-            <com.softsandr.terminal.activity.preference.custom.DocumentsColorPickerPreference
+            <com.softsandr.terminal.activity.preference.custom.color.text.DocumentsColorPickerPreference
                     android:key="@string/pref_doc_item_color_key"
                     android:title="@string/pref_doc_item_color_title"
                     android:summary="@string/pref_doc_item_color_summary"
