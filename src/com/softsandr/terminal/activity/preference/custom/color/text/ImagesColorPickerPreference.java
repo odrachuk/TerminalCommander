@@ -29,4 +29,9 @@ public class ImagesColorPickerPreference extends ColorPickerPreference {
     public ImagesColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void setDefaultJson() {
+        defaultValue = "{\"red\":85,\"green\":235,\"blue\":255}";
+    }
 }

@@ -29,4 +29,9 @@ public class ShellColorPickerPreference extends ColorPickerPreference {
     public ShellColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void setDefaultJson() {
+        defaultValue = "{\"red\":215,\"green\":168,\"blue\":67}";
+    }
 }

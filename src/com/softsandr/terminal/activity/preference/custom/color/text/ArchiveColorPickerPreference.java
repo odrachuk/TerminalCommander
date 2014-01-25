@@ -29,4 +29,9 @@ public class ArchiveColorPickerPreference extends ColorPickerPreference {
     public ArchiveColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void setDefaultJson() {
+        defaultValue = "{\"red\":255,\"green\":80,\"blue\":255}";
+    }
 }

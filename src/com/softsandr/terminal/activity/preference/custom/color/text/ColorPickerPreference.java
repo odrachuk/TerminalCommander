@@ -39,27 +39,33 @@ import org.json.JSONObject;
  */
 public abstract class ColorPickerPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
     protected final String logTag;
+    protected String defaultValue = "{\"red\":0,\"green\":0,\"blue\":0}";
     private SeekBar redSeekBar, greenSeekBar, blueSeekBar;
     private TextView redEditText, greenEditText, blueEditText;
     private TextView colorView;
-    public static final String DEFAULT_VALUE = "{\"red\":255,\"green\":80,\"blue\":236}";
     private Integer redCurValue, greenCurValue, blueCurValue;
     private static final int RED_ID = 0, GREEN_ID = 1, BLUE_ID = 2;
 
     public ColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         logTag = getClass().getSimpleName();
+        setDefaultJson();
         setDialogLayoutResource(R.layout.color_picker_dialog_layout);
         setPositiveButtonText(android.R.string.ok);
         setNegativeButtonText(android.R.string.cancel);
         setDialogIcon(null);
     }
 
+    /**
+     * Used for determining default value of color for specific child
+     */
+    protected abstract void setDefaultJson();
+
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         // read preferences
-        int[] defArray = PreferenceController.parseColorComponentsFromJson(getPersistedString(DEFAULT_VALUE));
+        int[] defArray = PreferenceController.parseColorComponentsFromJson(getPersistedString(defaultValue));
         redCurValue = defArray[RED_ID];
         greenCurValue = defArray[GREEN_ID];
         blueCurValue = defArray[BLUE_ID];
@@ -107,7 +113,7 @@ public abstract class ColorPickerPreference extends DialogPreference implements 
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
             // Restore existing state
-            int[] defArray = PreferenceController.parseColorComponentsFromJson(this.getPersistedString(DEFAULT_VALUE));
+            int[] defArray = PreferenceController.parseColorComponentsFromJson(this.getPersistedString(this.defaultValue));
             redCurValue = defArray[RED_ID];
             redCurValue = defArray[GREEN_ID];
             redCurValue = defArray[BLUE_ID];

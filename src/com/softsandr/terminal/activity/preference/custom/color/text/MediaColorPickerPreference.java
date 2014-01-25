@@ -29,4 +29,9 @@ public class MediaColorPickerPreference extends ColorPickerPreference {
     public MediaColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void setDefaultJson() {
+        defaultValue = "{\"red\":112,\"green\":235,\"blue\":96}";
+    }
 }

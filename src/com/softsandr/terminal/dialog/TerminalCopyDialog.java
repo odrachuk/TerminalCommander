@@ -20,6 +20,7 @@ package com.softsandr.terminal.dialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.*;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import com.softsandr.terminal.R;
 import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.command.CopyFileCommand;
 import com.softsandr.terminal.data.listview.ListViewItem;
+import com.softsandr.terminal.data.preferences.PreferenceController;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
@@ -139,6 +141,9 @@ public class TerminalCopyDialog extends DialogFragment {
             v.findViewById(R.id.terminal_cp_mv_dialog_btn_ok).setOnClickListener(mOnClickListener);
             v.findViewById(R.id.terminal_cp_mv_dialog_btn_cancel).setOnClickListener(mOnClickListener);
         }
+        // check and set default color
+        v.setBackgroundColor(PreferenceController.loadTerminalBgColor(getActivity(),
+                PreferenceManager.getDefaultSharedPreferences(getActivity())));
         return v;
     }
 

@@ -29,4 +29,9 @@ public class DocumentsColorPickerPreference extends ColorPickerPreference {
     public DocumentsColorPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void setDefaultJson() {
+        defaultValue = "{\"red\":208,\"green\":152,\"blue\":88}";
+    }
 }

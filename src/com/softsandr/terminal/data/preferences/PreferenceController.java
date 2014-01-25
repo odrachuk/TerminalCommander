@@ -121,27 +121,27 @@ public final class PreferenceController {
 
     private static void setDefaultArchiveMediaItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_archive_item_color_key),
-                ArchiveColorPickerPreference.DEFAULT_VALUE);
+                ArchiveColorPickerPreference.defaultValue);
     }
 
     private static void setDefaultDocumentMediaItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_doc_item_color_key),
-                DocumentsColorPickerPreference.DEFAULT_VALUE);
+                DocumentsColorPickerPreference.defaultValue);
     }
 
     private static void setDefaultImageMediaItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_images_item_color_key),
-                ImagesColorPickerPreference.DEFAULT_VALUE);
+                ImagesColorPickerPreference.defaultValue);
     }
 
     private static void setDefaultMediaItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_media_item_color_key),
-                MediaColorPickerPreference.DEFAULT_VALUE);
+                MediaColorPickerPreference.defaultValue);
     }
 
     private static void setDefaultShellItemColor(Context context, SharedPreferences.Editor editor) {
         editor.putString(context.getString(R.string.pref_shell_item_color_key),
-                ShellColorPickerPreference.DEFAULT_VALUE);
+                ShellColorPickerPreference.defaultValue);
     }
 
     private static void setDefaultTerminalBgColor(Context context, SharedPreferences.Editor editor) {
@@ -287,7 +287,7 @@ public final class PreferenceController {
      */
     public static int loadArchiveItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_archive_item_color_key),
-                ArchiveColorPickerPreference.DEFAULT_VALUE);
+                ArchiveColorPickerPreference.defaultValue);
         return parseColorFromJson(colorJson);
     }
 
@@ -300,7 +300,7 @@ public final class PreferenceController {
      */
     public static int loadDocumentItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_doc_item_color_key),
-                DocumentsColorPickerPreference.DEFAULT_VALUE);
+                DocumentsColorPickerPreference.defaultValue);
         return parseColorFromJson(colorJson);
     }
 
@@ -313,7 +313,7 @@ public final class PreferenceController {
      */
     public static int loadImageItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_images_item_color_key),
-                ImagesColorPickerPreference.DEFAULT_VALUE);
+                ImagesColorPickerPreference.defaultValue);
         return parseColorFromJson(colorJson);
     }
 
@@ -326,7 +326,7 @@ public final class PreferenceController {
      */
     public static int loadMediaItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_media_item_color_key),
-                MediaColorPickerPreference.DEFAULT_VALUE);
+                MediaColorPickerPreference.defaultValue);
         return parseColorFromJson(colorJson);
     }
 
@@ -339,7 +339,7 @@ public final class PreferenceController {
      */
     public static int loadShellItemColor(Context context, SharedPreferences preferences) {
         String colorJson = preferences.getString(context.getString(R.string.pref_shell_item_color_key),
-                ShellColorPickerPreference.DEFAULT_VALUE);
+                ShellColorPickerPreference.defaultValue);
         return parseColorFromJson(colorJson);
     }
 
