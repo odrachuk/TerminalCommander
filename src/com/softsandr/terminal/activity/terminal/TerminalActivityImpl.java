@@ -291,9 +291,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-      /*      case R.id.action_settings:
-                //todo
-                return true;*/
             case R.id.action_refresh:
                 switch (activePage) {
                     case LEFT:
@@ -341,17 +338,19 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
 
     private void saveDataBeforeDestroy() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        PreferenceController.saveLastLocations(
-                sharedPreferences,
-                mLeftAdapter.getLocationLabel().getPath(),
-                mRightAdapter.getLocationLabel().getPath());
-        PreferenceController.saveLeftHistoryLocations(
-                sharedPreferences,
-                mLeftHistoryLocationMonitor.getActualHistoryLocations());
-        PreferenceController.saveRightHistoryLocations(
-                sharedPreferences,
-                mRightHistoryLocationMonitor.getActualHistoryLocations());
-        PreferenceController.saveSortingStrategy(sharedPreferences, mSortingStrategy);
+        if (sharedPreferences != null && mLeftAdapter != null && mRightAdapter != null) {
+            PreferenceController.saveLastLocations(
+                    sharedPreferences,
+                    mLeftAdapter.getLocationLabel().getPath(),
+                    mRightAdapter.getLocationLabel().getPath());
+            PreferenceController.saveLeftHistoryLocations(
+                    sharedPreferences,
+                    mLeftHistoryLocationMonitor.getActualHistoryLocations());
+            PreferenceController.saveRightHistoryLocations(
+                    sharedPreferences,
+                    mRightHistoryLocationMonitor.getActualHistoryLocations());
+            PreferenceController.saveSortingStrategy(sharedPreferences, mSortingStrategy);
+        }
     }
 
     @Override
