@@ -50,10 +50,13 @@ public final class TabClickListener implements View.OnClickListener {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
+                    // determining start phrase for searching
                     String searchText = inputView.getText().toString().trim();
-                    int indexOfWhitespace = searchText.lastIndexOf(StringUtil.WHITESPACE) + 1;
-                    searchText = searchText.substring(indexOfWhitespace, searchText.length());
+                    int lastIndexOfWhitespace = searchText.lastIndexOf(StringUtil.WHITESPACE) + 1;
+                    searchText = searchText.substring(lastIndexOfWhitespace, searchText.length());
+                    // determining current location of user
                     String currentLocation = commander.getPrompt().getUserLocation();
+                    // reading user location
                     List<String> list = new ArrayList<String>();
                     ProcessDirectory.readUserLocation(list, currentLocation);
                     LinkedList<String> resultList = new LinkedList<String>();
@@ -62,12 +65,11 @@ public final class TabClickListener implements View.OnClickListener {
                             resultList.addLast(s);
                         }
                     }
+                    // prepare result string
                     if (!resultList.isEmpty()) {
                         if (resultList.size() == 1) {
                             String inputText = inputView.getText().toString();
-                            int lastWhitespaceIndex = inputText.indexOf(StringUtil.WHITESPACE);
-                            inputText = inputText.substring(0, lastWhitespaceIndex)
-                                    + StringUtil.WHITESPACE + resultList.get(0);
+                            inputText = inputText.substring(0, lastIndexOfWhitespace) + resultList.get(0);
                             inputView.setText(inputText);
                             inputView.setSelection(inputText.length());
                         } else {
