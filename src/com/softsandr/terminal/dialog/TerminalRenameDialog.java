@@ -39,7 +39,7 @@ import com.softsandr.utils.string.StringUtil;
  */
 public class TerminalRenameDialog extends DialogFragment {
     private static final String LOG_TAG = TerminalRenameDialog.class.getSimpleName();
-    private static final String ITEM = LOG_TAG + ".ITEM";
+    private static final String ITEM = LOG_TAG + ".INPUT_ITEM";
     private static final String DST_DIR_PATH = LOG_TAG + ".DST_DIR_PATH";
     private static final String CUR_DIR_PATH = LOG_TAG + ".CUR_DIR_PATH";
     private ListViewItem item;

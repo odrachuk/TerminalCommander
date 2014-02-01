@@ -133,5 +133,5 @@
     <string name="context_menu_text_can_read">Can read</string>
     <string name="context_menu_text_can_write">Can write</string>
     <string name="context_menu_text_can_exec">Can execute</string>
-    <string name="context_menu_text_size_computation">Computation of size</string>
+    <string name="context_menu_text_size_computation">Computation of size...</string>
 </resources>

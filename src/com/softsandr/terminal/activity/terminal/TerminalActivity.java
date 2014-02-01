@@ -18,7 +18,6 @@
 package com.softsandr.terminal.activity.terminal;
 
 import android.content.res.Resources;
-import android.widget.AdapterView;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
 import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
@@ -130,10 +129,4 @@ public interface TerminalActivity {
      * from terminal activity.
      */
     ActionBarToggleMonitor getActionBarToggleMonitor();
-
-    /**
-     * Show properties dialog for specific selected info item
-     * @param info  the information item from floating context menu
-     */
-    void showFilePropDialog(AdapterView.AdapterContextMenuInfo info);
 }

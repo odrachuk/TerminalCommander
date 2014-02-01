@@ -19,6 +19,7 @@ package com.softsandr.terminal.activity.terminal;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.*;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -36,7 +37,6 @@ import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.async.LoadLeftListTask;
 import com.softsandr.terminal.activity.terminal.async.LoadRightListTask;
-import com.softsandr.terminal.activity.terminal.async.SizeComputationTask;
 import com.softsandr.terminal.activity.terminal.listener.ListViewItemClickListener;
 import com.softsandr.terminal.activity.terminal.listener.ListViewTouchListener;
 import com.softsandr.terminal.activity.terminal.listener.TerminalClickListener;
@@ -44,6 +44,7 @@ import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
 import com.softsandr.terminal.activity.terminal.monitor.HistoryLocationsMonitor;
 import com.softsandr.terminal.activity.terminal.monitor.SortingMenuItemsMonitor;
 import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
+import com.softsandr.terminal.activity.terminal.service.SizeComputationService;
 import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.data.preferences.PreferenceController;
@@ -61,10 +62,12 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     public static final String COMMON_EXIT_INTENT = TerminalActivityImpl.class.getSimpleName() + ".COMMON_EXIT_INTENT";
     public static final String CLEAR_HISTORY_INTENT = TerminalActivityImpl.class.getSimpleName() + ".CLEAR_HISTORY_INTENT";
     public static final String SETTING_CHANGED_INTENT = TerminalActivityImpl.class.getSimpleName() + ".SETTING_CHANGED_INTENT";
+    public static final String HIDE_PROGRESS_INTENT = TerminalActivityImpl.class.getSimpleName() + ".HIDE_PROGRESS_INTENT";
 
     private static final String LOG_TAG = TerminalActivityImpl.class.getSimpleName();
     private static final String LEFT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".LEFT_FILE_LIST";
     private static final String RIGHT_FILE_LIST_PATH_BUNDLE = LOG_TAG + ".RIGHT_FILE_LIST";
+    private static final String ACTIVE_PROGRESS_BUNDLE = LOG_TAG + ".ACTIVE_PROGRESS_BUNDLE";
 
     private AbsListView.OnTouchListener mListTouchListener;
     private View.OnClickListener mOnClickListener;
@@ -79,8 +82,9 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     private HistoryLocationsMonitor mRightHistoryLocationMonitor;
     private SortingMenuItemsMonitor mSortingMenuItemsMonitor;
     private View rootContainer;
-    private boolean isPaused;
-    private boolean isSettingsChanged;
+    private boolean isPaused, isSettingsChanged, isActiveProgress;
+
+    private ProgressDialog progressDialog;
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -94,6 +98,12 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                     mRightHistoryLocationMonitor.clearHistory();
                 } else if (action.equals(SETTING_CHANGED_INTENT)) {
                     isSettingsChanged = true;
+                } else if (action.equals(HIDE_PROGRESS_INTENT)) {
+                    Bundle extras = intent.getExtras();
+                    if (extras != null) {
+                        showFilePropDialog((ListViewItem) extras.getParcelable(SizeComputationService.OUTPUT_ITEM));
+                    }
+                    hideProgress();
                 }
             }
         }
@@ -170,6 +180,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         intentFilter.addAction(COMMON_EXIT_INTENT);
         intentFilter.addAction(CLEAR_HISTORY_INTENT);
         intentFilter.addAction(SETTING_CHANGED_INTENT);
+        intentFilter.addAction(HIDE_PROGRESS_INTENT);
         registerReceiver(mBroadcastReceiver, intentFilter);
         checkSettingsChanges();
         // refresh panel if show activity in first or some settings ui components was changed
@@ -179,6 +190,10 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         }
         isPaused = false;
         isSettingsChanged = false;
+        // reshow progress if needs
+        if (isActiveProgress) {
+            showProgress();
+        }
     }
 
     /**
@@ -196,6 +211,10 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     protected void onPause() {
         super.onPause();
         isPaused = true;
+        if (isActiveProgress) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 
     @Override
@@ -206,6 +225,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         if (mRightAdapter != null) {
             outState.putString(RIGHT_FILE_LIST_PATH_BUNDLE, mRightAdapter.getLocationLabel().getPath());
         }
+        outState.putBoolean(ACTIVE_PROGRESS_BUNDLE, isActiveProgress);
         super.onSaveInstanceState(outState);
     }
 
@@ -215,6 +235,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         if (savedInstanceState != null) {
             mLeftListSavedLocation = savedInstanceState.getString(LEFT_FILE_LIST_PATH_BUNDLE);
             mRightListSavedLocation = savedInstanceState.getString(RIGHT_FILE_LIST_PATH_BUNDLE);
+            isActiveProgress = savedInstanceState.getBoolean(ACTIVE_PROGRESS_BUNDLE);
         }
     }
 
@@ -412,28 +433,52 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Log.d(LOG_TAG, "onContextItemSelected");
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        ListViewItem listViewItem = null;
+        if (info != null) {
+            if (activePage == ActivePage.LEFT) {
+                listViewItem = mLeftAdapter.getItem(info.position);
+            } else {
+                listViewItem = mRightAdapter.getItem(info.position);
+            }
+        }
         switch (item.getItemId()) {
             case R.id.context_action_file_properties:
-                showFilePropDialog(info);
+                showFilePropDialog(listViewItem);
                 return true;
             case R.id.context_action_parent_properties:
             case R.id.context_action_dir_properties:
-                if (info != null) {
-                    ListViewItem listViewItem = null;
-                    if (activePage == ActivePage.LEFT) {
-                        listViewItem = mLeftAdapter.getItem(info.position);
-                    } else {
-                        listViewItem = mRightAdapter.getItem(info.position);
-                    }
-                    if (listViewItem != null) {
-                        new SizeComputationTask(TerminalActivityImpl.this, info).execute(listViewItem);
-                    }
+                if (listViewItem != null) {
+                    showProgress();
+                    Intent intent = new Intent(this, SizeComputationService.class);
+                    intent.putExtra(SizeComputationService.INPUT_ITEM, listViewItem);
+                    startService(intent);
                 }
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void showProgress() {
+        progressDialog = new ProgressDialog(TerminalActivityImpl.this);
+        progressDialog.setMessage(getString(R.string.context_menu_text_size_computation));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        isActiveProgress = true;
+    }
+
+    private void hideProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+            isActiveProgress = false;
+        }
+    }
+
+    private void showFilePropDialog(ListViewItem item) {
+        TerminalDialogUtil.showPropertiesDialog(this, item);
     }
 
     @Override
@@ -494,12 +539,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     @Override
     public ActionBarToggleMonitor getActionBarToggleMonitor() {
         return mActionBarToggleMonitor;
-    }
-
-    @Override
-    public void showFilePropDialog(AdapterView.AdapterContextMenuInfo info) {
-        TerminalDialogUtil.showPropertiesDialog(activePage, info, mLeftAdapter, mRightAdapter,
-                TerminalActivityImpl.this);
     }
 
     @Override

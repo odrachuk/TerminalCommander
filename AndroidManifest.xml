@@ -5,7 +5,6 @@
           android:versionName="1.0.4">
     <!-- For reading account information -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -30,5 +29,6 @@
                   android:exported="false"/>
         <activity android:name=".activity.preference.TerminalPreferenceActivity"
                   android:exported="false"/>
+        <service android:name=".activity.terminal.service.SizeComputationService"/>
     </application>
 </manifest>
