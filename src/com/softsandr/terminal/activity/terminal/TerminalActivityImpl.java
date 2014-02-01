@@ -49,6 +49,7 @@ import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.data.preferences.PreferenceController;
 import com.softsandr.terminal.dialog.TerminalDialogUtil;
+import com.softsandr.utils.file.FileOpeningUtil;
 import com.softsandr.utils.orient.DetermineOrientationUtil;
 import com.softsandr.utils.string.StringUtil;
 
@@ -456,6 +457,10 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                     startService(intent);
                 }
                 return true;
+//            case R.id.context_action_file_share:
+//                if (listViewItem != null) {
+//                    FileOpeningUtil.shareFile(TerminalActivityImpl.this, listViewItem.getAbsPath());
+//                }
             default:
                 return super.onContextItemSelected(item);
         }

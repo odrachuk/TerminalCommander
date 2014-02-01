@@ -54,4 +54,26 @@ public final class FileOpeningUtil {
             Toast.makeText(activity, "Not found any installed application for opening file", Toast.LENGTH_LONG).show();
         }
     }
+
+    public static void shareFile(Activity activity, String filePath) {
+        File file = new File(filePath);
+        // determine file extension and type
+        MimeTypeMap map = MimeTypeMap.getSingleton();
+        String ext = MimeTypeMap.getFileExtensionFromUrl(file.getName());
+        String type = map.getMimeTypeFromExtension(ext);
+        // set default extension and type if necessary
+        if (type == null) {
+            type = "*/*";
+        }
+        // prepare intent
+        Intent openIntent = new Intent();
+        openIntent.setAction(Intent.ACTION_SEND);
+        openIntent.setDataAndType(Uri.fromFile(file), type);
+        // Verify that the intent will resolve to an activity
+        if (openIntent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivity(openIntent);
+        } else {
+            Toast.makeText(activity, "Not found any installed application for opening file", Toast.LENGTH_LONG).show();
+        }
+    }
 }
