@@ -101,7 +101,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                 } else if (action.equals(HIDE_PROGRESS_INTENT)) {
                     Bundle extras = intent.getExtras();
                     if (extras != null) {
-                        showFilePropDialog((ListViewItem) extras.getParcelable(SizeComputationService.OUTPUT_ITEM));
+                        TerminalDialogUtil.showPropertiesDialog(TerminalActivityImpl.this,                                (ListViewItem) extras.getParcelable(SizeComputationService.OUTPUT_ITEM));
                     }
                     hideProgress();
                 }
@@ -445,7 +445,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         }
         switch (item.getItemId()) {
             case R.id.context_action_file_properties:
-                showFilePropDialog(listViewItem);
+                TerminalDialogUtil.showPropertiesDialog(TerminalActivityImpl.this, listViewItem);
                 return true;
             case R.id.context_action_parent_properties:
             case R.id.context_action_dir_properties:
@@ -475,10 +475,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
             progressDialog = null;
             isActiveProgress = false;
         }
-    }
-
-    private void showFilePropDialog(ListViewItem item) {
-        TerminalDialogUtil.showPropertiesDialog(this, item);
     }
 
     @Override
