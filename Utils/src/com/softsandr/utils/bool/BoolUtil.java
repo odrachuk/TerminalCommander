@@ -15,13 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.terminal.data.listview;
+package com.softsandr.utils.bool;
 
 /**
- * The supported in App sorting strategy
+ * The String unified operations
  */
-public enum ListViewSortingStrategy {
-    SORT_BY_NAME,
-    SORT_BY_SIZE,
-    SORT_BY_DATE
+public class BoolUtil {
+
+    /**
+     * Utility class
+     */
+    public BoolUtil() {
+    }
+
+    public static String valToYesNo(boolean val) {
+        return val? "Yes" : "No";
+    }
 }

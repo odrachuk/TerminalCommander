@@ -71,4 +71,7 @@
     <dimen name="color_picker_test_view_margin">6dp</dimen>
     <dimen name="color_picker_label_left_margin">15dp</dimen>
     <dimen name="color_picker_template_text_size">20sp</dimen>
+    <!-- Toast -->
+    <dimen name="terminal_properties_toast_padding">8dp</dimen>
+    <dimen name="terminal_properties_toast_text_size">18sp</dimen>
 </resources>

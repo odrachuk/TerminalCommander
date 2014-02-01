@@ -45,29 +45,40 @@ public class ListViewFiller {
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
 
             @Override
-            public void initParentPath(String parentPath) {
-                ListViewItem firstItem = new ListViewItem(sortingStrategy, StringUtil.PARENT_DOTS,
-                        ListViewItem.UP_LINK_DEF_SIZE, 0l).setIsDirectory(true).setAbsPath(parentPath);
-                filesList.add(firstItem);
+            public void initParentPath(File root) {
+                ListViewItem item = new ListViewItem()
+                        .setFileName(StringUtil.PARENT_DOTS)
+                        .setAbsPath(root.getAbsolutePath())
+                        .setCanRead(true)
+                        .setCanWrite(root.canWrite())
+                        .setCanExecute(true)
+                        .setFileSize(ListViewItem.UP_LINK_DEF_SIZE)
+                        .setFileModifyTime(root.lastModified())
+                        .setIsDirectory(true)
+                        .setSortingStrategy(sortingStrategy)
+                        .setIsLink(false);
+                filesList.add(item);
             }
 
             @Override
             public void processDirectory(File file) {
                 try {
                     boolean isSymLink = FileUtil.isSymlink(path, file);
-                    ListViewItem item = new ListViewItem(
-                            sortingStrategy,
-                            isSymLink ?
+                    ListViewItem item = new ListViewItem()
+                            .setFileName(isSymLink ?
                                     StringUtil.DIRECTORY_LINK_PREFIX +
                                             file.getName() :
                                     StringUtil.PATH_SEPARATOR +
-                                            file.getName(),
-                            ListViewItem.DIRECTORY_DEF_SIZE,
-                            file.lastModified()).
-                            setAbsPath(file.getAbsolutePath()).
-                            setCanRead(file.canRead()).
-                            setIsDirectory(file.isDirectory()).
-                            setIsLink(isSymLink);
+                                            file.getName())
+                            .setAbsPath(file.getAbsolutePath())
+                            .setCanRead(file.canRead())
+                            .setCanWrite(file.canWrite())
+                            .setCanExecute(file.canExecute())
+                            .setFileSize(ListViewItem.DIRECTORY_DEF_SIZE)
+                            .setFileModifyTime(file.lastModified())
+                            .setIsDirectory(file.isDirectory())
+                            .setSortingStrategy(sortingStrategy)
+                            .setIsLink(isSymLink);
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);
@@ -78,18 +89,21 @@ public class ListViewFiller {
             public void processFile(File file) {
                 try {
                     boolean isSymLink = FileUtil.isSymlink(path, file);
-                    ListViewItem item = new ListViewItem(
-                            sortingStrategy,
-                             isSymLink?
+
+                    ListViewItem item = new ListViewItem()
+                            .setFileName(isSymLink?
                                     StringUtil.FILE_LINK_PREFIX +
                                             file.getName() :
-                                    file.getName(),
-                            file.length(),
-                            file.lastModified()).
-                            setAbsPath(file.getAbsolutePath()).
-                            setCanRead(file.canRead()).
-                            setIsDirectory(file.isDirectory()).
-                            setIsLink(isSymLink);
+                                    file.getName())
+                            .setAbsPath(file.getAbsolutePath())
+                            .setCanRead(file.canRead())
+                            .setCanWrite(file.canWrite())
+                            .setCanExecute(file.canExecute())
+                            .setFileSize(file.length())
+                            .setFileModifyTime(file.lastModified())
+                            .setIsDirectory(false)
+                            .setSortingStrategy(sortingStrategy)
+                            .setIsLink(isSymLink);
                     filesList.add(item);
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "prepareLeftList", e);

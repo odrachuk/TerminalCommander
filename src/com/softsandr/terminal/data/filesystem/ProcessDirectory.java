@@ -35,7 +35,7 @@ public class ProcessDirectory {
     private String fileExtension;
 
     public interface ProcessDirectoryStrategy {
-        void initParentPath(String parentPath);
+        void initParentPath(File root);
         void processDirectory(File file);
         void processFile(File file);
     }
@@ -57,7 +57,7 @@ public class ProcessDirectory {
         DirectoryContent treeInfo = Directory.walkDir(root.getAbsolutePath(), ".*" + fileExtension);
         // init parent dots
         if (!root.getPath().equals(StringUtil.PATH_SEPARATOR)) {
-            strategy.initParentPath(root.getAbsolutePath());
+            strategy.initParentPath(root);
         }
         // process all directories
         Iterator<File> dirsIterator = treeInfo.getDirsIterator();
@@ -80,7 +80,7 @@ public class ProcessDirectory {
         new ProcessDirectory(new ProcessDirectory.ProcessDirectoryStrategy() {
 
             @Override
-            public void initParentPath(String parentPath) {
+            public void initParentPath(File root) {
                 // ignored
             }
 

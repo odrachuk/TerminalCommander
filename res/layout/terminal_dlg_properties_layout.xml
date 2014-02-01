@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/toast_layout_root"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="@dimen/terminal_properties_toast_padding">
+    <!--Type-->
+    <TextView android:id="@+id/properties_toast_type"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Path-->
+    <TextView android:id="@+id/properties_toast_path"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Modified-->
+    <TextView android:id="@+id/properties_toast_modified"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Size-->
+    <TextView android:id="@+id/properties_toast_size"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Can read-->
+    <TextView android:id="@+id/properties_toast_can_read"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Can write-->
+    <TextView android:id="@+id/properties_toast_can_write"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+    <!--Can execute-->
+    <TextView android:id="@+id/properties_toast_can_exec"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="@dimen/terminal_properties_toast_text_size"/>
+</LinearLayout>

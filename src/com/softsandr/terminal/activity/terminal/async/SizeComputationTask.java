@@ -17,29 +17,50 @@
  ******************************************************************************/
 package com.softsandr.terminal.activity.terminal.async;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.AdapterView;
 import com.softsandr.terminal.R;
-import com.softsandr.utils.file.FileUtil;
+import com.softsandr.terminal.activity.terminal.TerminalActivity;
+import com.softsandr.terminal.activity.terminal.TerminalActivityImpl;
 import com.softsandr.terminal.data.listview.ListViewItem;
+import com.softsandr.utils.file.FileUtil;
 
 import java.io.File;
 
 /**
  * This class used for computation size of specific directory in interactive thread
  */
-public class SizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
+public class SizeComputationTask extends AsyncTask<ListViewItem, Void, Void> {
     private static final String LOG_TAG = SizeComputationTask.class.getSimpleName();
-    private Context context;
+    private final TerminalActivity terminalActivity;
+    private final AdapterView.AdapterContextMenuInfo info;
+    private ProgressDialog progressDialog;
 
-    public SizeComputationTask(Context context) {
-        this.context = context;
+    /**
+     * Start computation task for calculation size of directory
+     * @param terminalActivity  the instance of {@link com.softsandr.terminal.activity.terminal.TerminalActivity}
+     * @param info              the information object from floating context menu
+     */
+    public SizeComputationTask(TerminalActivity terminalActivity, AdapterView.AdapterContextMenuInfo info) {
+        this.terminalActivity = terminalActivity;
+        this.info = info;
     }
 
     @Override
-    protected Long doInBackground(ListViewItem... params) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+        Activity activity = (TerminalActivityImpl) terminalActivity;
+        progressDialog= ProgressDialog.show(activity,
+                activity.getString(R.string.context_menu_text_size),
+                activity.getString(R.string.context_menu_text_size_computation),
+                false);
+    }
+
+    @Override
+    protected Void doInBackground(ListViewItem... params) {
         ListViewItem item = params[0];
         long size = 0l;
         try {
@@ -47,12 +68,14 @@ public class SizeComputationTask extends AsyncTask<ListViewItem, Void, Long> {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Computing directory size exception:", e);
         }
-        return size;
+        item.setFileSize(size);
+        return null;
     }
 
     @Override
-    protected void onPostExecute(Long size) {
-        Toast.makeText(context, context.getString(R.string.toast_dir_size) + ListViewItem.readableFileSize(size),
-                Toast.LENGTH_SHORT).show();
+    protected void onPostExecute(Void v) {
+        super.onPostExecute(v);
+        progressDialog.dismiss();
+        terminalActivity.showFilePropDialog(info);
     }
 }

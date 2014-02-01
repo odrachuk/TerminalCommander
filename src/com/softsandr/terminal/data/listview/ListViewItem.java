@@ -39,69 +39,41 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     public static final long DIRECTORY_DEF_SIZE = -1;
     public static final long UP_LINK_DEF_SIZE = -2;
 
-    private final String fileModifyTime;
-    private final String fileName;
-    private final String fileSize;
-
     private ListViewSortingStrategy sortingStrategy;
+    private String fileModifyTime;
+    private String fileName;
+    private String fileSize;
+    private String absPath;
     private boolean isDirectory;
     private boolean canRead;
+    private boolean canWrite;
+    private boolean canExecute;
     private boolean isLink;
-    private String absPath;
 
-    /**
-     * Constractor of object that represent file object in list
-     * @param sortingStrategy   The type enum  {@link ListViewSortingStrategy}
-     * @param fileName          The file name only
-     * @param fileSize          The size of file in bytes
-     * @param fileModifyTime    The time of last file modify in millisecond
-     */
-    public ListViewItem(ListViewSortingStrategy sortingStrategy,
-                        String fileName,
-                        long fileSize,
-                        long fileModifyTime) {
-        this.sortingStrategy = sortingStrategy;
-        this.fileName = fileName;
-        this.fileSize = readableFileSize(fileSize);
+    public ListViewItem() {
+    }
+
+    public ListViewItem setFileModifyTime(long fileModifyTime) {
         this.fileModifyTime = sdf.format(fileModifyTime);
-    }
-
-    public static String readableFileSize(long size) {
-        if (size == UP_LINK_DEF_SIZE) {
-            return StringUtil.UP_DIR;
-        } else if (size == DIRECTORY_DEF_SIZE) {
-            return "dir";
-        } else if (size > 0) {
-            final String[] units = new String[]{"b", "Kb", "Mb", "Gb", "Tb"};
-            int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-            return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
-        } else {
-            return "0 b";
-        }
-    }
-
-    public static long fileSizeFromReadableString(String size) {
-        long longSize = 0l;
-        if (size.contains("Tb")) {
-            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("T") - 1)) * 1024 * 1024 * 1024 * 1024);
-        } else if (size.contains("Gb")) {
-            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("G") - 1)) * 1024 * 1024 * 1024);
-        } else if (size.contains("Mb")) {
-            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("M") - 1)) * 1024 * 1024);
-        } else if (size.contains("Kb")) {
-            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("K") - 1)) * 1024);
-        } else if (size.contains("b")) {
-            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("b") - 1)));
-        }
-        return longSize;
+        return this;
     }
 
     public String getFileModifyTime() {
         return fileModifyTime;
     }
 
+    public ListViewItem setFileSize(long fileSize) {
+        this.fileSize = readableFileSize(fileSize);
+        return this;
+    }
+
     public String getFileSize() {
         return fileSize;
+    }
+
+    public ListViewItem setFileName(String fileName) {
+        this.fileName = fileName;
+        return this;
     }
 
     public String getFileName() {
@@ -146,6 +118,37 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
 
     public boolean canRead() {
         return canRead;
+    }
+
+    public boolean isCanRead() {
+        return canRead;
+    }
+
+    public boolean isCanWrite() {
+        return canWrite;
+    }
+
+    public ListViewItem setCanWrite(boolean canWrite) {
+        this.canWrite = canWrite;
+        return this;
+    }
+
+    public boolean isCanExecute() {
+        return canExecute;
+    }
+
+    public ListViewItem setCanExecute(boolean canExecute) {
+        this.canExecute = canExecute;
+        return this;
+    }
+
+    public ListViewSortingStrategy getSortingStrategy() {
+        return sortingStrategy;
+    }
+
+    public ListViewItem setSortingStrategy(ListViewSortingStrategy sortingStrategy) {
+        this.sortingStrategy = sortingStrategy;
+        return this;
     }
 
     @Override
@@ -218,6 +221,9 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         dest.writeSerializable(sortingStrategy);
         dest.writeBooleanArray(new boolean[]{isDirectory});
         dest.writeBooleanArray(new boolean[]{isLink});
+        dest.writeBooleanArray(new boolean[]{canWrite});
+        dest.writeBooleanArray(new boolean[]{canRead});
+        dest.writeBooleanArray(new boolean[]{canExecute});
     }
 
     private ListViewItem(Parcel parcel) {
@@ -225,12 +231,27 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
         fileSize = parcel.readString();
         fileModifyTime = parcel.readString();
         absPath = parcel.readString();
+        sortingStrategy = (ListViewSortingStrategy) parcel.readSerializable();
+
         boolean[] isDirectoryRsp = new boolean[1];
         parcel.readBooleanArray(isDirectoryRsp);
         isDirectory = isDirectoryRsp[0];
+
         boolean[] isLinkRsp = new boolean[1];
         parcel.readBooleanArray(isLinkRsp);
         isDirectory = isLinkRsp[0];
+
+        boolean[] canWriteRsp = new boolean[1];
+        parcel.readBooleanArray(canWriteRsp);
+        canWrite = canWriteRsp[0];
+
+        boolean[] canReadRsp = new boolean[1];
+        parcel.readBooleanArray(canReadRsp);
+        canRead = canReadRsp[0];
+
+        boolean[] canExecuteRsp = new boolean[1];
+        parcel.readBooleanArray(canExecuteRsp);
+        canExecute = canExecuteRsp[0];
     }
 
     public static final Creator<ListViewItem> CREATOR = new Creator<ListViewItem>() {
@@ -246,27 +267,65 @@ public class ListViewItem implements Comparable<ListViewItem>, Parcelable {
     };
     /* End Parcelable declarations */
 
+    public static String readableFileSize(long size) {
+        if (size == UP_LINK_DEF_SIZE) {
+            return StringUtil.UP_DIR;
+        } else if (size == DIRECTORY_DEF_SIZE) {
+            return "dir";
+        } else if (size > 0) {
+            final String[] units = new String[]{"b", "Kb", "Mb", "Gb", "Tb"};
+            int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+            return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+        } else {
+            return "0 b";
+        }
+    }
+
+    public static long fileSizeFromReadableString(String size) {
+        long longSize = 0l;
+        if (size.contains("Tb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("T") - 1)) * 1024 * 1024 * 1024 * 1024);
+        } else if (size.contains("Gb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("G") - 1)) * 1024 * 1024 * 1024);
+        } else if (size.contains("Mb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("M") - 1)) * 1024 * 1024);
+        } else if (size.contains("Kb")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("K") - 1)) * 1024);
+        } else if (size.contains("b")) {
+            longSize = Math.round(Float.parseFloat(size.substring(0, size.indexOf("b") - 1)));
+        }
+        return longSize;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ListViewItem)) return false;
-        ListViewItem that = (ListViewItem) o;
-        return isDirectory == that.isDirectory
-                && isLink == that.isLink
-                && !(absPath != null ? !absPath.equals(that.absPath) : that.absPath != null)
-                && !(fileModifyTime != null ? !fileModifyTime.equals(that.fileModifyTime) : that.fileModifyTime != null)
-                && !(fileName != null ? !fileName.equals(that.fileName) : that.fileName != null)
-                && !(fileSize != null ? !fileSize.equals(that.fileSize) : that.fileSize != null);
+        ListViewItem item = (ListViewItem) o;
+        return canExecute == item.canExecute
+                && canRead == item.canRead
+                && canWrite == item.canWrite
+                && isDirectory == item.isDirectory
+                && isLink == item.isLink
+                && !(absPath != null ? !absPath.equals(item.absPath) : item.absPath != null)
+                && !(fileModifyTime != null ? !fileModifyTime.equals(item.fileModifyTime) : item.fileModifyTime != null)
+                && !(fileName != null ? !fileName.equals(item.fileName) : item.fileName != null)
+                && !(fileSize != null ? !fileSize.equals(item.fileSize) : item.fileSize != null)
+                && sortingStrategy == item.sortingStrategy;
     }
 
     @Override
     public int hashCode() {
-        int result = fileModifyTime != null ? fileModifyTime.hashCode() : 0;
+        int result = sortingStrategy != null ? sortingStrategy.hashCode() : 0;
+        result = 31 * result + (fileModifyTime != null ? fileModifyTime.hashCode() : 0);
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
-        result = 31 * result + (isDirectory ? 1 : 0);
-        result = 31 * result + (isLink ? 1 : 0);
         result = 31 * result + (absPath != null ? absPath.hashCode() : 0);
+        result = 31 * result + (isDirectory ? 1 : 0);
+        result = 31 * result + (canRead ? 1 : 0);
+        result = 31 * result + (canWrite ? 1 : 0);
+        result = 31 * result + (canExecute ? 1 : 0);
+        result = 31 * result + (isLink ? 1 : 0);
         return result;
     }
 

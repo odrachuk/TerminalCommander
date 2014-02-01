@@ -103,7 +103,7 @@ public class TerminalDeleteDialog extends DialogFragment {
         if (dialog != null) {
             getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        View v = inflater.inflate(R.layout.terminal_delete_dialog_layout, container, false);
+        View v = inflater.inflate(R.layout.terminal_dlg_delete_layout, container, false);
         if (v != null) {
             // Set relative notification text
             TextView deleteDescribe = (TextView) v.findViewById(R.id.terminal_delete_dialog_describe_delete_text);

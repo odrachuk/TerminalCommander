@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:id="@+id/context_action_dir_compress"-->
+          <!--android:title="@string/context_menu_compress"/>-->
+
+    <item android:id="@+id/context_action_dir_properties"
+          android:title="@string/context_menu_properties"/>
+</menu>

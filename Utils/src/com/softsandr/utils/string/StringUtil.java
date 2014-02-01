@@ -31,6 +31,12 @@ public class StringUtil {
     public final static String PARENT_DOTS = "/..";
     public final static String UP_DIR = "UP--DIR ";
 
+    /**
+     * Utility class
+     */
+    private StringUtil() {
+    }
+
     public static int countOccurrences(String haystack, char needle) {
         int count = 0;
         for (int i = 0; i < haystack.length(); i++) {

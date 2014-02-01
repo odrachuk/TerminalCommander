@@ -119,7 +119,7 @@ public class TerminalRenameDialog extends DialogFragment {
             window = dialog.getWindow();
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
-        View v = inflater.inflate(R.layout.terminal_cp_mv_rn_dialog_layout, container, false);
+        View v = inflater.inflate(R.layout.terminal_dlg_cp_mv_rn_layout, container, false);
         // Input
         if (v != null) {
             mInput = (EditText) v.findViewById(R.id.terminal_cp_mv_dialog_input_element);

@@ -94,7 +94,7 @@ public class TerminalHistoryDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.terminal_history_dialog_layout, container, false);
+        View v = inflater.inflate(R.layout.terminal_dlg_history_layout, container, false);
         if (v != null) {
             TextView title = (TextView) v.findViewById(R.id.terminal_history_dialog_title);
             title.setText(activePage.equals(ActivePage.LEFT) ?

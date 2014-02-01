@@ -102,7 +102,7 @@ public class TerminalMkDirDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.terminal_mk_dir_dialog_layout, container, false);
+        View v = inflater.inflate(R.layout.terminal_dlg_mk_dir_layout, container, false);
         if (v != null) {
         // Input
         String inputText = !curPath.equals(StringUtil.PATH_SEPARATOR) ?

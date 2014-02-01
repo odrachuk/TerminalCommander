@@ -13,6 +13,8 @@
     <string name="green">Green</string>
     <string name="blue">Blue</string>
     <string name="alpha">Alpha</string>
+    <string name="directory">Directory</string>
+    <string name="file">File</string>
     <!-- Panel column titles -->
     <string name="title_file_name">Name</string>
     <string name="title_file_size">Size</string>
@@ -62,6 +64,12 @@
     <string name="dlg_files">" files"</string>
     <string name="dlg_left_panel_history">History of left panel</string>
     <string name="dlg_right_panel_history">History of right panel</string>
+    <string name="dlg_properties_type">Type:</string>
+    <string name="dlg_properties_path">Path:</string>
+    <string name="dlg_properties_size">Size:</string>
+    <string name="dlg_properties_created">Created:</string>
+    <string name="dlg_properties_modified">Path:</string>
+    <string name="dlg_properties_permission">Permission:</string>
     <!-- Preferences strings -->
     <string name="pref_application_title">Application</string>
     <string name="pref_shell_executor_key">pref_shell_executor_key</string>
@@ -114,4 +122,16 @@
     <string name="pref_back_def_colorize_key">pref_back_def_colorize_key</string>
     <string name="pref_back_def_colorize_title">Reset colorize</string>
     <string name="pref_back_def_colorize_summary">Reset to default customized colors</string>
+    <!-- Context menus -->
+    <string name="context_menu_properties">Properties</string>
+    <string name="context_menu_compress">Compress</string>
+    <string name="context_menu_share">Share</string>
+    <string name="context_menu_text_type">Type</string>
+    <string name="context_menu_text_path">Path</string>
+    <string name="context_menu_text_modified">Las modified</string>
+    <string name="context_menu_text_size">Size</string>
+    <string name="context_menu_text_can_read">Can read</string>
+    <string name="context_menu_text_can_write">Can write</string>
+    <string name="context_menu_text_can_exec">Can execute</string>
+    <string name="context_menu_text_size_computation">Computation of size</string>
 </resources>

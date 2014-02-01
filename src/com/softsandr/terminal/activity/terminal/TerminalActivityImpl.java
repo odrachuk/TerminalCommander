@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.softsandr.terminal.R;
@@ -35,8 +36,8 @@ import com.softsandr.terminal.activity.preference.TerminalPreferenceActivity;
 import com.softsandr.terminal.activity.terminal.adapter.ListViewAdapter;
 import com.softsandr.terminal.activity.terminal.async.LoadLeftListTask;
 import com.softsandr.terminal.activity.terminal.async.LoadRightListTask;
+import com.softsandr.terminal.activity.terminal.async.SizeComputationTask;
 import com.softsandr.terminal.activity.terminal.listener.ListViewItemClickListener;
-import com.softsandr.terminal.activity.terminal.listener.ListViewItemLongClickListener;
 import com.softsandr.terminal.activity.terminal.listener.ListViewTouchListener;
 import com.softsandr.terminal.activity.terminal.listener.TerminalClickListener;
 import com.softsandr.terminal.activity.terminal.monitor.ActionBarToggleMonitor;
@@ -46,6 +47,7 @@ import com.softsandr.terminal.activity.terminal.selection.SelectionUiComponents;
 import com.softsandr.terminal.data.listview.ListViewItem;
 import com.softsandr.terminal.data.listview.ListViewSortingStrategy;
 import com.softsandr.terminal.data.preferences.PreferenceController;
+import com.softsandr.terminal.dialog.TerminalDialogUtil;
 import com.softsandr.utils.orient.DetermineOrientationUtil;
 import com.softsandr.utils.string.StringUtil;
 
@@ -131,6 +133,8 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         mLeftList = (ListView) findViewById(R.id.left_directory_list);
         mRightList = (ListView) findViewById(R.id.right_directory_list);
         rootContainer = findViewById(R.id.terminal_main_container);
+        registerForContextMenu(mLeftList);
+        registerForContextMenu(mRightList);
     }
 
     private void initActionBar() {
@@ -358,7 +362,6 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         mLeftAdapter = adapter;
         mLeftList.setAdapter(mLeftAdapter);
         mLeftList.setOnItemClickListener(new ListViewItemClickListener(this, mLeftAdapter, mLeftList));
-        mLeftList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mLeftAdapter));
         mLeftList.setOnTouchListener(mListTouchListener);
         mLeftAdapter.restoreHistoryLocation(mLeftListSavedLocation);
     }
@@ -373,9 +376,64 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
         mRightAdapter = adapter;
         mRightList.setAdapter(mRightAdapter);
         mRightList.setOnItemClickListener(new ListViewItemClickListener(this, mRightAdapter, mRightList));
-        mRightList.setOnItemLongClickListener(new ListViewItemLongClickListener(this, mRightAdapter));
         mRightList.setOnTouchListener(mListTouchListener);
         mRightAdapter.restoreHistoryLocation(mRightListSavedLocation);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.equals(mLeftList)) {
+            MenuInflater inflater = getMenuInflater();
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            ListViewItem selectedItem = mLeftAdapter.getItem(info.position);
+            menu.setHeaderTitle(selectedItem.getFileName());
+            if (selectedItem.isParentDots()) {
+                inflater.inflate(R.menu.context_menu_for_parent, menu);
+            } else if (selectedItem.isDirectory()) {
+                inflater.inflate(R.menu.context_menu_for_directory, menu);
+            } else {
+                inflater.inflate(R.menu.context_menu_for_file, menu);
+            }
+        } else if (v.equals(mRightList)) {
+            MenuInflater inflater = getMenuInflater();
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            ListViewItem selectedItem = mRightAdapter.getItem(info.position);
+            menu.setHeaderTitle(selectedItem.getFileName());
+            if (selectedItem.isParentDots()) {
+                inflater.inflate(R.menu.context_menu_for_parent, menu);
+            } else if (selectedItem.isDirectory()) {
+                inflater.inflate(R.menu.context_menu_for_directory, menu);
+            } else {
+                inflater.inflate(R.menu.context_menu_for_file, menu);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.context_action_file_properties:
+                showFilePropDialog(info);
+                return true;
+            case R.id.context_action_parent_properties:
+            case R.id.context_action_dir_properties:
+                if (info != null) {
+                    ListViewItem listViewItem = null;
+                    if (activePage == ActivePage.LEFT) {
+                        listViewItem = mLeftAdapter.getItem(info.position);
+                    } else {
+                        listViewItem = mRightAdapter.getItem(info.position);
+                    }
+                    if (listViewItem != null) {
+                        new SizeComputationTask(TerminalActivityImpl.this, info).execute(listViewItem);
+                    }
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -436,6 +494,12 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
     @Override
     public ActionBarToggleMonitor getActionBarToggleMonitor() {
         return mActionBarToggleMonitor;
+    }
+
+    @Override
+    public void showFilePropDialog(AdapterView.AdapterContextMenuInfo info) {
+        TerminalDialogUtil.showPropertiesDialog(activePage, info, mLeftAdapter, mRightAdapter,
+                TerminalActivityImpl.this);
     }
 
     @Override

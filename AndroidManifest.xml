@@ -28,8 +28,6 @@
         <activity android:name=".activity.commander.CommanderActivityImpl"
                   android:windowSoftInputMode="stateVisible|adjustResize"
                   android:exported="false"/>
-        <activity android:name=".activity.progress.TerminalProgressActivity"
-                  android:theme="@style/Transparent_Activity_Theme"/>
         <activity android:name=".activity.preference.TerminalPreferenceActivity"
                   android:exported="false"/>
     </application>
