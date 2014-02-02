@@ -216,6 +216,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
             progressDialog.dismiss();
             progressDialog = null;
         }
+        mActionBarToggleMonitor.clear();
     }
 
     @Override

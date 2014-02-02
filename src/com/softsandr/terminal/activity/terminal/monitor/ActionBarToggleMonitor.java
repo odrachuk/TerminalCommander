@@ -76,4 +76,12 @@ public class ActionBarToggleMonitor {
         terminal.getLeftListAdapter().getSelectionMonitor().setCtrlToggle(isCtrlToggled);
         terminal.getRightListAdapter().getSelectionMonitor().setCtrlToggle(isCtrlToggled);
     }
+
+    public void clear() {
+        if (isCtrlToggled) {
+            onClickCtrl();
+        } else if (isShiftToggled) {
+            onClickShift();
+        }
+    }
 }
