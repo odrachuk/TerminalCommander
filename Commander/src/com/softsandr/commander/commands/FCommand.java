@@ -24,7 +24,7 @@ import com.softsandr.terminal.R;
  */
 public enum FCommand {
     FALSE("false", R.raw.false_man),
-    FG("fg", R.raw.fg_man),
+    FG("fg", R.raw.bash_builtins_man),
     FOR("fg", R.raw.for_man);
 
     private final String command;

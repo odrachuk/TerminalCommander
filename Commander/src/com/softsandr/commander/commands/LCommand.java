@@ -23,9 +23,9 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum LCommand {
-    LET("let", R.raw.let_man),
+    LET("let", R.raw.bash_builtins_man),
     LN("let", R.raw.ln_man),
-    LOCAL("let", R.raw.local_man),
+    LOCAL("let", R.raw.bash_builtins_man),
     LS("ls", R.raw.ls_man),
     LSOF("ls", R.raw.lsof_man);
 

@@ -24,10 +24,10 @@ import com.softsandr.terminal.R;
  */
 public enum SCommand {
     SELECT("select", R.raw.select_man),
-    SET("set", R.raw.set_man),
-    SHIFT("shift", R.raw.shift_man),
+    SET("set", R.raw.bash_builtins_man),
+    SHIFT("shift", R.raw.bash_builtins_man),
     SLEEP("sleep", R.raw.sleep_man),
-    SOURCE("source", R.raw.source_man),
+    SOURCE("source", R.raw.bash_builtins_man),
     SYNC("sync", R.raw.sync_man);
 
     private final String command;

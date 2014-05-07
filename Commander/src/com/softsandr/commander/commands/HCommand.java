@@ -23,8 +23,8 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum HCommand {
-    HASH("hash", R.raw.hash_man),
-    HISTORY("hash", R.raw.history_man);
+    HASH("hash", R.raw.bash_builtins_man),
+    HISTORY("hash", R.raw.bash_builtins_man);
 
     private final String command;
     private final int fileId;

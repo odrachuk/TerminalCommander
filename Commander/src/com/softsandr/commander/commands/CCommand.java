@@ -25,7 +25,7 @@ import com.softsandr.terminal.R;
 public enum CCommand {
     CASE("case", R.raw.case_man),
     CAT("cat", R.raw.cat_man),
-    CD("cd", R.raw.cd_man),
+    CD("cd", R.raw.bash_builtins_man),
     CHMOD("chmod", R.raw.chmod_man),
     CHOWN("chown", R.raw.chown_man),
     CLEAR("clear", R.raw.clear_man),

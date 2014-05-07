@@ -23,7 +23,7 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum GCommand {
-    GETOPTS("getopts", R.raw.getopts_man),
+    GETOPTS("getopts", R.raw.bash_builtins_man),
     GREP("grep", R.raw.grep_man),
     GZIP("gzip", R.raw.gzip_man);
 

@@ -23,10 +23,10 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum UCommand {
-    ULIMIT("ulimit", R.raw.ulimit_man),
-    UMASK("umask", R.raw.umask_man),
-    UNALIAS("unalis", R.raw.unalias_man),
-    UNSET("unset", R.raw.unset_man),
+    ULIMIT("ulimit", R.raw.bash_builtins_man),
+    UMASK("umask", R.raw.bash_builtins_man),
+    UNALIAS("unalis", R.raw.bash_builtins_man),
+    UNSET("unset", R.raw.bash_builtins_man),
     UPTIME("uptime", R.raw.uptime_man);
 
     private final String command;

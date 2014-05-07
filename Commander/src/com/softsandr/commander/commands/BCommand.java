@@ -23,9 +23,9 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum BCommand {
-    BG("bg", R.raw.bg_man),
-    BREAK("break", R.raw.break_man),
-    BUILTIN("builtin", R.raw.builtin_man);
+    BG("bg", R.raw.bash_builtins_man),
+    BREAK("break", R.raw.bash_builtins_man),
+    BUILTIN("builtin", R.raw.bash_builtins_man);
 
     private final String command;
     private final int fileId;

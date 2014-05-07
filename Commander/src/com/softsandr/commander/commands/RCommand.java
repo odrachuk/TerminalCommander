@@ -23,12 +23,12 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum RCommand {
-    READ("read", R.raw.read_man),
-    READONLY("readonly", R.raw.readonly_man),
+    READ("read", R.raw.bash_builtins_man),
+    READONLY("readonly", R.raw.bash_builtins_man),
     REBOOT("reboot", R.raw.reboot_man),
     RENAME("rename", R.raw.rename_man),
     RENICE("renice", R.raw.renice_man),
-    RETURN("return", R.raw.return_man),
+    RETURN("return", R.raw.bash_builtins_man),
     RM("rm", R.raw.rm_man),
     RMDIR("rmdir", R.raw.rmdir_man);
 

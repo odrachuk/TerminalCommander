@@ -24,10 +24,10 @@ import com.softsandr.terminal.R;
  */
 public enum ECommand {
     ECHO("echo", R.raw.echo_man),
-    EVAL("eval", R.raw.eval_man),
-    EXEC("eval", R.raw.exec_man),
-    EXIT("eval", R.raw.exit_man),
-    EXPORT("eval", R.raw.export_man);
+    EVAL("eval", R.raw.bash_builtins_man),
+    EXEC("eval", R.raw.bash_builtins_man),
+    EXIT("eval", R.raw.bash_builtins_man),
+    EXPORT("eval", R.raw.bash_builtins_man);
 
     private final String command;
     private final int fileId;

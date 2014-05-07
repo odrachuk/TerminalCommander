@@ -23,7 +23,7 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum WCommand {
-    WAIT("wait", R.raw.wait_man),
+    WAIT("wait", R.raw.bash_builtins_man),
     WHILE("while", R.raw.while_man);
 
     private final String command;

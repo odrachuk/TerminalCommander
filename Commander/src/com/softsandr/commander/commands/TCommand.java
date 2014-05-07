@@ -25,12 +25,12 @@ import com.softsandr.terminal.R;
 public enum TCommand {
     TEST("test", R.raw.test_man),
     TIME("time", R.raw.time_man),
-    TIMES("times", R.raw.times_man),
+    TIMES("times", R.raw.bash_builtins_man),
     TOUCH("touch", R.raw.touch_man),
     TOP("top", R.raw.top_man),
-    TRAP("trap", R.raw.trap_man),
+    TRAP("trap", R.raw.bash_builtins_man),
     TRUE("true", R.raw.true_man),
-    TYPE("type", R.raw.type_man),;
+    TYPE("type", R.raw.bash_builtins_man),;
 
     private final String command;
     private final int fileId;

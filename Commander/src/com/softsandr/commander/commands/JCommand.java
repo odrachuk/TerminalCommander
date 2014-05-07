@@ -23,7 +23,7 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum JCommand {
-    JOBS("jobs", R.raw.jobs_man);
+    JOBS("jobs", R.raw.bash_builtins_man);
 
     private final String command;
     private final int fileId;

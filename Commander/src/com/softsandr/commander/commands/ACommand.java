@@ -23,7 +23,7 @@ import com.softsandr.terminal.R;
  * This class used for...
  */
 public enum ACommand {
-    ALIAS("alias", R.raw.alias_man);
+    ALIAS("alias", R.raw.bash_builtins_man);
 
     private final String command;
     private final int fileId;
