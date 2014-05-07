@@ -49,7 +49,7 @@ public class MakeDirectoryCommand implements FileManipulationCommand {
     public void onExecute() {
         try {
             FileUtil.forceMakeDir(new File(directoryName));
-            // clear selected and refresh directory after deleting
+            // clear_man selected and refresh directory after deleting
             makeRefresh();
         } catch (IOException e) {
             Log.e(LOG_TAG, "onExecute", e);

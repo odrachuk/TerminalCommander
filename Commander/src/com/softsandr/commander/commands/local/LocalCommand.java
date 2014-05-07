@@ -34,7 +34,7 @@ public abstract class LocalCommand {
 
     /**
      * Check execution possibility
-     * @return true if execution specific command is possible and false in other case
+     * @return true if execution specific command is possible and false in other case_man
      */
     public abstract String isExecutable();
 

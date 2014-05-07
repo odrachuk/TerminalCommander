@@ -25,7 +25,7 @@ import com.softsandr.terminal.data.preferences.PreferenceController;
  * a class like this as a central repository for information that might be shared between multiple
  * activities.
  * <p/>
- * In this case, we have not defined any specific work for this Application.
+ * In this case_man, we have not defined any specific work for this Application.
  * <p/>
  * See samples/ApiDemos/tests/src/com.example.android.apis/ApiDemosApplicationTests for an example
  * of how to perform unit tests on an Application object.

@@ -140,7 +140,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                 initializeActionBar((PreferenceScreen) preference);
             } else {
                 if (preference.getKey().equals(getString(R.string.pref_clear_locations_key))) {
-                    // send clear history broadcast
+                    // send clear_man history broadcast
                     getActivity().sendBroadcast(new Intent(TerminalActivityImpl.CLEAR_HISTORY_INTENT));
                 } else if (preference.getKey().equals(getString(R.string.pref_back_def_colorize_key))) {
                     // reset to default settings
@@ -184,7 +184,7 @@ public class TerminalPreferenceActivity extends Activity implements SharedPrefer
                             ((FrameLayout) homeBtnContainer).setOnClickListener(dismissDialogClickListener);
                         }
                     } else {
-                        // The 'If all else fails' default case
+                        // The 'If all else fails' default case_man
                         homeBtn.setOnClickListener(dismissDialogClickListener);
                     }
                 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Created by o.drachuk on 10/01/2014.
+ * Created by o.drachuk on 07/05/2014. 
  *
  * Copyright Oleksandr Drachuk.
  *
@@ -15,29 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.softsandr.commander.commands.local;
+package com.softsandr.commander.commands;
 
-import com.softsandr.commander.process.CommanderProcess;
-
-import static com.softsandr.utils.string.StringUtil.EMPTY;
+import com.softsandr.terminal.R;
 
 /**
- * The custom logic for execution clear_man command from console
+ * This class used for...
  */
-public class ClearCommand extends LocalCommand {
+public enum NCommand {
+    NETSTAT("netstat", R.raw.netstat_man),
+    ;
 
-    protected ClearCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
-        super(commanderProcess, commandText, userLocation);
-    }
+    private final String command;
+    private final int fileId;
 
-    @Override
-    public String isExecutable() {
-        return EMPTY;
-    }
-
-    @Override
-    public String onExecute() {
-        commanderProcess.onClear();
-        return EMPTY;
+    NCommand(String command, int fileId) {
+        this.command = command;
+        this.fileId = fileId;
     }
 }

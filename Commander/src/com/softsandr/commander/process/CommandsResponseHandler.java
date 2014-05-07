@@ -62,7 +62,7 @@ public class CommandsResponseHandler extends Handler {
             } else {
                 // check visibility of result component
                 commander.getOutTextView().setVisibility(View.VISIBLE);
-                // check if needs clear before display new portion of data
+                // check if needs clear_man before display new portion of data
                 if (inputBundle.containsKey(COMMAND_EXECUTION_CLEAR_KEY)) {
                     commander.getOutTextView().setText("");
                 }

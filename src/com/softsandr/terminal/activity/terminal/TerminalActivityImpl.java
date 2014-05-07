@@ -458,7 +458,7 @@ public class TerminalActivityImpl extends Activity implements TerminalActivity {
                     startService(intent);
                 }
                 return true;
-//            case R.id.context_action_file_share:
+//            case_man R.id.context_action_file_share:
 //                if (listViewItem != null) {
 //                    FileOpeningUtil.shareFile(TerminalActivityImpl.this, listViewItem.getAbsPath());
 //                }

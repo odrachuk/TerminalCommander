@@ -36,10 +36,10 @@ public enum InteractiveCommands {
             return "ping localhost"; // todo parsing real address and execution options
         }
     },
-    CAT("cat") {
+    CAT("cat_man") {
         @Override
         public String getSpecificText() {
-            return "cat"; // todo parsing real address and execution options
+            return "cat_man"; // todo parsing real address and execution options
         }
     };
 

@@ -26,7 +26,7 @@ import static com.softsandr.utils.string.StringUtil.EMPTY;
 import static com.softsandr.utils.string.StringUtil.PATH_SEPARATOR;
 
 /**
- * The custom logic for execution cd command
+ * The custom logic for execution cd_man command
  */
 public class CdCommand extends LocalCommand {
 
