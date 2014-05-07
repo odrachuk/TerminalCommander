@@ -1,0 +1,63 @@
+HALT(8)                                                                    halt                                                                   HALT(8)
+
+
+
+NAME
+       halt, poweroff, reboot - Halt, power-off or reboot the machine
+
+SYNOPSIS
+       halt [OPTIONS...]
+
+       poweroff [OPTIONS...]
+
+       reboot [OPTIONS...]
+
+DESCRIPTION
+       halt, poweroff, reboot may be used to halt, power-off or reboot the machine.
+
+OPTIONS
+       The following options are understood:
+
+       --help
+           Prints a short help text and exits.
+
+       --halt
+           Halt the machine, regardless which one of the three commands is invoked.
+
+       -p, --poweroff
+           Power-off the machine, regardless which one of the three commands is invoked.
+
+       --reboot
+           Reboot the machine, regardless which one of the three commands is invoked.
+
+       -f, --force
+           Force immediate halt, power-off, reboot. Don't contact the init system.
+
+       -w, --wtmp-only
+           Only write wtmp shutdown entry, don't actually halt, power-off, reboot.
+
+       -d, --no-wtmp
+           Don't write wtmp shutdown entry.
+
+       -n, --no-sync
+           Don't sync hard disks/storage media before halt, power-off, reboot.
+
+       --no-wall
+           Don't send wall message before halt, power-off, reboot.
+
+EXIT STATUS
+       On success 0 is returned, a non-zero failure code otherwise.
+
+NOTES
+       These are legacy commands available for compatibility only.
+
+SEE ALSO
+       systemd(1), systemctl(1), shutdown(8), wall(1)
+
+AUTHOR
+       Lennart Poettering <lennart@poettering.net>
+           Developer
+
+
+
+systemd                                                                 10/11/2011                                                                HALT(8)
