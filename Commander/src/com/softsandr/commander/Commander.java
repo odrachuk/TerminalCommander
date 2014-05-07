@@ -100,7 +100,7 @@ public class Commander {
         Log.d(LOG_TAG, "createProcess");
         process = new CommanderProcess(this);
         try {
-            process.startExecutionProcess(path);
+            process.setProcessDirectory(path);
         } catch (IOException e) {
             showToast(R.string.cannot_start_main_process);
         }

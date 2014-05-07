@@ -20,7 +20,6 @@ package com.softsandr.commander.process.execution;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 import com.softsandr.commander.commands.interactive.InteractiveCommands;
 import com.softsandr.commander.process.CommanderProcess;
 import com.softsandr.commander.process.CommandsResponseHandler;
@@ -146,7 +145,7 @@ public class InteractiveCommandExecution extends CommandExecution {
     public void cancel() {
         timer.cancel();
         try {
-            commanderProcess.startExecutionProcess(commanderProcess.getCommander().getPrompt().getUserLocation());
+            commanderProcess.setProcessDirectory(commanderProcess.getCommander().getPrompt().getUserLocation());
         } catch (IOException e) {
             commanderProcess.getCommander().showToast(R.string.cannot_start_main_process);
         }

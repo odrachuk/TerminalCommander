@@ -40,6 +40,7 @@ public class CommanderProcess {
     private final Commander commander;
 
     private InteractiveCommandExecution interactiveExecution;
+    private ProcessBuilder processBuilder;
     private Process process;
 
     /**
@@ -48,21 +49,15 @@ public class CommanderProcess {
     public CommanderProcess(Commander commander) {
         this.commander = commander;
         mResponseHandler = new CommandsResponseHandler(commander);
+        processBuilder = new ProcessBuilder(commander.getShellExecutor());
+        processBuilder.redirectErrorStream(true);
     }
 
-    public void startExecutionProcess(String path) throws IOException {
-        Log.d(LOG_TAG, "newExecutionProcess");
+    public void setProcessDirectory(String path) throws IOException {
+        Log.d(LOG_TAG, "setProcessDirectory");
         File pathDirectory = new File(path);
         if (pathDirectory.isDirectory()) {
-            ProcessBuilder builder = new ProcessBuilder(commander.getShellExecutor());
-            builder.redirectErrorStream(true);
-            builder.directory(pathDirectory);
-            try {
-                process = builder.start();
-            } catch (IOException ex) {
-                Log.e(LOG_TAG, "Exception when start execution process: " + ex.getMessage());
-                throw ex;
-            }
+            processBuilder.directory(pathDirectory);
         } else {
             Log.d(LOG_TAG, "Wrong initial process directory");
             commander.getOutTextView().setText(commander.getActivity().getString(R.string.bad_initial_directory));
@@ -72,22 +67,32 @@ public class CommanderProcess {
 
     public void execCommand(String commandText) {
         Log.d(LOG_TAG, "execCommand(" + commandText + ")");
-        if (LocalCommands.isLocalCommand(commandText)) {
-            new LocalCommandExecution(mResponseHandler, commandText,
-                    commander.getPrompt().getUserLocation(), this).execute();
-        } else if (InteractiveCommands.isInteractiveCommand(commandText)) {
-            interactiveExecution = new InteractiveCommandExecution(mResponseHandler, commandText,
-                    commander.getPrompt().getUserLocation(), this);
-            interactiveExecution.execute();
-        } else {
-            new NativeCommandExecution(mResponseHandler, commandText,
-                    commander.getPrompt().getUserLocation(), this).execute();
+        try {
+            // terminate if needs previous
+            if (process != null) {
+                process.destroy();
+            }
+            process = processBuilder.start();
+            if (LocalCommands.isLocalCommand(commandText)) {
+                new LocalCommandExecution(mResponseHandler, commandText,
+                        commander.getPrompt().getUserLocation(), this).execute();
+            } else if (InteractiveCommands.isInteractiveCommand(commandText)) {
+                interactiveExecution = new InteractiveCommandExecution(mResponseHandler, commandText,
+                        commander.getPrompt().getUserLocation(), this);
+                interactiveExecution.execute();
+            } else {
+                new NativeCommandExecution(mResponseHandler, commandText,
+                        commander.getPrompt().getUserLocation(), this).execute();
+            }
+        } catch (IOException ex) {
+            Log.e(LOG_TAG, "Exception when start execution process: " + ex.getMessage());
+            commander.showToast(R.string.cannot_start_main_process);
         }
     }
 
     public void onChangeDirectory(String targetPath) throws Exception {
         stopExecutionProcess();
-        startExecutionProcess(targetPath);
+        setProcessDirectory(targetPath);
     }
 
     public void onClear() {

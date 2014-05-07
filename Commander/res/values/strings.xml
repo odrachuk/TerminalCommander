@@ -6,7 +6,7 @@
     <string name="cannot_start_main_process">App cannot start main execution process.\nPlease check default executor path
         in settings.
     </string>
-    <string name="bad_initial_directory">The initial process\' directory wrong</string>
+    <string name="bad_initial_directory">Working directory is wrong</string>
     <string name="not_enough_permission_for_filesystem_reading">Not enough permissions for reading filesystem</string>
     <string name="target_is_not_directory">Target is not directory</string>
     <string name="not_arguments">No arguments</string>
