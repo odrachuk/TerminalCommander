@@ -40,8 +40,9 @@ public class CdCommand extends LocalCommand {
         String allCommand = commandText.trim();
         if (allCommand.indexOf(' ') > 0) {
             String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
-            if (FileUtil.isDirectoryExist(userLocation, targetDirectory)) {
-                if (!FileUtil.canChangeDirectory(userLocation, targetDirectory)) {
+            targetDirectory = FileUtil.unEscapeWhitespaces(targetDirectory);
+            if (FileUtil.isDirectoryExist(FileUtil.unEscapeWhitespaces(userLocation), targetDirectory)) {
+                if (!FileUtil.canChangeDirectory(FileUtil.unEscapeWhitespaces(userLocation), targetDirectory)) {
                     callbackString += commanderProcess.getCommander().getActivity().getString(R.string.not_enough_permission_for_filesystem_reading);
                 }
             } else {
@@ -61,17 +62,19 @@ public class CdCommand extends LocalCommand {
             if (allCommand.indexOf(' ') > 0) {
                 String targetDirectory = allCommand.substring(allCommand.indexOf(' ') + 1, allCommand.length());
                 targetDirectory = FileUtil.trimLastSlash(targetDirectory);
+                targetDirectory = FileUtil.unEscapeWhitespaces(targetDirectory);
                 StringBuilder targetFullPath = new StringBuilder(EMPTY);
                 if (PredefinedLocation.isPredefinedLocation(targetDirectory)) {
                     targetFullPath.append(PredefinedLocation.getType(targetDirectory).
-                            getTransformedPath(userLocation, targetDirectory));
+                            getTransformedPath(FileUtil.unEscapeWhitespaces(userLocation), targetDirectory));
                 } else {
-                    targetFullPath.append(FileUtil.buildDirectoryPath(userLocation, targetDirectory));
+                    targetFullPath.append(FileUtil.buildDirectoryPath(FileUtil.unEscapeWhitespaces(userLocation),
+                            targetDirectory));
                 }
                 commanderProcess.onChangeDirectory(targetFullPath.toString());
             }
         } catch (Exception e) {
-            callbackString = commanderProcess.getCommander().getActivity().getString(R.string.cannot_start_main_process);
+            callbackString = commanderProcess.getCommander().getActivity().getString(R.string.target_is_not_directory);
         }
         return callbackString;
     }
@@ -129,7 +132,7 @@ public class CdCommand extends LocalCommand {
                 }
             }
         },
-        MANY_TWICE_DOT_SLASH("../../") {
+        MANY_TWICE_DOT_SLASH("../..") {
             @Override
             public String getTransformedPath(String processPath, String commandTrimmedPath) {
                 if (processPath.lastIndexOf(StringUtil.PATH_SEPARATOR) == 0) {
@@ -139,11 +142,11 @@ public class CdCommand extends LocalCommand {
                     processPathBuilder.append(processPath.substring(1, processPath.length()));
                     processPathBuilder.append(StringUtil.PATH_SEPARATOR);
                     String[] pathDirs = processPathBuilder.toString().split(StringUtil.PATH_SEPARATOR);
-                    int countOfUp = StringUtil.countOccurrences(commandTrimmedPath, StringUtil.PATH_SEPARATE_CHAR);
+                    int countOfUp = StringUtil.countOccurrences(commandTrimmedPath, "..");
                     if (countOfUp >= pathDirs.length) {
                         return StringUtil.PATH_SEPARATOR;
                     } else {
-                        int subCount = countOfUp - pathDirs.length;
+                        int subCount = pathDirs.length - countOfUp;
                         StringBuilder responsePath = new StringBuilder();
                         responsePath.append(StringUtil.PATH_SEPARATOR);
                         for (int i = 0; i < subCount; i++) {

@@ -24,7 +24,7 @@ import com.softsandr.terminal.R;
  */
 public enum PCommand {
     PING("ping", R.raw.ping_man),
-    PING6("ping", R.raw.ping6_man),
+    PING6("ping6", R.raw.ping6_man),
     PRINTENV("printenv", R.raw.printenv_man),
     PS("ps", R.raw.ps_man),
     PWD("pwd", R.raw.pwd_man);

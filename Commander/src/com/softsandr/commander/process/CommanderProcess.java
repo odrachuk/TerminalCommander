@@ -27,6 +27,8 @@ import com.softsandr.commander.process.execution.InteractiveCommandExecution;
 import com.softsandr.commander.process.execution.LocalCommandExecution;
 import com.softsandr.commander.process.execution.NativeCommandExecution;
 import com.softsandr.terminal.R;
+import com.softsandr.utils.file.FileUtil;
+import com.softsandr.utils.string.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,9 +62,9 @@ public class CommanderProcess {
             processBuilder.directory(pathDirectory);
         } else {
             Log.d(LOG_TAG, "Wrong initial process directory");
-            commander.getOutTextView().setText(commander.getActivity().getString(R.string.bad_initial_directory));
+            commander.showToast(R.string.bad_initial_directory);
         }
-        commander.getPrompt().setUserLocation(path);
+        commander.getPrompt().setUserLocation(FileUtil.escapeWhitespaces(path));
     }
 
     public void execCommand(String commandText) {

@@ -24,6 +24,7 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * The utility for file manipulation operations
@@ -945,7 +946,8 @@ public class FileUtil {
      */
     public static boolean canChangeDirectory(String curDirName, String subDirName) {
         boolean canChange = false;
-        File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + subDirName);
+        String targetDir = subDirName;
+        File dir = new File(curDirName + StringUtil.PATH_SEPARATOR + targetDir);
         if (dir.canRead()) {
             canChange = true;
         }
@@ -1010,13 +1012,31 @@ public class FileUtil {
      * @return  true if name is correct and file can be created in specific directory
      */
     public static boolean isFilenameValid(String location, String fileName) {
-        File f = new File(location + "/" + fileName);
+        File f = new File(location + StringUtil.PATH_SEPARATOR + fileName);
         try {
             f.getCanonicalPath();
             return true;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    /**
+     * Used when needs make escaping of whitespaces in file name
+     * @param filename a file name
+     * @return escaped file name like Blah\ Blah
+     */
+    public static String escapeWhitespaces(String filename) {
+        return filename.replaceAll("\\s", "\\\\ ");
+    }
+
+    /**
+     * Used when needs delete escaping symbols
+     * @param filename a fle name with slash in name like Blah\ Blah
+     * @return the name without slash in name like Blah Blah
+     */
+    public static String unEscapeWhitespaces(String filename) {
+        return filename.replaceAll("\\\\ ", " ");
     }
 
     /**

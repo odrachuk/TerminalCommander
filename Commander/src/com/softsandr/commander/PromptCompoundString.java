@@ -19,6 +19,7 @@ package com.softsandr.commander;
 
 import android.widget.TextView;
 import com.softsandr.utils.account.AccountUtil;
+import com.softsandr.utils.file.FileUtil;
 
 /**
  * The text to left of input on console - prompt message for user

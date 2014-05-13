@@ -37,14 +37,12 @@ public class StringUtil {
     private StringUtil() {
     }
 
-    public static int countOccurrences(String haystack, char needle) {
-        int count = 0;
-        for (int i = 0; i < haystack.length(); i++) {
-            if (haystack.charAt(i) == needle) {
-                count++;
-            }
+    public static int countOccurrences(String haystack, String needle) {
+        if (haystack.contains(needle)) {
+            String[] tmp = haystack.split(needle);
+            return tmp.length - 1;
         }
-        return count;
+        return 0;
     }
 
     public static boolean isStringDigital(String str) {

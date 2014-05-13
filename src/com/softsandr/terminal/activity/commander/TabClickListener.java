@@ -23,11 +23,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.softsandr.commander.Commander;
 import com.softsandr.terminal.data.filesystem.ProcessDirectory;
+import com.softsandr.utils.file.FileUtil;
 import com.softsandr.utils.string.StringUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * This class used for processing click on tabulate button from console activity
@@ -62,7 +64,7 @@ public final class TabClickListener implements View.OnClickListener {
                     LinkedList<String> resultList = new LinkedList<String>();
                     for (String s : list) {
                         if (s.startsWith(searchText) || s.equals(searchText)) {
-                            resultList.addLast(s);
+                            resultList.addLast(FileUtil.escapeWhitespaces(s));
                         }
                     }
                     // prepare result string
@@ -73,14 +75,26 @@ public final class TabClickListener implements View.OnClickListener {
                             inputView.setText(inputText);
                             inputView.setSelection(inputText.length());
                         } else {
-                            String outText = outView.getText() != null ?
-                                    outView.getText().toString() + StringUtil.LINE_SEPARATOR : StringUtil.EMPTY;
-                            for (String s : resultList) {
-                                outText += "\'" + s + "\'" + StringUtil.WHITESPACE;
+                            StringBuilder outText = new StringBuilder(StringUtil.EMPTY);
+                            if (outView.getText() != null && !outView.getText().toString().isEmpty()) {
+                                outText.append(outView.getText().toString()).append(StringUtil.LINE_SEPARATOR);
                             }
+                            for (int i = 0; i < resultList.size() - 1; i++) {
+                                outText.append(resultList.get(i)).append(StringUtil.LINE_SEPARATOR);
+                            }
+                            outText.append(resultList.get(resultList.size() - 1));
                             outView.setVisibility(View.VISIBLE);
-                            outView.setText(outText);
+                            outView.setText(outText.toString());
                         }
+                    } else {
+                        outView.setVisibility(View.VISIBLE);
+                        StringBuilder outText = new StringBuilder(StringUtil.EMPTY);
+                        if (outView.getText() != null && !outView.getText().toString().isEmpty()) {
+                            outText.append(outView.getText().toString()).append(StringUtil.LINE_SEPARATOR);
+                        }
+                        outText.append(commander.getPrompt().getCompoundString()).
+                                append(inputView.getText().toString());
+                        outView.setText(outText.toString());
                     }
                 }
             });

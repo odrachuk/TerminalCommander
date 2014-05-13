@@ -23,14 +23,14 @@ import com.softsandr.commander.process.CommanderProcess;
  * The container of constants that are all supported local command in App
  */
 public enum LocalCommands {
-    CD("cd_man") {
+    CD("cd") {
         @Override
         public LocalCommand newCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
             return new CdCommand(commanderProcess, commandText, userLocation);
         }
     },
 
-    CLEAR("clear_man") {
+    CLEAR("clear") {
         @Override
         public LocalCommand newCommand(CommanderProcess commanderProcess, String commandText, String userLocation) {
             return new ClearCommand(commanderProcess, commandText, userLocation);
